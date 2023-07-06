@@ -1,9 +1,9 @@
 import { Pressable, StyleSheet, useColorScheme } from 'react-native';
-import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { Link, useRouter } from 'expo-router';
+import TransactionsList from '../../components/TransactionsList';
 
 export default function TabOneScreen() {
   const router = useRouter();
@@ -50,6 +50,7 @@ export default function TabOneScreen() {
           </Link>
         </View>
       </View>
+      <TransactionsList></TransactionsList>
       <View style={styles.binButton}>
         <Pressable onPress={onPressDeposit}>
           {({ pressed }) => (
