@@ -3,15 +3,17 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
+import { Link, useRouter } from 'expo-router';
 
 export default function TabOneScreen() {
+  const router = useRouter();
   const colorScheme = useColorScheme();
   const onPressDeposit = () => {
     console.log('navigate to deposit');
   };
 
   const onPressSend = () => {
-    console.log('send money');
+    router.replace('/modal');
   };
 
   return (
@@ -21,7 +23,7 @@ export default function TabOneScreen() {
         <Text style={styles.title}>200LS</Text>
         <View style={styles.buttonsContainer}>
           <View style={styles.labeledButton}>
-            <Pressable onPress={onPressSend} style={styles.button}>
+            <Pressable style={styles.button}>
               {({ pressed }) => (
                 <FontAwesome
                   name='arrow-down'
@@ -32,18 +34,20 @@ export default function TabOneScreen() {
             </Pressable>
             <Text style={{ textAlign: 'center' }}>Request</Text>
           </View>
-          <View style={styles.labeledButton}>
-            <Pressable onPress={onPressDeposit} style={styles.button}>
-              {({ pressed }) => (
-                <FontAwesome
-                  name='arrow-up'
-                  color={Colors[colorScheme ?? 'light'].text}
-                  style={{ opacity: pressed ? 0.5 : 1 }}
-                />
-              )}
-            </Pressable>
-            <Text style={{ textAlign: 'center' }}>Send</Text>
-          </View>
+          <Link href='/modal'>
+            <View style={styles.labeledButton}>
+              <Pressable onPress={onPressSend} style={styles.button}>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name='arrow-up'
+                    color={Colors[colorScheme ?? 'light'].text}
+                    style={{ opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+              <Text style={{ textAlign: 'center' }}>Send</Text>
+            </View>
+          </Link>
         </View>
       </View>
       <View style={styles.binButton}>
