@@ -1,9 +1,10 @@
 import { Pressable, StyleSheet, useColorScheme } from 'react-native';
 import { Text, View } from '../../components/Themed';
-import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { Link, useRouter } from 'expo-router';
-import TransactionsList from '../../components/TransactionsList';
+import TransactionsList from '../../components/transactions/TransactionsList';
+import { mockUser } from '../../Mocks/mockDB';
 
 export default function TabOneScreen() {
   const router = useRouter();
@@ -23,10 +24,22 @@ export default function TabOneScreen() {
         <Text style={styles.title}>200LS</Text>
         <View style={styles.buttonsContainer}>
           <View style={styles.labeledButton}>
-            <Pressable style={styles.button}>
+            <Pressable style={styles.icon}>
               {({ pressed }) => (
-                <FontAwesome
-                  name='arrow-down'
+                <Ionicons
+                  name='scan-circle'
+                  size={24}
+                  color={Colors[colorScheme ?? 'light'].text}
+                />
+              )}
+            </Pressable>
+            <Text style={{ textAlign: 'center' }}>Request</Text>
+          </View>
+          <View style={styles.labeledButton}>
+            <Pressable style={styles.icon}>
+              {({ pressed }) => (
+                <FontAwesome5
+                  name='hand-holding-medical'
                   color={Colors[colorScheme ?? 'light'].text}
                   style={{ opacity: pressed ? 0.5 : 1 }}
                 />
@@ -36,10 +49,10 @@ export default function TabOneScreen() {
           </View>
           <Link href='/modal'>
             <View style={styles.labeledButton}>
-              <Pressable onPress={onPressSend} style={styles.button}>
+              <Pressable onPress={onPressSend} style={styles.icon}>
                 {({ pressed }) => (
                   <FontAwesome
-                    name='arrow-up'
+                    name='paper-plane'
                     color={Colors[colorScheme ?? 'light'].text}
                     style={{ opacity: pressed ? 0.5 : 1 }}
                   />
@@ -50,7 +63,7 @@ export default function TabOneScreen() {
           </Link>
         </View>
       </View>
-      <TransactionsList></TransactionsList>
+      <TransactionsList currentUser={mockUser}></TransactionsList>
       <View style={styles.binButton}>
         <Pressable onPress={onPressDeposit}>
           {({ pressed }) => (
@@ -99,7 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  button: {
+  icon: {
     height: 70,
     width: 70,
     justifyContent: 'center',
@@ -107,6 +120,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     backgroundColor: 'grey',
     borderRadius: 50,
+    fontSize: 40,
   },
   binButton: {
     position: 'absolute',
