@@ -5,6 +5,7 @@ import Colors from '../../constants/Colors';
 import { Link, useRouter } from 'expo-router';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import { mockUser } from '../../Mocks/mockDB';
+import DashboardButton from '../../components/home/DashboardButton';
 
 export default function TabOneScreen() {
   const router = useRouter();
@@ -47,6 +48,7 @@ export default function TabOneScreen() {
             </Pressable>
             <Text style={{ textAlign: 'center' }}>Request</Text>
           </View>
+          <DashboardButton iconName='help' iconLibrary='Entypo' />
           <Link href='/modal'>
             <View style={styles.labeledButton}>
               <Pressable onPress={onPressSend} style={styles.icon}>
