@@ -5,6 +5,7 @@ import Colors from '../../constants/Colors';
 import { Link, useRouter } from 'expo-router';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import { mockUser } from '../../Mocks/mockDB';
+import DashboardButton from '../../components/home/DashboardButton';
 
 export default function TabOneScreen() {
   const router = useRouter();
@@ -24,43 +25,20 @@ export default function TabOneScreen() {
         <Text style={styles.title}>200LS</Text>
         <View style={styles.buttonsContainer}>
           <View style={styles.labeledButton}>
-            <Pressable style={styles.icon}>
-              {({ pressed }) => (
-                <Ionicons
-                  name='scan-circle'
-                  size={24}
-                  color={Colors[colorScheme ?? 'light'].text}
-                />
-              )}
-            </Pressable>
+            <DashboardButton iconName='scan-circle' iconLibrary='Ionicons' />
+            <Text style={{ textAlign: 'center' }}>Scan</Text>
+          </View>
+          <View style={styles.labeledButton}>
+            <DashboardButton
+              iconName='hand-coin-outline'
+              iconLibrary='MaterialCommunityIcons'
+            />
             <Text style={{ textAlign: 'center' }}>Request</Text>
           </View>
           <View style={styles.labeledButton}>
-            <Pressable style={styles.icon}>
-              {({ pressed }) => (
-                <FontAwesome5
-                  name='hand-holding-medical'
-                  color={Colors[colorScheme ?? 'light'].text}
-                  style={{ opacity: pressed ? 0.5 : 1 }}
-                />
-              )}
-            </Pressable>
-            <Text style={{ textAlign: 'center' }}>Request</Text>
+            <DashboardButton iconName='paper-plane' iconLibrary='FontAwesome' />
+            <Text style={{ textAlign: 'center' }}>Send</Text>
           </View>
-          <Link href='/modal'>
-            <View style={styles.labeledButton}>
-              <Pressable onPress={onPressSend} style={styles.icon}>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name='paper-plane'
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-              <Text style={{ textAlign: 'center' }}>Send</Text>
-            </View>
-          </Link>
         </View>
       </View>
       <TransactionsList currentUser={mockUser}></TransactionsList>
