@@ -32,12 +32,11 @@ export default function DashboardButton({
             <CustomIcon
               iconLibraryName={iconLibrary}
               iconName={iconName}
-              // @ts-ignore
               color={Colors[colorScheme ?? 'light'].text}
+              size={35}
             />
           )}
         </Pressable>
-        <Text style={{ textAlign: 'center' }}>Send</Text>
       </View>
     </Link>
   );
@@ -50,6 +49,13 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     textAlign: 'center',
     justifyContent: 'center',
+    height: 70,
+    width: 70,
+    alignItems: 'center',
+    marginHorizontal: 5,
+    backgroundColor: 'grey',
+    borderRadius: 50,
+    fontSize: 40,
   },
   dashboard: {
     position: 'absolute',
@@ -74,15 +80,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  icon: {
-    height: 70,
-    width: 70,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-    backgroundColor: 'grey',
-    borderRadius: 50,
-    fontSize: 40,
   },
 });

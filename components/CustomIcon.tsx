@@ -22,7 +22,7 @@ interface CustomIconProps {
   size?: number;
 }
 
-const DynamicComponent = ({
+const DynamicIconComponent = ({
   iconName,
   iconLibraryName,
   color,
@@ -41,34 +41,34 @@ const DynamicComponent = ({
       Component = Entypo;
       break;
     case 'Feather':
-      Component: Feather;
+      Component = Feather;
       break;
     case 'Fontisto':
-      Component: Fontisto;
+      Component = Fontisto;
       break;
     case 'FontAwesome':
-      Component: FontAwesome;
+      Component = FontAwesome;
       break;
     case 'Foundation':
-      Component: Foundation;
+      Component = Foundation;
       break;
     case 'Ionicons':
-      Component: Ionicons;
+      Component = Ionicons;
       break;
     case 'MaterialCommunityIcons':
-      Component: MaterialCommunityIcons;
+      Component = MaterialCommunityIcons;
       break;
     case 'MaterialIcons':
-      Component: MaterialIcons;
+      Component = MaterialIcons;
       break;
     case 'Octicons':
-      Component: Octicons;
+      Component = Octicons;
       break;
     case 'SimpleLineIcons':
-      Component: SimpleLineIcons;
+      Component = SimpleLineIcons;
       break;
     case 'Zocial':
-      Component: Zocial;
+      Component = Zocial;
       break;
     default:
       // Set a default component or handle the error case
@@ -81,5 +81,5 @@ const DynamicComponent = ({
 };
 
 export function CustomIcon(props: CustomIconProps) {
-  return <DynamicComponent {...props} />;
+  return <DynamicIconComponent {...props} />;
 }
