@@ -4,6 +4,7 @@ import {
   EvilIcons,
   Feather,
   FontAwesome,
+  FontAwesome5,
   Fontisto,
   Foundation,
   Ionicons,
@@ -48,6 +49,9 @@ const DynamicIconComponent = ({
       break;
     case 'FontAwesome':
       Component = FontAwesome;
+      break;
+    case 'FontAwesome5':
+      Component = FontAwesome5;
       break;
     case 'Foundation':
       Component = Foundation;
