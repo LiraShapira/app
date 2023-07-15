@@ -13,6 +13,8 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { Zocial } from '@expo/vector-icons';
 // NOTE: no type is provided here
 import { FontAwesome5 } from '@expo/vector-icons';
+// so we created and added FontAwesome5 icon name type
+import { FontAwesome5IconNames } from './FontAwesome5IconNames';
 
 // NOTE: FontAwesome5 icon names are not included in this type
 export type IconName = keyof typeof MaterialIcons.glyphMap | keyof typeof AntDesign.glyphMap | keyof typeof Entypo.glyphMap | keyof typeof EvilIcons.glyphMap |
@@ -25,7 +27,7 @@ export type IconName = keyof typeof MaterialIcons.glyphMap | keyof typeof AntDes
   keyof typeof MaterialIcons.glyphMap |
   keyof typeof Octicons.glyphMap |
   keyof typeof SimpleLineIcons.glyphMap |
-  keyof typeof Zocial.glyphMap
+  keyof typeof Zocial.glyphMap | FontAwesome5IconNames
 
 export type IconLibrary = 'AntDesign' |
   'Entypo' |
@@ -33,6 +35,7 @@ export type IconLibrary = 'AntDesign' |
   'Feather' |
   'Fontisto' |
   'FontAwesome' |
+  'FontAwesome5' |
   'Foundation' |
   'Ionicons' |
   'MaterialCommunityIcons' |
