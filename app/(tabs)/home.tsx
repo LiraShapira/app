@@ -1,8 +1,8 @@
 import { Pressable, StyleSheet, useColorScheme } from 'react-native';
 import { Text, View } from '../../components/Themed';
-import { Ionicons, FontAwesome5, FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import { mockUser } from '../../Mocks/mockDB';
 import DashboardButton from '../../components/home/DashboardButton';
@@ -22,7 +22,7 @@ export default function TabOneScreen() {
     <View style={styles.container}>
       <View style={styles.dashboard}>
         <Text style={styles.subtitle}>You Have:</Text>
-        <Text style={styles.title}>200LS</Text>
+        <Text style={styles.title}>{mockUser.accountBalance}</Text>
         <View style={styles.buttonsContainer}>
           <View style={styles.labeledButton}>
             <DashboardButton iconName='scan-circle' iconLibrary='Ionicons' />
@@ -41,7 +41,10 @@ export default function TabOneScreen() {
           </View>
         </View>
       </View>
-      <TransactionsList currentUser={mockUser}></TransactionsList>
+      <View style={styles.transactionList}>
+        <Text style={{ fontSize: 40 }}>My Activities</Text>
+        <TransactionsList currentUser={mockUser} />
+      </View>
       <View style={styles.binButton}>
         <Pressable onPress={onPressDeposit}>
           {({ pressed }) => (
@@ -112,6 +115,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#fff',
     justifyContent: 'center',
+  },
+  transactionList: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'flex-start',
+    paddingHorizontal: 8,
   },
   separator: {
     marginVertical: 30,

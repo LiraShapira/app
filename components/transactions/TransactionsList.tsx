@@ -1,4 +1,4 @@
-import { View, Text, useColorScheme, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { mockTransactions } from '../../Mocks/mockDB';
 import { Transaction } from '../../types/Transaction';
 import { User } from '../../types/User';
@@ -11,8 +11,6 @@ interface TransactionsListProps {
 export default function TransactionsList({
   currentUser,
 }: TransactionsListProps) {
-  const colorScheme = useColorScheme();
-
   return (
     <View>
       {mockTransactions.map((transaction: Transaction, i) => (
@@ -33,5 +31,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 5,
     textAlign: 'center',
+    width: '100%',
   },
 });

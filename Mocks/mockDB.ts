@@ -32,7 +32,7 @@ export const mockUser: User = {
   userName: 'shimon',
   userID: '1234',
   userLocalCompostStand: 4,
-  accountBalance: 200,
+  accountBalance: 154,
   dateJoined: new Date('2023-07-05'),
   transactions: [mockTransaction, mockTransaction2, mockTransaction3]
 }
