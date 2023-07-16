@@ -3,6 +3,7 @@ import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
 
 import Colors from '../../constants/Colors';
+import { CustomIcon } from '../../components/CustomIcon';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -29,14 +30,14 @@ export default function TabLayout() {
           title: 'home',
           tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
           headerRight: () => (
-            <Link href='/modal' asChild>
+            <Link disabled href='/modal' asChild>
               <Pressable>
                 {({ pressed }) => (
-                  <FontAwesome
-                    name='info-circle'
+                  <CustomIcon
+                    iconName='menu'
+                    iconLibraryName='Entypo'
                     size={25}
                     color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
               </Pressable>
