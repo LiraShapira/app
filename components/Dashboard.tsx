@@ -1,12 +1,25 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 import { mockUser } from '../Mocks/mockDB';
 import DashboardButton from './home/DashboardButton';
+import Colors from '../constants/Colors';
 
 export default function Dashboard() {
+  const colorScheme = useColorScheme();
+
   return (
     <View style={styles.dashboard}>
       <Text style={styles.subtitle}>You Have:</Text>
-      <Text style={styles.title}>{mockUser.accountBalance}</Text>
+      <View style={styles.amountDisplay}>
+        <Text
+          style={{
+            color: Colors[colorScheme ?? 'light'].text,
+            ...styles.title,
+          }}
+        >
+          {mockUser.accountBalance}
+        </Text>
+        <Text>LS</Text>
+      </View>
       <View style={styles.buttonsContainer}>
         <View style={styles.labeledButton}>
           <DashboardButton iconName='scan-circle' iconLibrary='Ionicons' />
@@ -32,13 +45,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginBottom: 20,
+    marginVertical: 28,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
+  },
+  amountDisplay: {
+    display: 'flex',
+    flexDirection: 'row',
   },
   subtitle: {
     fontSize: 18,
@@ -53,10 +70,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
   },
-
   buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    gap: 8,
   },
 });

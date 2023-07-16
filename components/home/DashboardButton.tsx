@@ -6,7 +6,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import { Link } from 'expo-router';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Colors from '../../constants/Colors';
 import { IconLibrary, IconName } from '../../types/Icons';
 import { CustomIcon } from '../CustomIcon';
 
@@ -32,7 +32,7 @@ export default function DashboardButton({
             <CustomIcon
               iconLibraryName={iconLibrary}
               iconName={iconName}
-              color={Colors[colorScheme ?? 'light'].text}
+              color={Colors[colorScheme ?? 'light'].background}
               size={35}
             />
           )}
