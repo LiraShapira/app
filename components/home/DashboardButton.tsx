@@ -32,7 +32,7 @@ export default function DashboardButton({
             <CustomIcon
               iconLibraryName={iconLibrary}
               iconName={iconName}
-              color={Colors[colorScheme ?? 'light'].background}
+              color={Colors[colorScheme ?? 'light'].text}
               size={35}
             />
           )}

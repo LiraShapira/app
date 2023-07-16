@@ -27,7 +27,13 @@ export default function TransactionItem({
           >
             {transaction.date.getDay()}
           </Text>
-          <Text style={{}}>{monthsShortForm[transaction.date.getMonth()]}</Text>
+          <Text
+            style={{
+              color: Colors[colorScheme ?? 'light'].text,
+            }}
+          >
+            {monthsShortForm[transaction.date.getMonth()]}
+          </Text>
         </View>
         <View style={styles.notesDisplay}>
           <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
@@ -53,7 +59,12 @@ export default function TransactionItem({
           </Text>
         </View>
       </View>
-      <View style={styles.divider} />
+      <View
+        style={{
+          borderColor: Colors[colorScheme ?? 'light'].shading,
+          ...styles.divider,
+        }}
+      />
     </View>
   );
 }
@@ -90,6 +101,5 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 12,
     borderBottomWidth: 1,
-    borderColor: 'black',
   },
 });

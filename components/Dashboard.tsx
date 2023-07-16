@@ -8,7 +8,14 @@ export default function Dashboard() {
 
   return (
     <View style={styles.dashboard}>
-      <Text style={styles.subtitle}>You Have:</Text>
+      <Text
+        style={{
+          color: Colors[colorScheme ?? 'light'].text,
+          ...styles.subtitle,
+        }}
+      >
+        You Have:
+      </Text>
       <View style={styles.amountDisplay}>
         <Text
           style={{
@@ -18,23 +25,44 @@ export default function Dashboard() {
         >
           {mockUser.accountBalance}
         </Text>
-        <Text>LS</Text>
+        <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>LS</Text>
       </View>
       <View style={styles.buttonsContainer}>
         <View style={styles.labeledButton}>
           <DashboardButton iconName='scan-circle' iconLibrary='Ionicons' />
-          <Text style={{ textAlign: 'center' }}>Scan</Text>
+          <Text
+            style={{
+              color: Colors[colorScheme ?? 'light'].text,
+              textAlign: 'center',
+            }}
+          >
+            Scan
+          </Text>
         </View>
         <View style={styles.labeledButton}>
           <DashboardButton
             iconName='hand-coin-outline'
             iconLibrary='MaterialCommunityIcons'
           />
-          <Text style={{ textAlign: 'center' }}>Request</Text>
+          <Text
+            style={{
+              color: Colors[colorScheme ?? 'light'].text,
+              textAlign: 'center',
+            }}
+          >
+            Request
+          </Text>
         </View>
         <View style={styles.labeledButton}>
           <DashboardButton iconName='paper-plane' iconLibrary='FontAwesome' />
-          <Text style={{ textAlign: 'center' }}>Send</Text>
+          <Text
+            style={{
+              color: Colors[colorScheme ?? 'light'].text,
+              textAlign: 'center',
+            }}
+          >
+            Send
+          </Text>
         </View>
       </View>
     </View>
