@@ -20,7 +20,9 @@ export default function TabOneScreen() {
 
   return (
     <View style={styles.container}>
-      <Dashboard />
+      <View>
+        <Dashboard />
+      </View>
       <View style={styles.transactionList}>
         <Text style={{ fontSize: 40 }}>My Activities</Text>
         <TransactionsList currentUser={mockUser} />
@@ -48,8 +50,9 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   icon: {
     height: 70,

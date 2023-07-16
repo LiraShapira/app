@@ -29,12 +29,9 @@ export default function Dashboard() {
 }
 const styles = StyleSheet.create({
   dashboard: {
-    position: 'absolute',
-    top: 100,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    height: 100,
     marginBottom: 20,
   },
   title: {
