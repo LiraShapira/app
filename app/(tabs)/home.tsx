@@ -5,7 +5,7 @@ import Colors from '../../constants/Colors';
 import { useRouter } from 'expo-router';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import { mockUser } from '../../Mocks/mockDB';
-import DashboardButton from '../../components/home/DashboardButton';
+import Dashboard from '../../components/Dashboard';
 
 export default function TabOneScreen() {
   const router = useRouter();
@@ -14,33 +14,13 @@ export default function TabOneScreen() {
     console.log('navigate to deposit');
   };
 
-  const onPressSend = () => {
-    router.replace('/modal');
-  };
+  // const onPressSend = () => {
+  //   router.replace('/modal');
+  // };
 
   return (
     <View style={styles.container}>
-      <View style={styles.dashboard}>
-        <Text style={styles.subtitle}>You Have:</Text>
-        <Text style={styles.title}>{mockUser.accountBalance}</Text>
-        <View style={styles.buttonsContainer}>
-          <View style={styles.labeledButton}>
-            <DashboardButton iconName='scan-circle' iconLibrary='Ionicons' />
-            <Text style={{ textAlign: 'center' }}>Scan</Text>
-          </View>
-          <View style={styles.labeledButton}>
-            <DashboardButton
-              iconName='hand-coin-outline'
-              iconLibrary='MaterialCommunityIcons'
-            />
-            <Text style={{ textAlign: 'center' }}>Request</Text>
-          </View>
-          <View style={styles.labeledButton}>
-            <DashboardButton iconName='paper-plane' iconLibrary='FontAwesome' />
-            <Text style={{ textAlign: 'center' }}>Send</Text>
-          </View>
-        </View>
-      </View>
+      <Dashboard />
       <View style={styles.transactionList}>
         <Text style={{ fontSize: 40 }}>My Activities</Text>
         <TransactionsList currentUser={mockUser} />
@@ -52,7 +32,11 @@ export default function TabOneScreen() {
               name='trash'
               size={55}
               color={Colors[colorScheme ?? 'light'].text}
-              style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+              style={{
+                margin: 4,
+                marginHorizontal: 10,
+                opacity: pressed ? 0.5 : 1,
+              }}
             />
           )}
         </Pressable>
@@ -62,36 +46,10 @@ export default function TabOneScreen() {
 }
 
 const styles = StyleSheet.create({
-  labeledButton: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignContent: 'center',
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-  dashboard: {
-    position: 'absolute',
-    top: 100,
-    justifyContent: 'center',
+  container: {
+    flex: 1,
     alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
-    textAlign: 'center',
-    marginBottom: 10,
-    width: '100%',
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
   },
   icon: {
     height: 70,
@@ -106,15 +64,8 @@ const styles = StyleSheet.create({
   binButton: {
     position: 'absolute',
     bottom: 10,
-    // borderWidth: 3,
-    // borderRadius: 30,
-    // borderColor: 'white',
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    borderColor: '#fff',
-    justifyContent: 'center',
+    borderWidth: 3,
+    borderRadius: 30,
   },
   transactionList: {
     width: '100%',
