@@ -12,13 +12,13 @@ export default function TransactionsList({
   currentUser,
 }: TransactionsListProps) {
   return (
-    <View>
+    <View style={styles.transactionList}>
       {mockTransactions.map((transaction: Transaction, i) => (
-        <View key={`${i}${transaction.date}`} style={styles.transactionList}>
+        <View key={`${i}${transaction.date}`} style={styles.transactionItem}>
           <TransactionItem
             transaction={transaction}
             income={transaction.recipientUserID === currentUser.userID}
-          ></TransactionItem>
+          />
         </View>
       ))}
     </View>
@@ -27,10 +27,13 @@ export default function TransactionsList({
 
 const styles = StyleSheet.create({
   transactionList: {
+    paddingVertical: 8,
+  },
+  transactionItem: {
     display: 'flex',
-    flexDirection: 'row',
     gap: 5,
     textAlign: 'center',
-    width: '100%',
+    width: '90%',
+    paddingHorizontal: 4,
   },
 });

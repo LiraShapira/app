@@ -15,42 +15,45 @@ export default function TransactionItem({
   const colorScheme = useColorScheme();
 
   return (
-    <View style={styles.transactionItem}>
-      <View style={styles.dateDisplay}>
-        <Text
-          style={{
-            fontWeight: '500',
-            fontSize: 25,
-            color: Colors[colorScheme ?? 'light'].text,
-          }}
-        >
-          {transaction.date.getDay()}
-        </Text>
-        <Text style={{}}>{monthsShortForm[transaction.date.getMonth()]}</Text>
+    <View>
+      <View style={styles.transactionItem}>
+        <View style={styles.dateDisplay}>
+          <Text
+            style={{
+              fontWeight: '500',
+              fontSize: 25,
+              color: Colors[colorScheme ?? 'light'].text,
+            }}
+          >
+            {transaction.date.getDay()}
+          </Text>
+          <Text style={{}}>{monthsShortForm[transaction.date.getMonth()]}</Text>
+        </View>
+        <View style={styles.notesDisplay}>
+          <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
+            {transaction.reason}
+          </Text>
+        </View>
+        <View style={styles.amountDisplay}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: Colors[colorScheme ?? 'light'].text,
+            }}
+          >
+            {income ? '+' : '-'}
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              color: Colors[colorScheme ?? 'light'].text,
+            }}
+          >
+            {transaction.amount}
+          </Text>
+        </View>
       </View>
-      <View style={styles.notesDisplay}>
-        <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
-          {transaction.reason}
-        </Text>
-      </View>
-      <View style={styles.amountDisplay}>
-        <Text
-          style={{
-            fontSize: 20,
-            color: Colors[colorScheme ?? 'light'].text,
-          }}
-        >
-          {income ? '+' : '-'}
-        </Text>
-        <Text
-          style={{
-            fontSize: 20,
-            color: Colors[colorScheme ?? 'light'].text,
-          }}
-        >
-          {transaction.amount}
-        </Text>
-      </View>
+      <View style={styles.divider} />
     </View>
   );
 }
@@ -80,8 +83,13 @@ const styles = StyleSheet.create({
   },
   notesDisplay: {
     width: '60%',
-    // flexGrow: 4,
     display: 'flex',
     flexDirection: 'row',
+  },
+  divider: {
+    width: '100%',
+    padding: 12,
+    borderBottomWidth: 1,
+    borderColor: 'black',
   },
 });
