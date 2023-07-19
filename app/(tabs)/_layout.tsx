@@ -1,6 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
+import { Pressable, View, useColorScheme } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import { CustomIcon } from '../../components/CustomIcon';
@@ -30,18 +30,20 @@ export default function TabLayout() {
           title: 'home',
           tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
           headerRight: () => (
-            <Link disabled href='/modal' asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <CustomIcon
-                    iconName='menu'
-                    iconLibraryName='Entypo'
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                  />
-                )}
-              </Pressable>
-            </Link>
+            <View style={{ padding: 8 }}>
+              <Link disabled href='/modal' asChild>
+                <Pressable>
+                  {({ pressed }) => (
+                    <CustomIcon
+                      iconName='menu'
+                      iconLibraryName='Entypo'
+                      size={25}
+                      color={Colors[colorScheme ?? 'light'].text}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            </View>
           ),
         }}
       />

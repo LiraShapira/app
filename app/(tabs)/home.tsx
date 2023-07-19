@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import { mockUser } from '../../Mocks/mockDB';
 import Dashboard from '../../components/Dashboard';
+import { CustomIcon } from '../../components/CustomIcon';
 
 export default function TabOneScreen() {
   const router = useRouter();
@@ -35,16 +36,18 @@ export default function TabOneScreen() {
       <View style={styles.binButton}>
         <Pressable onPress={onPressDeposit}>
           {({ pressed }) => (
-            <FontAwesome
-              name='trash'
-              size={55}
-              color={Colors[colorScheme ?? 'light'].text}
+            <View
               style={{
-                margin: 4,
-                marginHorizontal: 10,
                 opacity: pressed ? 0.5 : 1,
               }}
-            />
+            >
+              <CustomIcon
+                iconName='leaf-circle-outline'
+                iconLibraryName='MaterialCommunityIcons'
+                size={55}
+                color={Colors[colorScheme ?? 'light'].text}
+              />
+            </View>
           )}
         </Pressable>
       </View>
@@ -71,9 +74,7 @@ const styles = StyleSheet.create({
   },
   binButton: {
     position: 'absolute',
-    bottom: 10,
-    borderWidth: 3,
-    borderRadius: 30,
+    bottom: -20,
   },
   transactionList: {
     width: '100%',
