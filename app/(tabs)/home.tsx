@@ -1,19 +1,14 @@
-import { Pressable, StyleSheet, useColorScheme } from 'react-native';
+import { StyleSheet, useColorScheme } from 'react-native';
 import { Text, View } from '../../components/Themed';
-import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { useRouter } from 'expo-router';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import { mockUser } from '../../Mocks/mockDB';
 import Dashboard from '../../components/Dashboard';
-import { CustomIcon } from '../../components/CustomIcon';
 
 export default function TabOneScreen() {
   const router = useRouter();
   const colorScheme = useColorScheme();
-  const onPressDeposit = () => {
-    console.log('navigate to deposit');
-  };
 
   // const onPressSend = () => {
   //   router.replace('/modal');
@@ -32,24 +27,6 @@ export default function TabOneScreen() {
       <View style={styles.transactionList}>
         <Text style={{ fontSize: 40 }}>My Activities</Text>
         <TransactionsList currentUser={mockUser} />
-      </View>
-      <View style={styles.binButton}>
-        <Pressable onPress={onPressDeposit}>
-          {({ pressed }) => (
-            <View
-              style={{
-                opacity: pressed ? 0.5 : 1,
-              }}
-            >
-              <CustomIcon
-                iconName='leaf-circle-outline'
-                iconLibraryName='MaterialCommunityIcons'
-                size={55}
-                color={Colors[colorScheme ?? 'light'].text}
-              />
-            </View>
-          )}
-        </Pressable>
       </View>
     </View>
   );
@@ -71,10 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     borderRadius: 50,
     fontSize: 40,
-  },
-  binButton: {
-    position: 'absolute',
-    bottom: -20,
   },
   transactionList: {
     width: '100%',

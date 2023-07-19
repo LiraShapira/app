@@ -4,6 +4,7 @@ import { Pressable, View, useColorScheme } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import { CustomIcon } from '../../components/CustomIcon';
+import DepositButton from '../../components/depositButton';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -45,6 +46,13 @@ export default function TabLayout() {
               </Link>
             </View>
           ),
+        }}
+      />
+      <Tabs.Screen
+        name='Deposit'
+        options={{
+          title: '',
+          tabBarIcon: () => <DepositButton />,
         }}
       />
       <Tabs.Screen
