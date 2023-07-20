@@ -14,7 +14,7 @@ import {
   SimpleLineIcons,
   Zocial,
 } from '@expo/vector-icons';
-import { IconLibrary, IconName } from '../types/Icons';
+import { IconLibrary, IconName } from '../../types/Icons';
 import { Text } from 'react-native';
 interface CustomIconProps {
   iconName: IconName;

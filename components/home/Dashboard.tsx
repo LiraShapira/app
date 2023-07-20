@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, useColorScheme } from 'react-native';
-import { mockUser } from '../Mocks/mockDB';
-import DashboardButton from './home/DashboardButton';
-import Colors from '../constants/Colors';
+import { mockUser } from '../../Mocks/mockDB';
+import DashboardButton from './DashboardButton';
+import Colors from '../../constants/Colors';
 
 export default function Dashboard() {
   const colorScheme = useColorScheme();

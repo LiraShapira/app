@@ -1,6 +1,6 @@
 import { View, StyleSheet, Pressable, useColorScheme } from 'react-native';
-import Colors from '../constants/Colors';
-import { CustomIcon } from './CustomIcon';
+import Colors from '../../constants/Colors';
+import { CustomIcon } from '../utils/CustomIcon';
 
 export default function depositButton() {
   const colorScheme = useColorScheme();

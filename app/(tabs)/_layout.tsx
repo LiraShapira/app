@@ -3,8 +3,8 @@ import { Link, Tabs } from 'expo-router';
 import { Pressable, View, useColorScheme } from 'react-native';
 
 import Colors from '../../constants/Colors';
-import { CustomIcon } from '../../components/CustomIcon';
-import DepositButton from '../../components/depositButton';
+import { CustomIcon } from '../../components/utils/CustomIcon';
+import DepositButton from '../../components/tabsBar/DepositButton';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -26,7 +26,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name='home'
+        name='Home'
         options={{
           title: 'home',
           tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
@@ -56,9 +56,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='two'
+        name='Two'
         options={{
-          title: 'Tab Two',
+          title: 'market',
           tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
         }}
       />

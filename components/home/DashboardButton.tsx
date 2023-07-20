@@ -8,7 +8,7 @@ import {
 import { Link } from 'expo-router';
 import Colors from '../../constants/Colors';
 import { IconLibrary, IconName } from '../../types/Icons';
-import { CustomIcon } from '../CustomIcon';
+import { CustomIcon } from '../utils/CustomIcon';
 
 interface DashboardButtonProps {
   iconName: IconName;

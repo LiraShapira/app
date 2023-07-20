@@ -4,7 +4,7 @@ import Colors from '../../constants/Colors';
 import { useRouter } from 'expo-router';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import { mockUser } from '../../Mocks/mockDB';
-import Dashboard from '../../components/Dashboard';
+import Dashboard from '../../components/home/Dashboard';
 
 export default function TabOneScreen() {
   const router = useRouter();
