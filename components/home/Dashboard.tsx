@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 import { mockUser } from '../../Mocks/mockDB';
 import DashboardButton from './DashboardButton';
 import Colors from '../../constants/Colors';
+import i18n from '../../translationService';
 
 export default function Dashboard() {
   const colorScheme = useColorScheme();
@@ -14,7 +15,7 @@ export default function Dashboard() {
           ...styles.subtitle,
         }}
       >
-        You Have:
+        {i18n.t('home_lira_shapira_currency_you_have')}
       </Text>
       <View style={styles.amountDisplay}>
         <Text
@@ -25,7 +26,9 @@ export default function Dashboard() {
         >
           {mockUser.accountBalance}
         </Text>
-        <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>LS</Text>
+        <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
+          {i18n.t('home_lira_shapira_currency_shorthand')}
+        </Text>
       </View>
       <View style={styles.buttonsContainer}>
         <View style={styles.labeledButton}>
@@ -36,7 +39,7 @@ export default function Dashboard() {
               textAlign: 'center',
             }}
           >
-            Scan
+            {i18n.t('dashboard_dashboard_buttons_scan')}
           </Text>
         </View>
         <View style={styles.labeledButton}>
@@ -50,7 +53,7 @@ export default function Dashboard() {
               textAlign: 'center',
             }}
           >
-            Request
+            {i18n.t('dashboard_dashboard_buttons_request')}
           </Text>
         </View>
         <View style={styles.labeledButton}>
@@ -61,7 +64,7 @@ export default function Dashboard() {
               textAlign: 'center',
             }}
           >
-            Send
+            {i18n.t('dashboard_dashboard_buttons_send')}
           </Text>
         </View>
       </View>

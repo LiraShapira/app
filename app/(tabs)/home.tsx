@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import { mockUser } from '../../Mocks/mockDB';
 import Dashboard from '../../components/home/Dashboard';
+import i18n from '../../translationService';
 
 export default function TabOneScreen() {
   const router = useRouter();
@@ -25,7 +26,9 @@ export default function TabOneScreen() {
         <Dashboard />
       </View>
       <View style={styles.transactionList}>
-        <Text style={{ fontSize: 40 }}>My Activities</Text>
+        <Text style={{ fontSize: 40 }}>
+          {i18n.t('home_transactions_title')}
+        </Text>
         <TransactionsList currentUser={mockUser} />
       </View>
     </View>

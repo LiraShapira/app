@@ -1,7 +1,8 @@
 import { View, Text, useColorScheme, StyleSheet } from 'react-native';
 import { Transaction } from '../../types/Transaction';
 import Colors from '../../constants/Colors';
-import { monthsShortForm } from '../../constants/Months';
+import { monthsLongForm } from '../../constants/Months';
+import i18n from '../../translationService';
 
 interface TransactionItemProps {
   income: boolean;
@@ -13,7 +14,7 @@ export default function TransactionItem({
   transaction,
 }: TransactionItemProps) {
   const colorScheme = useColorScheme();
-
+  const month = monthsLongForm[transaction.date.getMonth()];
   return (
     <View>
       <View style={styles.transactionItem}>
@@ -32,7 +33,7 @@ export default function TransactionItem({
               color: Colors[colorScheme ?? 'light'].text,
             }}
           >
-            {monthsShortForm[transaction.date.getMonth()]}
+            {i18n.t(`month_${month}_MMM`)}
           </Text>
         </View>
         <View style={styles.notesDisplay}>
