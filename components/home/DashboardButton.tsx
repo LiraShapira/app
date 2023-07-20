@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
+import { View, Pressable, StyleSheet, useColorScheme } from 'react-native';
 import { Link } from 'expo-router';
 import Colors from '../../constants/Colors';
 import { IconLibrary, IconName } from '../../types/Icons';
@@ -25,17 +19,26 @@ export default function DashboardButton({
   };
 
   return (
-    <Link href='/modal'>
+    <Link href='/'>
       <View style={styles.labeledButton}>
         <Pressable onPress={onPressSend}>
-          {({ pressed }) => (
-            <CustomIcon
-              iconLibraryName={iconLibrary}
-              iconName={iconName}
-              color={Colors[colorScheme ?? 'light'].text}
-              size={35}
-            />
-          )}
+          {({ pressed }) =>
+            pressed ? (
+              <CustomIcon
+                iconLibraryName={iconLibrary}
+                iconName={iconName}
+                color={Colors[colorScheme ?? 'light'].shading}
+                size={35}
+              />
+            ) : (
+              <CustomIcon
+                iconLibraryName={iconLibrary}
+                iconName={iconName}
+                color={Colors[colorScheme ?? 'light'].text}
+                size={35}
+              />
+            )
+          }
         </Pressable>
       </View>
     </Link>
@@ -55,7 +58,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     backgroundColor: 'grey',
     borderRadius: 50,
-    fontSize: 40,
   },
   dashboard: {
     position: 'absolute',
