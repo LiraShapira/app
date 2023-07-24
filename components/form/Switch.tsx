@@ -16,7 +16,7 @@ interface Option {
 
 interface SwitchProps {
   options: Option[];
-  onPress: (e: any) => void;
+  onPress: (v: string) => void;
   fontSize?: number;
   textColor?: AppColor;
   /**
@@ -27,6 +27,10 @@ interface SwitchProps {
    * background color of the switch
    */
   backgroundColor?: AppColor;
+  /**
+   * Item selected in initial render (default -1)
+   */
+  initial?: number;
 }
 
 export default function Switch(props: SwitchProps) {
