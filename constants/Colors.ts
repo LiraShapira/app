@@ -1,21 +1,34 @@
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
 
-export default {
-  light: {
-    text: '#000',
-    background: '#fff',
-    shading: '#c7c7c7',
-    tint: tintColorLight,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#fff',
-    background: '#000',
-    shading: '#595858',
-    tint: tintColorDark,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
-  },
+export enum Light {
+  text = '#000',
+  background = '#fff',
+  shading = '#e0e0e0',
+  tint = tintColorLight,
+  tabIconDefault = '#ccc',
+  tabIconSelected = tintColorLight,
+}
+
+export enum Dark {
+  text = '#fff',
+  background = '#000',
+  shading = '#595858',
+  tint = tintColorDark,
+  tabIconDefault = '#ccc',
+  tabIconSelected = tintColorDark,
+}
+
+export type AppColor = Dark | Light;
+
+interface AppColors {
+  dark: typeof Dark;
+  light: typeof Light;
+}
+
+const appColors: AppColors = {
+  dark: Dark,
+  light: Light
 };
+
+export default appColors
