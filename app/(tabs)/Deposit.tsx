@@ -1,21 +1,26 @@
-import { Text, View, StyleSheet, useColorScheme } from 'react-native';
+import { View, useColorScheme } from 'react-native';
+import Colors from '../../constants/Colors';
+import Switch from '../../components/form/Switch';
 
-export default function depositButton() {
+export default function Deposit() {
   const colorScheme = useColorScheme();
-  const onPressDeposit = () => {
-    console.log('navigate to deposit');
+
+  const onPressSend = (e: any) => {
+    console.log(e);
   };
+
   return (
-    <View style={styles.depositButton}>
-      <Text>hello</Text>
+    <View>
+      <Switch
+        initial={1}
+        onPress={onPressSend}
+        selectedColor={Colors[colorScheme ?? 'light'].text}
+        backgroundColor={Colors[colorScheme ?? 'light'].shading}
+        options={[
+          { label: 'test one', value: 's' },
+          { label: 'test two', value: 'a' },
+        ]}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  depositButton: {
-    position: 'absolute',
-    bottom: -20,
-    zIndex: 4,
-  },
-});
