@@ -103,6 +103,6 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 16,
   },
 });

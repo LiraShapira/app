@@ -14,28 +14,28 @@ export default function DashboardButton({
   iconLibrary,
 }: DashboardButtonProps) {
   const colorScheme = useColorScheme();
-  const onPressSend = () => {
+  const onPress = () => {
     console.log('navigate to deposit');
   };
 
   return (
-    <Link href='/'>
+    <Link href='/Deposit'>
       <View style={styles.labeledButton}>
-        <Pressable onPress={onPressSend}>
+        <Pressable onPress={onPress}>
           {({ pressed }) =>
             pressed ? (
               <CustomIcon
                 iconLibraryName={iconLibrary}
                 iconName={iconName}
                 color={Colors[colorScheme ?? 'light'].shading}
-                size={35}
+                size={30}
               />
             ) : (
               <CustomIcon
                 iconLibraryName={iconLibrary}
                 iconName={iconName}
                 color={Colors[colorScheme ?? 'light'].text}
-                size={35}
+                size={30}
               />
             )
           }
