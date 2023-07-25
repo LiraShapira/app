@@ -31,6 +31,10 @@ interface SwitchProps {
    * Item selected in initial render (default -1)
    */
   initial?: number;
+  /*
+   *Color of the item selected
+   */
+  buttonColor?: AppColor;
 }
 
 export default function Switch(props: SwitchProps) {

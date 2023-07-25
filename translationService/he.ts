@@ -2,6 +2,7 @@ export default {
   welcome: 'ברוך הבא',
   yes: 'כן',
   no: 'לא',
+  some: 'מעט',
   tabs_wallet: 'ארנק',
   tabs_market: 'שוק',
   home_lira_shapira_currency_you_have: 'כמה יש?',
@@ -11,7 +12,7 @@ export default {
   dashboard_dashboard_buttons_scan: 'סריקה',
   home_transactions_title: 'הפעילויות שלי',
 
-  deposit_tite: 'מה הסטטוס?',
+  deposit_title: 'מה הסטטוס?',
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',
   deposit_form_bin_status_empty: 'פנוי',
