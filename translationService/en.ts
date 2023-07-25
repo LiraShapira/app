@@ -1,5 +1,7 @@
 export default {
   welcome: 'Hello',
+  yes: 'yes',
+  no: 'no',
   tabs_wallet: 'wallet',
   tabs_market: 'market',
   home_lira_shapira_currency_you_have: 'You have:',
@@ -8,6 +10,11 @@ export default {
   dashboard_dashboard_buttons_request: 'request',
   dashboard_dashboard_buttons_scan: 'scan',
   home_transactions_title: 'My Activities',
+
+  deposit_tite: 'What\'s the status?',
+  deposit_form_bin_status: 'Bin status',
+  deposit_form_bin_status_full: 'full',
+  deposit_form_bin_status_empty: 'empty',
 
   month_january: 'january',
   month_february: 'february',

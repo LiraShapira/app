@@ -1,5 +1,7 @@
 export default {
   welcome: 'ברוך הבא',
+  yes: 'כן',
+  no: 'לא',
   tabs_wallet: 'ארנק',
   tabs_market: 'שוק',
   home_lira_shapira_currency_you_have: 'כמה יש?',
@@ -8,6 +10,12 @@ export default {
   dashboard_dashboard_buttons_request: 'בקשה',
   dashboard_dashboard_buttons_scan: 'סריקה',
   home_transactions_title: 'הפעילויות שלי',
+
+  deposit_tite: 'מה הסטטוס?',
+  deposit_form_bin_status: 'מצב הקומפוסטר',
+  deposit_form_bin_status_full: 'מלא',
+  deposit_form_bin_status_empty: 'פנוי',
+
   month_january: '	ינואר',
   month_february: '	פברואר',
   monthmarch: '	מרץ',
@@ -32,5 +40,6 @@ export default {
   month_october_MMM: 'אוקטובר',
   month_november_MMM: 'נובמבר',
   month_december_MMM: 'דצמבר',
+
 
 }
