@@ -28,6 +28,7 @@ export default function TransactionsList({
 const styles = StyleSheet.create({
   transactionList: {
     paddingVertical: 8,
+    width: '100%',
   },
   transactionItem: {
     display: 'flex',
