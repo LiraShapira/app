@@ -1,21 +1,19 @@
 import { View, Text, StyleSheet, useColorScheme } from 'react-native';
-import i18n from '../../translationService';
 import Colors from '../../constants/Colors';
 import Switch from '../../components/form/Switch';
 
 interface DepositFormSwitchProps {
   switchLabels: string[];
   title: string;
+  onPress: (v: string) => void;
 }
 
 export default function DepositFormSwitch({
   switchLabels,
   title,
+  onPress,
 }: DepositFormSwitchProps) {
   const colorScheme = useColorScheme();
-  const onPressSend = (e: string) => {
-    console.log(e);
-  };
   const options = switchLabels.map((l) => ({ label: l, value: l }));
 
   return (
@@ -34,7 +32,7 @@ export default function DepositFormSwitch({
         <Switch
           buttonColor={Colors[colorScheme ?? 'light'].tint}
           initial={1}
-          onPress={onPressSend}
+          onPress={onPress}
           selectedColor={Colors[colorScheme ?? 'light'].background}
           backgroundColor={Colors[colorScheme ?? 'light'].shading}
           options={options}
