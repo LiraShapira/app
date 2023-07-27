@@ -14,14 +14,57 @@ import {
   SimpleLineIcons,
   Zocial,
 } from '@expo/vector-icons';
-import { IconLibrary, IconName } from '../../types/Icons';
 import { Text } from 'react-native';
-interface CustomIconProps {
-  iconName: IconName;
-  iconLibraryName: IconLibrary;
+import { Icon } from '@expo/vector-icons/build/createIconSet';
+
+type GetMyClassT<C extends Icon<any, any>> = C extends Icon<infer T, any>
+  ? T
+  : unknown;
+
+type AntDesignIcon = GetMyClassT<typeof AntDesign>;
+type EvilIcon = GetMyClassT<typeof EvilIcons>;
+type EntypoIcon = GetMyClassT<typeof Entypo>;
+type FeatherIcon = GetMyClassT<typeof Feather>;
+type FontistoIcon = GetMyClassT<typeof Fontisto>;
+type FontAwesomeIcon = GetMyClassT<typeof FontAwesome>;
+type FontAwesome5Icon = GetMyClassT<typeof FontAwesome5>;
+type FoundationIcon = GetMyClassT<typeof Foundation>;
+type IoniconsIcon = GetMyClassT<typeof Ionicons>;
+type MaterialCommunityIconsIcon = GetMyClassT<typeof MaterialCommunityIcons>;
+type MaterialIconsIcon = GetMyClassT<typeof MaterialIcons>;
+type OcticonsIcon = GetMyClassT<typeof Octicons>;
+type SimpleLineIconsIcon = GetMyClassT<typeof SimpleLineIcons>;
+type ZocialIcon = GetMyClassT<typeof Zocial>;
+
+type ExpoIcon =
+  | {
+      iconLibraryName: 'AntDesign';
+      iconName: AntDesignIcon;
+    }
+  | {
+      iconLibraryName: 'EvilIcons';
+      iconName: EvilIcon;
+    }
+  | { iconLibraryName: 'Entypo'; iconName: EntypoIcon }
+  | { iconLibraryName: 'Feather'; iconName: FeatherIcon }
+  | { iconLibraryName: 'Fontisto'; iconName: FontistoIcon }
+  | { iconLibraryName: 'FontAwesome'; iconName: FontAwesomeIcon }
+  | { iconLibraryName: 'FontAwesome5'; iconName: FontAwesome5Icon }
+  | { iconLibraryName: 'Foundation'; iconName: FoundationIcon }
+  | { iconLibraryName: 'Ionicons'; iconName: IoniconsIcon }
+  | {
+      iconLibraryName: 'MaterialCommunityIcons';
+      iconName: MaterialCommunityIconsIcon;
+    }
+  | { iconLibraryName: 'MaterialIcons'; iconName: MaterialIconsIcon }
+  | { iconLibraryName: 'Octicons'; iconName: OcticonsIcon }
+  | { iconLibraryName: 'SimpleLineIcons'; iconName: SimpleLineIconsIcon }
+  | { iconLibraryName: 'Zocial'; iconName: ZocialIcon };
+
+type CustomIconProps = ExpoIcon & {
   color?: string;
   size?: number;
-}
+};
 
 const DynamicIconComponent = ({
   iconName,
