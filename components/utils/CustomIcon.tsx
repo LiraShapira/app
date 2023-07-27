@@ -64,6 +64,7 @@ type ExpoIcon =
 type CustomIconProps = ExpoIcon & {
   color?: string;
   size?: number;
+  disabled?: boolean;
 };
 
 const DynamicIconComponent = ({
@@ -71,6 +72,7 @@ const DynamicIconComponent = ({
   iconLibraryName,
   color,
   size,
+  disabled,
 }: CustomIconProps) => {
   let Component;
 
@@ -123,10 +125,18 @@ const DynamicIconComponent = ({
       break;
   }
 
-  // @ts-ignore
-  return <Component name={iconName} color={color} size={size} />;
+  return disabled ? (
+    <Component
+      style={{ opacity: '50%' }}
+      name={iconName}
+      color={color}
+      size={size}
+    />
+  ) : (
+    <Component name={iconName} color={color} size={size} />
+  );
 };
 
-export function CustomIcon(props: CustomIconProps) {
+export function CustomIcon(props: CustomIconProps): JSX.Element {
   return <DynamicIconComponent {...props} />;
 }

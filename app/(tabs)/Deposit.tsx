@@ -18,10 +18,11 @@ export default function Deposit() {
   const [compostSmell, setCompostSmell] = useState<string>('');
   const [dryMatter, setDryMatter] = useState<string>('');
   const [amount, setAmount] = useState<number>(0);
+  const [notes, setNotes] = useState<string>('');
 
   const onPressSend = (e: any) => {
     // send form
-    console.log({ amount, dryMatter, binStatus, compostSmell });
+    console.log({ amount, dryMatter, binStatus, compostSmell, notes });
   };
 
   const onPressSkip = (e: any) => {
@@ -39,14 +40,23 @@ export default function Deposit() {
         {i18n.t('deposit_title')}
       </Text>
       <View style={styles.depositSwitches}>
-        <Text
-          style={{
-            color: Colors[colorScheme ?? 'light'].text,
-          }}
-        >
-          Amount
-        </Text>
-        <NumberInput step={0.5} amount={amount} onChange={setAmount} />
+        <View style={styles.amount}>
+          <Text
+            style={{
+              color: Colors[colorScheme ?? 'light'].text,
+              fontSize: 18,
+              ...styles.amountLabel,
+            }}
+          >
+            Amount
+          </Text>
+          <NumberInput
+            style={styles.amountInput}
+            step={0.5}
+            amount={amount}
+            onChange={setAmount}
+          />
+        </View>
         <DepositFormSwitch
           onPress={setBinStatus}
           title={i18n.t('deposit_form_bin_status')}
@@ -68,6 +78,7 @@ export default function Deposit() {
 
         <Text>Notes</Text>
         <TextInput
+          onChangeText={setNotes}
           style={styles.input}
           placeholder="Any notes you'd like to add?"
         />
@@ -124,8 +135,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // justifyContent: 'space-between',
   },
-  depositSwitch: { flex: 1 },
-  depositSwitchLabel: { flex: 1 },
+  amount: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  amountLabel: { flex: 1 },
+  amountInput: { flex: 1 },
   input: {
     height: 80,
     margin: 12,

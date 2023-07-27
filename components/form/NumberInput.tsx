@@ -32,6 +32,7 @@ export default function NumberInput({
     onChange(amount + (step || 0.5));
   };
   const onDecrement = () => {
+    if (amount === 0) return;
     onChange(amount - (step || 0.5));
   };
 
@@ -39,6 +40,7 @@ export default function NumberInput({
     <View style={{ ...stylesheetStyles.container, ...style }}>
       <Pressable onPress={onDecrement}>
         <CustomIcon
+          disabled={amount === 0}
           color={Colors[colorScheme ?? 'light'].text}
           size={40}
           iconName='minuscircleo'
@@ -46,7 +48,7 @@ export default function NumberInput({
         />
       </Pressable>
       <View>
-        <Text>{amount}</Text>
+        <Text style={{ fontSize: 18 }}>{amount}</Text>
       </View>
       <Pressable onPress={onIncrement}>
         <CustomIcon
@@ -64,6 +66,9 @@ const stylesheetStyles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 4,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
   },
 });

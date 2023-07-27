@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
   submitButton: {
     borderRadius: 100,
     width: 200,
-    // alignContent: 'center',
     alignItems: 'center',
   },
 });
