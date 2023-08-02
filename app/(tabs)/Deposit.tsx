@@ -30,10 +30,11 @@ export default function Deposit() {
   };
 
   return (
-    <View style={{ padding: 8 }}>
+    <View style={{ height: '100%', padding: 8 }}>
       <Text
         style={{
           fontSize: 40,
+          paddingVertical: 16,
           color: Colors[colorScheme ?? 'light'].text,
         }}
       >
@@ -75,13 +76,14 @@ export default function Deposit() {
           title='Dry matter?'
           switchLabels={[i18n.t('no'), i18n.t('some'), i18n.t('yes')]}
         />
-
-        <Text>Notes</Text>
-        <TextInput
-          onChangeText={setNotes}
-          style={styles.input}
-          placeholder="Any notes you'd like to add?"
-        />
+        <View>
+          <Text>Notes</Text>
+          <TextInput
+            onChangeText={setNotes}
+            style={styles.input}
+            placeholder="Any notes you'd like to add?"
+          />
+        </View>
         <View style={styles.buttons}>
           <View
             style={{
@@ -89,7 +91,11 @@ export default function Deposit() {
               ...styles.submitButton,
             }}
           >
-            <Pressable onPress={onPressSend}>
+            <Pressable
+              disabled={!amount}
+              style={{ opacity: amount === 0 ? 40 : 100 }}
+              onPress={onPressSend}
+            >
               <Text
                 style={{
                   color: Colors[colorScheme ?? 'light'].text,
@@ -125,15 +131,16 @@ const styles = StyleSheet.create({
   depositSwitches: {
     display: 'flex',
     flexDirection: 'column',
-    padding: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
     alignContent: 'center',
-    justifyContent: 'center',
-    gap: 12,
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    height: '80%',
   },
   depositSwitchContainer: {
     display: 'flex',
     flexDirection: 'row',
-    // justifyContent: 'space-between',
   },
   amount: {
     display: 'flex',
@@ -144,7 +151,9 @@ const styles = StyleSheet.create({
   amountLabel: { flex: 1 },
   amountInput: { flex: 1 },
   input: {
-    height: 80,
+    height: 120,
+    textAlignVertical: 'top',
+    textAlign: 'left',
     margin: 12,
     borderWidth: 1,
     padding: 10,
