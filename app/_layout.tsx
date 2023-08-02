@@ -6,9 +6,9 @@ import {
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
-
+import { useEffect } from 'react';
+import * as Contacts from 'expo-contacts';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -29,6 +29,25 @@ export default function RootLayout() {
   useEffect(() => {
     if (error) throw error;
   }, [error]);
+  useEffect(() => {
+    (async () => {
+      const { status } = await Contacts.requestPermissionsAsync();
+      if (status === 'granted') {
+        const { data } = await Contacts.getContactsAsync({
+          fields: [
+            Contacts.Fields.FirstName,
+            Contacts.Fields.LastName,
+            Contacts.Fields.PhoneNumbers,
+          ],
+        });
+
+        if (data.length > 0) {
+          const contact = data;
+          console.log(contact);
+        }
+      }
+    })();
+  }, []);
 
   return (
     <>
