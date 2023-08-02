@@ -24,6 +24,8 @@ export default function DashboardButton({
         <Pressable onPress={onPress}>
           {({ pressed }) =>
             pressed ? (
+              // TODO typing
+              // @ts-ignore TODO typing
               <CustomIcon
                 iconLibraryName={iconLibrary}
                 iconName={iconName}
@@ -31,6 +33,8 @@ export default function DashboardButton({
                 size={30}
               />
             ) : (
+              // TODO typing
+              // @ts-ignore
               <CustomIcon
                 iconLibraryName={iconLibrary}
                 iconName={iconName}
