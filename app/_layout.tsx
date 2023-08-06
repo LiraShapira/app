@@ -50,8 +50,6 @@ export default function RootLayout() {
         });
 
         if (data.length > 0) {
-          const contacts = data.slice(0, 5);
-          console.log(contacts);
           setContacts(data);
         }
       }

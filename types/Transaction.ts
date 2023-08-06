@@ -5,6 +5,6 @@ export interface Transaction {
   purchaserUserID: string
   category: Category
   amount: number
-  date: Date,
+  date: string,
   reason: string
 }
