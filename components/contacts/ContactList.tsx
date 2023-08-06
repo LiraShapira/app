@@ -3,9 +3,18 @@ import { contactsContext } from '../../app/_layout';
 import { useContext } from 'react';
 import ContactItem from './ContactItem';
 
-export default function ContactList() {
+interface ContactListProps {
+  filterTerms: string;
+}
+
+export default function ContactList({ filterTerms }: ContactListProps) {
   const contacts = useContext(contactsContext);
-  const localContacts = contacts.filter((c) => c.phoneNumbers?.length);
+  const localContacts = contacts
+    .filter((c) => c.phoneNumbers?.length)
+    .filter(
+      (c) =>
+        c.firstName?.includes(filterTerms) || c.lastName?.includes(filterTerms)
+    );
   return (
     <View style={{ gap: 8, padding: 8 }}>
       <ScrollView style={{ height: '80%' }}>
