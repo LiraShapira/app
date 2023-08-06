@@ -12,6 +12,8 @@ import * as Contacts from 'expo-contacts';
 import { Contact } from 'expo-contacts';
 import { Provider } from 'react-redux';
 import { store } from '../store';
+import { loadUser } from '../store/userSlice';
+import { useAppDispatch } from '../hooks';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -71,7 +73,11 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(loadUser('test'));
+  });
   return (
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>

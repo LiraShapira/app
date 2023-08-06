@@ -3,9 +3,12 @@ import { mockUser } from '../../Mocks/mockDB';
 import DashboardButton from './DashboardButton';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
+import { selectUser } from '../../store/userSlice';
+import { useAppSelector } from '../../hooks';
 
 export default function Dashboard() {
   const colorScheme = useColorScheme();
+  const user = useAppSelector(selectUser);
 
   return (
     <View style={styles.dashboard}>
@@ -24,7 +27,7 @@ export default function Dashboard() {
             ...styles.title,
           }}
         >
-          {mockUser.accountBalance}
+          {user.accountBalance}
         </Text>
         <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
           {i18n.t('home_lira_shapira_currency_shorthand')}
