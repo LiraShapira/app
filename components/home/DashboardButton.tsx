@@ -2,24 +2,27 @@ import { View, Pressable, StyleSheet, useColorScheme } from 'react-native';
 import { Link } from 'expo-router';
 import Colors from '../../constants/Colors';
 import { IconLibrary, IconName } from '../../types/Icons';
+import { Route } from '../../types/Routes';
 import { CustomIcon } from '../utils/CustomIcon';
 
 interface DashboardButtonProps {
   iconName: IconName;
   iconLibrary: IconLibrary;
+  route?: Route;
 }
 
 export default function DashboardButton({
   iconName,
   iconLibrary,
+  route = '/Deposit',
 }: DashboardButtonProps) {
   const colorScheme = useColorScheme();
   const onPress = () => {
-    console.log('navigate to deposit');
+    console.log('navigate to ' + route);
   };
 
   return (
-    <Link href='/Deposit'>
+    <Link href={route}>
       <View style={styles.labeledButton}>
         <Pressable onPress={onPress}>
           {({ pressed }) =>
@@ -29,7 +32,7 @@ export default function DashboardButton({
               <CustomIcon
                 iconLibraryName={iconLibrary}
                 iconName={iconName}
-                color={Colors[colorScheme ?? 'light'].shading}
+                color={Colors[colorScheme ?? 'light'].tint}
                 size={30}
               />
             ) : (

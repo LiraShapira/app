@@ -57,7 +57,11 @@ export default function Dashboard() {
           </Text>
         </View>
         <View style={styles.labeledButton}>
-          <DashboardButton iconName='paper-plane' iconLibrary='FontAwesome' />
+          <DashboardButton
+            route='/Send'
+            iconName='paper-plane'
+            iconLibrary='FontAwesome'
+          />
           <Text
             style={{
               color: Colors[colorScheme ?? 'light'].text,
