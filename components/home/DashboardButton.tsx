@@ -25,27 +25,20 @@ export default function DashboardButton({
     <Link href={route}>
       <View style={styles.labeledButton}>
         <Pressable onPress={onPress}>
-          {({ pressed }) =>
-            pressed ? (
-              // TODO typing
-              // @ts-ignore TODO typing
-              <CustomIcon
-                iconLibraryName={iconLibrary}
-                iconName={iconName}
-                color={Colors[colorScheme ?? 'light'].tint}
-                size={30}
-              />
-            ) : (
-              // TODO typing
-              // @ts-ignore
-              <CustomIcon
-                iconLibraryName={iconLibrary}
-                iconName={iconName}
-                color={Colors[colorScheme ?? 'light'].text}
-                size={30}
-              />
-            )
-          }
+          {({ pressed }) => (
+            // TODO typing
+            // @ts-ignore TODO typing
+            <CustomIcon
+              iconLibraryName={iconLibrary}
+              iconName={iconName}
+              color={
+                pressed
+                  ? Colors[colorScheme ?? 'light'].tint
+                  : Colors[colorScheme ?? 'light'].text
+              }
+              size={30}
+            />
+          )}
         </Pressable>
       </View>
     </Link>
