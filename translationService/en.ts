@@ -17,6 +17,10 @@ export default {
   deposit_form_bin_status_full: 'full',
   deposit_form_bin_status_empty: 'empty',
 
+  send_search_title: 'Who to send to?',
+  send_search_searching_for: 'searching for: ',
+  send_search_placeholder: 'Enter a name or phone number',
+
   month_january: 'january',
   month_february: 'february',
   month_march: 'march',

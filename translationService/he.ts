@@ -17,6 +17,10 @@ export default {
   deposit_form_bin_status_full: 'מלא',
   deposit_form_bin_status_empty: 'פנוי',
 
+  send_search_title: 'למי להעביר?',
+  send_search_searching_for: 'מחפש אחר',
+  send_search_placeholder: 'הזן שם או מספר טלפון',
+
   month_january: '	ינואר',
   month_february: '	פברואר',
   monthmarch: '	מרץ',
