@@ -54,7 +54,7 @@ interface SwitchProps {
  */
 export default function Switch(props: SwitchProps) {
   return props.disabled ? (
-    <SwitchSelector style={{ opacity: '40%' }} {...props}></SwitchSelector>
+    <SwitchSelector style={{ opacity: 0.4 }} {...props}></SwitchSelector>
   ) : (
     <SwitchSelector {...props}></SwitchSelector>
   );

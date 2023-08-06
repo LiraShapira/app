@@ -93,7 +93,7 @@ export default function Deposit() {
           >
             <Pressable
               disabled={!amount}
-              style={{ opacity: amount === 0 ? 40 : 100 }}
+              style={{ opacity: amount === 0 ? 0.4 : 1 }}
               onPress={onPressSend}
             >
               <Text

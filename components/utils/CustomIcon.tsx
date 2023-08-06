@@ -127,7 +127,7 @@ const DynamicIconComponent = ({
 
   return disabled ? (
     <Component
-      style={{ opacity: '50%' }}
+      style={{ opacity: 0.5 }}
       name={iconName}
       color={color}
       size={size}
