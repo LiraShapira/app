@@ -5,6 +5,6 @@ export interface User {
   userName: string
   userLocalCompostStand: number
   accountBalance: number
-  dateJoined: Date
+  dateJoined: string
   transactions: Transaction[]
 }

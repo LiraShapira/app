@@ -14,7 +14,7 @@ export default function TransactionItem({
   transaction,
 }: TransactionItemProps) {
   const colorScheme = useColorScheme();
-  const month = monthsLongForm[transaction.date.getMonth()];
+  const month = monthsLongForm[new Date(transaction.date).getMonth()];
   return (
     <View>
       <View style={styles.transactionItem}>
@@ -26,7 +26,7 @@ export default function TransactionItem({
               color: Colors[colorScheme ?? 'light'].text,
             }}
           >
-            {transaction.date.getDay()}
+            {new Date(transaction.date).getDay()}
           </Text>
           <Text
             style={{
