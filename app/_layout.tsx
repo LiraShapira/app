@@ -7,8 +7,9 @@ import {
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
-import { useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import * as Contacts from 'expo-contacts';
+import { Contact } from 'expo-contacts';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -19,11 +20,14 @@ export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
+export const contactsContext = createContext<Contact[]>([]);
+
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
   });
+  const [contacts, setContacts] = useState<Contact[]>([]);
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
@@ -42,8 +46,9 @@ export default function RootLayout() {
         });
 
         if (data.length > 0) {
-          const contact = data;
-          console.log(contact);
+          const contacts = data.slice(0, 5);
+          console.log(contacts);
+          setContacts(data);
         }
       }
     })();
@@ -51,9 +56,11 @@ export default function RootLayout() {
 
   return (
     <>
-      {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
-      {!loaded && <SplashScreen />}
-      {loaded && <RootLayoutNav />}
+      <contactsContext.Provider value={contacts}>
+        {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
+        {!loaded && <SplashScreen />}
+        {loaded && <RootLayoutNav />}
+      </contactsContext.Provider>
     </>
   );
 }
