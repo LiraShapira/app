@@ -10,6 +10,8 @@ import { useColorScheme } from 'react-native';
 import { createContext, useEffect, useState } from 'react';
 import * as Contacts from 'expo-contacts';
 import { Contact } from 'expo-contacts';
+import { Provider } from 'react-redux';
+import { store } from '../store';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -56,11 +58,13 @@ export default function RootLayout() {
 
   return (
     <>
-      <contactsContext.Provider value={contacts}>
-        {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
-        {!loaded && <SplashScreen />}
-        {loaded && <RootLayoutNav />}
-      </contactsContext.Provider>
+      <Provider store={store}>
+        <contactsContext.Provider value={contacts}>
+          {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
+          {!loaded && <SplashScreen />}
+          {loaded && <RootLayoutNav />}
+        </contactsContext.Provider>
+      </Provider>
     </>
   );
 }

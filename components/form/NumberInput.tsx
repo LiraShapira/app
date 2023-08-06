@@ -8,39 +8,32 @@ import {
 } from 'react-native';
 import { CustomIcon } from '../utils/CustomIcon';
 import Colors from '../../constants/Colors';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import {
+  decrementByAmount,
+  incrementByAmount,
+  selectCount,
+} from '../../store/counterSlice';
 
 interface NumberInputProps {
-  onChange: (e: number) => void;
   /**
    * View Styles for container.
    * Overrides component styles.
    */
   style?: ViewStyle;
-  amount: number;
   step?: number;
 }
 
-export default function NumberInput({
-  onChange,
-  step,
-  style,
-  amount,
-}: NumberInputProps) {
+export default function NumberInput({ step = 0.5, style }: NumberInputProps) {
   const colorScheme = useColorScheme();
-
-  const onIncrement = () => {
-    onChange(amount + (step || 0.5));
-  };
-  const onDecrement = () => {
-    if (amount === 0) return;
-    onChange(amount - (step || 0.5));
-  };
+  const count = useAppSelector(selectCount);
+  const dispatch = useAppDispatch();
 
   return (
     <View style={{ ...stylesheetStyles.container, ...style }}>
-      <Pressable onPress={onDecrement}>
+      <Pressable onPress={() => dispatch(decrementByAmount(step))}>
         <CustomIcon
-          disabled={amount === 0}
+          disabled={count === 0}
           color={Colors[colorScheme ?? 'light'].text}
           size={40}
           iconName='minuscircleo'
@@ -48,9 +41,9 @@ export default function NumberInput({
         />
       </Pressable>
       <View>
-        <Text style={{ fontSize: 18 }}>{amount}</Text>
+        <Text style={{ fontSize: 18 }}>{count}</Text>
       </View>
-      <Pressable onPress={onIncrement}>
+      <Pressable onPress={() => dispatch(incrementByAmount(step))}>
         <CustomIcon
           color={Colors[colorScheme ?? 'light'].text}
           size={40}

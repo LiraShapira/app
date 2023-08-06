@@ -11,18 +11,20 @@ import i18n from '../../translationService';
 import DepositFormSwitch from '../../components/form/DepositFormSwitch';
 import { useState } from 'react';
 import NumberInput from '../../components/form/NumberInput';
+import { useAppSelector } from '../../hooks';
+import { selectCount } from '../../store/counterSlice';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
   const [binStatus, setBinStatus] = useState<string>('');
   const [compostSmell, setCompostSmell] = useState<string>('');
   const [dryMatter, setDryMatter] = useState<string>('');
-  const [amount, setAmount] = useState<number>(0);
   const [notes, setNotes] = useState<string>('');
+  const count = useAppSelector(selectCount);
 
   const onPressSend = (e: any) => {
     // send form
-    console.log({ amount, dryMatter, binStatus, compostSmell, notes });
+    console.log({ count, dryMatter, binStatus, compostSmell, notes });
   };
 
   const onPressSkip = (e: any) => {
@@ -51,12 +53,7 @@ export default function Deposit() {
           >
             Amount
           </Text>
-          <NumberInput
-            style={styles.amountInput}
-            step={0.5}
-            amount={amount}
-            onChange={setAmount}
-          />
+          <NumberInput style={styles.amountInput} />
         </View>
         <DepositFormSwitch
           onPress={setBinStatus}
@@ -92,8 +89,8 @@ export default function Deposit() {
             }}
           >
             <Pressable
-              disabled={!amount}
-              style={{ opacity: amount === 0 ? 0.4 : 1 }}
+              disabled={!count}
+              style={{ opacity: count === 0 ? 0.4 : 1 }}
               onPress={onPressSend}
             >
               <Text
