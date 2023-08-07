@@ -11,20 +11,28 @@ import i18n from '../../translationService';
 import DepositFormSwitch from '../../components/form/DepositFormSwitch';
 import { useState } from 'react';
 import NumberInput from '../../components/form/NumberInput';
-import { useAppSelector } from '../../hooks';
-import { selectCount } from '../../store/depositFormSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  resetFormAsync,
+  selectNotes,
+  selectValue,
+  setNotes,
+} from '../../store/depositFormSlice';
+import { selectUser } from '../../store/userSlice';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
   const [binStatus, setBinStatus] = useState<string>('');
   const [compostSmell, setCompostSmell] = useState<string>('');
   const [dryMatter, setDryMatter] = useState<string>('');
-  const [notes, setNotes] = useState<string>('');
-  const count = useAppSelector(selectCount);
+  const user = useAppSelector(selectUser);
+  const value = useAppSelector(selectValue);
+  const notes = useAppSelector(selectNotes);
+  const dispatch = useAppDispatch();
 
   const onPressSend = (e: any) => {
     // send form
-    console.log({ count, dryMatter, binStatus, compostSmell, notes });
+    console.log({ value, dryMatter, binStatus, compostSmell, notes });
   };
 
   const onPressSkip = (e: any) => {
@@ -76,7 +84,8 @@ export default function Deposit() {
         <View>
           <Text>Notes</Text>
           <TextInput
-            onChangeText={setNotes}
+            value={notes}
+            onChangeText={(e) => dispatch(setNotes(e))}
             style={{
               borderColor: Colors[colorScheme ?? 'light'].text,
               ...styles.input,
@@ -93,9 +102,9 @@ export default function Deposit() {
             }}
           >
             <Pressable
-              disabled={!count}
-              style={{ opacity: count === 0 ? 0.4 : 1 }}
-              onPress={onPressSend}
+              disabled={!value}
+              style={{ opacity: value === 0 ? 0.4 : 1 }}
+              onPress={() => dispatch(resetFormAsync(user.userID))}
             >
               <Text
                 style={{

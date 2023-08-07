@@ -12,7 +12,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import {
   decrementByAmount,
   incrementByAmount,
-  selectCount,
+  selectValue,
 } from '../../store/depositFormSlice';
 
 interface NumberInputProps {
@@ -26,14 +26,14 @@ interface NumberInputProps {
 
 export default function NumberInput({ step = 0.5, style }: NumberInputProps) {
   const colorScheme = useColorScheme();
-  const count = useAppSelector(selectCount);
+  const value = useAppSelector(selectValue);
   const dispatch = useAppDispatch();
 
   return (
     <View style={{ ...stylesheetStyles.container, ...style }}>
       <Pressable onPress={() => dispatch(decrementByAmount(step))}>
         <CustomIcon
-          disabled={count === 0}
+          disabled={value === 0}
           color={Colors[colorScheme ?? 'light'].text}
           size={40}
           iconName='minuscircleo'
@@ -41,7 +41,7 @@ export default function NumberInput({ step = 0.5, style }: NumberInputProps) {
         />
       </Pressable>
       <View>
-        <Text style={{ fontSize: 18 }}>{count}</Text>
+        <Text style={{ fontSize: 18 }}>{value}</Text>
       </View>
       <Pressable onPress={() => dispatch(incrementByAmount(step))}>
         <CustomIcon
