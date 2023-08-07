@@ -13,7 +13,7 @@ import {
   decrementByAmount,
   incrementByAmount,
   selectCount,
-} from '../../store/counterSlice';
+} from '../../store/depositFormSlice';
 
 interface NumberInputProps {
   /**

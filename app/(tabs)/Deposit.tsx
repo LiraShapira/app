@@ -12,7 +12,7 @@ import DepositFormSwitch from '../../components/form/DepositFormSwitch';
 import { useState } from 'react';
 import NumberInput from '../../components/form/NumberInput';
 import { useAppSelector } from '../../hooks';
-import { selectCount } from '../../store/counterSlice';
+import { selectCount } from '../../store/depositFormSlice';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
@@ -79,6 +79,7 @@ export default function Deposit() {
             onChangeText={setNotes}
             style={styles.input}
             placeholder="Any notes you'd like to add?"
+            placeholderTextColor={Colors[colorScheme ?? 'light'].text}
           />
         </View>
         <View style={styles.buttons}>
