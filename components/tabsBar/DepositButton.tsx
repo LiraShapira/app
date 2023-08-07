@@ -5,7 +5,7 @@ import { CustomIcon } from '../utils/CustomIcon';
 export default function depositButton() {
   const colorScheme = useColorScheme();
   const onPressDeposit = () => {
-    console.log('navigate to deposit');
+    console.log('navigate to /Deposit');
   };
   return (
     <View style={styles.depositButton}>

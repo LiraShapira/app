@@ -2,26 +2,22 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import { fetchCount } from './counterAPI';
 
-interface CounterState {
+interface DepositFormState {
   value: number;
   status: 'idle' | 'loading' | 'failed';
 }
 
-const initialState: CounterState = {
+const initialState: DepositFormState = {
   value: 0,
   status: 'idle',
 };
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
 export const incrementAsync = createAsyncThunk<
   number,
   number,
-  { state: { counter: CounterState } }
+  { state: { depositForm: DepositFormState } }
 >('counter/fetchCount', async (amount: number, { getState }) => {
-  const { value } = getState().counter;
+  const { value } = getState().depositForm;
   const response = await fetchCount(value, amount);
   return response.data;
 });
@@ -37,6 +33,9 @@ export const depositFormSlice = createSlice({
       if (state.value === 0) return;
       state.value -= action.payload;
     },
+    reset: (state) => {
+      state
+    }
   },
   extraReducers: builder => {
     builder
@@ -52,9 +51,6 @@ export const depositFormSlice = createSlice({
 
 export const { incrementByAmount, decrementByAmount } = depositFormSlice.actions;
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectCount = (state: RootState) => state.counter.value;
+export const selectCount = (state: RootState) => state.depositForm.value;
 
 export default depositFormSlice.reducer;

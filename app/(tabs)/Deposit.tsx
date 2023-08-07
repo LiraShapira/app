@@ -77,7 +77,10 @@ export default function Deposit() {
           <Text>Notes</Text>
           <TextInput
             onChangeText={setNotes}
-            style={styles.input}
+            style={{
+              borderColor: Colors[colorScheme ?? 'light'].text,
+              ...styles.input,
+            }}
             placeholder="Any notes you'd like to add?"
             placeholderTextColor={Colors[colorScheme ?? 'light'].text}
           />
@@ -153,8 +156,9 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     textAlign: 'left',
     margin: 12,
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 10,
+    borderStyle: 'solid',
   },
   buttons: {
     display: 'flex',
