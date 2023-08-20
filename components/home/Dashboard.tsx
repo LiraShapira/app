@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, useColorScheme } from 'react-native';
-import { mockUser } from '../../Mocks/mockDB';
 import DashboardButton from './DashboardButton';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';

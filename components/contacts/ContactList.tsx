@@ -15,7 +15,6 @@ export default function ContactList({ filterTerms }: ContactListProps) {
       const phoneNumbers = c.phoneNumbers.map(
         (phoneNumber) => phoneNumber.number
       );
-      console.log(phoneNumbers);
       return (
         c.firstName?.includes(filterTerms) ||
         c.lastName?.includes(filterTerms) ||

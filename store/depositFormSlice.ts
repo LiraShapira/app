@@ -20,7 +20,6 @@ export const sendDepositForm = createAsyncThunk<
   string,
   { state: RootState }
 >('depositForm/sendDepositForm', async (userId: string, { getState }) => {
-  console.log('sending')
   const form = getState().depositForm;
   form.userId = userId;
   try {
@@ -46,7 +45,6 @@ export const depositFormSlice = createSlice({
       state.value -= action.payload;
     },
     setNotes: (state, action: PayloadAction<string>) => {
-      console.log(action.payload)
       state.notes = action.payload;
     },
     resetForm: (state) => {
