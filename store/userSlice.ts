@@ -22,34 +22,40 @@ const initialState: initialState = {
 };
 
 
-export const loadUser = createAsyncThunk('counter/fetchUser', async (userPhoneNumber: string) => {
-  // const { userName } = getState().user;
-  const response = await fetchUser(userPhoneNumber);
-  return response.data;
-});
+export const loadUser = createAsyncThunk<
+  User,
+  string,
+  { state: RootState }
+>('user/fetchUser',
+  async (userPhoneNumber: string) => {
+    const { data } = await fetchUser(userPhoneNumber);
+    return data;
+  });
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+    }
   },
-  extraReducers: builder => {
-    builder
-      .addCase(loadUser.pending, state => {
-        state.loading = true;
-      })
-      .addCase(loadUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload;
-      });
-  },
+  // extraReducers: builder => {
+  //   builder
+  //     .addCase(loadUser.pending, state => {
+  //       state.loading = true;
+  //     })
+  //     .addCase(loadUser.fulfilled, (state, action) => {
+  //       state.loading = false;
+  //       state.user = action.payload;
+  //     });
+  // },
 });
 
-// export const { loadUser } = userSlice.actions;
+export const { setUser } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserId = (state: RootState) => state.user.user.userID;
-
+export const selectUserLoading = (state: RootState) => state.user.loading;
 
 export default userSlice.reducer;

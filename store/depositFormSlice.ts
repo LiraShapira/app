@@ -18,7 +18,7 @@ const initialState: DepositFormState = {
 export const sendDepositForm = createAsyncThunk<
   string | false,
   string,
-  { state: { depositForm: DepositFormState } }
+  { state: RootState }
 >('depositForm/sendDepositForm', async (userId: string, { getState }) => {
   console.log('sending')
   const form = getState().depositForm;

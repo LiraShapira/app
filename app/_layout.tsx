@@ -12,8 +12,10 @@ import * as Contacts from 'expo-contacts';
 import { Contact } from 'expo-contacts';
 import { Provider } from 'react-redux';
 import { store } from '../store';
-import { loadUser } from '../store/userSlice';
-import { useAppDispatch } from '../hooks';
+import { loadUser, selectUserLoading, setUser } from '../store/userSlice';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { selectDepositFormLoading } from '../store/depositFormSlice';
+import LoadingPage from '../components/utils/LoadingPage';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -72,16 +74,27 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
+  const userLoading = useAppSelector(selectUserLoading);
+  const depositFormLoading = useAppSelector(selectDepositFormLoading);
 
   useEffect(() => {
-    dispatch(loadUser('test'));
+    dispatch(loadUser('test'))
+      .unwrap()
+      .then((user) => {
+        dispatch(setUser(user));
+      });
   });
+
   return (
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-        </Stack>
+        {depositFormLoading || userLoading ? (
+          <LoadingPage />
+        ) : (
+          <Stack>
+            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+          </Stack>
+        )}
       </ThemeProvider>
     </>
   );
