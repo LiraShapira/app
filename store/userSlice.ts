@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { User } from '../types/User';
-import { fetchUser } from './userAPI';
+import { fetchUser } from '../API/userAPI';
 
 
 interface initialState {
@@ -49,5 +49,7 @@ export const userSlice = createSlice({
 // export const { loadUser } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
+export const selectUserId = (state: RootState) => state.user.user.userID;
+
 
 export default userSlice.reducer;

@@ -13,26 +13,28 @@ import { useState } from 'react';
 import NumberInput from '../../components/form/NumberInput';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
-  resetFormAsync,
+  resetForm,
   selectNotes,
   selectValue,
+  sendDepositForm,
   setNotes,
 } from '../../store/depositFormSlice';
-import { selectUser } from '../../store/userSlice';
+import { selectUserId } from '../../store/userSlice';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
   const [binStatus, setBinStatus] = useState<string>('');
   const [compostSmell, setCompostSmell] = useState<string>('');
   const [dryMatter, setDryMatter] = useState<string>('');
-  const user = useAppSelector(selectUser);
+  const userId = useAppSelector(selectUserId);
   const value = useAppSelector(selectValue);
   const notes = useAppSelector(selectNotes);
   const dispatch = useAppDispatch();
 
   const onPressSend = (e: any) => {
     // send form
-    console.log({ value, dryMatter, binStatus, compostSmell, notes });
+    dispatch(sendDepositForm(userId));
+    dispatch(resetForm());
   };
 
   const onPressSkip = (e: any) => {
@@ -104,7 +106,7 @@ export default function Deposit() {
             <Pressable
               disabled={!value}
               style={{ opacity: value === 0 ? 0.4 : 1 }}
-              onPress={() => dispatch(resetFormAsync(user.userID))}
+              onPress={onPressSend}
             >
               <Text
                 style={{

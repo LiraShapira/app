@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
-import { sendForm } from './depositAPI';
+import { sendForm } from '../API/depositAPI';
 
 interface DepositFormState extends DepositForm {
   loading: boolean;
@@ -13,16 +13,23 @@ const initialState: DepositFormState = {
   notes: ''
 };
 
-export const resetFormAsync = createAsyncThunk<
-  string,
+
+
+export const sendDepositForm = createAsyncThunk<
+  string | false,
   string,
   { state: { depositForm: DepositFormState } }
->('depositForm/resetFormAsync', async (userId: string, { getState }) => {
-  console.log('resetting')
+>('depositForm/sendDepositForm', async (userId: string, { getState }) => {
+  console.log('sending')
   const form = getState().depositForm;
   form.userId = userId;
-  const response = await sendForm(form);
-  return response;
+  try {
+    const response = await sendForm(form);
+    return response;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 });
 
 export const depositFormSlice = createSlice({
@@ -49,13 +56,11 @@ export const depositFormSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(resetFormAsync.pending, state => {
+      .addCase(sendDepositForm.pending, state => {
         state.loading = true;
       })
-      .addCase(resetFormAsync.fulfilled, (state) => {
+      .addCase(sendDepositForm.fulfilled, (state) => {
         state.loading = false;
-        state.value = 0;
-        state.notes = '';
       });
   },
 });
