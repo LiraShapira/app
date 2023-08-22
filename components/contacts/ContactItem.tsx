@@ -20,14 +20,14 @@ export default function ContactItem({ contact }: ContactItemProps) {
     >
       <CustomIcon
         color={Colors[colorScheme ?? 'light'].text}
-        size={45}
+        size={65}
         iconName='person-circle'
         iconLibraryName='Ionicons'
       />
       <View style={{ flexDirection: 'row' }}>
         <Text
           style={{
-            fontSize: 10,
+            fontSize: 15,
             color: Colors[colorScheme ?? 'light'].text,
           }}
         >
@@ -35,7 +35,7 @@ export default function ContactItem({ contact }: ContactItemProps) {
         </Text>
         <Text
           style={{
-            fontSize: 10,
+            fontSize: 15,
             color: Colors[colorScheme ?? 'light'].text,
           }}
         >

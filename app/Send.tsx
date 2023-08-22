@@ -41,19 +41,27 @@ export default function Send() {
   }, [debouncedFilterTerms]);
 
   return (
-    <View>
-      <Text>{i18n.t('send_search_title')}</Text>
+    <View style={{ padding: 8 }}>
+      <Text
+        style={{
+          fontSize: 24,
+          color: Colors[colorScheme ?? 'light'].text,
+        }}
+      >
+        {i18n.t('send_search_title')}
+      </Text>
       <TextInput
         style={{
           color: Colors[colorScheme ?? 'light'].text,
           borderStyle: 'solid',
-          borderColor: Colors[colorScheme ?? 'light'].text,
-          borderWidth: 1,
+          borderBottomColor: Colors[colorScheme ?? 'light'].text,
+          borderBottomWidth: 1,
           paddingHorizontal: 4,
           width: '80%',
+          alignSelf: 'center', // Center the TextInput element horizontally
         }}
         placeholder={i18n.t('send_search_placeholder')}
-        placeholderTextColor={Colors[colorScheme ?? 'light'].text}
+        placeholderTextColor={Colors[colorScheme ?? 'light'].shading}
         onChangeText={setFilterTerms}
       ></TextInput>
       {filterTerms && (
@@ -61,9 +69,11 @@ export default function Send() {
           {i18n.t('send_search_searching_for')} {debouncedFilterTerms}
         </Text>
       )}
-      <ContactList
-        contacts={debouncedFilterTerms ? filteredContacts : contacts}
-      />
+      <View style={{ height: '100%' }}>
+        <ContactList
+          contacts={debouncedFilterTerms ? filteredContacts : contacts}
+        />
+      </View>
     </View>
   );
 }
