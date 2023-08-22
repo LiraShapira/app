@@ -7,13 +7,8 @@ import { mockUser } from '../../Mocks/mockDB';
 import Dashboard from '../../components/home/Dashboard';
 import i18n from '../../translationService';
 
-export default function TabOneScreen() {
-  const router = useRouter();
+export default function Home() {
   const colorScheme = useColorScheme();
-
-  // const onPressSend = () => {
-  //   router.replace('/modal');
-  // };
 
   return (
     <View style={styles.container}>
