@@ -1,7 +1,6 @@
 import { StyleSheet, useColorScheme } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import Colors from '../../constants/Colors';
-import { useRouter } from 'expo-router';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import { mockUser } from '../../Mocks/mockDB';
 import Dashboard from '../../components/home/Dashboard';
