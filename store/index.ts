@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import depositFormReducer from './depositFormSlice';
 import userSliceReducer from './userSlice';
+import sendFormSliceReducer from './sendSlice';
 
 export const store = configureStore({
   reducer: {
     depositForm: depositFormReducer,
-    user: userSliceReducer
+    user: userSliceReducer,
+    sendForm: sendFormSliceReducer
   },
 });
 
