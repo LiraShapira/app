@@ -56,7 +56,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='Two'
+        name='Market'
         options={{
           title: i18n.t('tabs_market'),
           tabBarIcon: ({ color }) => (
