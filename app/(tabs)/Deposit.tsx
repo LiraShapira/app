@@ -20,6 +20,7 @@ import {
   setNotes,
 } from '../../store/depositFormSlice';
 import { selectUserId } from '../../store/userSlice';
+import Button from '../../components/utils/Button';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
@@ -97,42 +98,8 @@ export default function Deposit() {
           />
         </View>
         <View style={styles.buttons}>
-          <View
-            style={{
-              backgroundColor: Colors[colorScheme ?? 'light'].shading,
-              ...styles.submitButton,
-            }}
-          >
-            <Pressable
-              disabled={!value}
-              style={{ opacity: value === 0 ? 0.4 : 1 }}
-              onPress={onPressSend}
-            >
-              <Text
-                style={{
-                  color: Colors[colorScheme ?? 'light'].text,
-                }}
-              >
-                Send
-              </Text>
-            </Pressable>
-          </View>
-          <View
-            style={{
-              backgroundColor: Colors[colorScheme ?? 'light'].shading,
-              ...styles.submitButton,
-            }}
-          >
-            <Pressable style={styles.submitButton}>
-              <Text
-                style={{
-                  color: Colors[colorScheme ?? 'light'].text,
-                }}
-              >
-                Skip
-              </Text>
-            </Pressable>
-          </View>
+          <Button text='Send' onPress={onPressSend} disabled={!value} />
+          <Button text='Skip' onPress={() => console.log('skip')} />
         </View>
       </View>
     </View>
