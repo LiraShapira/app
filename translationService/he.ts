@@ -20,6 +20,9 @@ export default {
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
   send_search_placeholder: 'הזן שם או מספר טלפון',
+  sendamount_how_much: 'כמה להעביר?',
+  sendamount_continue: 'המשך',
+  sendamount_back: 'חזרה למי',
 
   month_january: '	ינואר',
   month_february: '	פברואר',

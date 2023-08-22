@@ -20,6 +20,9 @@ export default {
   send_search_title: 'Who to send to?',
   send_search_searching_for: 'searching for: ',
   send_search_placeholder: 'Enter a name or phone number',
+  sendamount_how_much: 'How much?',
+  sendamount_continue: 'continue',
+  sendamount_back: 'back to contacts',
 
   month_january: 'january',
   month_february: 'february',
