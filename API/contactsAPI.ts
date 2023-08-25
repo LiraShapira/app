@@ -1,7 +1,7 @@
 import * as Contacts from 'expo-contacts';
 import { Contact } from 'expo-contacts';
 
-export function fetchContacts() {
+export function fetchContacts(): Promise<Contact[]> {
     return new Promise<Contact[]>(async resolve => {
       const { status } = await Contacts.requestPermissionsAsync();
       if (status === 'granted') {

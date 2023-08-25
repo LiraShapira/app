@@ -36,8 +36,11 @@ export const loadUser = createAsyncThunk<
     return data;
   });
 
-export const loadContacts = createAsyncThunk(
-  'user/fetchContacts',
+export const loadContacts = createAsyncThunk<
+  Contact[], 
+  void,
+  { state: RootState }
+>('user/fetchContacts',
   async () => {
     const contacts = await fetchContacts();
     return contacts;
@@ -51,6 +54,12 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     }
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(loadContacts.fulfilled, (state, action) => {
+        state.contacts = action.payload; // Update contacts directly on the slice
+      });
   },
   // extraReducers: builder => {
   //   builder
