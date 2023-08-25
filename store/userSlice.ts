@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { User } from '../types/User';
-import { fetchUser } from '../API/userAPI';
+import { fetchUser, saveTransactionToDatabase } from '../API/userAPI';
+import { Transaction } from '../types/Transaction';
 
 
 interface initialState {
@@ -32,15 +33,36 @@ export const loadUser = createAsyncThunk<
     return data;
   });
 
+interface saveTransactionArgs {
+  transaction: Transaction;
+  userID: string;
+}
+
+export const saveTransaction = createAsyncThunk<
+  Transaction,
+  saveTransactionArgs,
+  { state: RootState }
+>('user/saveTransaction',
+  async ({ userID, transaction }: saveTransactionArgs) => {
+    const { data } = await saveTransactionToDatabase(userID, transaction);
+    return data;
+  });
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
+    },
+    addTransaction: (state, action: PayloadAction<Transaction>) => {
+
     }
   },
-  // extraReducers: builder => {
+  extraReducers: builder => {
+    builder.addCase(saveTransaction.fulfilled, (state, action) => {
+      state.user.transactions.push(action.payload);
+    })
   //   builder
   //     .addCase(loadUser.pending, state => {
   //       state.loading = true;
@@ -49,7 +71,7 @@ export const userSlice = createSlice({
   //       state.loading = false;
   //       state.user = action.payload;
   //     });
-  // },
+  },
 });
 
 export const { setUser } = userSlice.actions;
