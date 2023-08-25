@@ -1,18 +1,19 @@
-import { Text, TextInput, View, useColorScheme } from 'react-native';
-import ContactList from '../components/contacts/ContactList';
-import { useContext, useEffect, useState } from 'react';
-import i18n from '../translationService';
-import Colors from '../constants/Colors';
-import { contactsContext } from './_layout';
-import { Contact } from 'expo-contacts';
-import { useDebounce } from '../hooks';
+import { Text, TextInput, View, useColorScheme } from "react-native";
+import ContactList from "../components/contacts/ContactList";
+import { useEffect, useState } from "react";
+import i18n from "../translationService";
+import Colors from "../constants/Colors";
+import { Contact } from "expo-contacts";
+import { useDebounce } from "../hooks";
+import { useSelector } from "react-redux";
+import { selectContacts } from "../store/userSlice";
 
 export default function Send() {
-  const [filterTerms, setFilterTerms] = useState<string>('');
+  const [filterTerms, setFilterTerms] = useState<string>("");
   const [filteredContacts, setfilteredContacts] = useState<Contact[]>([]);
   const colorScheme = useColorScheme();
-  const contacts = useContext(contactsContext);
   const debouncedFilterTerms = useDebounce(filterTerms, 300);
+  const contacts = useSelector(selectContacts);
 
   // console.log('flatmap');
   // const phoneNumbersFlatMap = contacts
@@ -45,31 +46,31 @@ export default function Send() {
       <Text
         style={{
           fontSize: 24,
-          color: Colors[colorScheme ?? 'light'].text,
+          color: Colors[colorScheme ?? "light"].text,
         }}
       >
-        {i18n.t('send_search_title')}
+        {i18n.t("send_search_title")}
       </Text>
       <TextInput
         style={{
-          color: Colors[colorScheme ?? 'light'].text,
-          borderStyle: 'solid',
-          borderBottomColor: Colors[colorScheme ?? 'light'].text,
+          color: Colors[colorScheme ?? "light"].text,
+          borderStyle: "solid",
+          borderBottomColor: Colors[colorScheme ?? "light"].text,
           borderBottomWidth: 1,
           paddingHorizontal: 4,
-          width: '80%',
-          alignSelf: 'center', // Center the TextInput element horizontally
+          width: "80%",
+          alignSelf: "center", // Center the TextInput element horizontally
         }}
-        placeholder={i18n.t('send_search_placeholder')}
-        placeholderTextColor={Colors[colorScheme ?? 'light'].shading}
+        placeholder={i18n.t("send_search_placeholder")}
+        placeholderTextColor={Colors[colorScheme ?? "light"].shading}
         onChangeText={setFilterTerms}
       ></TextInput>
       {filterTerms && (
         <Text>
-          {i18n.t('send_search_searching_for')} {debouncedFilterTerms}
+          {i18n.t("send_search_searching_for")} {debouncedFilterTerms}
         </Text>
       )}
-      <View style={{ height: '100%' }}>
+      <View style={{ height: "100%" }}>
         <ContactList
           contacts={debouncedFilterTerms ? filteredContacts : contacts}
         />
