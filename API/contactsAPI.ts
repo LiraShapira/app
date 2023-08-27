@@ -12,6 +12,7 @@ export function fetchContacts(): Promise<Contacts.Contact[]> {
             Contacts.Fields.PhoneNumbers,
           ],
         });
+        resolve(data);
       } else {
         resolve(mockContacts);
       }
