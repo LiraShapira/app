@@ -1,4 +1,5 @@
 import { mockUser } from "../Mocks/mockDB";
+import { Transaction } from "../types/Transaction";
 import { User } from "../types/User";
 
 export function fetchUser(userPhoneNumber: string) {
@@ -7,4 +8,8 @@ export function fetchUser(userPhoneNumber: string) {
   );
 }
 
-
+export function saveTransactionToDatabase(userID: string, transaction: Transaction) {
+  return new Promise<{ data: Transaction }>(resolve =>
+    setTimeout(() => resolve({ data: transaction}), 1000),
+  );
+}
