@@ -10,7 +10,12 @@ import { useColorScheme } from 'react-native';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../store';
-import { loadUser, selectUserLoading, setUser } from '../store/userSlice';
+import {
+  loadContacts,
+  loadUser,
+  selectUserLoading,
+  setUser,
+} from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectDepositFormLoading } from '../store/depositFormSlice';
 import LoadingPage from '../components/utils/LoadingPage';
@@ -53,6 +58,10 @@ function RootLayoutNav() {
   const depositFormLoading = useAppSelector(selectDepositFormLoading);
 
   useEffect(() => {
+    dispatch(loadContacts());
+  });
+
+  useEffect(() => {
     dispatch(loadUser('test'))
       .unwrap()
       .then((user) => {
@@ -67,7 +76,7 @@ function RootLayoutNav() {
           <LoadingPage />
         ) : (
           <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
           </Stack>
         )}
       </ThemeProvider>
