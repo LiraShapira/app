@@ -70,10 +70,8 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
-    addTransaction: (state, action: PayloadAction<Transaction>) => {
-
-    }
   },
+
   extraReducers: builder => {
     builder.addCase(saveTransaction.fulfilled, (state, action) => {
       state.user.transactions.push(action.payload);
