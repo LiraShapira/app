@@ -2,10 +2,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { User } from '../types/User';
 import { fetchUser } from '../API/userAPI';
+import { fetchContacts } from '../API/contactsAPI';
+import { Contact } from 'expo-contacts';
 
 
 interface initialState {
   user: User;
+  contacts: Contact[];
   loading: boolean;
 }
 
@@ -18,6 +21,7 @@ const initialState: initialState = {
     userLocalCompostStand: 1,
     userName: '',
   },
+  contacts: [],
   loading: false
 };
 
@@ -32,6 +36,17 @@ export const loadUser = createAsyncThunk<
     return data;
   });
 
+export const loadContacts = createAsyncThunk<
+  Contact[], 
+  void,
+  { state: RootState }
+>('user/fetchContacts',
+  async () => {
+    const contacts = await fetchContacts();
+    return contacts;
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -39,6 +54,12 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     }
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(loadContacts.fulfilled, (state, action) => {
+        state.contacts = action.payload; // Update contacts directly on the slice
+      });
   },
   // extraReducers: builder => {
   //   builder
@@ -57,5 +78,6 @@ export const { setUser } = userSlice.actions;
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserId = (state: RootState) => state.user.user.userID;
 export const selectUserLoading = (state: RootState) => state.user.loading;
+export const selectContacts = (state: RootState) => state.user.contacts;
 
 export default userSlice.reducer;

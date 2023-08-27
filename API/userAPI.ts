@@ -6,3 +6,5 @@ export function fetchUser(userPhoneNumber: string) {
     setTimeout(() => resolve({ data: mockUser }), 1000),
   );
 }
+
+

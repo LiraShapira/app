@@ -1,18 +1,19 @@
 import { Text, TextInput, View, useColorScheme } from 'react-native';
 import ContactList from '../components/contacts/ContactList';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import i18n from '../translationService';
 import Colors from '../constants/Colors';
-import { contactsContext } from './_layout';
 import { Contact } from 'expo-contacts';
 import { useDebounce } from '../hooks';
+import { useSelector } from 'react-redux';
+import { selectContacts } from '../store/userSlice';
 
 export default function Send() {
   const [filterTerms, setFilterTerms] = useState<string>('');
   const [filteredContacts, setfilteredContacts] = useState<Contact[]>([]);
   const colorScheme = useColorScheme();
-  const contacts = useContext(contactsContext);
   const debouncedFilterTerms = useDebounce(filterTerms, 300);
+  const contacts = useSelector(selectContacts);
 
   // console.log('flatmap');
   // const phoneNumbersFlatMap = contacts

@@ -34,7 +34,7 @@ export const mockUser: User = {
   userLocalCompostStand: 4,
   accountBalance: 154,
   dateJoined: new Date('2023-07-05').toDateString(),
-  transactions: [mockTransaction, mockTransaction2, mockTransaction3]
+  transactions: [mockTransaction, mockTransaction2, mockTransaction3],
 }
 
 export const mockUser2: User = {
@@ -43,7 +43,7 @@ export const mockUser2: User = {
   userLocalCompostStand: 4,
   accountBalance: 200,
   dateJoined: new Date('2023-07-05').toDateString(),
-  transactions: [mockTransaction, mockTransaction2, mockTransaction3]
+  transactions: [mockTransaction, mockTransaction2, mockTransaction3],
 }
 
 export const mockTransactions: Transaction[] = [mockTransaction, mockTransaction2, mockTransaction3]
