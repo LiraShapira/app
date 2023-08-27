@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { User } from '../types/User';
+import { FetchUserArgs, User } from '../types/User';
 import { fetchUser } from '../API/userAPI';
 import { fetchContacts } from '../API/contactsAPI';
 import { Contact } from 'expo-contacts';
@@ -19,7 +19,9 @@ const initialState: initialState = {
     userID: '',
     transactions: [],
     userLocalCompostStand: 1,
-    userName: '',
+    lastName: '',
+    firstName: '',
+    phoneNumber: ''
   },
   contacts: [],
   loading: false
@@ -27,17 +29,24 @@ const initialState: initialState = {
 
 
 export const loadUser = createAsyncThunk<
-  User,
-  string,
+  User | void,
+  FetchUserArgs,
   { state: RootState }
 >('user/fetchUser',
-  async (userPhoneNumber: string) => {
-    const { data } = await fetchUser(userPhoneNumber);
-    return data;
+  async (fetchUserArgs: FetchUserArgs) => {
+    try {
+      const user = await fetchUser(fetchUserArgs);
+      if (user) {
+        return user;
+      } else {
+        throw new Error('failure to get user')
+      }
+    } catch (e) {
+    }
   });
 
 export const loadContacts = createAsyncThunk<
-  Contact[], 
+  Contact[],
   void,
   { state: RootState }
 >('user/fetchContacts',
