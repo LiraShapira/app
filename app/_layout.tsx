@@ -5,7 +5,7 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { Slot, Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
@@ -43,8 +43,7 @@ export default function RootLayout() {
   return (
     <>
       <Provider store={store}>
-        {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
-        {!loaded && <SplashScreen />}
+        {!loaded && <Slot />}
         {loaded && <RootLayoutNav />}
       </Provider>
     </>
