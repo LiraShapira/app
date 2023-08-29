@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -33,7 +35,8 @@
           "contactsPermission": "Allow Lira Shapira to access your contacts."
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      "expo-router"
     ]
   }
 }
