@@ -11,11 +11,26 @@ This is the Frontend for the new Lira Shapira App, a local eco-currency. Earn by
 עבור כל קילו של זבל אורגני- מונפקת לירה שפירא אחת.
 </span>
 
-### Join!
+## Join us!
+
 Lira Shapira is looking for contributions! 🤚
+
 - check out our github [project](https://github.com/orgs/LiraShapira/projects/1/views/1) for updates and for a list of good [issues to get started with](https://github.com/orgs/LiraShapira/projects/1/views/4).
 
-### To start work on the app:
+## To start work on the app:
+
 - fork & clone the repo.
+
 - run `npm i`
-- run `npm run start`
+- then choose from below options:
+
+### without a local running server:
+
+- run `npm run dev`
+
+### in conjuction with the lira shapira backend:
+
+- git fork and clone the [server repo](https://github.com/LiraShapira/server)
+- from the root of server repo, run `npm run devstart` (you will need a running postgres server)
+- in the app repo, make a .env.local file using the .env.local.template file contents
+- run `npm run start` from the root of the app repo
