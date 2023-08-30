@@ -1,10 +1,10 @@
-// import { mockUser } from "../Mocks/mockDB";
-// import { User } from "../types/User";
+import { mockUser } from "../Mocks/mockDB";
 import { FetchUserArgs, User } from "../types/User";
 import { SERVER_URL } from "./config";
 import { Transaction } from "../types/Transaction";
 
 export const fetchUser = async (fetchUserArgs: FetchUserArgs): Promise<User | null> => {
+  if (process.env.NODE_ENV === 'development') return mockUser
   const jsonBody = JSON.stringify(fetchUserArgs)
   try {
     const requestString = `${SERVER_URL}/user`;
@@ -20,9 +20,6 @@ export const fetchUser = async (fetchUserArgs: FetchUserArgs): Promise<User | nu
     console.log(e);
     return null;
   }
-  // return new Promise<{ data: User }>(resolve =>
-  //   setTimeout(() => resolve({ data: mockUser }), 1000),
-  // );
 }
 
 export function saveTransactionToDatabase(userID: string, transaction: Transaction) {
