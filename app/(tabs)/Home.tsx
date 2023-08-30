@@ -2,12 +2,14 @@ import { StyleSheet, useColorScheme } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import Colors from '../../constants/Colors';
 import TransactionsList from '../../components/transactions/TransactionsList';
-import { mockUser } from '../../Mocks/mockDB';
 import Dashboard from '../../components/home/Dashboard';
 import i18n from '../../translationService';
+import { selectUser } from '../../store/userSlice';
+import { useAppSelector } from '../../hooks';
 
 export default function Home() {
   const colorScheme = useColorScheme();
+  const user = useAppSelector(selectUser);
 
   return (
     <View style={styles.container}>
@@ -23,7 +25,7 @@ export default function Home() {
         <Text style={{ fontSize: 40 }}>
           {i18n.t('home_transactions_title')}
         </Text>
-        <TransactionsList currentUser={mockUser} />
+        <TransactionsList currentUser={user} />
       </View>
     </View>
   );

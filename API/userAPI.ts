@@ -2,6 +2,7 @@
 // import { User } from "../types/User";
 import { FetchUserArgs, User } from "../types/User";
 import { SERVER_URL } from "./config";
+import { Transaction } from "../types/Transaction";
 
 export const fetchUser = async (fetchUserArgs: FetchUserArgs): Promise<User | null> => {
   const jsonBody = JSON.stringify(fetchUserArgs)
@@ -24,4 +25,8 @@ export const fetchUser = async (fetchUserArgs: FetchUserArgs): Promise<User | nu
   // );
 }
 
-
+export function saveTransactionToDatabase(userID: string, transaction: Transaction) {
+  return new Promise<{ data: Transaction }>(resolve =>
+    setTimeout(() => resolve({ data: transaction }), 1000),
+  );
+}

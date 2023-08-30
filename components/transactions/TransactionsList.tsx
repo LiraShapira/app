@@ -1,5 +1,4 @@
 import { View, StyleSheet } from 'react-native';
-import { mockTransactions } from '../../Mocks/mockDB';
 import { Transaction } from '../../types/Transaction';
 import { User } from '../../types/User';
 import TransactionItem from './TransactionItem';
@@ -13,7 +12,7 @@ export default function TransactionsList({
 }: TransactionsListProps) {
   return (
     <View style={styles.transactionList}>
-      {mockTransactions.map((transaction: Transaction, i) => (
+      {currentUser.transactions.map((transaction: Transaction, i) => (
         <View key={`${i}${transaction.date}`} style={styles.transactionItem}>
           <TransactionItem
             transaction={transaction}
