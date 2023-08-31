@@ -1,5 +1,7 @@
+import { Platform } from 'react-native';
 import * as Contacts from 'expo-contacts';
 import { mockContacts } from '../Mocks/mockDB';
+
 
 export function fetchContacts(): Promise<Contacts.Contact[]> {
     return new Promise<Contacts.Contact[]>(async resolve => {
@@ -13,7 +15,7 @@ export function fetchContacts(): Promise<Contacts.Contact[]> {
           ],
         });
         resolve(data);
-      } else {
+      } else if (Platform.OS === "web") {
         resolve(mockContacts);
       }
     });
