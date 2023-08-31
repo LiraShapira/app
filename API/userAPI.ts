@@ -4,7 +4,7 @@ import { SERVER_URL } from "./config";
 import { Transaction } from "../types/Transaction";
 
 export const fetchUser = async (fetchUserArgs: FetchUserArgs): Promise<User | null> => {
-  if (process.env.NODE_ENV === 'development') return mockUser
+  if (process.env.EXPO_PUBLIC_DEV) return mockUser;
   const jsonBody = JSON.stringify(fetchUserArgs)
   try {
     const requestString = `${SERVER_URL}/user`;
@@ -15,7 +15,7 @@ export const fetchUser = async (fetchUserArgs: FetchUserArgs): Promise<User | nu
         'Content-Type': 'application/json', // Set the correct Content-Type header
       },
     })
-    return user.json()
+    return await user.json()
   } catch (e) {
     console.log(e);
     return null;
