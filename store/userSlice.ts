@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { FetchUserArgs, User } from '../types/User';
+import { FetchUserArgs, User, UserRole } from '../types/User';
 import { fetchUser, saveTransactionToDatabase } from '../API/userAPI';
 import { Transaction } from '../types/Transaction';
 import { fetchContacts } from '../API/contactsAPI';
@@ -16,13 +16,14 @@ interface initialState {
 const initialState: initialState = {
   user: {
     accountBalance: 0,
-    dateJoined: new Date().toDateString(),
-    userID: '',
+    createdAt: new Date().toDateString(),
+    id: '',
     transactions: [],
-    userLocalCompostStand: 1,
+    userLocalCompostStandId: 1,
     lastName: '',
     firstName: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    role: UserRole.BASIC
   },
   contacts: [],
   loading: false
@@ -83,6 +84,7 @@ export const userSlice = createSlice({
 
   extraReducers: builder => {
     builder.addCase(saveTransaction.fulfilled, (state, action) => {
+      if (!state.user.transactions) state.user.transactions = [];
       state.user.transactions.push(action.payload);
     })
     builder
@@ -104,7 +106,7 @@ export const userSlice = createSlice({
 export const { setUser } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
-export const selectUserId = (state: RootState) => state.user.user.userID;
+export const selectUserId = (state: RootState) => state.user.user.id;
 export const selectUserLoading = (state: RootState) => state.user.loading;
 export const selectContacts = (state: RootState) => state.user.contacts;
 

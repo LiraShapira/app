@@ -1,10 +1,11 @@
 export type Category = 'groceries' | 'garden'
 
 export interface Transaction {
-  recipientUserID: string
-  purchaserUserID: string
+  id: string;
+  recipientId: string
+  purchaserId: string
   category: Category
   amount: number
-  date: string,
+  createdAt: string,
   reason: string
 }

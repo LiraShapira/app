@@ -1,13 +1,19 @@
 import { Transaction } from "./Transaction"
 
+export enum UserRole {
+  BASIC,
+  ADMIN
+}
+
 export interface User {
-  userID: string
+  id: string
   firstName: string
   lastName: string
-  userLocalCompostStand: number
+  role: UserRole
+  userLocalCompostStandId: number
   accountBalance: number
-  dateJoined: string
-  transactions: Transaction[]
+  createdAt: string
+  transactions?: Transaction[]
   phoneNumber: string
 }
 
