@@ -12,6 +12,8 @@ export default {
   dashboard_dashboard_buttons_scan: 'סריקה',
   home_transactions_title: 'הפעילויות שלי',
 
+  transactions_list_no_activities: 'אין פעילויות',
+
   deposit_title: 'מה הסטטוס?',
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',

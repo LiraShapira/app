@@ -2,6 +2,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { Transaction } from '../../types/Transaction';
 import { User } from '../../types/User';
 import TransactionItem from './TransactionItem';
+import i18n from '../../translationService';
 
 interface TransactionsListProps {
   currentUser: User;
@@ -25,7 +26,7 @@ export default function TransactionsList({
           </View>
         ))
       ) : (
-        <Text>Hello</Text>
+        <Text>{i18n.t('transactions_list_no_activities')}</Text>
       )}
     </View>
   );
