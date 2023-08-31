@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "dev": "cross-env NODE_ENV=development && expo start",
+    "dev": "cross-env EXPO_PUBLIC_DEV=true expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
