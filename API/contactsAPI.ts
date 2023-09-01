@@ -1,8 +1,10 @@
+import { Platform } from 'react-native';
 import * as Contacts from 'expo-contacts';
-import { Contact } from 'expo-contacts';
+import { mockContacts } from '../Mocks/mockDB';
 
-export function fetchContacts(): Promise<Contact[]> {
-    return new Promise<Contact[]>(async resolve => {
+
+export function fetchContacts(): Promise<Contacts.Contact[]> {
+    return new Promise<Contacts.Contact[]>(async resolve => {
       const { status } = await Contacts.requestPermissionsAsync();
       if (status === 'granted') {
         const { data } = await Contacts.getContactsAsync({
@@ -13,8 +15,8 @@ export function fetchContacts(): Promise<Contact[]> {
           ],
         });
         resolve(data);
-      } else {
-        resolve([]);
+      } else if (Platform.OS === "web") {
+        resolve(mockContacts);
       }
     });
   }
