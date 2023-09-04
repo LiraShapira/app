@@ -22,8 +22,3 @@ export const fetchUser = async (fetchUserArgs: FetchUserArgs): Promise<User | nu
   }
 }
 
-export function saveTransactionToDatabase(userID: string, transaction: Transaction) {
-  return new Promise<{ data: Transaction }>(resolve =>
-    setTimeout(() => resolve({ data: transaction }), 1000),
-  );
-}
