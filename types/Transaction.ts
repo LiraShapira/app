@@ -1,4 +1,4 @@
-export type Category = 'groceries' | 'garden'
+export type Category = 'groceries' | 'garden' | 'misc' | 'gift';
 
 export interface Transaction {
   id: string;
@@ -9,3 +9,7 @@ export interface Transaction {
   createdAt: string,
   reason: string
 }
+
+export type saveTransactionArgs = Pick<Transaction, 'category' | 'amount' | 'purchaserId' | 'reason'> & {
+  recipientPhoneNumber: string;
+};

@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { FetchUserArgs, User, UserRole } from '../types/User';
-import { fetchUser, saveTransactionToDatabase } from '../API/userAPI';
+import { fetchUser } from '../API/userAPI';
 import { Transaction } from '../types/Transaction';
 import { fetchContacts } from '../API/contactsAPI';
 import { Contact } from 'expo-contacts';
 
 
-interface initialState {
+interface UserState {
   user: User;
   contacts: Contact[];
   loading: boolean;
 }
 
-const initialState: initialState = {
+const initialState: UserState = {
   user: {
     accountBalance: 0,
     createdAt: new Date().toDateString(),
@@ -47,21 +47,6 @@ export const loadUser = createAsyncThunk<
     }
   });
 
-interface saveTransactionArgs {
-  transaction: Transaction;
-  userID: string;
-}
-
-export const saveTransaction = createAsyncThunk<
-  Transaction,
-  saveTransactionArgs,
-  { state: RootState }
->('user/saveTransaction',
-  async ({ userID, transaction }: saveTransactionArgs) => {
-    const { data } = await saveTransactionToDatabase(userID, transaction);
-    return data;
-  });
-
 export const loadContacts = createAsyncThunk<
   Contact[],
   void,
@@ -83,10 +68,6 @@ export const userSlice = createSlice({
   },
 
   extraReducers: builder => {
-    builder.addCase(saveTransaction.fulfilled, (state, action) => {
-      if (!state.user.transactions) state.user.transactions = [];
-      state.user.transactions.push(action.payload);
-    })
     builder
       .addCase(loadContacts.fulfilled, (state, action) => {
         state.contacts = action.payload; // Update contacts directly on the slice
