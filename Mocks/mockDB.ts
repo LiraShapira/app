@@ -1,50 +1,59 @@
 import { Transaction } from "../types/Transaction";
-import { User } from "../types/User";
+import { User, UserRole } from "../types/User";
 import { Contact } from "expo-contacts";
 
 export const mockTransaction: Transaction = {
-  recipientUserID: '1234355',
-  purchaserUserID: '1234',
+  recipientId: '1234355',
+  purchaserId: '1234',
   category: 'garden',
   amount: 10,
-  date: new Date('2023-07-05').toDateString(),
-  reason: 'bought a spade'
+  createdAt: new Date('2023-07-05').toDateString(),
+  reason: 'bought a spade',
+  id: '123456'
 }
 
 export const mockTransaction2: Transaction = {
-  recipientUserID: '1234',
-  purchaserUserID: '1234355',
+  recipientId: '1234',
+  purchaserId: '1234355',
   category: 'garden',
   amount: 14,
-  date: new Date('2023-07-06').toDateString(),
-  reason: 'bought seeds'
+  createdAt: new Date('2023-07-06').toDateString(),
+  reason: 'bought seeds',
+  id: '1234567'
 }
 
 export const mockTransaction3: Transaction = {
-  recipientUserID: '1234',
-  purchaserUserID: '1234355',
+  recipientId: '1234',
+  purchaserId: '1234355',
   category: 'groceries',
   amount: 100,
-  date: new Date('2023-07-08').toDateString(),
-  reason: 'בקשה ממירון גלברד'
+  createdAt: new Date('2023-07-08').toDateString(),
+  reason: 'בקשה ממירון גלברד',
+  id: '12345678'
 }
 
 export const mockUser: User = {
-  userName: 'shimon',
-  userID: '1234',
-  userLocalCompostStand: 4,
+  firstName: 'simon',
+  lastName: 'test',
+  id: '1234',
+  userLocalCompostStandId: 4,
   accountBalance: 154,
-  dateJoined: new Date('2023-07-05').toDateString(),
+  createdAt: new Date('2023-07-05').toDateString(),
   transactions: [mockTransaction, mockTransaction2, mockTransaction3],
+  phoneNumber: '123456789',
+  role: UserRole.ADMIN
 }
 
 export const mockUser2: User = {
-  userName: 'Bill',
-  userID: '1234355',
-  userLocalCompostStand: 4,
+  firstName: 'Bill',
+  lastName: 'Withers',
+  id: '1234355',
+  userLocalCompostStandId: 4,
   accountBalance: 200,
-  dateJoined: new Date('2023-07-05').toDateString(),
+  createdAt: new Date('2023-07-05').toDateString(),
   transactions: [mockTransaction, mockTransaction2, mockTransaction3],
+  phoneNumber: '987654321',
+  role: UserRole.BASIC
 }
 
 export const mockTransactions: Transaction[] = [mockTransaction, mockTransaction2, mockTransaction3]

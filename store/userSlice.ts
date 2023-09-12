@@ -1,26 +1,29 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { User } from '../types/User';
-import { fetchUser, saveTransactionToDatabase } from '../API/userAPI';
+import { FetchUserArgs, User, UserRole } from '../types/User';
+import { fetchUser } from '../API/userAPI';
 import { Transaction } from '../types/Transaction';
 import { fetchContacts } from '../API/contactsAPI';
 import { Contact } from 'expo-contacts';
 
 
-interface initialState {
+interface UserState {
   user: User;
   contacts: Contact[];
   loading: boolean;
 }
 
-const initialState: initialState = {
+const initialState: UserState = {
   user: {
     accountBalance: 0,
-    dateJoined: new Date().toDateString(),
-    userID: '',
+    createdAt: new Date().toDateString(),
+    id: '',
     transactions: [],
-    userLocalCompostStand: 1,
-    userName: '',
+    userLocalCompostStandId: 1,
+    lastName: '',
+    firstName: '',
+    phoneNumber: '',
+    role: UserRole.BASIC
   },
   contacts: [],
   loading: false
@@ -28,32 +31,24 @@ const initialState: initialState = {
 
 
 export const loadUser = createAsyncThunk<
-  User,
-  string,
+  User | void,
+  FetchUserArgs,
   { state: RootState }
 >('user/fetchUser',
-  async (userPhoneNumber: string) => {
-    const { data } = await fetchUser(userPhoneNumber);
-    return data;
-  });
-
-interface saveTransactionArgs {
-  transaction: Transaction;
-  userID: string;
-}
-
-export const saveTransaction = createAsyncThunk<
-  Transaction,
-  saveTransactionArgs,
-  { state: RootState }
->('user/saveTransaction',
-  async ({ userID, transaction }: saveTransactionArgs) => {
-    const { data } = await saveTransactionToDatabase(userID, transaction);
-    return data;
+  async (fetchUserArgs: FetchUserArgs) => {
+    try {
+      const user = await fetchUser(fetchUserArgs);
+      if (user) {
+        return user;
+      } else {
+        throw new Error('failure to get user')
+      }
+    } catch (e) {
+    }
   });
 
 export const loadContacts = createAsyncThunk<
-  Contact[], 
+  Contact[],
   void,
   { state: RootState }
 >('user/fetchContacts',
@@ -73,9 +68,6 @@ export const userSlice = createSlice({
   },
 
   extraReducers: builder => {
-    builder.addCase(saveTransaction.fulfilled, (state, action) => {
-      state.user.transactions.push(action.payload);
-    })
     builder
       .addCase(loadContacts.fulfilled, (state, action) => {
         state.contacts = action.payload; // Update contacts directly on the slice
@@ -90,12 +82,12 @@ export const userSlice = createSlice({
   //       state.loading = false;
   //       state.user = action.payload;
   //     });
-  });
+});
 
 export const { setUser } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
-export const selectUserId = (state: RootState) => state.user.user.userID;
+export const selectUserId = (state: RootState) => state.user.user.id;
 export const selectUserLoading = (state: RootState) => state.user.loading;
 export const selectContacts = (state: RootState) => state.user.contacts;
 

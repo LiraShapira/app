@@ -12,6 +12,8 @@ export default {
   dashboard_dashboard_buttons_scan: 'scan',
   home_transactions_title: 'My Activities',
 
+  transactions_list_no_activities: 'No transactions to display',
+
   deposit_title: 'What\'s the status?',
   deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',

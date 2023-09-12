@@ -19,6 +19,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectDepositFormLoading } from '../store/depositFormSlice';
 import LoadingPage from '../components/utils/LoadingPage';
+import { FetchUserArgs } from '../types/User';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -61,10 +62,20 @@ function RootLayoutNav() {
   });
 
   useEffect(() => {
-    dispatch(loadUser('test'))
+    const test: FetchUserArgs = {
+      firstName: 'johnny',
+      lastName: 'test',
+      phoneNumber: '123456789',
+    };
+
+    dispatch(loadUser(test))
       .unwrap()
       .then((user) => {
-        dispatch(setUser(user));
+        if (!user) {
+          console.log('failed to load user');
+        } else {
+          dispatch(setUser(user));
+        }
       });
   });
 

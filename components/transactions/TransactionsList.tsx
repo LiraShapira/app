@@ -1,7 +1,8 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { Transaction } from '../../types/Transaction';
 import { User } from '../../types/User';
 import TransactionItem from './TransactionItem';
+import i18n from '../../translationService';
 
 interface TransactionsListProps {
   currentUser: User;
@@ -12,14 +13,21 @@ export default function TransactionsList({
 }: TransactionsListProps) {
   return (
     <View style={styles.transactionList}>
-      {currentUser.transactions.map((transaction: Transaction, i) => (
-        <View key={`${i}${transaction.date}`} style={styles.transactionItem}>
-          <TransactionItem
-            transaction={transaction}
-            income={transaction.recipientUserID === currentUser.userID}
-          />
-        </View>
-      ))}
+      {currentUser.transactions ? (
+        currentUser.transactions.map((transaction: Transaction, i) => (
+          <View
+            key={`${i}${transaction.createdAt}`}
+            style={styles.transactionItem}
+          >
+            <TransactionItem
+              transaction={transaction}
+              income={transaction.recipientId === currentUser.id}
+            />
+          </View>
+        ))
+      ) : (
+        <Text>{i18n.t('transactions_list_no_activities')}</Text>
+      )}
     </View>
   );
 }
