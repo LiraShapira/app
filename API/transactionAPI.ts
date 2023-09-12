@@ -8,6 +8,7 @@ export interface saveTransactionReturn extends Transaction {
 }
 
 export const saveTransactionToDatabase = async (userID: string, partialTransaction: saveTransactionArgs): Promise<saveTransactionReturn | string> => {     
+    // return example transaction if in dev mode
     if (process.env.EXPO_PUBLIC_DEV) return {
         category: partialTransaction.category,
         amount: partialTransaction.amount,
@@ -19,7 +20,10 @@ export const saveTransactionToDatabase = async (userID: string, partialTransacti
         users: [mockUser, mockUser2]
     };
 
-    const jsonBody = JSON.stringify(partialTransaction)
+    const jsonBody = JSON.stringify({
+        ...partialTransaction,
+        purchaserId: userID
+    })
     try {
         const requestString = `${SERVER_URL}/saveTransaction`;
         const user = await fetch(requestString, {
