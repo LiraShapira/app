@@ -1,4 +1,10 @@
-export type Category = 'GROCERIES' | 'GARDEN' | 'MISC' | 'GIFT';
+export enum Category {
+  GROCERIES = 'GROCERIES',
+  GARDEN = 'GARDEN',
+  MISC = 'MISC',
+  GIFT = 'GIFT',
+  DEPOSIT = 'DEPOSIT',
+}
 
 export interface Transaction {
   id: string;

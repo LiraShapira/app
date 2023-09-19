@@ -22,7 +22,7 @@ const initialState: SendFormState = {
   loading: false,
   amount: 0,
   reason: '',
-  category: 'MISC',
+  category: Category.MISC,
 };
 
 export const saveTransaction = createAsyncThunk<
