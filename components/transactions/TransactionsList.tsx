@@ -13,7 +13,7 @@ export default function TransactionsList({
 }: TransactionsListProps) {
   return (
     <View style={styles.transactionList}>
-      {currentUser.transactions ? (
+      {currentUser.transactions.length ? (
         currentUser.transactions.map((transaction: Transaction, i) => (
           <View
             key={`${i}${transaction.createdAt}`}
@@ -24,7 +24,7 @@ export default function TransactionsList({
               income={transaction.recipientId === currentUser.id}
             />
           </View>
-        ))
+        )).reverse()
       ) : (
         <Text>{i18n.t('transactions_list_no_activities')}</Text>
       )}

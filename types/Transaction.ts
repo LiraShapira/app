@@ -1,15 +1,24 @@
-export type Category = 'GROCERIES' | 'GARDEN' | 'MISC' | 'GIFT';
+export enum Category {
+  GROCERIES = 'GROCERIES',
+  GARDEN = 'GARDEN',
+  MISC = 'MISC',
+  GIFT = 'GIFT',
+  DEPOSIT = 'DEPOSIT',
+}
 
 export interface Transaction {
   id: string;
-  recipientId: string
-  purchaserId: string
-  category: Category
-  amount: number
-  createdAt: string,
-  reason: string
+  recipientId: string;
+  purchaserId: string;
+  category: Category;
+  amount: number;
+  createdAt: string;
+  reason: string;
 }
 
-export type saveTransactionArgs = Pick<Transaction, 'category' | 'amount' | 'purchaserId' | 'reason'> & {
+export type saveTransactionArgs = Pick<
+  Transaction,
+  'category' | 'amount' | 'purchaserId' | 'reason'
+> & {
   recipientPhoneNumber: string;
 };

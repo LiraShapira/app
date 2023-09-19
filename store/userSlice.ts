@@ -65,6 +65,12 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    addUserTransaction: (state, action: PayloadAction<Transaction>) => {
+      state.user.transactions.push(action.payload);
+    },
+    setUserBalance: (state, action: PayloadAction<number>) => {
+      state.user.accountBalance = action.payload;
+    }
   },
 
   extraReducers: builder => {
@@ -84,7 +90,7 @@ export const userSlice = createSlice({
   //     });
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, addUserTransaction, setUserBalance } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserId = (state: RootState) => state.user.user.id;

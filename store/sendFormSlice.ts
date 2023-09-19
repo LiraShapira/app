@@ -6,7 +6,7 @@ import {
   saveTransactionArgs,
 } from '../types/Transaction';
 import {
-  saveTransactionReturn,
+  TransactionWithUsers,
   saveTransactionToDatabase,
 } from '../API/transactionAPI';
 
@@ -22,11 +22,11 @@ const initialState: SendFormState = {
   loading: false,
   amount: 0,
   reason: '',
-  category: 'MISC',
+  category: Category.MISC,
 };
 
 export const saveTransaction = createAsyncThunk<
-  saveTransactionReturn | string,
+  TransactionWithUsers,
   saveTransactionArgs,
   { state: RootState }
 >(
@@ -34,7 +34,7 @@ export const saveTransaction = createAsyncThunk<
   async (
     saveTransactionArgs,
     { getState }
-  ): Promise<saveTransactionReturn | string> => {
+  ): Promise<TransactionWithUsers> => {
     const userID = getState().user.user.id;
     const data = await saveTransactionToDatabase(userID, saveTransactionArgs);
     return data;
@@ -64,7 +64,7 @@ export const sendFormSlice = createSlice({
         state.loading = true;
       })
       .addCase(saveTransaction.fulfilled, (state) => {
-        state = initialState;
+        state.loading = false;
       });
   },
 });
@@ -75,5 +75,7 @@ export const { setChosenContact, unsetChosenContact, setReason, setAmount } =
 export const selectChosenContact = (state: RootState) =>
   state.sendForm.chosenContact;
 export const selectUserLoading = (state: RootState) => state.sendForm.loading;
+export const selectAmount = (state: RootState) => state.sendForm.amount;
+export const selectReason = (state: RootState) => state.sendForm.reason;
 
 export default sendFormSlice.reducer;

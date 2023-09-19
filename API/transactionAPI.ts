@@ -3,11 +3,11 @@ import { Transaction, saveTransactionArgs } from "../types/Transaction";
 import { User } from "../types/User";
 import { SERVER_URL } from "./config";
 
-export interface saveTransactionReturn extends Transaction {
+export interface TransactionWithUsers extends Transaction {
     users: [User, User]
 }
 
-export const saveTransactionToDatabase = async (userID: string, partialTransaction: saveTransactionArgs): Promise<saveTransactionReturn | string> => {     
+export const saveTransactionToDatabase = async (userID: string, partialTransaction: saveTransactionArgs): Promise<TransactionWithUsers> => {     
     // return example transaction if in dev mode
     if (process.env.EXPO_PUBLIC_DEV) return {
         category: partialTransaction.category,
@@ -20,10 +20,7 @@ export const saveTransactionToDatabase = async (userID: string, partialTransacti
         users: [mockUser, mockUser2]
     };
 
-    const jsonBody = JSON.stringify({
-        ...partialTransaction,
-        purchaserId: userID
-    })
+    const jsonBody = JSON.stringify(partialTransaction)
     try {
         const requestString = `${SERVER_URL}/saveTransaction`;
         const user = await fetch(requestString, {

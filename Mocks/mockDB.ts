@@ -1,11 +1,11 @@
-import { Transaction } from "../types/Transaction";
+import { Category, Transaction } from "../types/Transaction";
 import { User, UserRole } from "../types/User";
 import { Contact } from "expo-contacts";
 
 export const mockTransaction: Transaction = {
   recipientId: '1234355',
   purchaserId: '1234',
-  category: 'garden',
+  category: Category.GROCERIES,
   amount: 10,
   createdAt: new Date('2023-07-05').toDateString(),
   reason: 'bought a spade',
@@ -15,7 +15,7 @@ export const mockTransaction: Transaction = {
 export const mockTransaction2: Transaction = {
   recipientId: '1234',
   purchaserId: '1234355',
-  category: 'garden',
+  category: Category.GARDEN,
   amount: 14,
   createdAt: new Date('2023-07-06').toDateString(),
   reason: 'bought seeds',
@@ -25,7 +25,7 @@ export const mockTransaction2: Transaction = {
 export const mockTransaction3: Transaction = {
   recipientId: '1234',
   purchaserId: '1234355',
-  category: 'groceries',
+  category: Category.GROCERIES,
   amount: 100,
   createdAt: new Date('2023-07-08').toDateString(),
   reason: 'בקשה ממירון גלברד',
@@ -70,7 +70,7 @@ export const mockContacts: Contact[] = [
         id: "1345",
         isPrimary: false,
         label: "work",
-        number: "+447012345678",
+        number: "987654321",
       },
     ],
   },
