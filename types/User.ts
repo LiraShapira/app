@@ -13,7 +13,7 @@ export interface User {
   userLocalCompostStandId: number
   accountBalance: number
   createdAt: string
-  transactions?: Transaction[]
+  transactions: Transaction[]
   phoneNumber: string
 }
 
