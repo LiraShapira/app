@@ -1,33 +1,34 @@
 import { Text, StyleSheet, Modal, View, Pressable } from 'react-native';
 import CustomButton, { ButtonProps } from './CustomButton';
+import {
+  selectIsModalVisible,
+  selectModalText,
+} from '../../store/appStateSlice';
+import { useAppSelector } from '../../hooks';
 
 export interface CustomModalProps {
-  visible: boolean;
-  message: string;
   buttons: ButtonProps[];
   type?: 'info' | 'error';
 }
 
-export const CustomModal = ({
-  type = 'info',
-  visible,
-  message,
-  buttons,
-}: CustomModalProps) => {
+export const CustomModal = ({ type = 'info', buttons }: CustomModalProps) => {
+  const isModalVisible = useAppSelector(selectIsModalVisible);
+  const ModalText = useAppSelector(selectModalText);
+
   return (
     <View style={styles.centeredView}>
-      <Modal animationType='slide' transparent={true} visible={visible}>
+      <Modal animationType='slide' transparent={true} visible={isModalVisible}>
         <View
           style={{
             borderColor: type === 'info' ? 'blue' : 'red',
-            borderWidth: visible ? 2 : 0,
+            borderWidth: isModalVisible ? 2 : 0,
             borderRadius: 20,
             margin: 20,
             top: '30%',
           }}
         >
           <View style={styles.modalView}>
-            <Text>{message}</Text>
+            <Text>{ModalText}</Text>
             {buttons.map(({ text, onPress }) => {
               return (
                 <View key={text} style={{ marginTop: 5 }}>

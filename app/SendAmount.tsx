@@ -19,6 +19,7 @@ import {
   selectUserId,
   setUserBalance,
 } from '../store/userSlice';
+import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import { CustomModal } from '../components/utils/CustomModal';
 
 export default function SendAmount() {
@@ -30,7 +31,6 @@ export default function SendAmount() {
   const router = useRouter();
   const [amountError, setAmountError] = useState<boolean>(false);
   const [reasonError, setReasonError] = useState<boolean>(false);
-  const [isCustomModalVisible, setIsCustomModalVisible] = useState(false);
   const userId = useAppSelector(selectUserId);
 
   const onPressSend = () => {
@@ -61,7 +61,9 @@ export default function SendAmount() {
         router.push('/Home');
       })
       .catch((e) => {
-        setIsCustomModalVisible(true);
+        console.log(e);
+        dispatch(setModalText(e.message));
+        dispatch(setIsModalVisible(true));
         console.log(e);
       });
   };
@@ -93,15 +95,24 @@ export default function SendAmount() {
     dispatch(setReason(reason));
   };
 
+  const onModalCancel = () => {
+    dispatch(setAmount(0));
+    dispatch(setReason(''));
+    dispatch(setIsModalVisible(false));
+    router.push('/Home');
+  };
+  const onModalChangeContact = () => {
+    dispatch(setIsModalVisible(false));
+    router.back();
+  };
+
   return (
     <View style={{ padding: 8, gap: 8, alignItems: 'center' }}>
       <CustomModal
         buttons={[
-          { text: 'close', onPress: () => setIsCustomModalVisible(false) },
-          { text: 'open', onPress: () => setIsCustomModalVisible(false) },
+          { text: 'Cancel', onPress: onModalCancel },
+          { text: 'Change Contact', onPress: onModalChangeContact },
         ]}
-        message='test'
-        visible={isCustomModalVisible}
       />
       <View>
         <Text
