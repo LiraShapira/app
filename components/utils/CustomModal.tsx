@@ -1,15 +1,11 @@
 import { Text, StyleSheet, Modal, View, Pressable } from 'react-native';
-
-export interface CustomModalButton {
-  text: string;
-  onPress: (e: any) => void;
-}
+import CustomButton, { ButtonProps } from './CustomButton';
 
 export interface CustomModalProps {
   visible: boolean;
   message: string;
-  buttons: CustomModalButton[];
-  type: 'info' | 'error';
+  buttons: ButtonProps[];
+  type?: 'info' | 'error';
 }
 
 export const CustomModal = ({
@@ -19,30 +15,26 @@ export const CustomModal = ({
   buttons,
 }: CustomModalProps) => {
   return (
-    <View
-      style={{
-        ...styles.centeredView,
-      }}
-    >
+    <View style={styles.centeredView}>
       <Modal animationType='slide' transparent={true} visible={visible}>
-        <View style={styles.centeredView}>
-          <View
-            style={{
-              borderColor: type === 'info' ? 'blue' : 'red',
-              borderWidth: visible ? 2 : 0,
-              borderRadius: 20,
-            }}
-          >
-            <View style={styles.modalView}>
-              <Text>{message}</Text>
-              {buttons.map(({ text, onPress }) => {
-                return (
-                  <Pressable key={text} onPress={onPress}>
-                    <Text>{text}</Text>
-                  </Pressable>
-                );
-              })}
-            </View>
+        <View
+          style={{
+            borderColor: type === 'info' ? 'blue' : 'red',
+            borderWidth: visible ? 2 : 0,
+            borderRadius: 20,
+            margin: 20,
+            top: '30%',
+          }}
+        >
+          <View style={styles.modalView}>
+            <Text>{message}</Text>
+            {buttons.map(({ text, onPress }) => {
+              return (
+                <View key={text} style={{ marginTop: 5 }}>
+                  <CustomButton text={text} onPress={onPress} />
+                </View>
+              );
+            })}
           </View>
         </View>
       </Modal>
@@ -55,10 +47,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
   },
   modalView: {
-    margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
     borderStyle: 'solid',
