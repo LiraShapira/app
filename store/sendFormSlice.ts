@@ -49,7 +49,7 @@ export const saveTransaction = createAsyncThunk<
 );
 
 export const sendFormSlice = createSlice({
-  name: 'send',
+  name: 'sendForm',
   initialState,
   reducers: {
     setChosenContact: (state, action: PayloadAction<Contact>) => {

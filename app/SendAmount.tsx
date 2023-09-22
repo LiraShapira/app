@@ -1,6 +1,6 @@
 import { View, Text, TextInput, useColorScheme } from 'react-native';
 import Colors from '../constants/Colors';
-import Button from '../components/utils/Button';
+import CustomButton from '../components/utils/CustomButton';
 import i18n from '../translationService';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import {
@@ -98,6 +98,7 @@ export default function SendAmount() {
       <CustomModal
         buttons={[
           { text: 'close', onPress: () => setIsCustomModalVisible(false) },
+          { text: 'open', onPress: () => setIsCustomModalVisible(false) },
         ]}
         message='test'
         visible={isCustomModalVisible}
@@ -162,12 +163,12 @@ export default function SendAmount() {
           alignSelf: 'center',
         }}
       >
-        <Button
+        <CustomButton
           disabled={!reason || !amount || amountError || reasonError}
           onPress={onPressSend}
           text={i18n.t('sendamount_continue')}
         />
-        <Button
+        <CustomButton
           onPress={() => router.replace('/Send')}
           text={i18n.t('sendamount_back')}
         />
