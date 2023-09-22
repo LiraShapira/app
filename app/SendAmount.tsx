@@ -14,7 +14,12 @@ import {
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Category } from '../types/Transaction';
-import { addUserTransaction, selectUserId, setUserBalance } from '../store/userSlice';
+import {
+  addUserTransaction,
+  selectUserId,
+  setUserBalance,
+} from '../store/userSlice';
+import { CustomModal } from '../components/utils/CustomModal';
 
 export default function SendAmount() {
   const colorScheme = useColorScheme();
@@ -25,6 +30,7 @@ export default function SendAmount() {
   const router = useRouter();
   const [amountError, setAmountError] = useState<boolean>(false);
   const [reasonError, setReasonError] = useState<boolean>(false);
+  const [isCustomModalVisible, setIsCustomModalVisible] = useState(false);
   const userId = useAppSelector(selectUserId);
 
   const onPressSend = () => {
@@ -42,16 +48,20 @@ export default function SendAmount() {
     dispatch(saveTransaction(newTransaction))
       .unwrap()
       .then((transaction) => {
-        const currentUser = transaction.users.find((user) => user.id === userId);
+        console.log({ transaction });
+        const currentUser = transaction.users.find(
+          (user) => user.id === userId
+        );
         const { users, ...transactionWithoutUsers } = transaction;
         dispatch(addUserTransaction(transactionWithoutUsers));
         if (!currentUser) return;
-        dispatch(setUserBalance(currentUser.accountBalance))
+        dispatch(setUserBalance(currentUser.accountBalance));
         dispatch(setAmount(0));
         dispatch(setReason(''));
         router.push('/Home');
       })
       .catch((e) => {
+        setIsCustomModalVisible(true);
         console.log(e);
       });
   };
@@ -85,6 +95,13 @@ export default function SendAmount() {
 
   return (
     <View style={{ padding: 8, gap: 8, alignItems: 'center' }}>
+      <CustomModal
+        buttons={[
+          { text: 'close', onPress: () => setIsCustomModalVisible(false) },
+        ]}
+        message='test'
+        visible={isCustomModalVisible}
+      />
       <View>
         <Text
           style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
@@ -113,7 +130,7 @@ export default function SendAmount() {
             borderColor: amountError ? 'red' : 'none',
           }}
           onChangeText={onChangeAmount}
-          inputMode="numeric"
+          inputMode='numeric'
         />
       </View>
       <View>
@@ -134,7 +151,7 @@ export default function SendAmount() {
             width: '60%',
           }}
           onChangeText={onChangeReason}
-          inputMode="text"
+          inputMode='text'
         />
       </View>
       <View

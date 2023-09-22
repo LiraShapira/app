@@ -6,8 +6,11 @@ import { SERVER_URL } from "./config";
 export interface TransactionWithUsers extends Transaction {
     users: [User, User]
 }
+export interface ErrorResponse {
+    error: string;
+}
 
-export const saveTransactionToDatabase = async (userID: string, partialTransaction: saveTransactionArgs): Promise<TransactionWithUsers> => {     
+export const saveTransactionToDatabase = async (userID: string, partialTransaction: saveTransactionArgs): Promise<TransactionWithUsers | ErrorResponse> => {
     // return example transaction if in dev mode
     if (process.env.EXPO_PUBLIC_DEV) return {
         category: partialTransaction.category,
@@ -30,6 +33,9 @@ export const saveTransactionToDatabase = async (userID: string, partialTransacti
                 'Content-Type': 'application/json', // Set the correct Content-Type header
             },
         })
+        if (user.status !== 201) {
+            throw new Error()
+        }
         return await user.json()
     } catch (e: any) {
         console.log(e);

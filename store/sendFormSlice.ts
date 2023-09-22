@@ -10,6 +10,10 @@ import {
   saveTransactionToDatabase,
 } from '../API/transactionAPI';
 
+export interface ErrorResponse {
+  error: string;
+}
+
 interface SendFormState {
   chosenContact?: Contact;
   amount: number;
@@ -37,6 +41,9 @@ export const saveTransaction = createAsyncThunk<
   ): Promise<TransactionWithUsers> => {
     const userID = getState().user.user.id;
     const data = await saveTransactionToDatabase(userID, saveTransactionArgs);
+    if ('error' in data) {
+      throw new Error(data.error);
+    }
     return data;
   }
 );
