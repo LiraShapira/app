@@ -9,7 +9,7 @@ import {
   TransactionWithUsers,
   saveTransactionToDatabase,
 } from '../API/transactionAPI';
-import { ApiResponse } from '../types/APITypes';
+import { SuccessApiResponse } from '../types/APITypes';
 
 export interface ErrorResponse {
   error: string;
@@ -31,7 +31,7 @@ const initialState: SendFormState = {
 };
 
 export const saveTransaction = createAsyncThunk<
-  ApiResponse<TransactionWithUsers>,
+  SuccessApiResponse<TransactionWithUsers>,
   saveTransactionArgs,
   { state: RootState }
 >(
@@ -39,10 +39,10 @@ export const saveTransaction = createAsyncThunk<
   async (
     saveTransactionArgs,
     { getState }
-  ): Promise<ApiResponse<TransactionWithUsers>> => {
+  ): Promise<SuccessApiResponse<TransactionWithUsers>> => {
     const response = await saveTransactionToDatabase(saveTransactionArgs);
     if (!('data' in response)) {
-      throw new Error(response)
+      throw new Error(response.message)
     }
     return response;
   }

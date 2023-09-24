@@ -10,6 +10,7 @@ import {
   selectReason,
   setAmount,
   setReason,
+  unsetChosenContact,
 } from '../store/sendFormSlice';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -47,8 +48,7 @@ export default function SendAmount() {
     };
     dispatch(saveTransaction(newTransaction))
       .unwrap()
-      .then((transaction) => {
-        console.log({ transaction });
+      .then(({ data: transaction }) => {
         const currentUser = transaction.users.find(
           (user) => user.id === userId
         );
@@ -61,10 +61,8 @@ export default function SendAmount() {
         router.push('/Home');
       })
       .catch((e) => {
-        console.log(e);
         dispatch(setModalText(e.message));
         dispatch(setIsModalVisible(true));
-        console.log(e);
       });
   };
 
@@ -103,15 +101,17 @@ export default function SendAmount() {
   };
   const onModalChangeContact = () => {
     dispatch(setIsModalVisible(false));
-    router.back();
+    dispatch(unsetChosenContact());
+    router.replace('/Send');
   };
 
   return (
     <View style={{ padding: 8, gap: 8, alignItems: 'center' }}>
       <CustomModal
+        type='error'
         buttons={[
-          { text: 'Cancel', onPress: onModalCancel },
-          { text: 'Change Contact', onPress: onModalChangeContact },
+          { text: i18n.t('cancel'), onPress: onModalCancel },
+          { text: i18n.t('sendamount_back'), onPress: onModalChangeContact },
         ]}
       />
       <View>
@@ -126,17 +126,14 @@ export default function SendAmount() {
           >
             Please input a number between 1 - 99
           </Text>
-        ) : (
-          <Text></Text>
-        )}
+        ) : null}
         <TextInput
           autoFocus
           maxLength={2}
           style={{
             fontSize: 44,
             textAlign: 'center',
-            // color: Colors[colorScheme ?? 'light'].text,
-            // borderBottomColor: Colors[colorScheme ?? 'light'].text,
+            color: Colors[colorScheme ?? 'light'].text,
             borderBottomWidth: 1,
             width: '60%',
             borderColor: amountError ? 'red' : 'none',

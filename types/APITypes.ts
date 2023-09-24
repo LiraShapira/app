@@ -1,8 +1,6 @@
-export type ApiResponse<T> = {
+export interface SuccessApiResponse<T> {
   data: T;
   status: number;
-} |
-{
-  message: string;
-  stack: string;
 }
+
+export type ApiResponse<T> = SuccessApiResponse<T> | Error

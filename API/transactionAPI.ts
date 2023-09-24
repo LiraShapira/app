@@ -29,9 +29,8 @@ export const saveTransactionToDatabase = async (partialTransaction: saveTransact
             },
         })
         const JSONresponse = await response.json();
-        console.log({ JSONresponse, response })
         if (response.status !== 201) {
-            throw new Error(JSONresponse)
+            throw new Error(JSONresponse.error);
         }
         return { data: JSONresponse, status: response.status };
     } catch (e: any) {
