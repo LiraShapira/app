@@ -7,13 +7,13 @@ import {
 } from 'react-native';
 import Colors from '../../constants/Colors';
 
-interface ButtonProps {
+export interface ButtonProps {
   text: string;
   disabled?: boolean;
   onPress: (...args: any[]) => any;
 }
 
-export default function Button({
+export default function CustomButton({
   text,
   onPress,
   disabled = false,
@@ -34,6 +34,7 @@ export default function Button({
       >
         <Text
           style={{
+            padding: 8,
             color: Colors[colorScheme ?? 'light'].text,
           }}
         >
@@ -47,9 +48,7 @@ export default function Button({
 const styles = StyleSheet.create({
   submitButton: {
     padding: 8,
-    borderRadius: 200,
-    width: '40%',
-    height: 50,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -3,6 +3,8 @@ export default {
   yes: 'yes',
   no: 'no',
   some: 'some',
+  cancel: 'Cancel',
+
   tabs_wallet: 'wallet',
   tabs_market: 'market',
   home_lira_shapira_currency_you_have: 'You have:',
@@ -24,7 +26,7 @@ export default {
   send_search_placeholder: 'Enter a name or phone number',
   sendamount_how_much: 'How much?',
   sendamount_continue: 'continue',
-  sendamount_back: 'back to contacts',
+  sendamount_back: 'Back to contacts',
 
   month_january: 'january',
   month_february: 'february',

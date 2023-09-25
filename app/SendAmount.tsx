@@ -1,6 +1,6 @@
 import { View, Text, TextInput, useColorScheme } from 'react-native';
 import Colors from '../constants/Colors';
-import Button from '../components/utils/Button';
+import CustomButton from '../components/utils/CustomButton';
 import i18n from '../translationService';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import {
@@ -10,11 +10,18 @@ import {
   selectReason,
   setAmount,
   setReason,
+  unsetChosenContact,
 } from '../store/sendFormSlice';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Category } from '../types/Transaction';
-import { addUserTransaction, selectUserId, setUserBalance } from '../store/userSlice';
+import {
+  addUserTransaction,
+  selectUserId,
+  setUserBalance,
+} from '../store/userSlice';
+import { setIsModalVisible, setModalText } from '../store/appStateSlice';
+import { CustomModal } from '../components/utils/CustomModal';
 
 export default function SendAmount() {
   const colorScheme = useColorScheme();
@@ -41,18 +48,21 @@ export default function SendAmount() {
     };
     dispatch(saveTransaction(newTransaction))
       .unwrap()
-      .then((transaction) => {
-        const currentUser = transaction.users.find((user) => user.id === userId);
+      .then(({ data: transaction }) => {
+        const currentUser = transaction.users.find(
+          (user) => user.id === userId
+        );
         const { users, ...transactionWithoutUsers } = transaction;
         dispatch(addUserTransaction(transactionWithoutUsers));
         if (!currentUser) return;
-        dispatch(setUserBalance(currentUser.accountBalance))
+        dispatch(setUserBalance(currentUser.accountBalance));
         dispatch(setAmount(0));
         dispatch(setReason(''));
         router.push('/Home');
       })
       .catch((e) => {
-        console.log(e);
+        dispatch(setModalText(e.message));
+        dispatch(setIsModalVisible(true));
       });
   };
 
@@ -83,8 +93,27 @@ export default function SendAmount() {
     dispatch(setReason(reason));
   };
 
+  const onModalCancel = () => {
+    dispatch(setAmount(0));
+    dispatch(setReason(''));
+    dispatch(setIsModalVisible(false));
+    router.push('/Home');
+  };
+  const onModalChangeContact = () => {
+    dispatch(setIsModalVisible(false));
+    dispatch(unsetChosenContact());
+    router.replace('/Send');
+  };
+
   return (
     <View style={{ padding: 8, gap: 8, alignItems: 'center' }}>
+      <CustomModal
+        type='error'
+        buttons={[
+          { text: i18n.t('cancel'), onPress: onModalCancel },
+          { text: i18n.t('sendamount_back'), onPress: onModalChangeContact },
+        ]}
+      />
       <View>
         <Text
           style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
@@ -97,23 +126,20 @@ export default function SendAmount() {
           >
             Please input a number between 1 - 99
           </Text>
-        ) : (
-          <Text></Text>
-        )}
+        ) : null}
         <TextInput
           autoFocus
           maxLength={2}
           style={{
             fontSize: 44,
             textAlign: 'center',
-            // color: Colors[colorScheme ?? 'light'].text,
-            // borderBottomColor: Colors[colorScheme ?? 'light'].text,
+            color: Colors[colorScheme ?? 'light'].text,
             borderBottomWidth: 1,
             width: '60%',
             borderColor: amountError ? 'red' : 'none',
           }}
           onChangeText={onChangeAmount}
-          inputMode="numeric"
+          inputMode='numeric'
         />
       </View>
       <View>
@@ -134,7 +160,7 @@ export default function SendAmount() {
             width: '60%',
           }}
           onChangeText={onChangeReason}
-          inputMode="text"
+          inputMode='text'
         />
       </View>
       <View
@@ -145,12 +171,12 @@ export default function SendAmount() {
           alignSelf: 'center',
         }}
       >
-        <Button
+        <CustomButton
           disabled={!reason || !amount || amountError || reasonError}
           onPress={onPressSend}
           text={i18n.t('sendamount_continue')}
         />
-        <Button
+        <CustomButton
           onPress={() => router.replace('/Send')}
           text={i18n.t('sendamount_back')}
         />

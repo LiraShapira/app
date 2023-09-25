@@ -20,7 +20,7 @@ import {
   setNotes,
 } from '../../store/depositFormSlice';
 import { selectUserId } from '../../store/userSlice';
-import Button from '../../components/utils/Button';
+import CustomButton from '../../components/utils/CustomButton';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
@@ -98,8 +98,8 @@ export default function Deposit() {
           />
         </View>
         <View style={styles.buttons}>
-          <Button text='Send' onPress={onPressSend} disabled={!value} />
-          <Button text='Skip' onPress={() => console.log('skip')} />
+          <CustomButton text='Send' onPress={onPressSend} disabled={!value} />
+          <CustomButton text='Skip' onPress={() => console.log('skip')} />
         </View>
       </View>
     </View>

@@ -9,6 +9,11 @@ import {
   TransactionWithUsers,
   saveTransactionToDatabase,
 } from '../API/transactionAPI';
+import { SuccessApiResponse } from '../types/APITypes';
+
+export interface ErrorResponse {
+  error: string;
+}
 
 interface SendFormState {
   chosenContact?: Contact;
@@ -26,7 +31,7 @@ const initialState: SendFormState = {
 };
 
 export const saveTransaction = createAsyncThunk<
-  TransactionWithUsers,
+  SuccessApiResponse<TransactionWithUsers>,
   saveTransactionArgs,
   { state: RootState }
 >(
@@ -34,15 +39,17 @@ export const saveTransaction = createAsyncThunk<
   async (
     saveTransactionArgs,
     { getState }
-  ): Promise<TransactionWithUsers> => {
-    const userID = getState().user.user.id;
-    const data = await saveTransactionToDatabase(userID, saveTransactionArgs);
-    return data;
+  ): Promise<SuccessApiResponse<TransactionWithUsers>> => {
+    const response = await saveTransactionToDatabase(saveTransactionArgs);
+    if (!('data' in response)) {
+      throw new Error(response.message)
+    }
+    return response;
   }
 );
 
 export const sendFormSlice = createSlice({
-  name: 'send',
+  name: 'sendForm',
   initialState,
   reducers: {
     setChosenContact: (state, action: PayloadAction<Contact>) => {

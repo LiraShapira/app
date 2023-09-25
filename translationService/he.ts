@@ -3,6 +3,9 @@ export default {
   yes: 'כן',
   no: 'לא',
   some: 'מעט',
+  cancel: 'ביטול',
+
+
   tabs_wallet: 'ארנק',
   tabs_market: 'שוק',
   home_lira_shapira_currency_you_have: 'כמה יש?',

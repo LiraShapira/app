@@ -1,4 +1,5 @@
-import { mockUser, mockUser2 } from "../Mocks/mockDB";
+import { mockTransaction, mockUser, mockUser2 } from "../Mocks/mockDB";
+import { ApiResponse } from "../types/APITypes";
 import { Transaction, saveTransactionArgs } from "../types/Transaction";
 import { User } from "../types/User";
 import { SERVER_URL } from "./config";
@@ -7,32 +8,32 @@ export interface TransactionWithUsers extends Transaction {
     users: [User, User]
 }
 
-export const saveTransactionToDatabase = async (userID: string, partialTransaction: saveTransactionArgs): Promise<TransactionWithUsers> => {     
+export const saveTransactionToDatabase = async (partialTransaction: saveTransactionArgs): Promise<ApiResponse<TransactionWithUsers>> => {
     // return example transaction if in dev mode
     if (process.env.EXPO_PUBLIC_DEV) return {
-        category: partialTransaction.category,
-        amount: partialTransaction.amount,
-        reason: partialTransaction.reason,
-        recipientId: partialTransaction.recipientPhoneNumber,
-        id: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        purchaserId: userID,
-        users: [mockUser, mockUser2]
+        data: {
+            ...mockTransaction,
+            users: [mockUser, mockUser2]
+        },
+        status: 201
     };
 
     const jsonBody = JSON.stringify(partialTransaction)
     try {
         const requestString = `${SERVER_URL}/saveTransaction`;
-        const user = await fetch(requestString, {
+        const response = await fetch(requestString, {
             method: 'POST',
             body: jsonBody,
             headers: {
                 'Content-Type': 'application/json', // Set the correct Content-Type header
             },
         })
-        return await user.json()
+        const JSONresponse = await response.json();
+        if (response.status !== 201) {
+            throw new Error(JSONresponse.error);
+        }
+        return { data: JSONresponse, status: response.status };
     } catch (e: any) {
-        console.log(e);
-        return e.message;
+        return e;
     }
 }
