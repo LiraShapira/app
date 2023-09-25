@@ -58,6 +58,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     backgroundColor: 'grey',
     borderRadius: 50,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
   },
   dashboard: {
     position: 'absolute',
