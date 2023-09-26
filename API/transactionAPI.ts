@@ -9,8 +9,8 @@ export interface TransactionWithUsers extends Transaction {
 }
 
 export const saveTransactionToDatabase = async (partialTransaction: saveTransactionArgs): Promise<ApiResponse<TransactionWithUsers>> => {
-    // return example transaction if in dev mode
-    if (process.env.EXPO_PUBLIC_DEV) return {
+    // return example transaction if in demo mode
+    if (process.env.EXPO_PUBLIC_DEMO) return {
         data: {
             ...mockTransaction,
             users: [mockUser, mockUser2]
