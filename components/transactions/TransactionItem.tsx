@@ -3,6 +3,7 @@ import { Transaction } from '../../types/Transaction';
 import Colors from '../../constants/Colors';
 import { monthsLongForm } from '../../constants/Months';
 import i18n from '../../translationService';
+import { useMemo } from 'react';
 
 interface TransactionItemProps {
   income: boolean;
@@ -14,7 +15,12 @@ export default function TransactionItem({
   transaction,
 }: TransactionItemProps) {
   const colorScheme = useColorScheme();
-  const month = monthsLongForm[new Date(transaction.createdAt).getMonth()];
+  
+  const [day, month] = useMemo(() => {
+    const date = new Date(transaction.createdAt);
+    return [date.getDate(), monthsLongForm[date.getMonth()]];
+  }, [transaction.createdAt])
+  
   return (
     <View>
       <View style={styles.transactionItem}>
@@ -26,7 +32,7 @@ export default function TransactionItem({
               color: Colors[colorScheme ?? 'light'].text,
             }}
           >
-            {new Date(transaction.createdAt).getDay()}
+            {day}
           </Text>
           <Text
             style={{
