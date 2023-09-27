@@ -19,7 +19,11 @@ import {
   sendDepositForm,
   setNotes,
 } from '../../store/depositFormSlice';
-import { incrementUserBalance, selectUserId } from '../../store/userSlice';
+import {
+  addUserTransaction,
+  incrementUserBalance,
+  selectUserId,
+} from '../../store/userSlice';
 import CustomButton from '../../components/utils/CustomButton';
 
 export default function Deposit() {
@@ -38,6 +42,7 @@ export default function Deposit() {
       .unwrap()
       .then(({ data: transaction }) => {
         dispatch(incrementUserBalance(transaction.amount));
+        dispatch(addUserTransaction(transaction));
       });
     dispatch(resetForm());
   };
