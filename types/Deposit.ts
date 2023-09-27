@@ -1,8 +1,7 @@
 interface DepositForm {
-  value: number;
-  userId: string;
+  amount: number;
   binStatus?: 'empty' | 'full';
   compostSmell?: 'yes' | 'no';
   dryMatter?: 'no' | 'some' | 'yes',
-  notes: string;
+  notes?: string;
 }

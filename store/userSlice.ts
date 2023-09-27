@@ -64,12 +64,28 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
+      if (typeof action.payload.accountBalance === 'string') {
+        state.user.accountBalance = parseInt(action.payload.accountBalance)
+      } else {
+        state.user.accountBalance = action.payload.accountBalance
+      }
     },
     addUserTransaction: (state, action: PayloadAction<Transaction>) => {
       state.user.transactions.push(action.payload);
     },
-    setUserBalance: (state, action: PayloadAction<number>) => {
-      state.user.accountBalance = action.payload;
+    setUserBalance: (state, action: PayloadAction<number | string>) => {
+      if (typeof action.payload === 'string') {
+        state.user.accountBalance = parseInt(action.payload)
+      } else {
+        state.user.accountBalance = action.payload
+      }
+    },
+    incrementUserBalance: (state, action: PayloadAction<number | string>) => {
+      if (typeof action.payload === 'string') {
+        state.user.accountBalance += parseInt(action.payload)
+      } else {
+        state.user.accountBalance += action.payload
+      }
     }
   },
 
@@ -90,7 +106,7 @@ export const userSlice = createSlice({
   //     });
 });
 
-export const { setUser, addUserTransaction, setUserBalance } = userSlice.actions;
+export const { setUser, addUserTransaction, setUserBalance, incrementUserBalance } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserId = (state: RootState) => state.user.user.id;
