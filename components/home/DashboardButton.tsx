@@ -14,7 +14,7 @@ interface DashboardButtonProps {
 export default function DashboardButton({
   iconName,
   iconLibrary,
-  route = '/Deposit',
+  route,
 }: DashboardButtonProps) {
   const colorScheme = useColorScheme();
   const onPress = () => {
@@ -22,8 +22,10 @@ export default function DashboardButton({
   };
 
   return (
-    <Link href={route}>
-      <View style={styles.labeledButton}>
+    <>
+    {route ? (
+      <Link href={route}>
+        <View style={styles.labeledButton}>
         <Pressable onPress={onPress}>
           {({ pressed }) => (
             // TODO typing
@@ -41,7 +43,30 @@ export default function DashboardButton({
           )}
         </Pressable>
       </View>
-    </Link>
+      </Link>
+    ) : (
+      <View>
+        <View style={styles.disabledBtn}>
+          <Pressable onPress={onPress}>
+            {({ pressed }) => (
+              // TODO typing
+              // @ts-ignore TODO typing
+              <CustomIcon
+                iconLibraryName={iconLibrary}
+                iconName={iconName}
+                color={
+                  pressed
+                    ? Colors[colorScheme ?? 'light'].tint
+                    : Colors[colorScheme ?? 'light'].text
+                }
+                size={30}
+              />
+            )}
+          </Pressable>
+        </View>
+      </View>
+    )}
+    </>
   );
 }
 
@@ -88,4 +113,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  disabledBtn: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    height: 70,
+    width: 70,
+    alignItems: 'center',
+    marginHorizontal: 5,
+    backgroundColor: '#5f5f5f',
+    borderRadius: 50,
+    shadowColor: '#000',
+    shadowOffset: { width:  0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+  }
 });
