@@ -70,6 +70,13 @@ export const userSlice = createSlice({
     },
     setUserBalance: (state, action: PayloadAction<number>) => {
       state.user.accountBalance = action.payload;
+    },
+    incrementUserBalance: (state, action: PayloadAction<number | string>) => {
+      if (typeof action.payload === 'string') {
+        state.user.accountBalance += parseInt(action.payload)
+      } else {
+        state.user.accountBalance += action.payload
+      }
     }
   },
 
@@ -90,7 +97,7 @@ export const userSlice = createSlice({
   //     });
 });
 
-export const { setUser, addUserTransaction, setUserBalance } = userSlice.actions;
+export const { setUser, addUserTransaction, setUserBalance, incrementUserBalance } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserId = (state: RootState) => state.user.user.id;

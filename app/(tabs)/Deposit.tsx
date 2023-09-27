@@ -19,7 +19,7 @@ import {
   sendDepositForm,
   setNotes,
 } from '../../store/depositFormSlice';
-import { selectUserId } from '../../store/userSlice';
+import { incrementUserBalance, selectUserId } from '../../store/userSlice';
 import CustomButton from '../../components/utils/CustomButton';
 
 export default function Deposit() {
@@ -34,7 +34,11 @@ export default function Deposit() {
 
   const onPressSend = (e: any) => {
     // send form
-    dispatch(sendDepositForm(userId));
+    dispatch(sendDepositForm(userId))
+      .unwrap()
+      .then(({ data: transaction }) => {
+        dispatch(incrementUserBalance(transaction.amount));
+      });
     dispatch(resetForm());
   };
 
