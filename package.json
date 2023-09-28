@@ -13,12 +13,14 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/config-plugins": "~7.2.2",
     "@expo/ngrok": "^4.1.1",
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/native": "^6.0.2",
     "@reduxjs/toolkit": "^1.9.5",
     "expo": "^49.0.0",
     "expo-contacts": "~12.2.0",
+    "expo-dev-client": "~2.4.11",
     "expo-font": "~11.4.0",
     "expo-linking": "~5.0.2",
     "expo-localization": "~14.3.0",
@@ -35,7 +37,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-switch-selector": "^2.3.0",
     "react-native-web": "~0.19.6",
-    "react-redux": "^8.1.2"
+    "react-redux": "^8.1.2",
+    "react-native-gesture-handler": "~2.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

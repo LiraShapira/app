@@ -77,7 +77,7 @@ function RootLayoutNav() {
           dispatch(setUser(user));
         }
       });
-  });
+  }, []);
 
   return (
     <>
