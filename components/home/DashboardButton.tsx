@@ -17,16 +17,13 @@ export default function DashboardButton({
   route,
 }: DashboardButtonProps) {
   const colorScheme = useColorScheme();
-  const onPress = () => {
-    console.log('navigate to ' + route);
-  };
 
   return (
     <>
     {route ? (
       <Link href={route}>
-        <View style={styles.labeledButton}>
-        <Pressable onPress={onPress}>
+        <View style={{...styles.labeledButton, backgroundColor: 'grey' }}>
+        <Pressable>
           {({ pressed }) => (
             // TODO typing
             // @ts-ignore TODO typing
@@ -46,8 +43,8 @@ export default function DashboardButton({
       </Link>
     ) : (
       <View>
-        <View style={styles.disabledBtn}>
-          <Pressable onPress={onPress}>
+        <View style={{...styles.labeledButton, backgroundColor: '#5f5f5f', opacity: 0.5 }}>
+          <Pressable>
             {({ pressed }) => (
               // TODO typing
               // @ts-ignore TODO typing
@@ -81,9 +78,7 @@ const styles = StyleSheet.create({
     width: 70,
     alignItems: 'center',
     marginHorizontal: 5,
-    backgroundColor: 'grey',
     borderRadius: 50,
-
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,
@@ -112,22 +107,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  disabledBtn: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignContent: 'center',
-    textAlign: 'center',
-    justifyContent: 'center',
-    height: 70,
-    width: 70,
-    alignItems: 'center',
-    marginHorizontal: 5,
-    backgroundColor: '#5f5f5f',
-    borderRadius: 50,
-    shadowColor: '#000',
-    shadowOffset: { width:  0, height: 5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
   }
 });
