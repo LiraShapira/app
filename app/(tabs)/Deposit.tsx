@@ -71,7 +71,7 @@ export default function Deposit() {
               ...styles.amountLabel,
             }}
           >
-            Amount
+            Amount (kg)
           </Text>
           <NumberInput style={styles.amountInput} />
         </View>
@@ -94,19 +94,29 @@ export default function Deposit() {
           switchLabels={[i18n.t('no'), i18n.t('some'), i18n.t('yes')]}
         />
         <View>
-          <Text>{i18n.t('deposit_form_notes')}</Text>
+          <Text 
+          style={{ color: Colors[colorScheme ?? 'light'].text }}
+          >{i18n.t('deposit_form_notes')}</Text>
           <TextInput
             value={notes}
             onChangeText={(e) => dispatch(setNotes(e))}
             style={{
               borderColor: Colors[colorScheme ?? 'light'].text,
+              color: Colors[colorScheme ?? 'light'].text,
               ...styles.input,
             }}
           />
         </View>
         <View style={styles.buttons}>
-          <CustomButton text={i18n.t('deposit_form_send')} onPress={onPressSend} disabled={!value} />
-          <CustomButton text={i18n.t('deposit_form_skip')} onPress={() => console.log('skip')} />
+          <CustomButton
+            text={i18n.t('deposit_form_send')}
+            onPress={onPressSend}
+            disabled={!value}
+          />
+          <CustomButton
+            text={i18n.t('deposit_form_skip')}
+            onPress={() => console.log('skip')}
+          />
         </View>
       </View>
     </View>

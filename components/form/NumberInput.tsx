@@ -36,19 +36,23 @@ export default function NumberInput({ step = 0.5, style }: NumberInputProps) {
           disabled={value === 0}
           color={Colors[colorScheme ?? 'light'].text}
           size={40}
-          iconName='minuscircleo'
-          iconLibraryName='AntDesign'
+          iconName="minuscircleo"
+          iconLibraryName="AntDesign"
         />
       </Pressable>
       <View>
-        <Text style={{ fontSize: 18 }}>{value}</Text>
+        <Text
+          style={{ fontSize: 18, color: Colors[colorScheme ?? 'light'].text }}
+        >
+          {value}
+        </Text>
       </View>
       <Pressable onPress={() => dispatch(incrementByAmount(step))}>
         <CustomIcon
           color={Colors[colorScheme ?? 'light'].text}
           size={40}
-          iconName='pluscircleo'
-          iconLibraryName='AntDesign'
+          iconName="pluscircleo"
+          iconLibraryName="AntDesign"
         />
       </Pressable>
     </View>

@@ -1,8 +1,9 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, useColorScheme } from 'react-native';
 import { Transaction } from '../../types/Transaction';
 import { User } from '../../types/User';
 import TransactionItem from './TransactionItem';
 import i18n from '../../translationService';
+import Colors from '../../constants/Colors';
 
 interface TransactionsListProps {
   currentUser: User;
@@ -11,6 +12,8 @@ interface TransactionsListProps {
 export default function TransactionsList({
   currentUser,
 }: TransactionsListProps) {
+  const colorScheme = useColorScheme();
+
   return (
     <View style={styles.transactionList}>
       {currentUser.transactions.length ? (
@@ -26,7 +29,9 @@ export default function TransactionsList({
           </View>
         )).reverse()
       ) : (
-        <Text>{i18n.t('transactions_list_no_activities')}</Text>
+        <Text
+        style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
+        >{i18n.t('transactions_list_no_activities')}</Text>
       )}
     </View>
   );
