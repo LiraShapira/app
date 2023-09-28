@@ -5,7 +5,7 @@ import Switch from '../../components/form/Switch';
 interface DepositFormSwitchProps {
   switchLabels: string[];
   title: string;
-  onPress: (v: string) => void;
+  onPress: (v: any) => void;
 }
 
 export default function DepositFormSwitch({

@@ -14,28 +14,29 @@ const initialState: DepositFormState = {
   notes: ''
 };
 
-
-
 export const sendDepositForm = createAsyncThunk<
   SuccessApiResponse<Transaction>,
   string,
   { state: RootState }
->('depositForm/sendDepositForm', async (userId: string, { getState }): Promise<SuccessApiResponse<Transaction>> => {
-  const form = getState().depositForm;
-  console.log(form)
-  const response = await saveDepositToDatabase({ ...form, userId });
-  if (!('data' in response)) {
-    throw new Error(response.message)
+>(
+  'depositForm/sendDepositForm',
+  async (
+    userId: string,
+    { getState }
+  ): Promise<SuccessApiResponse<Transaction>> => {
+    const form = getState().depositForm;
+    const response = await saveDepositToDatabase({ ...form, userId });
+    if (!('data' in response)) {
+      throw new Error(response.message);
+    }
+    return response;
   }
-  return response;
-});
+);
 
 export const depositFormSlice = createSlice({
   name: 'depositForm',
   initialState,
   reducers: {
-    // createSlice will auto-generate the action types and action
-    // creators for you, based on the names of the reducer functions you provide.
     incrementByAmount: (state, action: PayloadAction<number>) => {
       state.amount += action.payload;
     },
@@ -46,14 +47,32 @@ export const depositFormSlice = createSlice({
     setNotes: (state, action: PayloadAction<string>) => {
       state.notes = action.payload;
     },
+    setBinStatus: (state, action: PayloadAction<DepositForm['binStatus']>) => {
+      state.binStatus = action.payload;
+    },
+    setCompostSmell: (
+      state,
+      action: PayloadAction<DepositForm['compostSmell']>
+    ) => {
+      state.compostSmell = action.payload;
+    },
+    setCompostDryMatter: (
+      state,
+      action: PayloadAction<DepositForm['dryMatter']>
+    ) => {
+      state.dryMatter = action.payload;
+    },
     resetForm: (state) => {
+      delete state.dryMatter;
+      delete state.compostSmell;
+      delete state.binStatus;
       state.amount = 0;
       state.notes = '';
-    }
+    },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(sendDepositForm.pending, state => {
+      .addCase(sendDepositForm.pending, (state) => {
         state.loading = true;
       })
       .addCase(sendDepositForm.fulfilled, (state) => {
@@ -62,9 +81,18 @@ export const depositFormSlice = createSlice({
   },
 });
 
-export const { incrementByAmount, decrementByAmount, resetForm, setNotes } = depositFormSlice.actions;
+export const {
+  incrementByAmount,
+  decrementByAmount,
+  resetForm,
+  setNotes,
+  setCompostDryMatter,
+  setBinStatus,
+  setCompostSmell
+} = depositFormSlice.actions;
 
-export const selectDepositFormLoading = (state: RootState) => state.depositForm.loading;
+export const selectDepositFormLoading = (state: RootState) =>
+  state.depositForm.loading;
 export const selectValue = (state: RootState) => state.depositForm.amount;
 export const selectNotes = (state: RootState) => state.depositForm.notes;
 
