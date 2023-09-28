@@ -85,16 +85,16 @@ export default function Deposit() {
         />
         <DepositFormSwitch
           onPress={setCompostSmell}
-          title='Compost smell?'
+          title={i18n.t('deposit_form_bin_status_smell')}
           switchLabels={[i18n.t('no'), i18n.t('yes')]}
         />
         <DepositFormSwitch
           onPress={setDryMatter}
-          title='Dry matter?'
+          title={i18n.t('deposit_form_dry_matter')}
           switchLabels={[i18n.t('no'), i18n.t('some'), i18n.t('yes')]}
         />
         <View>
-          <Text>Notes</Text>
+          <Text>{i18n.t('deposit_form_notes')}</Text>
           <TextInput
             value={notes}
             onChangeText={(e) => dispatch(setNotes(e))}
@@ -102,13 +102,11 @@ export default function Deposit() {
               borderColor: Colors[colorScheme ?? 'light'].text,
               ...styles.input,
             }}
-            placeholder="Any notes you'd like to add?"
-            placeholderTextColor={Colors[colorScheme ?? 'light'].text}
           />
         </View>
         <View style={styles.buttons}>
-          <CustomButton text='Send' onPress={onPressSend} disabled={!value} />
-          <CustomButton text='Skip' onPress={() => console.log('skip')} />
+          <CustomButton text={i18n.t('deposit_form_send')} onPress={onPressSend} disabled={!value} />
+          <CustomButton text={i18n.t('deposit_form_skip')} onPress={() => console.log('skip')} />
         </View>
       </View>
     </View>

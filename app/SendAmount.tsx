@@ -149,7 +149,6 @@ export default function SendAmount() {
           {'why are you sending?'}
         </Text>
         <TextInput
-          autoFocus
           maxLength={15}
           style={{
             fontSize: 44,
