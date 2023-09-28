@@ -24,10 +24,11 @@ export default function Send() {
   // set filtered contacts
   useEffect(() => {
     const filterContacts = (c: Contact) => {
+      const lcFilterTerms = debouncedFilterTerms.toLowerCase(); 
       if (c.phoneNumbers?.length) {
         return (
-          c.firstName?.includes(debouncedFilterTerms) ||
-          c.lastName?.includes(debouncedFilterTerms)
+          c.firstName?.toLowerCase().includes(debouncedFilterTerms) ||
+          c.lastName?.toLowerCase().includes(debouncedFilterTerms)
           // phoneNumbersFlatMap.findIndex((e) => e?.includes(filterTerms)) !== -1
         );
       }
