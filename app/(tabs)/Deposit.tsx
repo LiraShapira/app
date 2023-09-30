@@ -81,15 +81,18 @@ export default function Deposit() {
             i18n.t('deposit_form_bin_status_full'),
             i18n.t('deposit_form_bin_status_empty'),
           ]}
+          optionValues={[true, false]}
         />
         <DepositFormSwitch
           onPress={(v: DepositForm['compostSmell']) => dispatch(setCompostSmell(v))}
           title={i18n.t('deposit_form_bin_status_smell')}
+          optionValues={[false, true]}
           switchLabels={[i18n.t('no'), i18n.t('yes')]}
         />
         <DepositFormSwitch
           onPress={(v: DepositForm['dryMatter']) => dispatch(setCompostDryMatter(v))}
           title={i18n.t('deposit_form_dry_matter')}
+          optionValues={['no', 'some', 'yes']}
           switchLabels={[i18n.t('no'), i18n.t('some'), i18n.t('yes')]}
         />
         <View>
