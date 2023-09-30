@@ -24,11 +24,11 @@ export default function Send() {
   // set filtered contacts
   useEffect(() => {
     const filterContacts = (c: Contact) => {
-      const lcFilterTerms = debouncedFilterTerms.toLowerCase(); 
+      const lcFilterTerms = debouncedFilterTerms.toLowerCase();
       if (c.phoneNumbers?.length) {
         return (
-          c.firstName?.toLowerCase().includes(debouncedFilterTerms) ||
-          c.lastName?.toLowerCase().includes(debouncedFilterTerms)
+          c.firstName?.toLowerCase().includes(lcFilterTerms) ||
+          c.lastName?.toLowerCase().includes(lcFilterTerms)
           // phoneNumbersFlatMap.findIndex((e) => e?.includes(filterTerms)) !== -1
         );
       }
@@ -67,7 +67,11 @@ export default function Send() {
         onChangeText={setFilterTerms}
       ></TextInput>
       {filterTerms && (
-        <Text>
+        <Text
+          style={{
+            color: Colors[colorScheme ?? 'light'].text,
+          }}
+        >
           {i18n.t('send_search_searching_for')} {debouncedFilterTerms}
         </Text>
       )}

@@ -9,7 +9,6 @@ import {
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
 import DepositFormSwitch from '../../components/form/DepositFormSwitch';
-import { useState } from 'react';
 import NumberInput from '../../components/form/NumberInput';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
@@ -17,6 +16,9 @@ import {
   selectNotes,
   selectValue,
   sendDepositForm,
+  setBinStatus,
+  setCompostDryMatter,
+  setCompostSmell,
   setNotes,
 } from '../../store/depositFormSlice';
 import {
@@ -28,9 +30,6 @@ import CustomButton from '../../components/utils/CustomButton';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
-  const [binStatus, setBinStatus] = useState<string>('');
-  const [compostSmell, setCompostSmell] = useState<string>('');
-  const [dryMatter, setDryMatter] = useState<string>('');
   const userId = useAppSelector(selectUserId);
   const value = useAppSelector(selectValue);
   const notes = useAppSelector(selectNotes);
@@ -71,44 +70,55 @@ export default function Deposit() {
               ...styles.amountLabel,
             }}
           >
-            Amount
+            Amount (kg)
           </Text>
           <NumberInput style={styles.amountInput} />
         </View>
         <DepositFormSwitch
-          onPress={setBinStatus}
+          onPress={(v: DepositForm['binStatus']) => dispatch(setBinStatus(v))}
           title={i18n.t('deposit_form_bin_status')}
           switchLabels={[
             i18n.t('deposit_form_bin_status_full'),
             i18n.t('deposit_form_bin_status_empty'),
           ]}
+          optionValues={[true, false]}
         />
         <DepositFormSwitch
-          onPress={setCompostSmell}
-          title='Compost smell?'
+          onPress={(v: DepositForm['compostSmell']) => dispatch(setCompostSmell(v))}
+          title={i18n.t('deposit_form_bin_status_smell')}
+          optionValues={[false, true]}
           switchLabels={[i18n.t('no'), i18n.t('yes')]}
         />
         <DepositFormSwitch
-          onPress={setDryMatter}
-          title='Dry matter?'
+          onPress={(v: DepositForm['dryMatter']) => dispatch(setCompostDryMatter(v))}
+          title={i18n.t('deposit_form_dry_matter')}
+          optionValues={['no', 'some', 'yes']}
           switchLabels={[i18n.t('no'), i18n.t('some'), i18n.t('yes')]}
         />
         <View>
-          <Text>Notes</Text>
+          <Text 
+          style={{ color: Colors[colorScheme ?? 'light'].text }}
+          >{i18n.t('deposit_form_notes')}</Text>
           <TextInput
             value={notes}
             onChangeText={(e) => dispatch(setNotes(e))}
             style={{
               borderColor: Colors[colorScheme ?? 'light'].text,
+              color: Colors[colorScheme ?? 'light'].text,
               ...styles.input,
             }}
-            placeholder="Any notes you'd like to add?"
-            placeholderTextColor={Colors[colorScheme ?? 'light'].text}
           />
         </View>
         <View style={styles.buttons}>
-          <CustomButton text='Send' onPress={onPressSend} disabled={!value} />
-          <CustomButton text='Skip' onPress={() => console.log('skip')} />
+          <CustomButton
+            text={i18n.t('deposit_form_send')}
+            onPress={onPressSend}
+            disabled={!value}
+          />
+          <CustomButton
+            text={i18n.t('deposit_form_skip')}
+            onPress={() => console.log('skip')}
+          />
         </View>
       </View>
     </View>

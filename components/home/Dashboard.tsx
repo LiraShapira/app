@@ -39,6 +39,7 @@ export default function Dashboard() {
             style={{
               color: Colors[colorScheme ?? 'light'].text,
               textAlign: 'center',
+              opacity: 0.5,
             }}
           >
             {i18n.t('dashboard_dashboard_buttons_scan')}
@@ -51,6 +52,7 @@ export default function Dashboard() {
           />
           <Text
             style={{
+              opacity: 0.5,
               color: Colors[colorScheme ?? 'light'].text,
               textAlign: 'center',
             }}

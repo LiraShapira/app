@@ -20,6 +20,11 @@ export default {
   deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',
   deposit_form_bin_status_empty: 'empty',
+  deposit_form_bin_status_smell: 'Does the compost smell bad?',
+  deposit_form_dry_matter: 'Dry matter?',
+  deposit_form_skip: 'Skip',
+  deposit_form_send: 'Send',
+  deposit_form_notes: 'Notes',
 
   send_search_title: 'Who to send to?',
   send_search_searching_for: 'searching for: ',

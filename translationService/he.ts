@@ -21,6 +21,11 @@ export default {
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',
   deposit_form_bin_status_empty: 'פנוי',
+  deposit_form_dry_matter: 'חומר יבש',
+  deposit_form_bin_status_smell: 'הקומפוסטר מסריח',
+  deposit_form_skip: 'דלג',
+  deposit_form_send: 'שלח',
+  deposit_form_notes: 'הערות / הארות',
 
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
