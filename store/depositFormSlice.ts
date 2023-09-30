@@ -4,8 +4,9 @@ import { saveDepositToDatabase } from '../API/depositAPI';
 import { SuccessApiResponse } from '../types/APITypes';
 import { Transaction } from '../types/Transaction';
 
-interface DepositFormState extends DepositForm {
+interface DepositFormState extends Omit<DepositForm, 'compostSmell'> {
   loading: boolean;
+  compostSmell?: boolean;
 }
 
 const initialState: DepositFormState = {
@@ -54,7 +55,7 @@ export const depositFormSlice = createSlice({
       state,
       action: PayloadAction<DepositForm['compostSmell']>
     ) => {
-      state.compostSmell = action.payload;
+        state.compostSmell = action.payload === 'yes';
     },
     setCompostDryMatter: (
       state,
