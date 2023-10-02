@@ -53,6 +53,7 @@ export default function TabLayout() {
         options={{
           title: '',
           tabBarIcon: () => <DepositButton />,
+          tabBarStyle: {display:'none'}
         }}
       />
       <Tabs.Screen
