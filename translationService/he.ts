@@ -33,6 +33,8 @@ export default {
   sendamount_how_much: 'כמה להעביר?',
   sendamount_continue: 'המשך',
   sendamount_back: 'חזרה למי',
+  send_search_no_results: 'אין תוצאות ל\'%{search}\'',
+  send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
 
   month_january: '	ינואר',
   month_february: '	פברואר',
