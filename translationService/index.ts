@@ -5,7 +5,7 @@ import he from './he';
 
 // Set the key-value pairs for the different languages you want to support.
 const translations = {
-  en,
+  en: he,
   // language code is 'he' & 'iw' for different devices
   he,
   iw: he

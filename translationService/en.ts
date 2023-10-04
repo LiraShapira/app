@@ -32,6 +32,8 @@ export default {
   sendamount_how_much: 'How much?',
   sendamount_continue: 'continue',
   sendamount_back: 'Back to contacts',
+  send_search_no_results: 'No results found for \'%{search}\'',
+  send_search_no_results_send_to_number: 'Send to \'%{number}\'',
 
   month_january: 'january',
   month_february: 'february',
