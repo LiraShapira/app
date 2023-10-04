@@ -4,7 +4,7 @@
     "slug": "liraShapiraApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/lira-shapira.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
