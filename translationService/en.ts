@@ -1,10 +1,13 @@
 export default {
+  // GENERAL UTILS
   welcome: 'Hello',
   yes: 'yes',
   no: 'no',
   some: 'some',
   cancel: 'Cancel',
+  continue: 'Continue',
 
+  // HOME
   tabs_wallet: 'wallet',
   tabs_market: 'market',
   home_lira_shapira_currency_you_have: 'You have:',
@@ -13,9 +16,9 @@ export default {
   dashboard_dashboard_buttons_request: 'request',
   dashboard_dashboard_buttons_scan: 'scan',
   home_transactions_title: 'My Activities',
-
   transactions_list_no_activities: 'No transactions to display',
 
+  // DEPOSIT
   deposit_title: 'What\'s the status?',
   deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',
@@ -26,15 +29,19 @@ export default {
   deposit_form_send: 'Send',
   deposit_form_notes: 'Notes',
 
+  // SEND
   send_search_title: 'Who to send to?',
   send_search_searching_for: 'searching for: ',
   send_search_placeholder: 'Enter a name or phone number',
   sendamount_how_much: 'How much?',
+  sendamount_reason: 'reason',
+  sendamount_amount: 'amount (kg)',
   sendamount_continue: 'continue',
   sendamount_back: 'Back to contacts',
   send_search_no_results: 'No results found for \'%{search}\'',
   send_search_no_results_send_to_number: 'Send to \'%{number}\'',
 
+  // MONTH UTILS
   month_january: 'january',
   month_february: 'february',
   month_march: 'march',

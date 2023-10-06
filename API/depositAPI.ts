@@ -3,8 +3,9 @@ import { ApiResponse } from "../types/APITypes";
 import { Transaction } from "../types/Transaction";
 import { SERVER_URL } from "./config";
 
-interface FormWithUserId extends DepositForm {
+export interface FormWithUserId extends Omit<DepositForm, 'notes'> {
   userId: string;
+  notes?: string;
 }
 
 export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Promise<ApiResponse<Transaction>> => {

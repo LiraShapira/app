@@ -146,7 +146,7 @@ export default function SendAmount() {
         <Text
           style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
         >
-          {'why are you sending?'}
+          { i18n.t('sendamount_reason')}
         </Text>
         <TextInput
           maxLength={15}

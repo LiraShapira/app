@@ -4,6 +4,7 @@
   "scripts": {
     "start": "expo start",
     "demo": "cross-env EXPO_PUBLIC_DEMO=true expo start",
+    "demo:offline": "cross-env EXPO_PUBLIC_DEMO=true expo start --offline",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",

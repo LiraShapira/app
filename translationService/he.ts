@@ -1,11 +1,13 @@
 export default {
+  // GENERAL UTILS
   welcome: 'ברוך הבא',
   yes: 'כן',
   no: 'לא',
   some: 'מעט',
   cancel: 'ביטול',
+  continue: 'המשך',
 
-
+  // HOME
   tabs_wallet: 'ארנק',
   tabs_market: 'שוק',
   home_lira_shapira_currency_you_have: 'כמה יש?',
@@ -14,9 +16,9 @@ export default {
   dashboard_dashboard_buttons_request: 'בקשה',
   dashboard_dashboard_buttons_scan: 'סריקה',
   home_transactions_title: 'הפעילויות שלי',
-
   transactions_list_no_activities: 'אין פעילויות',
 
+  // DEPOSIT
   deposit_title: 'מה הסטטוס?',
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',
@@ -27,15 +29,19 @@ export default {
   deposit_form_send: 'שלח',
   deposit_form_notes: 'הערות / הארות',
 
+  // SEND
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
   send_search_placeholder: 'הזן שם או מספר טלפון',
   sendamount_how_much: 'כמה להעביר?',
+  sendamount_reason: 'למה?',
+  sendamount_amount: 'כמה (kg)?',
   sendamount_continue: 'המשך',
   sendamount_back: 'חזרה למי',
   send_search_no_results: 'אין תוצאות ל\'%{search}\'',
   send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
 
+  // MONTH UTILS
   month_january: '	ינואר',
   month_february: '	פברואר',
   monthmarch: '	מרץ',
@@ -60,6 +66,4 @@ export default {
   month_october_MMM: 'אוקטובר',
   month_november_MMM: 'נובמבר',
   month_december_MMM: 'דצמבר',
-
-
 }

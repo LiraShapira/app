@@ -1,53 +1,24 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  TextInput,
-  Pressable,
-} from 'react-native';
+import { View, StyleSheet, Text, useColorScheme } from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
-import DepositFormSwitch from '../../components/form/DepositFormSwitch';
 import NumberInput from '../../components/form/NumberInput';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  resetForm,
-  selectNotes,
-  selectValue,
-  sendDepositForm,
-  setBinStatus,
-  setCompostDryMatter,
-  setCompostSmell,
-  setNotes,
-} from '../../store/depositFormSlice';
-import {
-  addUserTransaction,
-  incrementUserBalance,
-  selectUserId,
-} from '../../store/userSlice';
 import CustomButton from '../../components/utils/CustomButton';
+import { resetForm, selectValue } from '../../store/depositFormSlice';
+import { useRouter } from 'expo-router';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
-  const userId = useAppSelector(selectUserId);
-  const value = useAppSelector(selectValue);
-  const notes = useAppSelector(selectNotes);
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  const value = useAppSelector(selectValue);
 
-  const onPressSend = (e: any) => {
-    // send form
-    dispatch(sendDepositForm(userId))
-      .unwrap()
-      .then(({ data: transaction }) => {
-        dispatch(incrementUserBalance(transaction.amount));
-        dispatch(addUserTransaction(transaction));
-      });
+  const onPressCancel = () => {
     dispatch(resetForm());
+    router.replace('/Home');
   };
-
-  const onPressSkip = (e: any) => {
-    // send empty form
+  const onPressContinue = () => {
+    router.replace('/CompostReport');
   };
 
   return (
@@ -70,55 +41,17 @@ export default function Deposit() {
               ...styles.amountLabel,
             }}
           >
-            Amount (kg)
+            {i18n.t('sendamount_amount')}
           </Text>
-          <NumberInput style={styles.amountInput} />
         </View>
-        <DepositFormSwitch
-          onPress={(v: DepositForm['binStatus']) => dispatch(setBinStatus(v))}
-          title={i18n.t('deposit_form_bin_status')}
-          switchLabels={[
-            i18n.t('deposit_form_bin_status_full'),
-            i18n.t('deposit_form_bin_status_empty'),
-          ]}
-          optionValues={[true, false]}
-        />
-        <DepositFormSwitch
-          onPress={(v: DepositForm['compostSmell']) => dispatch(setCompostSmell(v))}
-          title={i18n.t('deposit_form_bin_status_smell')}
-          optionValues={[false, true]}
-          switchLabels={[i18n.t('no'), i18n.t('yes')]}
-        />
-        <DepositFormSwitch
-          onPress={(v: DepositForm['dryMatter']) => dispatch(setCompostDryMatter(v))}
-          title={i18n.t('deposit_form_dry_matter')}
-          optionValues={['no', 'some', 'yes']}
-          switchLabels={[i18n.t('no'), i18n.t('some'), i18n.t('yes')]}
-        />
-        <View>
-          <Text 
-          style={{ color: Colors[colorScheme ?? 'light'].text }}
-          >{i18n.t('deposit_form_notes')}</Text>
-          <TextInput
-            value={notes}
-            onChangeText={(e) => dispatch(setNotes(e))}
-            style={{
-              borderColor: Colors[colorScheme ?? 'light'].text,
-              color: Colors[colorScheme ?? 'light'].text,
-              ...styles.input,
-            }}
-          />
-        </View>
+        <NumberInput />
         <View style={styles.buttons}>
           <CustomButton
-            text={i18n.t('deposit_form_send')}
-            onPress={onPressSend}
+            text={i18n.t('continue')}
+            onPress={onPressContinue}
             disabled={!value}
           />
-          <CustomButton
-            text={i18n.t('deposit_form_skip')}
-            onPress={() => console.log('skip')}
-          />
+          <CustomButton text={i18n.t('cancel')} onPress={onPressCancel} />
         </View>
       </View>
     </View>
