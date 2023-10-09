@@ -16,21 +16,16 @@ export default function Send() {
   const debouncedFilterTerms = useDebounce(filterTerms, 300);
   const contacts = useSelector(selectContacts);
 
-  // console.log('flatmap');
-  // const phoneNumbersFlatMap = contacts
-  //   .filter((c) => c.phoneNumbers?.length)
-  //   .flatMap((c) => c.phoneNumbers?.map((phoneNumber) => phoneNumber.number));
-
   // when filter terms change
   // set filtered contacts
   useEffect(() => {
+
     const filterContacts = (c: Contact) => {
-      const lcFilterTerms = debouncedFilterTerms.toLowerCase();
       if (c.phoneNumbers?.length) {
         return (
-          c.firstName?.toLowerCase().includes(lcFilterTerms) ||
-          c.lastName?.toLowerCase().includes(lcFilterTerms)
-          // phoneNumbersFlatMap.findIndex((e) => e?.includes(filterTerms)) !== -1
+          c.firstName?.toLowerCase().includes(debouncedFilterTerms) ||
+          c.lastName?.toLowerCase().includes(debouncedFilterTerms) ||
+          c.phoneNumbers?.some(phoneNumber => phoneNumber.number.toString().includes(debouncedFilterTerms))
         );
       }
     };
@@ -41,6 +36,7 @@ export default function Send() {
       );
     };
     if (debouncedFilterTerms) filterBySearchTerm();
+
   }, [debouncedFilterTerms]);
 
   return (
