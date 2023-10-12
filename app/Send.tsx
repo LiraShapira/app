@@ -8,31 +8,24 @@ import { useDebounce } from '../hooks';
 import { useSelector } from 'react-redux';
 import { selectContacts } from '../store/userSlice';
 import SearchResultsInfo from '../components/Send/SearchResultsInfo';
+import {filterContactsCondition} from "./filterContactsCondition";
 
 export default function Send() {
   const [filterTerms, setFilterTerms] = useState<string>('');
   const [filteredContacts, setfilteredContacts] = useState<Contact[]>([]);
   const colorScheme = useColorScheme();
-  const debouncedFilterTerms = useDebounce(filterTerms, 300);
+  const debouncedFilterTerms: string = useDebounce(filterTerms, 300).toString();
   const contacts = useSelector(selectContacts);
 
   // when filter terms change
   // set filtered contacts
   useEffect(() => {
 
-    const filterContacts = (c: Contact) => {
-      if (c.phoneNumbers?.length) {
-        return (
-          c.firstName?.toLowerCase().includes(debouncedFilterTerms) ||
-          c.lastName?.toLowerCase().includes(debouncedFilterTerms) ||
-          c.phoneNumbers?.some(phoneNumber => phoneNumber.number.toString().includes(debouncedFilterTerms))
-        );
-      }
-    };
-
     const filterBySearchTerm = () => {
       setfilteredContacts(
-        contacts.filter((c) => c.phoneNumbers?.length).filter(filterContacts)
+        contacts
+            .filter((c) => c.phoneNumbers?.length)
+            .filter(cont =>  filterContactsCondition(cont, debouncedFilterTerms))
       );
     };
     if (debouncedFilterTerms) filterBySearchTerm();
