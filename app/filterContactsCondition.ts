@@ -8,6 +8,6 @@ export function filterContactsCondition(c: Contact, debouncedFilterTerms: string
             c.phoneNumbers?.some(
                 phoneNumber => phoneNumber.number?.toString().includes(debouncedFilterTerms.toLowerCase())
             )
-        );
+        ) ?? false;
     }
 }
