@@ -23,9 +23,7 @@ export default function Send() {
 
     const filterBySearchTerm = () => {
       setfilteredContacts(
-        contacts
-            .filter((c) => c.phoneNumbers?.length)
-            .filter(cont =>  filterContactsCondition(cont, debouncedFilterTerms))
+        contacts.filter(cont =>  filterContactsCondition(cont, debouncedFilterTerms))
       );
     };
     if (debouncedFilterTerms) filterBySearchTerm();
