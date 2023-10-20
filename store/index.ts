@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import depositFormReducer from './depositFormSlice';
 import userSliceReducer from './userSlice';
 import sendFormSliceReducer from './sendFormSlice';
+import authFormSlice from './authFormSlice';
 import appStateSlice from './appStateSlice';
 
 export const store = configureStore({
@@ -9,7 +10,9 @@ export const store = configureStore({
     depositForm: depositFormReducer,
     user: userSliceReducer,
     sendForm: sendFormSliceReducer,
-    appState: appStateSlice
+    authForm: authFormSlice,
+    appState: appStateSlice,
+
   },
 });
 

@@ -13,6 +13,7 @@ import { store } from '../store';
 import {
   loadContacts,
   loadUser,
+  onLoad,
   selectUserLoading,
   setUser,
 } from '../store/userSlice';
@@ -20,6 +21,7 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectDepositFormLoading } from '../store/depositFormSlice';
 import LoadingPage from '../components/utils/LoadingPage';
 import { FetchUserArgs } from '../types/User';
+import OnLoad from '../components/utils/OnLoad';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -52,44 +54,38 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  console.log("being called")
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
-  const userLoading = useAppSelector(selectUserLoading);
+  // const userLoading = useAppSelector(selectUserLoading);
   const depositFormLoading = useAppSelector(selectDepositFormLoading);
 
-  useEffect(() => {
-    dispatch(loadContacts());
-  });
 
-  useEffect(() => {
-    const test: FetchUserArgs = {
-      firstName: 'johnny',
-      lastName: 'test',
-      phoneNumber: '123456789',
-    };
+  // useEffect(() => {
+  //   const test: FetchUserArgs = {
+  //     firstName: 'johnny',
+  //     lastName: 'test',
+  //     phoneNumber: '123456789',
+  //   };
 
-    dispatch(loadUser(test))
-      .unwrap()
-      .then((user) => {
-        if (!user) {
-          console.log('failed to load user');
-        } else {
-          dispatch(setUser(user));
-        }
-      });
-  });
-
+  //   dispatch(loadUser(test))
+  //     .unwrap()
+  //     .then((user) => {
+  //       if (!user) {
+  //         console.log('failed to load user');
+  //       } else {
+  //         dispatch(setUser(user));
+  //       }
+  //     });
+  // }, []);
   return (
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        {depositFormLoading || userLoading ? (
-          <LoadingPage />
-        ) : (
-          <Stack>
-            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-          </Stack>
-        )}
+        <Stack>
+          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        </Stack>
       </ThemeProvider>
+      <OnLoad />
     </>
   );
 }
