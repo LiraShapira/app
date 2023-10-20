@@ -15,17 +15,6 @@ const useRegistrationForm = () => {
   const firstName = useAppSelector(selectFirstName);
   const lastName = useAppSelector(selectLastName);
   const phoneNumber = useAppSelector(selectPhoneNumber);
-  // const [firstName, lastName, phoneNumber] = useMultiAppSelectors([
-  //   selectFirstName,
-  //   selectLastName,
-  //   selectPhoneNumber,
-  // ]);
-
-  console.log({
-    firstName,
-    lastName,
-    phoneNumber,
-  })
 
   return {
     firstName,
@@ -39,7 +28,6 @@ const useRegistrationForm = () => {
 }
 
 export default function Auth() {
-  console.log("re-rendering")
   const colorScheme = useColorScheme() ?? 'light';
   const {
     firstName,
@@ -50,7 +38,6 @@ export default function Auth() {
     setPhoneNumber,
     onSubmit,
   } = useRegistrationForm();
-  console.log({firstName})
 
   return (
     <View style={styles.container}>

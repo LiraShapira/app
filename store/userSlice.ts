@@ -37,16 +37,14 @@ export const onLoad = createAsyncThunk<User | void, null, { state: RootState }>(
   async (_, {dispatch}) => {
     try {
       dispatch(setIsUserLoading(true))
-      console.log("dispatching");
-      console.log("phone number", await getItem("phoneNumber"));
       const phoneNumber = await getItem("phoneNumber");
-      console.log("if no phone number returning")
+
       if (!phoneNumber) return router.push("/Auth");
 
       if (phoneNumber) {
         dispatch(loadContacts());
         const user = await dispatch(loadUser({ phoneNumber }));
-        console.log("user", user);
+        
         if (!user) return router.push("/Auth");
         dispatch(setUser(user));
       }

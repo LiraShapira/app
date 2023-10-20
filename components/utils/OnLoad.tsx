@@ -8,7 +8,6 @@ const OnLoad = () => {
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
     useEffect(() => {
-      console.log("on mount, on mount", navigation.isReady())
       if(navigation.isReady()) dispatch(onLoad())
     //   dispatch(onLoad())
     }, [navigation.isReady()])

@@ -27,15 +27,11 @@ export const sendAuthForm = createAsyncThunk<
   { state: RootState }
 >('authForm/sendAuthForm', async (userId: string | undefined, { getState, dispatch }) => {
   const form = getState().authForm;
-  console.log({userId})
   try {
     const response = await fetchUser(form);
     dispatch(resetForm());
-    console.log(response)
     setItem("phoneNumber", response.phoneNumber)
     dispatch(setUser(response))
-    
-
     return response;
 
   } catch (e) {
@@ -49,16 +45,13 @@ const authFormSlice = createSlice({
   initialState,
   reducers: {
     setFirstName: (state, action: PayloadAction<string>) => {
-      console.log("here.", action.payload)
       state.firstName = action.payload;
-      console.log("being called", state.firstName)
     },
     setLastName: (state, action: PayloadAction<string>) => {
       state.lastName = action.payload;
     },
     setPhoneNumber: (state, action: PayloadAction<string>) => {
       state.phoneNumber = action.payload;
-      console.log("being called", state)
     },
     resetForm: (state) => {
       status = {
