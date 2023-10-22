@@ -136,7 +136,7 @@ export default function SendAmount() {
             color: Colors[colorScheme ?? 'light'].text,
             borderBottomWidth: 1,
             width: '60%',
-            borderColor: amountError ? 'red' : 'none',
+            ...(amountError && { borderColor: 'red' }),
           }}
           onChangeText={onChangeAmount}
           inputMode='numeric'
@@ -149,7 +149,6 @@ export default function SendAmount() {
           {'why are you sending?'}
         </Text>
         <TextInput
-          autoFocus
           maxLength={15}
           style={{
             fontSize: 44,

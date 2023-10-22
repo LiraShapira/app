@@ -24,6 +24,11 @@ export default {
   deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',
   deposit_form_bin_status_empty: 'empty',
+  deposit_form_bin_status_smell: 'Does the compost smell bad?',
+  deposit_form_dry_matter: 'Dry matter?',
+  deposit_form_skip: 'Skip',
+  deposit_form_send: 'Send',
+  deposit_form_notes: 'Notes',
 
   send_search_title: 'Who to send to?',
   send_search_searching_for: 'searching for: ',
@@ -31,6 +36,8 @@ export default {
   sendamount_how_much: 'How much?',
   sendamount_continue: 'continue',
   sendamount_back: 'Back to contacts',
+  send_search_no_results: 'No results found for \'%{search}\'',
+  send_search_no_results_send_to_number: 'Send to \'%{number}\'',
 
   month_january: 'january',
   month_february: 'february',

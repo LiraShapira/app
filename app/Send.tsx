@@ -7,6 +7,7 @@ import { Contact } from 'expo-contacts';
 import { useDebounce } from '../hooks';
 import { useSelector } from 'react-redux';
 import { selectContacts } from '../store/userSlice';
+import SearchResultsInfo from '../components/Send/SearchResultsInfo';
 
 export default function Send() {
   const [filterTerms, setFilterTerms] = useState<string>('');
@@ -24,10 +25,11 @@ export default function Send() {
   // set filtered contacts
   useEffect(() => {
     const filterContacts = (c: Contact) => {
+      const lcFilterTerms = debouncedFilterTerms.toLowerCase();
       if (c.phoneNumbers?.length) {
         return (
-          c.firstName?.includes(debouncedFilterTerms) ||
-          c.lastName?.includes(debouncedFilterTerms)
+          c.firstName?.toLowerCase().includes(lcFilterTerms) ||
+          c.lastName?.toLowerCase().includes(lcFilterTerms)
           // phoneNumbersFlatMap.findIndex((e) => e?.includes(filterTerms)) !== -1
         );
       }
@@ -65,11 +67,13 @@ export default function Send() {
         placeholderTextColor={Colors[colorScheme ?? 'light'].shading}
         onChangeText={setFilterTerms}
       ></TextInput>
-      {filterTerms && (
-        <Text>
-          {i18n.t('send_search_searching_for')} {debouncedFilterTerms}
-        </Text>
+      {debouncedFilterTerms && (
+        <SearchResultsInfo
+          debouncedFilterTerms={debouncedFilterTerms}
+          noContacts={filteredContacts.length === 0}
+        />
       )}
+
       <View style={{ height: '100%' }}>
         <ContactList
           contacts={debouncedFilterTerms ? filteredContacts : contacts}

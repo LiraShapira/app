@@ -4,17 +4,19 @@ import Switch from '../../components/form/Switch';
 
 interface DepositFormSwitchProps {
   switchLabels: string[];
+  optionValues: any[];
   title: string;
-  onPress: (v: string) => void;
+  onPress: (v: any) => void;
 }
 
 export default function DepositFormSwitch({
   switchLabels,
   title,
+  optionValues,
   onPress,
 }: DepositFormSwitchProps) {
   const colorScheme = useColorScheme();
-  const options = switchLabels.map((l) => ({ label: l, value: l }));
+  const options = switchLabels.map((l, i) => ({ label: l, value: optionValues[i] }));
 
   return (
     <View style={styles.depositSwitchContainer}>

@@ -11,7 +11,7 @@ This is the Frontend for the new Lira Shapira App, a local eco-currency. Earn by
 עבור כל קילו של זבל אורגני- מונפקת לירה שפירא אחת.
 </span>
 
-<p align='center' padding="8px 0 0 0">  
+<p align='center' padding="8px 0 0 0">
 <img width="32px" title="Typescript" src="https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/typescript.svg" style="max-width:100%;">
 <img width="32px" title="Redux" src="https://raw.githubusercontent.com/rahulbanerjee26/githubAboutMeGenerator/main/icons/redux.svg">
 <img width="32px" title="React-Native" src="https://reactnative.dev/img/header_logo.svg" style="max-width:100%;"/>
@@ -24,7 +24,6 @@ Lira Shapira is looking for contributions! 🤚
 
 - check out our github [project](https://github.com/orgs/LiraShapira/projects/1/views/1) for updates and for a list of good [issues to get started with](https://github.com/orgs/LiraShapira/projects/1/views/4).
 
-
 ## To start work on the app:
 
 - fork & clone the repo.
@@ -34,7 +33,7 @@ Lira Shapira is looking for contributions! 🤚
 
 ### without a local running server:
 
-- run `npm run dev`
+- run `npm run demo`
 - View the app on web or use [Expo Go](https://docs.expo.dev/get-started/expo-go/) to view on your mobile device
 
 ### in conjuction with the lira shapira backend:

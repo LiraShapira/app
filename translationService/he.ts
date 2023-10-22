@@ -23,6 +23,11 @@ export default {
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',
   deposit_form_bin_status_empty: 'פנוי',
+  deposit_form_dry_matter: 'חומר יבש',
+  deposit_form_bin_status_smell: 'הקומפוסטר מסריח',
+  deposit_form_skip: 'דלג',
+  deposit_form_send: 'שלח',
+  deposit_form_notes: 'הערות / הארות',
 
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
@@ -30,6 +35,8 @@ export default {
   sendamount_how_much: 'כמה להעביר?',
   sendamount_continue: 'המשך',
   sendamount_back: 'חזרה למי',
+  send_search_no_results: 'אין תוצאות ל\'%{search}\'',
+  send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
 
   month_january: '	ינואר',
   month_february: '	פברואר',

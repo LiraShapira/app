@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "dev": "cross-env EXPO_PUBLIC_DEV=true expo start",
+    "demo": "cross-env EXPO_PUBLIC_DEMO=true expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -29,6 +29,7 @@
     "expo-system-ui": "~2.4.0",
     "expo-web-browser": "~12.3.2",
     "i18n-js": "^4.2.0",
+    "libphonenumber-js": "^1.10.45",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.5",

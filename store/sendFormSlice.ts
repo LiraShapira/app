@@ -36,9 +36,7 @@ export const saveTransaction = createAsyncThunk<
   { state: RootState }
 >(
   'user/saveTransaction',
-  async (
-    saveTransactionArgs
-  ): Promise<SuccessApiResponse<TransactionWithUsers>> => {
+  async (saveTransactionArgs): Promise<SuccessApiResponse<TransactionWithUsers>> => {
     const response = await saveTransactionToDatabase(saveTransactionArgs);
     if (!('data' in response)) {
       throw new Error(response.message)

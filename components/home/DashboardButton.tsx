@@ -14,17 +14,16 @@ interface DashboardButtonProps {
 export default function DashboardButton({
   iconName,
   iconLibrary,
-  route = '/Deposit',
+  route,
 }: DashboardButtonProps) {
   const colorScheme = useColorScheme();
-  const onPress = () => {
-    console.log('navigate to ' + route);
-  };
 
   return (
-    <Link replace href={route}>
-      <View style={styles.labeledButton}>
-        <Pressable onPress={onPress}>
+    <>
+    {route ? (
+      <Link href={route}>
+        <View style={{...styles.labeledButton, backgroundColor: 'grey' }}>
+        <Pressable>
           {({ pressed }) => (
             // TODO typing
             // @ts-ignore TODO typing
@@ -41,7 +40,30 @@ export default function DashboardButton({
           )}
         </Pressable>
       </View>
-    </Link>
+      </Link>
+    ) : (
+      <View>
+        <View style={{...styles.labeledButton, backgroundColor: '#5f5f5f', opacity: 0.5 }}>
+          <Pressable>
+            {({ pressed }) => (
+              // TODO typing
+              // @ts-ignore TODO typing
+              <CustomIcon
+                iconLibraryName={iconLibrary}
+                iconName={iconName}
+                color={
+                  pressed
+                    ? Colors[colorScheme ?? 'light'].tint
+                    : Colors[colorScheme ?? 'light'].text
+                }
+                size={30}
+              />
+            )}
+          </Pressable>
+        </View>
+      </View>
+    )}
+    </>
   );
 }
 
@@ -56,9 +78,7 @@ const styles = StyleSheet.create({
     width: 70,
     alignItems: 'center',
     marginHorizontal: 5,
-    backgroundColor: 'grey',
     borderRadius: 50,
-
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,
@@ -87,5 +107,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-  },
+  }
 });
