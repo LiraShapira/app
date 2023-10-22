@@ -17,4 +17,8 @@ export interface User {
   phoneNumber: string
 }
 
-export type FetchUserArgs = Pick<User, 'firstName' | 'lastName' | 'phoneNumber'>
+export interface FetchUserArgs {
+  phoneNumber: string;
+  firstName?: string;
+  lastName?: string;
+}

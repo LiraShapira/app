@@ -1,17 +1,20 @@
 import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import { fetchUser } from '../API/userAPI';
-import {setItem} from '../utils/asyncStorage';
+import { setItem } from '../utils/asyncStorage';
 import { setUser } from './userSlice';
+import { User } from '../types/User';
+import { StorageKeys } from '../types/AsyncStorage';
 
 interface AuthForm {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  
+
 }
 interface AuthFormState extends AuthForm {
   loading: boolean;
+  isLoggedIn: boolean;
 }
 
 const initialState: AuthFormState = {
@@ -19,24 +22,27 @@ const initialState: AuthFormState = {
   lastName: '',
   phoneNumber: '',
   loading: false,
+  isLoggedIn: false,
 };
 
 export const sendAuthForm = createAsyncThunk<
-  string | false,
-  string,
+  User | void,
+  string | undefined,
   { state: RootState }
->('authForm/sendAuthForm', async (userId: string | undefined, { getState, dispatch }) => {
-  const form = getState().authForm;
+>('authForm/sendAuthForm', async (_userId: string | undefined, { getState, dispatch }) => {
+  const { phoneNumber, firstName, lastName } = getState().authForm;
   try {
-    const response = await fetchUser(form);
-    dispatch(resetForm());
-    setItem("phoneNumber", response.phoneNumber)
-    dispatch(setUser(response))
-    return response;
-
+    const user = await fetchUser({ phoneNumber, firstName, lastName });
+    if (user) {
+      dispatch(resetForm());
+      setItem(StorageKeys.phoneNumber, user.phoneNumber)
+      dispatch(setUser(user))
+      return user;
+    } else {
+      throw new Error('User not found');
+    }
   } catch (e) {
     console.log(e);
-    return false;
   }
 });
 
@@ -54,9 +60,10 @@ const authFormSlice = createSlice({
       state.phoneNumber = action.payload;
     },
     resetForm: (state) => {
-      status = {
-        ...initialState
-      }
+      state = initialState;
+    },
+    setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload;
     }
   },
   extraReducers: builder => {
@@ -70,18 +77,15 @@ const authFormSlice = createSlice({
   },
 });
 
-export const { 
+export const {
   setFirstName,
   setLastName,
   setPhoneNumber,
-  resetForm
+  resetForm,
+  setIsLoggedIn,
 } = authFormSlice.actions;
 
 const rootSelector = (state: RootState) => state.authForm;
-export const selectAuthFormLoading = (state: RootState) => createSelector(
-  rootSelector,
-  state => state.loading
-);
 
 export const selectFirstName = (state: RootState) => createSelector(
   rootSelector,
@@ -97,5 +101,9 @@ export const selectPhoneNumber = (state: RootState) => createSelector(
   rootSelector,
   state => state.phoneNumber
 );
+
+export const selectIsLoggedIn = (state: RootState) => state.authForm.isLoggedIn;
+
+export const selectAuthFormLoading = (state: RootState) => state.authForm.loading;
 
 export default authFormSlice.reducer;

@@ -37,8 +37,7 @@ export const saveTransaction = createAsyncThunk<
 >(
   'user/saveTransaction',
   async (
-    saveTransactionArgs,
-    { getState }
+    saveTransactionArgs
   ): Promise<SuccessApiResponse<TransactionWithUsers>> => {
     const response = await saveTransactionToDatabase(saveTransactionArgs);
     if (!('data' in response)) {
@@ -81,7 +80,7 @@ export const { setChosenContact, unsetChosenContact, setReason, setAmount } =
 
 export const selectChosenContact = (state: RootState) =>
   state.sendForm.chosenContact;
-export const selectUserLoading = (state: RootState) => state.sendForm.loading;
+export const selectSendFormLoading = (state: RootState) => state.sendForm.loading;
 export const selectAmount = (state: RootState) => state.sendForm.amount;
 export const selectReason = (state: RootState) => state.sendForm.reason;
 

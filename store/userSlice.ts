@@ -7,6 +7,7 @@ import { fetchContacts } from "../API/contactsAPI";
 import { Contact } from "expo-contacts";
 import { getItem } from "../utils/asyncStorage";
 import { router } from "expo-router";
+import { StorageKeys } from "../types/AsyncStorage";
 
 interface UserState {
   user: User;
@@ -32,42 +33,28 @@ const initialState: UserState = {
   isConnected: false,
 };
 
-export const onLoad = createAsyncThunk<User | void, null, { state: RootState }>(
-  "user/onLoad",
-  async (_, {dispatch}) => {
-    try {
-      dispatch(setIsUserLoading(true))
-      const phoneNumber = await getItem("phoneNumber");
-
-      if (!phoneNumber) return router.push("/Auth");
-
-      if (phoneNumber) {
-        dispatch(loadContacts());
-        const user = await dispatch(loadUser({ phoneNumber }));
-        
-        if (!user) return router.push("/Auth");
-        dispatch(setUser(user));
-      }
-    } catch (e){
-      console.log(e)
-    } finally{
-      dispatch(setIsUserLoading(false))
-    }
-  }
-);
-
-// export const onLoad = createAsyncThunk<{ state: RootState }>(
+// export const onLoad = createAsyncThunk<User | void, null, { state: RootState }>(
 //   "user/onLoad",
-//   async(async ({ dispatch }) => {
-//     console.log("dispatching");
-//     console.log("phone number", await getItem("phoneNumber"));
-//     const phoneNumber = await getItem("phoneNumber");
-//     if (phoneNumber) {
-//       const user = await dispatch(loadUser({ phoneNumber }));
-//       console.log("user", user);
-//       user && dispatch(setUser(user));
+//   async (_, { dispatch }) => {
+//     try {
+//       dispatch(setIsUserLoading(true))
+//       const phoneNumber = await getItem(StorageKeys.phoneNumber);
+
+//       if (!phoneNumber) return router.push("/Auth");
+
+//       if (phoneNumber) {
+//         dispatch(loadContacts());
+//         const user = await dispatch(loadUser({ phoneNumber }));
+
+//         if (!user) return router.push("/Auth");
+//         dispatch(setUser(user));
+//       }
+//     } catch (e) {
+//       console.log(e)
+//     } finally {
+//       dispatch(setIsUserLoading(false))
 //     }
-//   })
+//   }
 // );
 
 export const loadUser = createAsyncThunk<
@@ -82,7 +69,7 @@ export const loadUser = createAsyncThunk<
     } else {
       throw new Error("failure to get user");
     }
-  } catch (e) {}
+  } catch (e) { }
 });
 
 export const loadContacts = createAsyncThunk<
@@ -112,21 +99,19 @@ export const userSlice = createSlice({
       state.loading = action.payload;
     }
   },
-
   extraReducers: (builder) => {
-    builder.addCase(loadContacts.fulfilled, (state, action) => {
-      state.contacts = action.payload; // Update contacts directly on the slice
-    });
-  },
-  // extraReducers: builder => {
-  //   builder
-  //     .addCase(loadUser.pending, state => {
-  //       state.loading = true;
-  //     })
-  //     .addCase(loadUser.fulfilled, (state, action) => {
-  //       state.loading = false;
-  //       state.user = action.payload;
-  //     });
+    builder
+      .addCase(loadContacts.fulfilled, (state, action) => {
+        state.contacts = action.payload; // Update contacts directly on the slice
+      })
+      .addCase(loadUser.pending, state => {
+        state.loading = true;
+      })
+      .addCase(loadUser.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.user = action.payload;
+      });
+  }
 });
 
 export const { setUser, addUserTransaction, setUserBalance, setIsUserLoading } =

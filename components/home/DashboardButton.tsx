@@ -22,7 +22,7 @@ export default function DashboardButton({
   };
 
   return (
-    <Link href={route}>
+    <Link replace href={route}>
       <View style={styles.labeledButton}>
         <Pressable onPress={onPress}>
           {({ pressed }) => (
