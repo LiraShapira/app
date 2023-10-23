@@ -9,7 +9,7 @@ export const setItem = async (key: StorageKeys, value: string) => {
     }
 }
 
-export const getItem = async (key: StorageKeys): Promise<string> => {
+export const getItem = async (key: StorageKeys): Promise<string | null> => {
     try {
         const value = await AsyncStorage.getItem(key);
         if (value === null) {
@@ -18,6 +18,6 @@ export const getItem = async (key: StorageKeys): Promise<string> => {
         return value;
     } catch (e) {
         console.log(e);
-        return 'error'
+        return null;
     }
 }

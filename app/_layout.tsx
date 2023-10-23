@@ -10,7 +10,7 @@ import { Platform, useColorScheme } from 'react-native';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../store';
-import { loadUser, selectUserLoading, setIsUserLoading, setUser } from '../store/userSlice';
+import { loadContacts, loadUser, selectUserLoading, setIsUserLoading, setUser } from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 // import OnLoad from '../components/utils/OnLoad';
 import { getItem } from '../utils/asyncStorage';
@@ -60,6 +60,10 @@ function RootLayoutNav() {
   const isDepositFormLoading = useAppSelector(selectDepositFormLoading);
   const isSendFormLoading = useAppSelector(selectSendFormLoading);
 
+  useEffect(() => {
+    dispatch(loadContacts());
+  });
+  
   useEffect(() => {
     dispatch(setIsUserLoading(true))
     

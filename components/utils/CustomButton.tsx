@@ -43,7 +43,6 @@ export default function CustomButton({
   return (
     <View
       style={{
-        height: heightSizeMap[size],
         backgroundColor: Colors[colorScheme ?? 'light'].shading,
         ...styles.submitButton,
       }}
@@ -55,7 +54,6 @@ export default function CustomButton({
       >
         <Text
           style={{
-            padding: 8,
             fontSize: fontSizeMap[size],
             color: Colors[colorScheme ?? 'light'].text,
           }}

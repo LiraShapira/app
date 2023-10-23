@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import { fetchUser } from '../API/userAPI';
 import { setItem } from '../utils/asyncStorage';
@@ -85,22 +85,14 @@ export const {
   setIsLoggedIn,
 } = authFormSlice.actions;
 
-const rootSelector = (state: RootState) => state.authForm;
+export const selectFirstName = (state: RootState) => state.authForm.firstName
 
-export const selectFirstName = (state: RootState) => createSelector(
-  rootSelector,
-  state => state.firstName
-);
 
-export const selectLastName = (state: RootState) => createSelector(
-  rootSelector,
-  state => state.lastName
-);
+export const selectLastName = (state: RootState) => state.authForm.lastName
 
-export const selectPhoneNumber = (state: RootState) => createSelector(
-  rootSelector,
-  state => state.phoneNumber
-);
+
+export const selectPhoneNumber = (state: RootState) => state.authForm.phoneNumber
+
 
 export const selectIsLoggedIn = (state: RootState) => state.authForm.isLoggedIn;
 
