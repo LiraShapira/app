@@ -6,6 +6,10 @@ export default {
   cancel: 'Cancel',
 
   tabs_wallet: 'wallet',
+  auth_login: 'Login',
+  auth_register: 'Register',
+  auth_to_login: 'To Login',
+  auth_to_register: 'To Register',
   tabs_market: 'market',
   home_lira_shapira_currency_you_have: 'You have:',
   home_lira_shapira_currency_shorthand: 'L"S',

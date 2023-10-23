@@ -8,6 +8,8 @@ export default {
 
   tabs_wallet: 'ארנק',
   tabs_market: 'שוק',
+  auth_log_in: 'להיכנס',
+  auth_register: 'להירשם',
   home_lira_shapira_currency_you_have: 'כמה יש?',
   home_lira_shapira_currency_shorthand: 'ל"ש',
   dashboard_dashboard_buttons_send: 'העברה',
