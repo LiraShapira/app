@@ -1,9 +1,14 @@
 import { StyleSheet, ActivityIndicator, View } from 'react-native';
 
-export default function LoadingPage() {
+interface LoadingPageProps {
+  children: React.ReactNode;
+  loading: boolean;
+}
+
+export default function LoadingPage({ children, loading }: LoadingPageProps) {
   return (
     <View style={styles.loadingPage}>
-      <ActivityIndicator color='black' size='large' />
+      {loading ? <ActivityIndicator color="black" size="large" /> : children}
     </View>
   );
 }

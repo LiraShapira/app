@@ -8,6 +8,8 @@ export default {
 
   tabs_wallet: 'ארנק',
   tabs_market: 'שוק',
+  auth_log_in: 'להיכנס',
+  auth_register: 'להירשם',
   home_lira_shapira_currency_you_have: 'כמה יש?',
   home_lira_shapira_currency_shorthand: 'ל"ש',
   dashboard_dashboard_buttons_send: 'העברה',
@@ -33,6 +35,8 @@ export default {
   sendamount_how_much: 'כמה להעביר?',
   sendamount_continue: 'המשך',
   sendamount_back: 'חזרה למי',
+  send_search_no_results: 'אין תוצאות ל\'%{search}\'',
+  send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
 
   month_january: '	ינואר',
   month_february: '	פברואר',

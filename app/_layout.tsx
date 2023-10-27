@@ -6,20 +6,20 @@ import {
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot, Stack } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { Platform, useColorScheme } from 'react-native';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../store';
-import {
-  loadContacts,
-  loadUser,
-  selectUserLoading,
-  setUser,
-} from '../store/userSlice';
+import { loadContacts, loadUser, selectUserLoading, setIsUserLoading, setUser } from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { selectDepositFormLoading } from '../store/depositFormSlice';
+// import OnLoad from '../components/utils/OnLoad';
+import { getItem } from '../utils/asyncStorage';
+import { StorageKeys } from '../types/AsyncStorage';
+import { selectAuthFormLoading, selectIsLoggedIn, setIsLoggedIn } from '../store/authFormSlice';
+import Auth from './Auth';
 import LoadingPage from '../components/utils/LoadingPage';
-import { FetchUserArgs } from '../types/User';
+import { selectDepositFormLoading } from '../store/depositFormSlice';
+import { selectSendFormLoading } from '../store/sendFormSlice';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -54,41 +54,64 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
-  const userLoading = useAppSelector(selectUserLoading);
-  const depositFormLoading = useAppSelector(selectDepositFormLoading);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isUserLoading = useAppSelector(selectUserLoading);
+  const isAuthLoading = useAppSelector(selectAuthFormLoading);
+  const isDepositFormLoading = useAppSelector(selectDepositFormLoading);
+  const isSendFormLoading = useAppSelector(selectSendFormLoading);
 
   useEffect(() => {
     dispatch(loadContacts());
   });
-
+  
   useEffect(() => {
-    const test: FetchUserArgs = {
-      firstName: 'johnny',
-      lastName: 'test',
-      phoneNumber: '123456789',
-    };
-
-    dispatch(loadUser(test))
-      .unwrap()
-      .then((user) => {
-        if (!user) {
-          console.log('failed to load user');
-        } else {
-          dispatch(setUser(user));
+    dispatch(setIsUserLoading(true))
+    
+    if (Platform.OS === 'web') {
+      const phoneNumber = localStorage.getItem('phoneNumber');
+      // if previously logged in, a phoneNumber will be stored in localStorage
+      // we retrieve this to load the user
+      if (phoneNumber) {
+        dispatch(loadUser({ phoneNumber }))
+          .unwrap()
+          .then((user) => {
+            if (user) {
+              dispatch(setUser(user));
+              localStorage.setItem('phoneNumber', user.phoneNumber);
+              dispatch(setIsLoggedIn(true));
+            }
+          });
+      }
+    } else {
+      getItem(StorageKeys.phoneNumber).then((phoneNumber) => {
+        if (phoneNumber) {
+          dispatch(loadUser({ phoneNumber }))
+            .unwrap()
+            .then((user) => {
+              if (user) {
+                dispatch(setUser(user));
+                dispatch(setIsLoggedIn(true));
+              }
+            });
         }
       });
+    }
+
+    dispatch(setIsUserLoading(false));
   }, []);
 
   return (
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        {depositFormLoading || userLoading ? (
-          <LoadingPage />
-        ) : (
+        <LoadingPage loading={isUserLoading || isAuthLoading || isDepositFormLoading || isSendFormLoading}> 
+        {isLoggedIn ? (
           <Stack>
-            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           </Stack>
-        )}
+        ) : (
+          <Auth />
+          )}
+          </LoadingPage>
       </ThemeProvider>
     </>
   );

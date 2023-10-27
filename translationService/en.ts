@@ -6,6 +6,10 @@ export default {
   cancel: 'Cancel',
 
   tabs_wallet: 'wallet',
+  auth_login: 'Login',
+  auth_register: 'Register',
+  auth_to_login: 'To Login',
+  auth_to_register: 'To Register',
   tabs_market: 'market',
   home_lira_shapira_currency_you_have: 'You have:',
   home_lira_shapira_currency_shorthand: 'L"S',
@@ -32,6 +36,8 @@ export default {
   sendamount_how_much: 'How much?',
   sendamount_continue: 'continue',
   sendamount_back: 'Back to contacts',
+  send_search_no_results: 'No results found for \'%{search}\'',
+  send_search_no_results_send_to_number: 'Send to \'%{number}\'',
 
   month_january: 'january',
   month_february: 'february',

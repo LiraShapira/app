@@ -52,7 +52,14 @@ export default function TabLayout() {
         name='Deposit'
         options={{
           title: '',
-          tabBarIcon: () => <DepositButton />,
+          tabBarIcon: () => (
+            <CustomIcon
+              iconName="leaf-circle-outline"
+              iconLibraryName="MaterialCommunityIcons"
+              size={55}
+              color={Colors[colorScheme ?? 'light'].text}
+            />
+          ),
         }}
       />
       <Tabs.Screen

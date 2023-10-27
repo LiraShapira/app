@@ -17,7 +17,6 @@ export default function ContactItem({ contact }: ContactItemProps) {
 
   const onSelectContact = () => {
     dispatch(setChosenContact(contact));
-    // reroute to next screen
     router.replace('/SendAmount');
   };
 
