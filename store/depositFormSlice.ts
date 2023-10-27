@@ -3,6 +3,7 @@ import { RootState } from '.';
 import { saveDepositToDatabase } from '../API/depositAPI';
 import { SuccessApiResponse } from '../types/APITypes';
 import { Transaction } from '../types/Transaction';
+import { CompostStand, DepositForm } from '../types/Deposit';
 
 interface DepositFormState extends Omit<DepositForm, 'compostSmell'> {
   loading: boolean;
@@ -12,7 +13,8 @@ interface DepositFormState extends Omit<DepositForm, 'compostSmell'> {
 const initialState: DepositFormState = {
   amount: 0,
   loading: false,
-  notes: ''
+  notes: '',
+  compostStand: CompostStand.hakaveret
 };
 
 export const sendDepositForm = createAsyncThunk<
@@ -63,6 +65,10 @@ export const depositFormSlice = createSlice({
     ) => {
       state.dryMatter = action.payload;
     },
+    setCompostStand: (state, action: PayloadAction<CompostStand>) => {
+      console.log('action', action.payload)
+      state.compostStand = action.payload;
+    },
     resetForm: (state) => {
       delete state.dryMatter;
       delete state.compostSmell;
@@ -70,6 +76,7 @@ export const depositFormSlice = createSlice({
       state.amount = 0;
       state.notes = '';
     },
+    
   },
   extraReducers: (builder) => {
     builder
@@ -89,12 +96,14 @@ export const {
   setNotes,
   setCompostDryMatter,
   setBinStatus,
-  setCompostSmell
+  setCompostSmell,
+  setCompostStand
 } = depositFormSlice.actions;
 
 export const selectDepositFormLoading = (state: RootState) =>
   state.depositForm.loading;
 export const selectValue = (state: RootState) => state.depositForm.amount;
 export const selectNotes = (state: RootState) => state.depositForm.notes;
+export const selectCompostStand = (state: RootState) => state.depositForm.compostStand;
 
 export default depositFormSlice.reducer;

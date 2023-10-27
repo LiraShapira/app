@@ -1,10 +1,12 @@
 import { mockTransaction } from "../Mocks/mockDB";
 import { ApiResponse } from "../types/APITypes";
+import { DepositForm } from "../types/Deposit";
 import { Transaction } from "../types/Transaction";
 import { SERVER_URL } from "./config";
 
-interface FormWithUserId extends DepositForm {
+interface FormWithUserId extends Omit<DepositForm, 'compostSmell'> {
   userId: string;
+  compostSmell?: boolean;
 }
 
 export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Promise<ApiResponse<Transaction>> => {

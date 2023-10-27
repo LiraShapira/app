@@ -30,6 +30,22 @@ export default {
   deposit_form_send: 'Send',
   deposit_form_notes: 'Notes',
 
+  deposit_compost_stand_cafe_shapira: 'cafe shapira',
+  deposit_compost_stand_masalant: 'masalant 27',
+  deposit_compost_stand_hizkiyahu_hamelech: 'hizkiyahu hamelech',
+  deposit_compost_stand_kerem_hazeitim: 'kerem ha\'zeitim',
+  deposit_compost_stand_park_sonya: 'park sonya',
+  deposit_compost_stand_harakevet: 'park sonya',
+
+ deposit_compost_stand_hakaveret: 'Ha\'kaveret',
+ deposit_compost_stand_food_forest_park_hahurshot: 'Food forest park hahurshot',
+ deposit_compost_stand_tel_hubez: 'Tel hubez',
+ deposit_compost_stand_ginat_hahistadrut: 'ginat Ha\'histadrut',
+ deposit_compost_stand_alexander_zaid: 'Alexander zaid',
+ deposit_compost_stand_de_Modina: 'de Modina',
+ deposit_compost_stand_shiffer: 'shiffer st',
+ deposit_compost_stand_Burma: 'Burma',
+
   send_search_title: 'Who to send to?',
   send_search_searching_for: 'searching for: ',
   send_search_placeholder: 'Enter a name or phone number',
