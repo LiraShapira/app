@@ -29,6 +29,21 @@ export default {
   deposit_form_send: 'שלח',
   deposit_form_notes: 'הערות / הארות',
 
+  deposit_compost_stand_cafe_shapira: 'קפה שפירא ',
+  deposit_compost_stand_masalant: 'מרכז קהילתי (ישראל מסלנט 27) ',
+  deposit_compost_stand_hizkiyahu_hamelech: 'חזקיהו המלך ',
+  deposit_compost_stand_kerem_hazeitim: 'כרם הזיתים ',
+  deposit_compost_stand_park_sonya: 'פארק סוניה ',
+  deposit_compost_stand_hakaveret: 'הכוורת  ',
+  deposit_compost_stand_food_forest_park_hahurshot:
+    'יער המאכל- פארק החורשות  ',
+  deposit_compost_stand_tel_hubez: 'תל חובז  ',
+  deposit_compost_stand_ginat_hahistadrut: 'גינת ההסתדרות  ',
+  deposit_compost_stand_alexander_zaid: 'גינת אלכסנדר זייד  ',
+  deposit_compost_stand_de_modina: 'גינת דה-מודינה ',
+  deposit_compost_stand_shiffer: 'השקמה ברחוב שיפר ',
+  deposit_compost_stand_burma: 'חורשת בורמה',
+
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
   send_search_placeholder: 'הזן שם או מספר טלפון',
