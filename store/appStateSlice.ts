@@ -22,11 +22,14 @@ export const appStateSlice = createSlice({
     },
     setModalText: (state, action: PayloadAction<string>) => {
       state.modalText = action.payload;
+    },
+    setAppLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     }
   },
 });
 
-export const { setIsModalVisible, setModalText } =
+export const { setIsModalVisible, setModalText, setAppLoading } =
   appStateSlice.actions;
 
 export const selectModalText = (state: RootState) => state.appState.modalText;

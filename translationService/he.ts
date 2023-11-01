@@ -8,6 +8,8 @@ export default {
 
   tabs_wallet: 'ארנק',
   tabs_market: 'שוק',
+  auth_log_in: 'להיכנס',
+  auth_register: 'להירשם',
   home_lira_shapira_currency_you_have: 'כמה יש?',
   home_lira_shapira_currency_shorthand: 'ל"ש',
   dashboard_dashboard_buttons_send: 'העברה',
@@ -27,12 +29,29 @@ export default {
   deposit_form_send: 'שלח',
   deposit_form_notes: 'הערות / הארות',
 
+  deposit_compost_stand_cafe_shapira: 'קפה שפירא ',
+  deposit_compost_stand_masalant: 'מרכז קהילתי (ישראל מסלנט 27) ',
+  deposit_compost_stand_hizkiyahu_hamelech: 'חזקיהו המלך ',
+  deposit_compost_stand_kerem_hazeitim: 'כרם הזיתים ',
+  deposit_compost_stand_park_sonya: 'פארק סוניה ',
+  deposit_compost_stand_hakaveret: 'הכוורת  ',
+  deposit_compost_stand_food_forest_park_hahurshot:
+    'יער המאכל- פארק החורשות  ',
+  deposit_compost_stand_tel_hubez: 'תל חובז  ',
+  deposit_compost_stand_ginat_hahistadrut: 'גינת ההסתדרות  ',
+  deposit_compost_stand_alexander_zaid: 'גינת אלכסנדר זייד  ',
+  deposit_compost_stand_de_modina: 'גינת דה-מודינה ',
+  deposit_compost_stand_shiffer: 'השקמה ברחוב שיפר ',
+  deposit_compost_stand_burma: 'חורשת בורמה',
+
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
   send_search_placeholder: 'הזן שם או מספר טלפון',
   sendamount_how_much: 'כמה להעביר?',
   sendamount_continue: 'המשך',
   sendamount_back: 'חזרה למי',
+  send_search_no_results: 'אין תוצאות ל\'%{search}\'',
+  send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
 
   month_january: '	ינואר',
   month_february: '	פברואר',

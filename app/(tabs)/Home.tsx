@@ -12,22 +12,22 @@ export default function Home() {
   const user = useAppSelector(selectUser);
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          backgroundColor: Colors[colorScheme ?? 'light'].shading,
-          width: '100%',
-        }}
-      >
-        <Dashboard />
+      <View style={styles.container}>
+        <View
+          style={{
+            backgroundColor: Colors[colorScheme ?? 'light'].shading,
+            width: '100%',
+          }}
+        >
+          <Dashboard />
+        </View>
+        <View style={styles.transactionList}>
+          <Text style={{ fontSize: 40 }}>
+            {i18n.t('home_transactions_title')}
+          </Text>
+          <TransactionsList currentUser={user} />
+        </View>
       </View>
-      <View style={styles.transactionList}>
-        <Text style={{ fontSize: 40 }}>
-          {i18n.t('home_transactions_title')}
-        </Text>
-        <TransactionsList currentUser={user} />
-      </View>
-    </View>
   );
 }
 
