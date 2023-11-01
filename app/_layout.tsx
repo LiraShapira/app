@@ -59,7 +59,6 @@ function RootLayoutNav() {
   const isAuthLoading = useAppSelector(selectAuthFormLoading);
   const isDepositFormLoading = useAppSelector(selectDepositFormLoading);
   const isSendFormLoading = useAppSelector(selectSendFormLoading);
-
   useEffect(() => {
     dispatch(loadContacts());
   });

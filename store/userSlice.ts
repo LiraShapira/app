@@ -129,7 +129,7 @@ export const userSlice = createSlice({
   }
 });
 
-export const { setUser, addUserTransaction, setUserBalance, setIsUserLoading } =
+export const { setUser, addUserTransaction, setUserBalance, setIsUserLoading, incrementUserBalance } =
   userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;

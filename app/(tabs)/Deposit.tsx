@@ -4,7 +4,6 @@ import {
   Text,
   useColorScheme,
   TextInput,
-  Pressable,
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
@@ -13,12 +12,14 @@ import NumberInput from '../../components/form/NumberInput';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   resetForm,
+  selectCompostStand,
   selectNotes,
   selectValue,
   sendDepositForm,
   setBinStatus,
   setCompostDryMatter,
   setCompostSmell,
+  setCompostStand,
   setNotes,
 } from '../../store/depositFormSlice';
 import {
@@ -27,12 +28,16 @@ import {
   selectUserId,
 } from '../../store/userSlice';
 import CustomButton from '../../components/utils/CustomButton';
+import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
+import { Picker } from '@react-native-picker/picker';
+import { CompostStand, DepositForm } from '../../types/Deposit';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
   const userId = useAppSelector(selectUserId);
   const value = useAppSelector(selectValue);
   const notes = useAppSelector(selectNotes);
+  const selectedCompostStand = useAppSelector(selectCompostStand);
   const dispatch = useAppDispatch();
 
   const onPressSend = (e: any) => {
@@ -42,6 +47,10 @@ export default function Deposit() {
       .then(({ data: transaction }) => {
         dispatch(incrementUserBalance(transaction.amount));
         dispatch(addUserTransaction(transaction));
+      })
+      .catch((e) => {
+        dispatch(setModalText(e.message));
+        dispatch(setIsModalVisible(true));
       });
     dispatch(resetForm());
   };
@@ -74,6 +83,17 @@ export default function Deposit() {
           </Text>
           <NumberInput style={styles.amountInput} />
         </View>
+          <View>
+
+        <Picker
+          selectedValue={selectedCompostStand}
+          onValueChange={(stand: CompostStand) => dispatch(setCompostStand(stand))}
+          >
+          {Object.keys(CompostStand).map((stand) => {
+            return <Picker.Item key={stand} label={i18n.t(`deposit_compost_stand_${stand}`)} value={stand} />;
+          })}
+        </Picker>
+          </View>
         <DepositFormSwitch
           onPress={(v: DepositForm['binStatus']) => dispatch(setBinStatus(v))}
           title={i18n.t('deposit_form_bin_status')}
@@ -84,21 +104,25 @@ export default function Deposit() {
           optionValues={[true, false]}
         />
         <DepositFormSwitch
-          onPress={(v: DepositForm['compostSmell']) => dispatch(setCompostSmell(v))}
+          onPress={(v: DepositForm['compostSmell']) =>
+            dispatch(setCompostSmell(v))
+          }
           title={i18n.t('deposit_form_bin_status_smell')}
           optionValues={[false, true]}
           switchLabels={[i18n.t('no'), i18n.t('yes')]}
         />
         <DepositFormSwitch
-          onPress={(v: DepositForm['dryMatter']) => dispatch(setCompostDryMatter(v))}
+          onPress={(v: DepositForm['dryMatter']) =>
+            dispatch(setCompostDryMatter(v))
+          }
           title={i18n.t('deposit_form_dry_matter')}
           optionValues={['no', 'some', 'yes']}
           switchLabels={[i18n.t('no'), i18n.t('some'), i18n.t('yes')]}
         />
         <View>
-          <Text 
-          style={{ color: Colors[colorScheme ?? 'light'].text }}
-          >{i18n.t('deposit_form_notes')}</Text>
+          <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
+            {i18n.t('deposit_form_notes')}
+          </Text>
           <TextInput
             value={notes}
             onChangeText={(e) => dispatch(setNotes(e))}
