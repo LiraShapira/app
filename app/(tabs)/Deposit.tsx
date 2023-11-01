@@ -87,7 +87,7 @@ export default function Deposit() {
 
         <Picker
           selectedValue={selectedCompostStand}
-          onValueChange={(stand) => dispatch(setCompostStand(stand))}
+          onValueChange={(stand: CompostStand) => dispatch(setCompostStand(stand))}
           >
           {Object.keys(CompostStand).map((stand) => {
             return <Picker.Item key={stand} label={i18n.t(`deposit_compost_stand_${stand}`)} value={stand} />;

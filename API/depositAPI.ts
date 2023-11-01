@@ -25,8 +25,7 @@ export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Pro
       compostSmell: formWithUserId.compostSmell,
       dryMatterPresent: formWithUserId.dryMatter,
       notes: formWithUserId.notes,
-      // TODO compostStand Make dynamic
-      compostStandId: 1
+      compostStand: formWithUserId.compostStand,
     }
   }
 
