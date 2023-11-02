@@ -12,7 +12,6 @@ import { Provider } from 'react-redux';
 import { store } from '../store';
 import { loadContacts, loadUser, selectUserLoading, setIsUserLoading, setUser } from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
-// import OnLoad from '../components/utils/OnLoad';
 import { getItem } from '../utils/asyncStorage';
 import { StorageKeys } from '../types/AsyncStorage';
 import { selectAuthFormLoading, selectIsLoggedIn, setIsLoggedIn } from '../store/authFormSlice';
@@ -68,12 +67,10 @@ function RootLayoutNav() {
     
     if (Platform.OS === 'web') {
       const phoneNumber = localStorage.getItem('phoneNumber');
-      // if previously logged in, a phoneNumber will be stored in localStorage
-      // we retrieve this to load the user
       if (phoneNumber) {
-        dispatch(loadUser({ phoneNumber }))
+        dispatch(loadUser(phoneNumber))
           .unwrap()
-          .then((user) => {
+          .then(({ data: user}) => {
             if (user) {
               dispatch(setUser(user));
               localStorage.setItem('phoneNumber', user.phoneNumber);
@@ -82,11 +79,12 @@ function RootLayoutNav() {
           });
       }
     } else {
-      getItem(StorageKeys.phoneNumber).then((phoneNumber) => {
+      getItem(StorageKeys.phoneNumber)
+      .then((phoneNumber) => {
         if (phoneNumber) {
-          dispatch(loadUser({ phoneNumber }))
+          dispatch(loadUser(phoneNumber))
             .unwrap()
-            .then((user) => {
+            .then(({ data: user }) => {
               if (user) {
                 dispatch(setUser(user));
                 dispatch(setIsLoggedIn(true));

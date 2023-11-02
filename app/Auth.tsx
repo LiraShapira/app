@@ -7,7 +7,8 @@ import {
   selectFirstName,
   selectLastName,
   selectPhoneNumber,
-  sendAuthForm,
+  sendLoginForm,
+  sendRegistrationForm,
   setFirstName,
   setIsLoggedIn,
   setLastName,
@@ -19,47 +20,68 @@ import { useRouter } from 'expo-router';
 import { StorageKeys } from '../types/AsyncStorage';
 import i18n from '../translationService';
 import { useState } from 'react';
-
-const useRegistrationForm = () => {
-  const dispatch = useAppDispatch();
-  const firstName = useAppSelector(selectFirstName);
-  const lastName = useAppSelector(selectLastName);
-  const phoneNumber = useAppSelector(selectPhoneNumber);
-
-  return {
-    firstName,
-    lastName,
-    phoneNumber,
-    setFirstName: (firstName: string) => dispatch(setFirstName(firstName)),
-    setLastName: (lastName: string) => dispatch(setLastName(lastName)),
-    setPhoneNumber: (phoneNumber: string) =>
-      dispatch(setPhoneNumber(phoneNumber)),
-  };
-};
+import { setIsModalVisible, setModalText } from '../store/appStateSlice';
+import { CustomModal } from '../components/utils/CustomModal';
 
 export default function Auth() {
   const colorScheme = useColorScheme() ?? 'light';
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [regUI, setRegUI] = useState<boolean>(true);
-
-  const { setFirstName, setLastName, setPhoneNumber } = useRegistrationForm();
+  const phoneNumber = useAppSelector(selectPhoneNumber);
+  const firstName = useAppSelector(selectFirstName);
+  const lastName = useAppSelector(selectLastName);
 
   const onSubmit = () => {
-    dispatch(sendAuthForm())
-      .unwrap()
-      .then((user) => {
-        if (user) {
-          setUser(user);
-          setItem(StorageKeys.phoneNumber, user.phoneNumber);
-          dispatch(setIsLoggedIn(true));
-        }
-        router.push('/Home');
-      });
+    if (regUI) {
+      dispatch(sendRegistrationForm())
+        .unwrap()
+        .then(({ data: user }) => {
+          if ({ user }) {
+            setUser(user);
+            setItem(StorageKeys.phoneNumber, user.phoneNumber);
+            dispatch(setIsLoggedIn(true));
+          }
+          router.push('/Home');
+        })
+        .catch((e) => {
+          dispatch(setModalText(e.message));
+          dispatch(setIsModalVisible(true));
+        });
+    } else {
+      dispatch(sendLoginForm())
+        .unwrap()
+        .then(({ data: user }) => {
+          if ({ user }) {
+            setUser(user);
+            setItem(StorageKeys.phoneNumber, user.phoneNumber);
+            dispatch(setIsLoggedIn(true));
+          }
+          router.push('/Home');
+        })
+        .catch((e) => {
+          dispatch(setModalText(e.message));
+          dispatch(setIsModalVisible(true));
+        });
+    }
+  };
+
+  const onFailedLogin = () => {
+    dispatch(setIsModalVisible(false));
+    setRegUI(true);
   };
 
   return (
     <View style={styles.container}>
+      <CustomModal
+        type="info"
+        buttons={[
+          {
+            text: `no user exists for this number. Please register`,
+            onPress: onFailedLogin,
+          },
+        ]}
+      />
       <View
         style={{
           width: '90%',
@@ -89,7 +111,7 @@ export default function Auth() {
                 borderBottomColor: Colors[colorScheme].text,
                 ...styles.nameInput,
               }}
-              onChangeText={setFirstName}
+              onChangeText={(t) => dispatch(setFirstName(t))}
               placeholder={'First Name'}
               placeholderTextColor={Colors[colorScheme].shading}
             />
@@ -100,32 +122,40 @@ export default function Auth() {
                 borderBottomColor: Colors[colorScheme].text,
               }}
               placeholder={'Last Name'}
-              onChangeText={setLastName}
+              onChangeText={(t) => dispatch(setLastName(t))}
               placeholderTextColor={Colors[colorScheme].shading}
             />
           </View>
         ) : null}
-        <TextInput
-          style={{
-            color: Colors[colorScheme].text,
-            borderStyle: 'solid',
-            marginTop: 4,
-            borderBottomColor: Colors[colorScheme].text,
-            borderWidth: 1,
-            paddingHorizontal: 4,
-            height: 36,
-            marginHorizontal: 1,
-            width: '100%',
-            alignSelf: 'center', // Center the TextInput element horizontally
-          }}
-          placeholder={'Phone Number'}
-          placeholderTextColor={Colors[colorScheme].shading}
-          onChangeText={setPhoneNumber}
-        />
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{paddingRight: 8 }}>+972</Text>
+          <TextInput
+            inputMode="numeric"
+            style={{
+              color: Colors[colorScheme].text,
+              borderStyle: 'solid',
+              marginTop: 4,
+              borderBottomColor: Colors[colorScheme].text,
+              borderWidth: 1,
+              paddingHorizontal: 4,
+              height: 36,
+              marginHorizontal: 1,
+              width: '100%',
+              alignSelf: 'center', // Center the TextInput element horizontally
+            }}
+            placeholder={'Phone Number'}
+            placeholderTextColor={Colors[colorScheme].shading}
+            onChangeText={(t) => dispatch(setPhoneNumber(t))}
+          />
+        </View>
       </View>
 
       <View style={{ padding: 8, flexDirection: 'row' }}>
-        <CustomButton text="Submit" onPress={onSubmit} />
+        <CustomButton
+          text={regUI ? i18n.t('auth_register') : i18n.t('auth_login')}
+          disabled={!phoneNumber || (regUI && (!firstName || !lastName))}
+          onPress={onSubmit}
+        />
       </View>
     </View>
   );
@@ -133,7 +163,8 @@ export default function Auth() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    marginTop: '50%',
+    marginBottom: '50%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

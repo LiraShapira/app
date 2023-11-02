@@ -1,13 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { FetchUserArgs, User, UserRole } from "../types/User";
+import { User, UserRole } from "../types/User";
 import { fetchUser } from "../API/userAPI";
 import { Transaction } from "../types/Transaction";
 import { fetchContacts } from "../API/contactsAPI";
 import { Contact } from "expo-contacts";
-import { getItem } from "../utils/asyncStorage";
-import { router } from "expo-router";
-import { StorageKeys } from "../types/AsyncStorage";
+import { SuccessApiResponse } from "../types/APITypes";
 
 interface UserState {
   user: User;
@@ -34,18 +32,19 @@ const initialState: UserState = {
 };
 
 export const loadUser = createAsyncThunk<
-  User | void,
-  FetchUserArgs,
+  SuccessApiResponse<User>,
+  string,
   { state: RootState }
->("user/fetchUser", async (fetchUserArgs: FetchUserArgs) => {
-  try {
-    const user = await fetchUser(fetchUserArgs);
-    if (user) {
-      return user;
-    } else {
-      throw new Error("failure to get user");
-    }
-  } catch (e) { }
+>("user/fetchUser", async (phoneNumber: string) => {
+  const response = await fetchUser(phoneNumber);
+  if (!('data' in response)) {
+    throw new Error(response.message)
+  }
+  if (response.data) {
+    return response;
+  } else {
+    throw new Error('User not found');
+  }
 });
 
 export const loadContacts = createAsyncThunk<

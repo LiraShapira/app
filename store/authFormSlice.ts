@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
-import { fetchUser } from '../API/userAPI';
+import { fetchUser, registerNewUser } from '../API/userAPI';
 import { setItem } from '../utils/asyncStorage';
 import { setUser } from './userSlice';
 import { User } from '../types/User';
 import { StorageKeys } from '../types/AsyncStorage';
+import { SuccessApiResponse } from '../types/APITypes';
 
 interface AuthForm {
   firstName: string;
@@ -25,25 +26,44 @@ const initialState: AuthFormState = {
   isLoggedIn: false,
 };
 
-export const sendAuthForm = createAsyncThunk<
-  User | void,
+export const sendLoginForm = createAsyncThunk<
+  SuccessApiResponse<User>,
   string | undefined,
   { state: RootState }
->('authForm/sendAuthForm', async (_userId: string | undefined, { getState, dispatch }) => {
-  const { phoneNumber, firstName, lastName } = getState().authForm;
-  try {
-    const user = await fetchUser({ phoneNumber, firstName, lastName });
-    if (user) {
+>('authForm/sendLoginForm', async (_userId: string | undefined, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
+  const { phoneNumber } = getState().authForm;
+    const response = await fetchUser(phoneNumber);
+    if (!('data' in response)) {
+      throw new Error(response.message)
+    }
+    if (response.data) {
       dispatch(resetForm());
-      setItem(StorageKeys.phoneNumber, user.phoneNumber)
-      dispatch(setUser(user))
-      return user;
+      setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
+      dispatch(setUser(response.data))
+      return response;
     } else {
       throw new Error('User not found');
     }
-  } catch (e) {
-    console.log(e);
-  }
+});
+
+export const sendRegistrationForm = createAsyncThunk<
+  SuccessApiResponse<User>,
+  string | undefined,
+  { state: RootState }
+>('authForm/sendRegistrationForm', async (_userId: string | undefined, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
+  const { phoneNumber, firstName, lastName } = getState().authForm;
+    const response = await registerNewUser({ phoneNumber, firstName, lastName });
+    if (!('data' in response)) {
+      throw new Error(response.message)
+    }
+    if (response.data) {
+      dispatch(resetForm());
+      setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
+      dispatch(setUser(response.data))
+      return response;
+    } else {
+      throw new Error('User not found');
+    }
 });
 
 const authFormSlice = createSlice({
@@ -68,13 +88,22 @@ const authFormSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(sendAuthForm.pending, state => {
+      .addCase(sendLoginForm.pending, state => {
         state.loading = true;
       })
-      .addCase(sendAuthForm.fulfilled, (state) => {
+      .addCase(sendLoginForm.fulfilled, (state) => {
         state.loading = false;
       })
-      .addCase(sendAuthForm.rejected, (state) => {
+      .addCase(sendLoginForm.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(sendRegistrationForm.pending, state => {
+        state.loading = true;
+      })
+      .addCase(sendRegistrationForm.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(sendRegistrationForm.rejected, (state) => {
         state.loading = false;
       });
   },

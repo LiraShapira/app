@@ -6,6 +6,7 @@ import { mockContacts } from '../Mocks/mockDB';
 export function fetchContacts(): Promise<Contacts.Contact[]> {
   return new Promise<Contacts.Contact[]>(async resolve => {
     if (process.env.EXPO_PUBLIC_DEMO) resolve(mockContacts)
+    if (Platform.OS === "web") resolve(mockContacts)
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === 'granted') {
       const { data } = await Contacts.getContactsAsync({
@@ -16,8 +17,6 @@ export function fetchContacts(): Promise<Contacts.Contact[]> {
         ],
       });
       resolve(data);
-    } else if (Platform.OS === "web") {
-      resolve(mockContacts);
     }
   });
 }
