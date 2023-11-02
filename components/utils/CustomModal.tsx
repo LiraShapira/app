@@ -41,7 +41,7 @@ export const CustomModal = ({ type = 'info', buttons }: CustomModalProps) => {
           }}
         >
           <View style={styles.modalView}>
-            <Text style={{ color: Colors[colorScheme ?? 'light'].background }}>
+            <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
               {ModalText}
             </Text>
             {buttons.map(({ text, onPress }) => {
@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalView: {
-    backgroundColor: 'white',
     borderRadius: 20,
     borderStyle: 'solid',
     padding: 35,
