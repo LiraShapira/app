@@ -31,6 +31,7 @@ import CustomButton from '../../components/utils/CustomButton';
 import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
 import { Picker } from '@react-native-picker/picker';
 import { CompostStand, DepositForm } from '../../types/Deposit';
+import { useRouter } from 'expo-router';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
@@ -39,6 +40,7 @@ export default function Deposit() {
   const notes = useAppSelector(selectNotes);
   const selectedCompostStand = useAppSelector(selectCompostStand);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const onPressSend = (e: any) => {
     // send form
@@ -47,12 +49,13 @@ export default function Deposit() {
       .then(({ data: transaction }) => {
         dispatch(incrementUserBalance(transaction.amount));
         dispatch(addUserTransaction(transaction));
+        router.push('/Home');
       })
       .catch((e) => {
         dispatch(setModalText(e.message));
         dispatch(setIsModalVisible(true));
       });
-    dispatch(resetForm());
+      dispatch(resetForm());
   };
 
   const onPressSkip = (e: any) => {
