@@ -1,7 +1,5 @@
-import { Redirect, useNavigation, useRouter } from 'expo-router';
-// import { onLoad, selectIsConnected, selectUserLoading } from '../store/userSlice';
-// import { useAppDispatch, useAppSelector } from '../hooks';
-// import { useCallback, useEffect, useState } from 'react';
+import 'react-native-gesture-handler';
+import { Redirect } from 'expo-router';
 
 const Index = () => {
   return <Redirect href={'/Home'} />;

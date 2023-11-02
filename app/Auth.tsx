@@ -41,7 +41,7 @@ export default function Auth() {
   const colorScheme = useColorScheme() ?? 'light';
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [regUI, setRegUI] = useState<boolean>(false);
+  const [regUI, setRegUI] = useState<boolean>(true);
 
   const { setFirstName, setLastName, setPhoneNumber } = useRegistrationForm();
 

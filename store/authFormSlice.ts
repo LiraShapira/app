@@ -73,6 +73,9 @@ const authFormSlice = createSlice({
       })
       .addCase(sendAuthForm.fulfilled, (state) => {
         state.loading = false;
+      })
+      .addCase(sendAuthForm.rejected, (state) => {
+        state.loading = false;
       });
   },
 });

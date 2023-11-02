@@ -102,7 +102,7 @@ function RootLayoutNav() {
   return (
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <LoadingPage loading={isUserLoading || isAuthLoading || isDepositFormLoading || isSendFormLoading}> 
+        <LoadingPage loading={isUserLoading || isAuthLoading || isDepositFormLoading || isSendFormLoading} /> 
         {isLoggedIn ? (
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -110,7 +110,6 @@ function RootLayoutNav() {
         ) : (
           <Auth />
           )}
-          </LoadingPage>
       </ThemeProvider>
     </>
   );

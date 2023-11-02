@@ -85,6 +85,9 @@ export const depositFormSlice = createSlice({
       })
       .addCase(sendDepositForm.fulfilled, (state) => {
         state.loading = false;
+      })
+      .addCase(sendDepositForm.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
