@@ -69,6 +69,9 @@ export const sendFormSlice = createSlice({
       })
       .addCase(saveTransaction.fulfilled, (state) => {
         state.loading = false;
+      })
+      .addCase(saveTransaction.rejected, (state) => {
+        state.loading = false;
       });
   },
 });

@@ -33,30 +33,6 @@ const initialState: UserState = {
   isConnected: false,
 };
 
-// export const onLoad = createAsyncThunk<User | void, null, { state: RootState }>(
-//   "user/onLoad",
-//   async (_, { dispatch }) => {
-//     try {
-//       dispatch(setIsUserLoading(true))
-//       const phoneNumber = await getItem(StorageKeys.phoneNumber);
-
-//       if (!phoneNumber) return router.push("/Auth");
-
-//       if (phoneNumber) {
-//         dispatch(loadContacts());
-//         const user = await dispatch(loadUser({ phoneNumber }));
-
-//         if (!user) return router.push("/Auth");
-//         dispatch(setUser(user));
-//       }
-//     } catch (e) {
-//       console.log(e)
-//     } finally {
-//       dispatch(setIsUserLoading(false))
-//     }
-//   }
-// );
-
 export const loadUser = createAsyncThunk<
   User | void,
   FetchUserArgs,
@@ -122,9 +98,11 @@ export const userSlice = createSlice({
       .addCase(loadUser.pending, state => {
         state.loading = true;
       })
-      .addCase(loadUser.fulfilled, (state, action) => {
+      .addCase(loadUser.fulfilled, (state) => {
         state.loading = false;
-        // state.user = action.payload;
+      })
+      .addCase(loadUser.rejected, (state) => {
+        state.loading = false;
       });
   }
 });
