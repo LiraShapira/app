@@ -51,6 +51,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name='Deposit'
         options={{
+          href: null,
           title: '',
           tabBarIcon: () => (
             <CustomIcon

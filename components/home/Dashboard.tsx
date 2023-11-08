@@ -34,7 +34,11 @@ export default function Dashboard() {
       </View>
       <View style={styles.buttonsContainer}>
         <View style={styles.labeledButton}>
-          <DashboardButton iconName='scan-circle' iconLibrary='Ionicons' />
+          <DashboardButton
+            route="/Deposit"
+            iconName="leaf-circle-outline"
+            iconLibrary="MaterialCommunityIcons"
+          />
           <Text
             style={{
               color: Colors[colorScheme ?? 'light'].text,
@@ -42,13 +46,13 @@ export default function Dashboard() {
               opacity: 0.5,
             }}
           >
-            {i18n.t('dashboard_dashboard_buttons_scan')}
+            {i18n.t('deposit')}
           </Text>
         </View>
         <View style={styles.labeledButton}>
           <DashboardButton
-            iconName='hand-coin-outline'
-            iconLibrary='MaterialCommunityIcons'
+            iconName="hand-coin-outline"
+            iconLibrary="MaterialCommunityIcons"
           />
           <Text
             style={{
@@ -62,9 +66,9 @@ export default function Dashboard() {
         </View>
         <View style={styles.labeledButton}>
           <DashboardButton
-            route='/Send'
-            iconName='paper-plane'
-            iconLibrary='FontAwesome'
+            route="/Send"
+            iconName="paper-plane"
+            iconLibrary="FontAwesome"
           />
           <Text
             style={{
