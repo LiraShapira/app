@@ -4,8 +4,8 @@
   "scripts": {
     "start": "expo start",
     "demo": "cross-env EXPO_PUBLIC_DEMO=true expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll"
   },

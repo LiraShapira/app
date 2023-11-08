@@ -5,7 +5,7 @@
   "build": {
     "production": {
       "env": {
-        "SERVER_URL": "https://lirashapiraserver.onrender.com"
+        "EXPO_PUBLIC_SERVER_URL": "https://lirashapiraserver.onrender.com"
       }
     },
     "development": {
@@ -13,7 +13,7 @@
         "gradleCommand": ":app:assembleRelease"
       },
       "env": {
-        "SERVER_URL": "https://lirashapiraserver.onrender.com"
+        "EXPO_PUBLIC_SERVER_URL": "https://lirashapiraserver.onrender.com"
       }
     },
     "preview": {
