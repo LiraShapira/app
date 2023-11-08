@@ -22,6 +22,7 @@ import {
 } from '../store/userSlice';
 import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import { CustomModal } from '../components/utils/CustomModal';
+import { parsePhoneNumber } from 'libphonenumber-js';
 
 export default function SendAmount() {
   const colorScheme = useColorScheme();
@@ -38,9 +39,9 @@ export default function SendAmount() {
     if (!chosenContact?.phoneNumbers) return;
     const recipientPhoneNumber = chosenContact?.phoneNumbers[0].number;
     if (!recipientPhoneNumber) return;
-
+    const phoneNumber = parsePhoneNumber(recipientPhoneNumber, 'US')
     const newTransaction = {
-      recipientPhoneNumber: recipientPhoneNumber,
+      recipientPhoneNumber: phoneNumber.nationalNumber,
       amount: amount,
       category: Category.MISC,
       reason: reason,
@@ -124,7 +125,7 @@ export default function SendAmount() {
           <Text
             style={{ fontSize: 10, color: Colors[colorScheme ?? 'light'].tint }}
           >
-            Please input a number between 1 - 99
+            { i18n.t('sendamount_validate_amount') }
           </Text>
         ) : null}
         <TextInput
