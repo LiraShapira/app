@@ -82,7 +82,7 @@ export default function Deposit() {
               ...styles.amountLabel,
             }}
           >
-            Amount (kg)
+            { i18n.t('deposit_form_amount') }
           </Text>
           <NumberInput style={styles.amountInput} />
         </View>
@@ -142,10 +142,10 @@ export default function Deposit() {
             onPress={onPressSend}
             disabled={!value}
           />
-          <CustomButton
+          {/* <CustomButton
             text={i18n.t('deposit_form_skip')}
             onPress={() => console.log('skip')}
-          />
+          /> */}
         </View>
       </View>
     </View>

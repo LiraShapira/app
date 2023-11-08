@@ -7,9 +7,13 @@ export default {
 
 
   tabs_wallet: 'ארנק',
-  tabs_market: 'שוק',
-  auth_log_in: 'להיכנס',
+  
+  auth_login: 'להיכנס',
   auth_register: 'להירשם',
+  auth_to_login: 'להיכנס',
+  auth_to_register: 'להירשם',
+  auth_phone_number: 'מספר טלפון',
+  tabs_market: 'שוק',
   home_lira_shapira_currency_you_have: 'כמה יש?',
   home_lira_shapira_currency_shorthand: 'ל"ש',
   dashboard_dashboard_buttons_send: 'העברה',
@@ -19,6 +23,7 @@ export default {
 
   transactions_list_no_activities: 'אין פעילויות',
 
+  deposit: 'הפקדה',
   deposit_title: 'מה הסטטוס?',
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',
@@ -28,6 +33,7 @@ export default {
   deposit_form_skip: 'דלג',
   deposit_form_send: 'שלח',
   deposit_form_notes: 'הערות / הארות',
+  deposit_form_amount: 'כמות',
 
   deposit_compost_stand_cafe_shapira: 'קפה שפירא ',
   deposit_compost_stand_masalant: 'מרכז קהילתי (ישראל מסלנט 27) ',
@@ -48,6 +54,7 @@ export default {
   send_search_searching_for: 'מחפש אחר',
   send_search_placeholder: 'הזן שם או מספר טלפון',
   sendamount_how_much: 'כמה להעביר?',
+  sendamount_why: 'למה?',
   sendamount_continue: 'המשך',
   sendamount_back: 'חזרה למי',
   send_search_no_results: 'אין תוצאות ל\'%{search}\'',

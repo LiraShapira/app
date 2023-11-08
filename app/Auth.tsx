@@ -143,7 +143,7 @@ export default function Auth() {
               width: '100%',
               alignSelf: 'center', // Center the TextInput element horizontally
             }}
-            placeholder={'Phone Number'}
+            placeholder={ i18n.t('auth_phone_number') }
             placeholderTextColor={Colors[colorScheme].shading}
             onChangeText={(t) => dispatch(setPhoneNumber(t))}
           />

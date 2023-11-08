@@ -66,7 +66,6 @@ export const depositFormSlice = createSlice({
       state.dryMatter = action.payload;
     },
     setCompostStand: (state, action: PayloadAction<CompostStand>) => {
-      console.log('action', action.payload)
       state.compostStand = action.payload;
     },
     resetForm: (state) => {

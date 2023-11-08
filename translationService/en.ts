@@ -10,6 +10,7 @@ export default {
   auth_register: 'Register',
   auth_to_login: 'To Login',
   auth_to_register: 'To Register',
+  auth_phone_number: 'Phone Number',
   tabs_market: 'market',
   home_lira_shapira_currency_you_have: 'You have:',
   home_lira_shapira_currency_shorthand: 'L"S',
@@ -20,6 +21,7 @@ export default {
 
   transactions_list_no_activities: 'No transactions to display',
 
+  deposit: 'Deposit',
   deposit_title: 'What\'s the status?',
   deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',
@@ -29,6 +31,7 @@ export default {
   deposit_form_skip: 'Skip',
   deposit_form_send: 'Send',
   deposit_form_notes: 'Notes',
+  deposit_form_amount: 'Amount',
 
   deposit_compost_stand_cafe_shapira: 'Cafe Shapira',
   deposit_compost_stand_masalant: 'Masalant 27',
@@ -48,6 +51,7 @@ export default {
   send_search_searching_for: 'searching for: ',
   send_search_placeholder: 'Enter a name or phone number',
   sendamount_how_much: 'How much?',
+  sendamount_why: 'Why?',
   sendamount_continue: 'continue',
   sendamount_back: 'Back to contacts',
   send_search_no_results: 'No results found for \'%{search}\'',
