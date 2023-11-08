@@ -41,11 +41,15 @@ export const depositFormSlice = createSlice({
   initialState,
   reducers: {
     incrementByAmount: (state, action: PayloadAction<number>) => {
+      if (state.amount === 99) return;
       state.amount += action.payload;
     },
     decrementByAmount: (state, action: PayloadAction<number>) => {
       if (state.amount === 0) return;
       state.amount -= action.payload;
+    },
+    setAmount: (state, action: PayloadAction<number>) => {
+      state.amount = action.payload;
     },
     setNotes: (state, action: PayloadAction<string>) => {
       state.notes = action.payload;
@@ -75,7 +79,6 @@ export const depositFormSlice = createSlice({
       state.amount = 0;
       state.notes = '';
     },
-    
   },
   extraReducers: (builder) => {
     builder
@@ -99,7 +102,8 @@ export const {
   setCompostDryMatter,
   setBinStatus,
   setCompostSmell,
-  setCompostStand
+  setCompostStand,
+  setAmount
 } = depositFormSlice.actions;
 
 export const selectDepositFormLoading = (state: RootState) =>
