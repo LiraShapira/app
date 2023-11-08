@@ -1,8 +1,7 @@
-import { Link, Tabs } from 'expo-router';
-import { Pressable, View, useColorScheme } from 'react-native';
+import { Tabs } from 'expo-router';
+import { useColorScheme } from 'react-native';
 import Colors from '../../constants/Colors';
 import { CustomIcon } from '../../components/utils/CustomIcon';
-import DepositButton from '../../components/tabsBar/DepositButton';
 import i18n from '../../translationService';
 
 export default function TabLayout() {
@@ -26,33 +25,13 @@ export default function TabLayout() {
               color={color}
             />
           ),
-          headerRight: () => (
-            <View
-              style={{
-                padding: 8,
-              }}
-            >
-              <Link disabled href='/modal' asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <CustomIcon
-                      iconName='menu'
-                      iconLibraryName='Entypo'
-                      size={25}
-                      color={Colors[colorScheme ?? 'light'].text}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-            </View>
-          ),
         }}
       />
       <Tabs.Screen
         name='Deposit'
         options={{
           href: null,
-          title: '',
+          title: i18n.t('deposit'),
           tabBarIcon: () => (
             <CustomIcon
               iconName="leaf-circle-outline"

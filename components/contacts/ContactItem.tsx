@@ -43,13 +43,6 @@ export default function ContactItem({ contact }: ContactItemProps) {
             }}
           >
             {contact.firstName}{' '}
-          </Text>
-          <Text
-            style={{
-              fontSize: 15,
-              color: Colors[colorScheme ?? 'light'].text,
-            }}
-          >
             {contact.lastName}
           </Text>
         </View>

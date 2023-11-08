@@ -22,7 +22,6 @@ export default function DashboardButton({
   return (
     <>
       {route ? (
-        // <Link href={route}>
         <View style={{ ...styles.labeledButton, backgroundColor: 'grey' }}>
           <Pressable onPress={() => router.push(route)}>
             {({ pressed }) => (
@@ -42,7 +41,6 @@ export default function DashboardButton({
           </Pressable>
         </View>
       ) : (
-        // </Link>
         <View>
           <View
             style={{

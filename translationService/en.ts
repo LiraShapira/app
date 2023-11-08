@@ -7,6 +7,7 @@ export default {
 
   tabs_wallet: 'wallet',
   auth_login: 'Login',
+  auth_logout: 'Logout?',
   auth_register: 'Register',
   auth_to_login: 'To Login',
   auth_to_register: 'To Register',
@@ -56,6 +57,7 @@ export default {
   sendamount_back: 'Back to contacts',
   send_search_no_results: 'No results found for \'%{search}\'',
   send_search_no_results_send_to_number: 'Send to \'%{number}\'',
+  sendamount_validate_amount: 'Please input a number between 1 - 99',
 
   month_january: 'january',
   month_february: 'february',
