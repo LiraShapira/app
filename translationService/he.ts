@@ -17,6 +17,7 @@ export default {
   auth_first_name: 'שם פרטי',
   auth_last_name: 'שם משפחה',
   tabs_market: 'שוק',
+  tabs_events: 'אירועים',
   home_lira_shapira_currency_you_have: 'כמה יש?',
   home_lira_shapira_currency_shorthand: 'ל"ש',
   dashboard_dashboard_buttons_send: 'העברה',

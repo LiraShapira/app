@@ -43,9 +43,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='Market'
+        name='Events'
         options={{
-          title: i18n.t('tabs_market'),
+          title: i18n.t('tabs_events'),
           tabBarIcon: ({ color }) => (
             <CustomIcon
               iconName={'shopping-basket'}

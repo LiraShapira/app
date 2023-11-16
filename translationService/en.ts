@@ -15,6 +15,7 @@ export default {
   auth_first_name: 'First Name',
   auth_last_name: 'Last Name',
   tabs_market: 'market',
+  tabs_events: 'events',
   home_lira_shapira_currency_you_have: 'You have:',
   home_lira_shapira_currency_shorthand: 'L"S',
   dashboard_dashboard_buttons_send: 'send',
