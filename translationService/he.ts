@@ -14,6 +14,8 @@ export default {
   auth_to_login: 'להיכנס',
   auth_to_register: 'להירשם',
   auth_phone_number: 'מספר טלפון',
+  auth_first_name: 'שם פרטי',
+  auth_last_name: 'שם משפחה',
   tabs_market: 'שוק',
   home_lira_shapira_currency_you_have: 'כמה יש?',
   home_lira_shapira_currency_shorthand: 'ל"ש',

@@ -9,9 +9,7 @@ import {
   selectPhoneNumber,
   sendLoginForm,
   sendRegistrationForm,
-  setFirstName,
   setIsLoggedIn,
-  setLastName,
   setPhoneNumber,
 } from '../store/authFormSlice';
 import CustomButton from '../components/utils/CustomButton';
@@ -22,6 +20,7 @@ import i18n from '../translationService';
 import { useState } from 'react';
 import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import { CustomModal } from '../components/utils/CustomModal';
+import Registration from '../components/auth/Registration';
 
 export default function Auth() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -104,28 +103,7 @@ export default function Auth() {
           />
         </View>
         {regUI ? (
-          <View style={styles.fullNameInputContainer}>
-            <TextInput
-              style={{
-                color: Colors[colorScheme].text,
-                borderBottomColor: Colors[colorScheme].text,
-                ...styles.nameInput,
-              }}
-              onChangeText={(t) => dispatch(setFirstName(t))}
-              placeholder={'First Name'}
-              placeholderTextColor={Colors[colorScheme].shading}
-            />
-            <TextInput
-              style={{
-                ...styles.nameInput,
-                color: Colors[colorScheme].text,
-                borderBottomColor: Colors[colorScheme].text,
-              }}
-              placeholder={'Last Name'}
-              onChangeText={(t) => dispatch(setLastName(t))}
-              placeholderTextColor={Colors[colorScheme].shading}
-            />
-          </View>
+         <Registration />
         ) : null}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text style={{paddingRight: 8 }}>+972</Text>
@@ -169,17 +147,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  nameInput: {
-    borderStyle: 'solid',
-    borderWidth: 1,
-    height: 36,
-    flexBasis: '50%',
-    marginHorizontal: 1,
-  },
-  fullNameInputContainer: {
-    flexDirection: 'row',
-    gap: 8,
   },
   submit: {
     marginTop: 7,

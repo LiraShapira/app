@@ -12,6 +12,8 @@ export default {
   auth_to_login: 'To Login',
   auth_to_register: 'To Register',
   auth_phone_number: 'Phone Number',
+  auth_first_name: 'First Name',
+  auth_last_name: 'Last Name',
   tabs_market: 'market',
   home_lira_shapira_currency_you_have: 'You have:',
   home_lira_shapira_currency_shorthand: 'L"S',
