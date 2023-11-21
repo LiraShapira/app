@@ -1,13 +1,14 @@
-export default {
+import { Dictionary } from "../types/translation";
+
+const heDictionary: Dictionary = {
   welcome: 'ברוך הבא',
   yes: 'כן',
   no: 'לא',
   some: 'מעט',
   cancel: 'ביטול',
 
-
   tabs_wallet: 'ארנק',
-  
+
   auth_login: 'להיכנס',
   auth_logout: 'להתנתק?',
   auth_register: 'להירשם',
@@ -45,8 +46,7 @@ export default {
   deposit_compost_stand_kerem_hazeitim: 'כרם הזיתים ',
   deposit_compost_stand_park_sonya: 'פארק סוניה ',
   deposit_compost_stand_hakaveret: 'הכוורת  ',
-  deposit_compost_stand_food_forest_park_hahurshot:
-    'יער המאכל- פארק החורשות  ',
+  deposit_compost_stand_food_forest_park_hahurshot: 'יער המאכל- פארק החורשות  ',
   deposit_compost_stand_tel_hubez: 'תל חובז  ',
   deposit_compost_stand_ginat_hahistadrut: 'גינת ההסתדרות  ',
   deposit_compost_stand_alexander_zaid: 'גינת אלכסנדר זייד  ',
@@ -67,7 +67,7 @@ export default {
 
   month_january: '	ינואר',
   month_february: '	פברואר',
-  monthmarch: '	מרץ',
+  month_march: '	מרץ',
   month_april: '	אפריל',
   month_may: '	מאי',
   month_june: '	יוני',
@@ -79,7 +79,7 @@ export default {
   month_december: '	דצמבר',
   month_january_MMM: 'ינואר',
   month_february_MMM: 'פברואר',
-  monthmarch_MMM: 'מרץ',
+  month_march_MMM: 'מרץ',
   month_april_MMM: 'אפריל',
   month_may_MMM: 'מאי',
   month_june_MMM: 'יוני',
@@ -89,6 +89,6 @@ export default {
   month_october_MMM: 'אוקטובר',
   month_november_MMM: 'נובמבר',
   month_december_MMM: 'דצמבר',
-
-
 }
+
+export default heDictionary;

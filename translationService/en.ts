@@ -1,4 +1,6 @@
-export default {
+import { Dictionary } from "../types/translation";
+
+const enDictionary: Dictionary = {
   welcome: 'Hello',
   yes: 'yes',
   no: 'no',
@@ -88,3 +90,5 @@ export default {
   month_november_MMM: 'nov',
   month_december_MMM: 'dec',
 }
+
+export default enDictionary;
