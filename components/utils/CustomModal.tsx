@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Modal,
   View,
-  Pressable,
   useColorScheme,
 } from 'react-native';
 import CustomButton, { ButtonProps } from './CustomButton';
@@ -27,7 +26,6 @@ export const CustomModal = ({ type = 'info', buttons }: CustomModalProps) => {
   return (
     <View style={styles.centeredView}>
       <Modal
-        // TODO dark mode compatibility
         animationType="slide"
         transparent={true}
         visible={isModalVisible}
@@ -67,7 +65,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalView: {
-    backgroundColor: 'white',
     borderRadius: 20,
     borderStyle: 'solid',
     padding: 35,

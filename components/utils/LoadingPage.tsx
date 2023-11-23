@@ -1,21 +1,53 @@
-import { StyleSheet, ActivityIndicator, View } from 'react-native';
+import {
+  Modal,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 
-export default function LoadingPage() {
-  return (
-    <View style={styles.loadingPage}>
-      <ActivityIndicator color='black' size='large' />
-    </View>
-  );
+interface LoadingPageProps {
+  loading: boolean;
 }
 
+const LoadingPage = ({ loading }: LoadingPageProps) => {
+
+  return (
+    <View style={styles.centeredView}>
+      <Modal animationType="none" transparent={true} visible={loading}>
+        <View
+          style={{
+            position: 'absolute',
+            top: '30%',
+            right: '40%'
+          }}
+        >
+          <View style={styles.modalView}>
+            <ActivityIndicator size='large' style={{ padding: 35 }} color="#00ff00" />
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+};
+
+export default LoadingPage;
+
 const styles = StyleSheet.create({
-  loadingPage: {
-    flex: 1,
-    justifyContent: 'center',
-    height: '100%',
-    width: '100%',
+  centeredView: {
     position: 'absolute',
-    top: 0,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+  },
+  modalView: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    borderStyle: 'solid',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

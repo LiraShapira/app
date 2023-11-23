@@ -1,5 +1,6 @@
-export default {
-  // GENERAL UTILS
+import { Dictionary } from "../types/translation";
+
+const heDictionary: Dictionary = {
   welcome: 'ברוך הבא',
   yes: 'כן',
   no: 'לא',
@@ -9,7 +10,17 @@ export default {
 
   // HOME
   tabs_wallet: 'ארנק',
+
+  auth_login: 'כניסה',
+  auth_logout: 'להתנתק?',
+  auth_register: 'הרשמה',
+  auth_to_login: 'כניסה',
+  auth_to_register: 'הרשמה',
+  auth_phone_number: 'מספר טלפון',
+  auth_first_name: 'שם פרטי',
+  auth_last_name: 'שם משפחה',
   tabs_market: 'שוק',
+  tabs_events: 'אירועים',
   home_lira_shapira_currency_you_have: 'כמה יש?',
   home_lira_shapira_currency_shorthand: 'ל"ש',
   dashboard_dashboard_buttons_send: 'העברה',
@@ -19,6 +30,7 @@ export default {
   transactions_list_no_activities: 'אין פעילויות',
 
   // DEPOSIT
+  deposit: 'הפקדה',
   deposit_title: 'מה הסטטוס?',
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',
@@ -28,23 +40,39 @@ export default {
   deposit_form_skip: 'דלג',
   deposit_form_send: 'שלח',
   deposit_form_notes: 'הערות / הארות',
+  deposit_form_amount: 'כמות',
+
+  deposit_compost_stand_cafe_shapira: 'קפה שפירא ',
+  deposit_compost_stand_masalant: 'מרכז קהילתי (ישראל מסלנט 27) ',
+  deposit_compost_stand_hizkiyahu_hamelech: 'חזקיהו המלך ',
+  deposit_compost_stand_kerem_hazeitim: 'כרם הזיתים ',
+  deposit_compost_stand_park_sonya: 'פארק סוניה ',
+  deposit_compost_stand_hakaveret: 'הכוורת  ',
+  deposit_compost_stand_food_forest_park_hahurshot: 'יער המאכל- פארק החורשות  ',
+  deposit_compost_stand_tel_hubez: 'תל חובז  ',
+  deposit_compost_stand_ginat_hahistadrut: 'גינת ההסתדרות  ',
+  deposit_compost_stand_alexander_zaid: 'גינת אלכסנדר זייד  ',
+  deposit_compost_stand_de_modina: 'גינת דה-מודינה ',
+  deposit_compost_stand_shiffer: 'השקמה ברחוב שיפר ',
+  deposit_compost_stand_burma: 'חורשת בורמה',
 
   // SEND
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
   send_search_placeholder: 'הזן שם או מספר טלפון',
   sendamount_how_much: 'כמה להעביר?',
-  sendamount_reason: 'למה?',
-  sendamount_amount: 'כמה (kg)?',
+  // sendamount_amount: 'כמה (kg)?',
+  sendamount_why: 'למה?',
   sendamount_continue: 'המשך',
   sendamount_back: 'חזרה למי',
   send_search_no_results: 'אין תוצאות ל\'%{search}\'',
   send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
+  sendamount_validate_amount: 'אנא הכנס מספר בין 1 - 99',
 
   // MONTH UTILS
   month_january: '	ינואר',
   month_february: '	פברואר',
-  monthmarch: '	מרץ',
+  month_march: '	מרץ',
   month_april: '	אפריל',
   month_may: '	מאי',
   month_june: '	יוני',
@@ -56,7 +84,7 @@ export default {
   month_december: '	דצמבר',
   month_january_MMM: 'ינואר',
   month_february_MMM: 'פברואר',
-  monthmarch_MMM: 'מרץ',
+  month_march_MMM: 'מרץ',
   month_april_MMM: 'אפריל',
   month_may_MMM: 'מאי',
   month_june_MMM: 'יוני',
@@ -67,3 +95,5 @@ export default {
   month_november_MMM: 'נובמבר',
   month_december_MMM: 'דצמבר',
 }
+
+export default heDictionary;

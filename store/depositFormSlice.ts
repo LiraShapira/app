@@ -3,6 +3,7 @@ import { RootState } from '.';
 import { FormWithUserId, saveDepositToDatabase } from '../API/depositAPI';
 import { ApiResponse, SuccessApiResponse } from '../types/APITypes';
 import { Transaction } from '../types/Transaction';
+import { CompostStand, DepositForm } from '../types/Deposit';
 
 interface DepositFormState extends DepositForm {
   loading: boolean;
@@ -13,7 +14,8 @@ const initialState: DepositFormState = {
   amount: 0,
   loading: false,
   formTouched: false,
-  notes: ''
+  notes: '',
+  compostStand: CompostStand.hakaveret
 };
 
 export const sendDepositForm = createAsyncThunk<
@@ -31,9 +33,17 @@ export const sendDepositForm = createAsyncThunk<
     const form = getState().depositForm;
 
     if (form.formTouched) {
-      requestBody = ({ ...form, userId: userId })
+      requestBody = ({ 
+        ...form,
+        userId: userId,
+        compostSmell: form.compostSmell === 'yes'
+       })
     } else {
-      requestBody = ({ amount: form.amount, userId: userId })
+      requestBody = ({ 
+        amount: form.amount, 
+        userId: userId,
+        compostStand: form.compostStand
+      })
     }
 
     response = await saveDepositToDatabase(requestBody);
@@ -51,11 +61,15 @@ export const depositFormSlice = createSlice({
   initialState,
   reducers: {
     incrementByAmount: (state, action: PayloadAction<number>) => {
+      if (state.amount === 99) return;
       state.amount += action.payload;
     },
     decrementByAmount: (state, action: PayloadAction<number>) => {
       if (state.amount === 0) return;
       state.amount -= action.payload;
+    },
+    setAmount: (state, action: PayloadAction<number>) => {
+      state.amount = action.payload;
     },
     setNotes: (state, action: PayloadAction<string>) => {
       state.formTouched = true;
@@ -86,6 +100,9 @@ export const depositFormSlice = createSlice({
       state.notes = '';
       state.formTouched = false;
     },
+    setCompostStand: (state, action: PayloadAction<CompostStand>) => {
+      state.compostStand = action.payload;
+    },
     resetForm: (state) => {
       delete state.dryMatter;
       delete state.compostSmell;
@@ -102,6 +119,9 @@ export const depositFormSlice = createSlice({
       })
       .addCase(sendDepositForm.fulfilled, (state) => {
         state.loading = false;
+      })
+      .addCase(sendDepositForm.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
@@ -114,7 +134,9 @@ export const {
   setCompostDryMatter,
   setBinStatus,
   setCompostSmell,
-  resetOptionalProperties
+  resetOptionalProperties,
+  setCompostStand,
+  setAmount
 } = depositFormSlice.actions;
 
 export const selectDepositFormLoading = (state: RootState) =>
@@ -122,5 +144,6 @@ export const selectDepositFormLoading = (state: RootState) =>
 export const selectValue = (state: RootState) => state.depositForm.amount;
 export const selectNotes = (state: RootState) => state.depositForm.notes;
 export const selectFormTouched = (state: RootState) => state.depositForm.formTouched;
+export const selectCompostStand = (state: RootState) => state.depositForm.compostStand;
 
 export default depositFormSlice.reducer;

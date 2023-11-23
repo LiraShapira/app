@@ -1,4 +1,9 @@
-import { View, StyleSheet, Text, useColorScheme } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  useColorScheme,
+} from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
 import NumberInput from '../../components/form/NumberInput';

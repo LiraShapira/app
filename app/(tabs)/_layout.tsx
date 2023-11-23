@@ -1,8 +1,7 @@
-import { Link, Tabs } from 'expo-router';
-import { Pressable, View, useColorScheme } from 'react-native';
+import { Tabs } from 'expo-router';
+import { useColorScheme } from 'react-native';
 import Colors from '../../constants/Colors';
 import { CustomIcon } from '../../components/utils/CustomIcon';
-import DepositButton from '../../components/tabsBar/DepositButton';
 import i18n from '../../translationService';
 
 export default function TabLayout() {
@@ -26,39 +25,27 @@ export default function TabLayout() {
               color={color}
             />
           ),
-          headerRight: () => (
-            <View
-              style={{
-                padding: 8,
-              }}
-            >
-              <Link disabled href='/modal' asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <CustomIcon
-                      iconName='menu'
-                      iconLibraryName='Entypo'
-                      size={25}
-                      color={Colors[colorScheme ?? 'light'].text}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-            </View>
-          ),
         }}
       />
       <Tabs.Screen
         name='Deposit'
         options={{
-          title: '',
-          tabBarIcon: () => <DepositButton />,
+          href: null,
+          title: i18n.t('deposit'),
+          tabBarIcon: () => (
+            <CustomIcon
+              iconName="leaf-circle-outline"
+              iconLibraryName="MaterialCommunityIcons"
+              size={55}
+              color={Colors[colorScheme ?? 'light'].text}
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name='Market'
+        name='Events'
         options={{
-          title: i18n.t('tabs_market'),
+          title: i18n.t('tabs_events'),
           tabBarIcon: ({ color }) => (
             <CustomIcon
               iconName={'shopping-basket'}

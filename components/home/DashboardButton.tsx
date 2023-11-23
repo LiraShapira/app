@@ -1,5 +1,5 @@
 import { View, Pressable, StyleSheet, useColorScheme } from 'react-native';
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import Colors from '../../constants/Colors';
 import { IconLibrary, IconName } from '../../types/Icons';
 import { Route } from '../../types/Routes';
@@ -17,34 +17,13 @@ export default function DashboardButton({
   route,
 }: DashboardButtonProps) {
   const colorScheme = useColorScheme();
+  const router = useRouter();
 
   return (
     <>
-    {route ? (
-      <Link href={route}>
-        <View style={{...styles.labeledButton, backgroundColor: 'grey' }}>
-        <Pressable>
-          {({ pressed }) => (
-            // TODO typing
-            // @ts-ignore TODO typing
-            <CustomIcon
-              iconLibraryName={iconLibrary}
-              iconName={iconName}
-              color={
-                pressed
-                  ? Colors[colorScheme ?? 'light'].tint
-                  : Colors[colorScheme ?? 'light'].text
-              }
-              size={30}
-            />
-          )}
-        </Pressable>
-      </View>
-      </Link>
-    ) : (
-      <View>
-        <View style={{...styles.labeledButton, backgroundColor: '#5f5f5f', opacity: 0.5 }}>
-          <Pressable>
+      {route ? (
+        <View style={{ ...styles.labeledButton, backgroundColor: 'grey' }}>
+          <Pressable onPress={() => router.push(route)}>
             {({ pressed }) => (
               // TODO typing
               // @ts-ignore TODO typing
@@ -61,8 +40,31 @@ export default function DashboardButton({
             )}
           </Pressable>
         </View>
-      </View>
-    )}
+      ) : (
+        <View>
+          <View
+            style={{
+              ...styles.labeledButton,
+              backgroundColor: '#5f5f5f',
+              opacity: 0.5,
+            }}
+          >
+            <Pressable>
+              {() => (
+                // TODO typing
+                // @ts-ignore TODO typing
+                <CustomIcon
+                  iconLibraryName={iconLibrary}
+                  iconName={iconName}
+                  disabled
+                  color={Colors[colorScheme ?? 'light'].text}
+                  size={30}
+                />
+              )}
+            </Pressable>
+          </View>
+        </View>
+      )}
     </>
   );
 }
@@ -107,5 +109,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });

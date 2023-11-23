@@ -44,7 +44,7 @@ export default function TransactionItem({
         </View>
         <View style={styles.notesDisplay}>
           <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
-            {transaction.reason}
+            {transaction.reason === 'Deposit' ? i18n.t('deposit') : transaction.reason }
           </Text>
         </View>
         <View style={styles.amountDisplay}>

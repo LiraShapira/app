@@ -1,0 +1,26 @@
+{
+  "cli": {
+    "version": ">= 5.3.0"
+  },
+  "build": {
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_SERVER_URL": "https://lirashapiraserver.onrender.com"
+      }
+    },
+    "development": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      },
+      "env": {
+        "EXPO_PUBLIC_SERVER_URL": "https://lirashapiraserver.onrender.com"
+      }
+    },
+    "preview": {
+      "distribution": "internal"
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

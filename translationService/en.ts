@@ -1,5 +1,6 @@
-export default {
-  // GENERAL UTILS
+import { Dictionary } from "../types/translation";
+
+const enDictionary: Dictionary = {
   welcome: 'Hello',
   yes: 'yes',
   no: 'no',
@@ -9,7 +10,16 @@ export default {
 
   // HOME
   tabs_wallet: 'wallet',
+  auth_login: 'Login',
+  auth_logout: 'Logout?',
+  auth_register: 'Register',
+  auth_to_login: 'To Login',
+  auth_to_register: 'To Register',
+  auth_phone_number: 'Phone Number',
+  auth_first_name: 'First Name',
+  auth_last_name: 'Last Name',
   tabs_market: 'market',
+  tabs_events: 'events',
   home_lira_shapira_currency_you_have: 'You have:',
   home_lira_shapira_currency_shorthand: 'L"S',
   dashboard_dashboard_buttons_send: 'send',
@@ -19,6 +29,7 @@ export default {
   transactions_list_no_activities: 'No transactions to display',
 
   // DEPOSIT
+  deposit: 'Deposit',
   deposit_title: 'What\'s the status?',
   deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',
@@ -28,18 +39,34 @@ export default {
   deposit_form_skip: 'Skip',
   deposit_form_send: 'Send',
   deposit_form_notes: 'Notes',
+  deposit_form_amount: 'Amount',
+
+  deposit_compost_stand_cafe_shapira: 'Cafe Shapira',
+  deposit_compost_stand_masalant: 'Masalant 27',
+  deposit_compost_stand_hizkiyahu_hamelech: 'Hizkiyahu hamelech',
+  deposit_compost_stand_kerem_hazeitim: 'Kerem ha\'zeitim',
+  deposit_compost_stand_park_sonya: 'Park Sonya',
+  deposit_compost_stand_hakaveret: 'Ha\'kaveret',
+  deposit_compost_stand_food_forest_park_hahurshot: 'Food forest park hahurshot',
+  deposit_compost_stand_tel_hubez: 'Tel hubez',
+  deposit_compost_stand_ginat_hahistadrut: 'Ginat Ha\'histadrut',
+  deposit_compost_stand_alexander_zaid: 'Alexander zaid',
+  deposit_compost_stand_shiffer: 'Shiffer st',
+  deposit_compost_stand_de_modina: 'de Modina',
+  deposit_compost_stand_burma: 'Burma',
 
   // SEND
   send_search_title: 'Who to send to?',
   send_search_searching_for: 'searching for: ',
   send_search_placeholder: 'Enter a name or phone number',
   sendamount_how_much: 'How much?',
-  sendamount_reason: 'reason',
-  sendamount_amount: 'amount (kg)',
+  sendamount_why: 'why',
+  // sendamount_amount: 'amount (kg)',
   sendamount_continue: 'continue',
   sendamount_back: 'Back to contacts',
   send_search_no_results: 'No results found for \'%{search}\'',
   send_search_no_results_send_to_number: 'Send to \'%{number}\'',
+  sendamount_validate_amount: 'Please input a number between 1 - 99',
 
   // MONTH UTILS
   month_january: 'january',
@@ -68,3 +95,5 @@ export default {
   month_november_MMM: 'nov',
   month_december_MMM: 'dec',
 }
+
+export default enDictionary;

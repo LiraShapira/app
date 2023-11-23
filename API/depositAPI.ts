@@ -1,11 +1,12 @@
 import { mockTransaction } from "../Mocks/mockDB";
 import { ApiResponse } from "../types/APITypes";
+import { DepositForm } from "../types/Deposit";
 import { Transaction } from "../types/Transaction";
 import { SERVER_URL } from "./config";
 
-export interface FormWithUserId extends Omit<DepositForm, 'notes'> {
+export interface FormWithUserId extends Omit<DepositForm, 'compostSmell'> {
   userId: string;
-  notes?: string;
+  compostSmell?: boolean;
 }
 
 export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Promise<ApiResponse<Transaction>> => {
@@ -24,8 +25,7 @@ export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Pro
       compostSmell: formWithUserId.compostSmell,
       dryMatterPresent: formWithUserId.dryMatter,
       notes: formWithUserId.notes,
-      // TODO compostStand Make dynamic
-      compostStandId: 1
+      compostStand: formWithUserId.compostStand,
     }
   }
 
