@@ -9,11 +9,11 @@ const heDictionary: Dictionary = {
 
   tabs_wallet: 'ארנק',
 
-  auth_login: 'להיכנס',
+  auth_login: 'כניסה',
   auth_logout: 'להתנתק?',
-  auth_register: 'להירשם',
-  auth_to_login: 'להיכנס',
-  auth_to_register: 'להירשם',
+  auth_register: 'הרשמה',
+  auth_to_login: 'כניסה',
+  auth_to_register: 'הרשמה',
   auth_phone_number: 'מספר טלפון',
   auth_first_name: 'שם פרטי',
   auth_last_name: 'שם משפחה',
