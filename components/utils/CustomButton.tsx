@@ -10,21 +10,11 @@ import Colors from '../../constants/Colors';
 export interface ButtonProps {
   text: string;
   disabled?: boolean;
+  textColor?: string; 
+  backgroundColor?: string; 
   onPress: (...args: any[]) => any;
   size?: 's' | 'm' | 'l';
 }
-
-const widthSizeMap = {
-  s: 100,
-  m: 140,
-  l: 220,
-};
-
-const heightSizeMap = {
-  s: 18,
-  m: 24,
-  l: 32,
-};
 
 const fontSizeMap = {
   s: 12,
@@ -37,13 +27,15 @@ export default function CustomButton({
   onPress,
   disabled = false,
   size = 'm',
+  textColor,
+  backgroundColor,
 }: ButtonProps) {
   const colorScheme = useColorScheme();
 
   return (
     <View
       style={{
-        backgroundColor: Colors[colorScheme ?? 'light'].shading,
+        backgroundColor: backgroundColor || Colors[colorScheme ?? 'light'].shading,
         ...styles.submitButton,
       }}
     >
@@ -54,8 +46,9 @@ export default function CustomButton({
       >
         <Text
           style={{
+            fontWeight: '700',
             fontSize: fontSizeMap[size],
-            color: Colors[colorScheme ?? 'light'].text,
+            color: textColor || Colors[colorScheme ?? 'light'].text
           }}
         >
           {text}
