@@ -6,18 +6,18 @@ import {
   useColorScheme,
 } from 'react-native';
 import {
-  setBinStatus,
-  setCompostSmell,
-  setCompostDryMatter,
   setNotes,
   selectNotes,
   resetForm,
   sendDepositForm,
   resetOptionalProperties,
   selectFormTouched,
+  toggleCompostSmell,
+  selectDepositForm,
+  toggleBinStatus,
+  toggleMissingDryMatter,
 } from '../store/depositFormSlice';
 import i18n from '../translationService';
-import DepositFormSwitch from '../components/form/DepositFormSwitch';
 import CustomButton from '../components/utils/CustomButton';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import Colors from '../constants/Colors';
@@ -27,6 +27,7 @@ import {
   selectUserId,
 } from '../store/userSlice';
 import { useRouter } from 'expo-router';
+import CustomTag from '../components/utils/CustomTag';
 
 export default function CompostReport() {
   const colorScheme = useColorScheme();
@@ -34,6 +35,7 @@ export default function CompostReport() {
   const dispatch = useAppDispatch();
   const userId = useAppSelector(selectUserId);
   const formTouched = useAppSelector(selectFormTouched);
+  const depositForm = useAppSelector(selectDepositForm);
   const router = useRouter();
 
   const onPressSend = (e: any) => {
@@ -48,68 +50,63 @@ export default function CompostReport() {
   };
 
   const onPressSkip = (_e: any) => {
-    dispatch(resetOptionalProperties())
+    dispatch(resetOptionalProperties());
     dispatch(sendDepositForm(userId))
-    .unwrap()
-    .then(({ data: transaction }) => {
-      dispatch(incrementUserBalance(transaction.amount));
-      dispatch(addUserTransaction(transaction));
-      router.replace('/Home');
-      dispatch(resetForm());
-    });
-  }
+      .unwrap()
+      .then(({ data: transaction }) => {
+        dispatch(incrementUserBalance(transaction.amount));
+        dispatch(addUserTransaction(transaction));
+        router.replace('/Home');
+        dispatch(resetForm());
+      });
+  };
 
   return (
     <View style={styles.compostReport}>
-      <DepositFormSwitch
-        onPress={(v: DepositForm['binStatus']) => dispatch(setBinStatus(v))}
-        title={i18n.t('deposit_form_bin_status')}
-        switchLabels={[
-          i18n.t('deposit_form_bin_status_full'),
-          i18n.t('deposit_form_bin_status_empty'),
-        ]}
-        optionValues={[true, false]}
-      />
-      <DepositFormSwitch
-        onPress={(v: DepositForm['compostSmell']) =>
-          dispatch(setCompostSmell(v))
-        }
-        title={i18n.t('deposit_form_bin_status_smell')}
-        optionValues={[false, true]}
-        switchLabels={[i18n.t('no'), i18n.t('yes')]}
-      />
-      <DepositFormSwitch
-        onPress={(v: DepositForm['dryMatter']) =>
-          dispatch(setCompostDryMatter(v))
-        }
-        title={i18n.t('deposit_form_dry_matter')}
-        optionValues={['no', 'some', 'yes']}
-        switchLabels={[i18n.t('no'), i18n.t('some'), i18n.t('yes')]}
-      />
-      <View>
-        <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
-          {i18n.t('deposit_form_notes')}
-        </Text>
-        <TextInput
-          value={notes}
-          onChangeText={(e) => dispatch(setNotes(e))}
-          style={{
-            borderColor: Colors[colorScheme ?? 'light'].text,
-            color: Colors[colorScheme ?? 'light'].text,
-            ...styles.input,
-          }}
+      <Text style={{ fontSize: 40, padding: 12 }}>{i18n.t('compost_report_title')}</Text>
+      <View style={styles.compostReport_form}>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+          <CustomTag
+            text={i18n.t('compost_report_bin_smells')}
+            onPress={() => dispatch(toggleCompostSmell())}
+            active={!!depositForm.compostSmell}
+          />
+          <CustomTag
+            text={i18n.t('compost_report_bin_full')}
+            onPress={() => dispatch(toggleBinStatus())}
+            active={depositForm.binStatus === 'full'}
+          />
+        </View>
+        <CustomTag
+          text={i18n.t('compost_report_missing_dry_matter')}
+          onPress={() => dispatch(toggleMissingDryMatter())}
+          active={depositForm.dryMatter === 'no'}
         />
-      </View>
-      <View style={styles.buttons}>
-        <CustomButton
-          text={i18n.t('deposit_form_send')}
-          onPress={onPressSend}
-          disabled={!formTouched}
-        />
-        <CustomButton
-          text={i18n.t('deposit_form_skip')}
-          onPress={onPressSkip}
-        />
+        <View>
+          <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
+            {i18n.t('deposit_form_notes')}
+          </Text>
+          <TextInput
+            value={notes}
+            onChangeText={(e) => dispatch(setNotes(e))}
+            style={{
+              borderColor: Colors[colorScheme ?? 'light'].text,
+              color: Colors[colorScheme ?? 'light'].text,
+              ...styles.input,
+            }}
+          />
+        </View>
+        <View style={styles.buttons}>
+          <CustomButton
+            text={i18n.t('deposit_form_send')}
+            onPress={onPressSend}
+            disabled={!formTouched}
+          />
+          <CustomButton
+            text={i18n.t('deposit_form_skip')}
+            onPress={onPressSkip}
+          />
+        </View>
       </View>
     </View>
   );
@@ -117,22 +114,14 @@ export default function CompostReport() {
 
 const styles = StyleSheet.create({
   compostReport: {
-    justifyContent: 'space-evenly',
-    alignItems: 'stretch',
-    alignContent: 'space-between',
     height: '100%',
+    alignContent: 'space-between',
+    // justifyContent: 'stretch',
+  },
+  compostReport_form: {
     gap: 10,
     padding: 24,
-  },
-  depositSwitches: {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingVertical: 16,
-    paddingHorizontal: 8,
-    alignContent: 'center',
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
-    height: '80%',
+
   },
   input: {
     height: 80,
@@ -147,12 +136,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-  },
-  submitButton: {
-    borderRadius: 200,
-    width: '40%',
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

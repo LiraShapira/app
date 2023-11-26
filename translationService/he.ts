@@ -31,7 +31,7 @@ const heDictionary: Dictionary = {
 
   // DEPOSIT
   deposit: 'הפקדה',
-  deposit_title: 'מה הסטטוס?',
+  deposit_title: 'כמה להפקיד?',
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',
   deposit_form_bin_status_empty: 'פנוי',
@@ -56,6 +56,11 @@ const heDictionary: Dictionary = {
   deposit_compost_stand_shiffer: 'השקמה ברחוב שיפר ',
   deposit_compost_stand_burma: 'חורשת בורמה',
 
+  compost_report_title: 'מה המצב של הקומפוסטר?',
+  compost_report_bin_full: 'הקומפוסטר מלא',
+  compost_report_bin_smells: 'איף יש ריח רע',
+  compost_report_missing_dry_matter: 'חסר לי חומר יבש',
+  
   // SEND
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',

@@ -12,6 +12,7 @@ interface DepositFormState extends DepositForm {
 
 const initialState: DepositFormState = {
   amount: 0,
+  dryMatter: 'yes',
   loading: false,
   formTouched: false,
   notes: '',
@@ -36,7 +37,7 @@ export const sendDepositForm = createAsyncThunk<
       requestBody = ({ 
         ...form,
         userId: userId,
-        compostSmell: form.compostSmell === 'yes'
+        compostSmell: form.compostSmell
        })
     } else {
       requestBody = ({ 
@@ -75,23 +76,18 @@ export const depositFormSlice = createSlice({
       state.formTouched = true;
       state.notes = action.payload;
     },
-    setBinStatus: (state, action: PayloadAction<DepositForm['binStatus']>) => {
+    toggleBinStatus: (state) => {
       state.formTouched = true;
-      state.binStatus = action.payload;
+      state.binStatus = (state.binStatus === "empty") ? "full" : "empty";
     },
-    setCompostSmell: (
-      state,
-      action: PayloadAction<DepositForm['compostSmell']>
+    toggleCompostSmell: (
+      state
     ) => {
       state.formTouched = true;
-      state.compostSmell = action.payload;
+      state.compostSmell = !state.compostSmell;
     },
-    setCompostDryMatter: (
-      state,
-      action: PayloadAction<DepositForm['dryMatter']>
-    ) => {
-      state.formTouched = true;
-      state.dryMatter = action.payload;
+    toggleMissingDryMatter: (state) => {
+      state.dryMatter = (state.dryMatter === 'no') ? 'yes' : 'no';
     },
     resetOptionalProperties: (state) => {
       delete state.dryMatter;
@@ -131,14 +127,16 @@ export const {
   decrementByAmount,
   resetForm,
   setNotes,
-  setCompostDryMatter,
-  setBinStatus,
-  setCompostSmell,
   resetOptionalProperties,
   setCompostStand,
-  setAmount
+  setAmount,
+  toggleCompostSmell,
+  toggleBinStatus,
+  toggleMissingDryMatter
 } = depositFormSlice.actions;
 
+export const selectDepositForm = (state: RootState) =>
+  state.depositForm;
 export const selectDepositFormLoading = (state: RootState) =>
   state.depositForm.loading;
 export const selectValue = (state: RootState) => state.depositForm.amount;

@@ -30,8 +30,8 @@ const enDictionary: Dictionary = {
 
   // DEPOSIT
   deposit: 'Deposit',
-  deposit_title: 'What\'s the status?',
-  deposit_form_bin_status: 'Bin status',
+  deposit_title: 'How much?',
+deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',
   deposit_form_bin_status_empty: 'empty',
   deposit_form_bin_status_smell: 'Does the compost smell bad?',
@@ -40,6 +40,11 @@ const enDictionary: Dictionary = {
   deposit_form_send: 'Send',
   deposit_form_notes: 'Notes',
   deposit_form_amount: 'Amount',
+  
+  compost_report_title: 'What\'s the status',
+  compost_report_bin_full: 'compost bin full',
+  compost_report_bin_smells: 'compost smells',
+  compost_report_missing_dry_matter: 'missing dry matter',
 
   deposit_compost_stand_cafe_shapira: 'Cafe Shapira',
   deposit_compost_stand_masalant: 'Masalant 27',

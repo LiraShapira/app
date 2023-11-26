@@ -3,8 +3,9 @@ export interface Dictionary {
   yes: string;
   no: string;
   some: string;
-  continue: string;
   cancel: string;
+  continue: string;
+
   tabs_wallet: string;
   auth_login: string;
   auth_logout: string;
@@ -23,6 +24,7 @@ export interface Dictionary {
   dashboard_dashboard_buttons_scan: string;
   home_transactions_title: string;
   transactions_list_no_activities: string;
+
   deposit: string;
   deposit_title: string;
   deposit_form_bin_status: string;
@@ -47,6 +49,12 @@ export interface Dictionary {
   deposit_compost_stand_shiffer: string;
   deposit_compost_stand_de_modina: string;
   deposit_compost_stand_burma: string;
+
+  compost_report_title: string;
+  compost_report_bin_full: string;
+  compost_report_bin_smells: string;
+  compost_report_missing_dry_matter: string,
+
   send_search_title: string;
   send_search_searching_for: string;
   send_search_placeholder: string;
@@ -57,6 +65,7 @@ export interface Dictionary {
   send_search_no_results: string;
   send_search_no_results_send_to_number: string;
   sendamount_validate_amount: string;
+
   month_january: string;
   month_february: string;
   month_march: string;
@@ -82,3 +91,5 @@ export interface Dictionary {
   month_november_MMM: string;
   month_december_MMM: string;
 }
+
+export type DictionaryWord = keyof Dictionary; 

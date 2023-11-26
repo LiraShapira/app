@@ -38,17 +38,6 @@ export default function Deposit() {
         {i18n.t('deposit_title')}
       </Text>
       <View style={styles.depositSwitches}>
-        <View style={styles.amount}>
-          <Text
-            style={{
-              color: Colors[colorScheme ?? 'light'].text,
-              fontSize: 18,
-              ...styles.amountLabel,
-            }}
-          >
-            {i18n.t('sendamount_amount')}
-          </Text>
-        </View>
         <NumberInput />
         <View style={styles.buttons}>
           <CustomButton
