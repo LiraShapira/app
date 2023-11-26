@@ -9,7 +9,7 @@ export enum CompostStand  {
   burma = 'burma',
   park_sonya = 'park_sonya',
   kerem_hazeitim = 'kerem_hazeitim',
-  hizkiyahu_hamelech = 'hizkiyahu_hamelech',
+  hizkiyahu_hamelech = 'hizkiyahu_haFmelech',
   masalant = 'masalant',
   cafe_shapira = 'cafe_shapira'
 }
