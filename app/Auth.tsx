@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 import { selectCompostStand, setCompostStand } from '../store/depositFormSlice';
 import { CompostStand } from '../types/Deposit';
 import { Picker } from '@react-native-picker/picker';
@@ -42,9 +44,12 @@ export default function Auth() {
       dispatch(sendRegistrationForm())
         .unwrap()
         .then(({ data: user }) => {
-          if ({ user }) {
+          if (user) {
             setUser(user);
             setItem(StorageKeys.phoneNumber, user.phoneNumber);
+
+            AsyncStorage.setItem('compostStand', selectedCompostStand);
+
             dispatch(setIsLoggedIn(true));
           }
           router.push('/Home');
@@ -57,9 +62,12 @@ export default function Auth() {
       dispatch(sendLoginForm())
         .unwrap()
         .then(({ data: user }) => {
-          if ({ user }) {
+          if (user) {
             setUser(user);
             setItem(StorageKeys.phoneNumber, user.phoneNumber);
+
+            AsyncStorage.setItem('compostStand', selectedCompostStand);
+
             dispatch(setIsLoggedIn(true));
           }
           router.push('/Home');
@@ -70,6 +78,23 @@ export default function Auth() {
         });
     }
   };
+
+  useEffect(() => {
+    const retrieveCompostStand = async () => {
+      try {
+        const storedCompostStand = await AsyncStorage.getItem('compostStand');
+        if (storedCompostStand) {
+          const compostStand: CompostStand = storedCompostStand as CompostStand;
+          dispatch(setCompostStand(compostStand));
+        }
+      } catch (error) {
+        console.error('Error retrieving compostStand from local storage:', error);
+      }
+    };
+
+    retrieveCompostStand();
+  }, [dispatch]);
+
 
   const onFailedLogin = () => {
     dispatch(setIsModalVisible(false));

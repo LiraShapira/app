@@ -29,7 +29,7 @@ import {
 } from '../../store/userSlice';
 import CustomButton from '../../components/utils/CustomButton';
 import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
-import {  DepositForm } from '../../types/Deposit';
+import { DepositForm } from '../../types/Deposit';
 import { useRouter } from 'expo-router';
 
 export default function Deposit() {
@@ -37,7 +37,6 @@ export default function Deposit() {
   const userId = useAppSelector(selectUserId);
   const value = useAppSelector(selectValue);
   const notes = useAppSelector(selectNotes);
-  const selectedCompostStand = useAppSelector(selectCompostStand);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -54,7 +53,7 @@ export default function Deposit() {
         dispatch(setModalText(e.message));
         dispatch(setIsModalVisible(true));
       });
-      dispatch(resetForm());
+    dispatch(resetForm());
   };
 
   const onPressSkip = (e: any) => {
@@ -81,12 +80,12 @@ export default function Deposit() {
               ...styles.amountLabel,
             }}
           >
-            { i18n.t('deposit_form_amount') }
+            {i18n.t('deposit_form_amount')}
           </Text>
           <NumberInput style={styles.amountInput} />
         </View>
-          <View>
-          </View>
+        <View>
+        </View>
         <DepositFormSwitch
           onPress={(v: DepositForm['binStatus']) => dispatch(setBinStatus(v))}
           title={i18n.t('deposit_form_bin_status')}
