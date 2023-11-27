@@ -89,6 +89,9 @@ const heDictionary: Dictionary = {
   month_october_MMM: 'אוקטובר',
   month_november_MMM: 'נובמבר',
   month_december_MMM: 'דצמבר',
+
+  main_title: 'לירה שפירא - מטבע מקומי(ע״ר)',
+  secondary_main_title: 'הזבל שלך שווה כסף בשפירא',
 }
 
 export default heDictionary;

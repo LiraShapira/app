@@ -89,6 +89,9 @@ const enDictionary: Dictionary = {
   month_october_MMM: 'oct',
   month_november_MMM: 'nov',
   month_december_MMM: 'dec',
+
+  main_title: 'LiraShapiraGreenLocalCurrency',
+  secondary_main_title: 'GarbageWorthMoneyInShapira',
 }
 
 export default enDictionary;

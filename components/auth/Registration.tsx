@@ -8,12 +8,15 @@ import { setFirstName, setLastName } from "../../store/authFormSlice";
 export default function Registration() {
   const colorScheme = useColorScheme() ?? 'light';
   const dispatch = useAppDispatch();
-    
+
   return (
+
     <View style={{
       ...styles.fullNameInputContainer,
       backgroundColor: Colors[colorScheme].background
     }}>
+      <h1>{i18n.t('main_title')}</h1>
+      <h2>{i18n.t('secondary_main_title')}</h2>
       <TextInput
         style={{
           color: Colors[colorScheme].text,

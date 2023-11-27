@@ -1,3 +1,4 @@
+import { Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import { selectCompostStand, setCompostStand } from '../store/depositFormSlice';
@@ -178,6 +179,10 @@ export default function Auth() {
           onPress={onSubmit}
         />
       </View>
+      <Image
+        source={require('/Users/Lenovo/app/app/images/LiraShapiraLogo.jpeg')}
+        style={{ width: 200, height: 200 }}
+      />
     </View>
   );
 }

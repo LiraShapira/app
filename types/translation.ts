@@ -80,4 +80,6 @@ export interface Dictionary {
   month_october_MMM: string;
   month_november_MMM: string;
   month_december_MMM: string;
+  main_title: string;
+  secondary_main_title: string;
 }
