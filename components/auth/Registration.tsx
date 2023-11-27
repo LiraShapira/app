@@ -18,28 +18,26 @@ export default function Registration() {
       ...styles.container,
       backgroundColor: Colors[colorScheme].background
     }}>
-      <View style={styles.row}>
-        <TextInput
-          style={{
-            color: Colors[colorScheme].text,
-            borderBottomColor: Colors[colorScheme].text,
-            ...styles.nameInput,
-          }}
-          onChangeText={(t) => dispatch(setFirstName(t))}
-          placeholder={i18n.t('auth_first_name')}
-          placeholderTextColor={Colors[colorScheme].shading}
-        />
-        <TextInput
-          style={{
-            ...styles.nameInput,
-            color: Colors[colorScheme].text,
-            borderBottomColor: Colors[colorScheme].text,
-          }}
-          placeholder={i18n.t('auth_last_name')}
-          onChangeText={(t) => dispatch(setLastName(t))}
-          placeholderTextColor={Colors[colorScheme].shading}
-        />
-      </View>
+      <TextInput
+        style={{
+          color: Colors[colorScheme].text,
+          borderBottomColor: Colors[colorScheme].text,
+          ...styles.nameInput,
+        }}
+        onChangeText={(t) => dispatch(setFirstName(t))}
+        placeholder={i18n.t('auth_first_name')}
+        placeholderTextColor={Colors[colorScheme].shading}
+      />
+      <TextInput
+        style={{
+          ...styles.nameInput,
+          color: Colors[colorScheme].text,
+          borderBottomColor: Colors[colorScheme].text,
+        }}
+        placeholder={i18n.t('auth_last_name')}
+        onChangeText={(t) => dispatch(setLastName(t))}
+        placeholderTextColor={Colors[colorScheme].shading}
+      />
       <Picker
         selectedValue={selectedCompostStand}
         onValueChange={(stand: CompostStand) => dispatch(setCompostStand(stand))}
@@ -55,15 +53,10 @@ export default function Registration() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  row: {
-    flexDirection: 'row',
-    gap: 8,
   },
   nameInput: {
     borderStyle: 'solid',
@@ -77,7 +70,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     height: 56,
-    width: '100%', 
+    width: '100%',
     marginHorizontal: 1,
     marginTop: 5,
   },
