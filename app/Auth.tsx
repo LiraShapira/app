@@ -104,6 +104,12 @@ export default function Auth() {
 
   return (
     <View style={styles.container}>
+      <View>
+        <View style={styles.headerContainer}>
+          <h1 style={styles.headerText}>{i18n.t('main_title')}</h1>
+          <h2 style={styles.headerText}>{i18n.t('secondary_main_title')}</h2>
+        </View>
+      </View>
       <CustomModal
         type="info"
         buttons={[
@@ -188,6 +194,14 @@ export default function Auth() {
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    alignItems: 'center',
+    backgroundColor: 'green',
+    paddingVertical: 16,
+  },
+  headerText: {
+    color: 'white',
+  },
   container: {
     marginTop: '50%',
     marginBottom: '50%',
