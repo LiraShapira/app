@@ -29,8 +29,7 @@ import {
 } from '../../store/userSlice';
 import CustomButton from '../../components/utils/CustomButton';
 import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
-import { Picker } from '@react-native-picker/picker';
-import { CompostStand, DepositForm } from '../../types/Deposit';
+import {  DepositForm } from '../../types/Deposit';
 import { useRouter } from 'expo-router';
 
 export default function Deposit() {
@@ -87,15 +86,6 @@ export default function Deposit() {
           <NumberInput style={styles.amountInput} />
         </View>
           <View>
-
-        <Picker
-          selectedValue={selectedCompostStand}
-          onValueChange={(stand: CompostStand) => dispatch(setCompostStand(stand))}
-          >
-          {Object.keys(CompostStand).map((stand) => {
-            return <Picker.Item key={stand} label={i18n.t(`deposit_compost_stand_${stand}`)} value={stand} />;
-          })}
-        </Picker>
           </View>
         <DepositFormSwitch
           onPress={(v: DepositForm['binStatus']) => dispatch(setBinStatus(v))}

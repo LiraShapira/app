@@ -1,3 +1,6 @@
+import { selectCompostStand, setCompostStand } from '../store/depositFormSlice';
+import { CompostStand } from '../types/Deposit';
+import { Picker } from '@react-native-picker/picker';
 import { StyleSheet, TextInput, useColorScheme } from 'react-native';
 import { Text, View } from '../components/Themed';
 import Colors from '../constants/Colors';
@@ -23,6 +26,7 @@ import { CustomModal } from '../components/utils/CustomModal';
 import Registration from '../components/auth/Registration';
 
 export default function Auth() {
+
   const colorScheme = useColorScheme() ?? 'light';
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -30,6 +34,8 @@ export default function Auth() {
   const phoneNumber = useAppSelector(selectPhoneNumber);
   const firstName = useAppSelector(selectFirstName);
   const lastName = useAppSelector(selectLastName);
+  const selectedCompostStand = useAppSelector(selectCompostStand);
+  const isRegButtonDisabled = !phoneNumber || (regUI && (!firstName || !lastName)) || !selectedCompostStand;
 
   const onSubmit = () => {
     if (regUI) {
@@ -103,10 +109,10 @@ export default function Auth() {
           />
         </View>
         {regUI ? (
-         <Registration />
+          <Registration />
         ) : null}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{paddingRight: 8 }}>+972</Text>
+          <Text style={{ paddingRight: 8 }}>+972</Text>
           <TextInput
             inputMode="numeric"
             style={{
@@ -119,19 +125,31 @@ export default function Auth() {
               height: 36,
               marginHorizontal: 1,
               width: '100%',
-              alignSelf: 'center', // Center the TextInput element horizontally
+              alignSelf: 'center',
             }}
-            placeholder={ i18n.t('auth_phone_number') }
+            placeholder={i18n.t('auth_phone_number')}
             placeholderTextColor={Colors[colorScheme].shading}
             onChangeText={(t) => dispatch(setPhoneNumber(t))}
           />
         </View>
+        <Picker
+          selectedValue={selectedCompostStand}
+          onValueChange={(stand: CompostStand) => {
+            console.log('Selected Compost Stand:', stand);
+            dispatch(setCompostStand(stand));
+          }}
+          style={styles.picker}
+        >
+          {Object.keys(CompostStand).map((stand) => (
+            <Picker.Item key={stand} label={i18n.t(`deposit_compost_stand_${stand}`)} value={stand} />
+          ))}
+        </Picker>
       </View>
 
       <View style={{ padding: 8, flexDirection: 'row' }}>
         <CustomButton
           text={regUI ? i18n.t('auth_register') : i18n.t('auth_login')}
-          disabled={!phoneNumber || (regUI && (!firstName || !lastName))}
+          disabled={isRegButtonDisabled}
           onPress={onSubmit}
         />
       </View>
@@ -150,5 +168,14 @@ const styles = StyleSheet.create({
   },
   submit: {
     marginTop: 7,
+  },
+  picker: {
+    marginTop: 1,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    height: 36,
+    marginHorizontal: 1,
+    alignItems: 'center',
+    width: '100%',
   },
 });
