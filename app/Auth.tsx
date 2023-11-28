@@ -49,7 +49,7 @@ export default function Auth() {
             setUser(user);
             setItem(StorageKeys.phoneNumber, user.phoneNumber);
 
-            AsyncStorage.setItem('compostStand', selectedCompostStand);
+            setItem(StorageKeys.compostStand, selectedCompostStand);
 
             dispatch(setIsLoggedIn(true));
           }
@@ -67,7 +67,7 @@ export default function Auth() {
             setUser(user);
             setItem(StorageKeys.phoneNumber, user.phoneNumber);
 
-            AsyncStorage.setItem('compostStand', selectedCompostStand);
+            setItem(StorageKeys.compostStand, selectedCompostStand);
 
             dispatch(setIsLoggedIn(true));
           }
@@ -168,7 +168,6 @@ export default function Auth() {
         <Picker
           selectedValue={selectedCompostStand}
           onValueChange={(stand: CompostStand) => {
-            console.log('Selected Compost Stand:', stand);
             dispatch(setCompostStand(stand));
           }}
           style={styles.picker}
