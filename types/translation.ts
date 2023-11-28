@@ -34,7 +34,7 @@ export interface Dictionary {
   deposit_form_notes: string;
   deposit_form_amount: string;
   location: string,
-  deposit_compost_standblank: string,
+  deposit_compost_stand_blank: string,
   deposit_compost_stand_cafe_shapira: string;
   deposit_compost_stand_masalant: string;
   deposit_compost_stand_hizkiyahu_hamelech: string;

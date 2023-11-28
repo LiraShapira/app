@@ -1,3 +1,4 @@
+
 {
   "baseUrl": ".",
   "extends": "expo/tsconfig.base",
