@@ -164,6 +164,7 @@ export default function Auth() {
             onChangeText={(t) => dispatch(setPhoneNumber(t))}
           />
         </View>
+        <Text style={{ paddingRight: 8 }}>{i18n.t('location')}</Text>
         <Picker
           selectedValue={selectedCompostStand}
           onValueChange={(stand: CompostStand) => {
