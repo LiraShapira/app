@@ -40,7 +40,7 @@ const heDictionary: Dictionary = {
   deposit_form_notes: 'הערות / הארות',
   deposit_form_amount: 'כמות',
 
-  location: 'מיקום',
+  location: 'בחר מיקום מתפריט גלילה',
   deposit_compost_stand_null: ' ',
   deposit_compost_stand_cafe_shapira: 'קפה שפירא ',
   deposit_compost_stand_masalant: 'מרכז קהילתי (ישראל מסלנט 27) ',
