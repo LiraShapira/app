@@ -39,6 +39,7 @@ const enDictionary: Dictionary = {
   deposit_form_notes: 'Notes',
   deposit_form_amount: 'Amount',
 
+  deposit_compost_stand_null: ' ',
   deposit_compost_stand_cafe_shapira: 'Cafe Shapira',
   deposit_compost_stand_masalant: 'Masalant 27',
   deposit_compost_stand_hizkiyahu_hamelech: 'Hizkiyahu hamelech',
