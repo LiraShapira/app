@@ -12,7 +12,6 @@ import NumberInput from '../../components/form/NumberInput';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   resetForm,
-  selectCompostStand,
   selectNotes,
   selectValue,
   sendDepositForm,
@@ -29,8 +28,10 @@ import {
 } from '../../store/userSlice';
 import CustomButton from '../../components/utils/CustomButton';
 import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
-import { DepositForm } from '../../types/Deposit';
+import { CompostStand, DepositForm } from '../../types/Deposit';
 import { useRouter } from 'expo-router';
+import { getItem } from '../../utils/asyncStorage';
+import { StorageKeys } from '../../types/AsyncStorage';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
@@ -40,8 +41,11 @@ export default function Deposit() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const onPressSend = (e: any) => {
+  const onPressSend = async (e: any) => {
     // send form
+    const usersCompostStand = await getItem(StorageKeys.compostStand) as CompostStand
+    usersCompostStand && dispatch(setCompostStand(usersCompostStand));
+
     dispatch(sendDepositForm(userId))
       .unwrap()
       .then(({ data: transaction }) => {

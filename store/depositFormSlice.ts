@@ -14,7 +14,7 @@ const initialState: DepositFormState = {
   amount: 0,
   loading: false,
   notes: '',
-  compostStand: CompostStand.null
+  compostStand: CompostStand.blank
 };
 
 export const sendDepositForm = createAsyncThunk<

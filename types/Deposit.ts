@@ -1,5 +1,5 @@
 export enum CompostStand {
-  null = '',
+  blank '',
   hakaveret = 'hakaveret',
   food_forest_park_hahurshot = 'food_forest_park_hahurshot',
   tel_hubez = 'tel_hubez',
