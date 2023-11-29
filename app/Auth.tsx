@@ -38,8 +38,7 @@ export default function Auth() {
   const firstName = useAppSelector(selectFirstName);
   const lastName = useAppSelector(selectLastName);
   const selectedCompostStand = useAppSelector(selectCompostStand);
-  const isRegButtonDisabled = !phoneNumber || (regUI && (!firstName || !lastName)) || !selectedCompostStand;
-
+  const isRegButtonDisabled = !phoneNumber || (regUI && (!firstName || !lastName || !selectedCompostStand));
   const onSubmit = () => {
     if (regUI) {
       dispatch(sendRegistrationForm())
