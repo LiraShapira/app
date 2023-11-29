@@ -103,12 +103,6 @@ export default function Auth() {
 
   return (
     <View style={styles.container}>
-      <View>
-        <View style={styles.headerContainer}>
-          <h1 style={styles.headerText}>{i18n.t('main_title')}</h1>
-          <h2 style={styles.headerText}>{i18n.t('secondary_main_title')}</h2>
-        </View>
-      </View>
       <CustomModal
         type="info"
         buttons={[
@@ -162,63 +156,65 @@ export default function Auth() {
             placeholderTextColor={Colors[colorScheme].shading}
             onChangeText={(t) => dispatch(setPhoneNumber(t))}
           />
-        </View>
-        <Text style={{ paddingRight: 8 }}>{i18n.t('location')}</Text>
-        <Picker
-          selectedValue={selectedCompostStand}
-          onValueChange={(stand: CompostStand) => {
-            dispatch(setCompostStand(stand));
-          }}
-          style={styles.picker}
-        >
-          {Object.keys(CompostStand).map((stand) => (
-            <Picker.Item key={stand} label={i18n.t(`deposit_compost_stand_${stand}`)} value={stand} />
-          ))}
-        </Picker>
-      </View>
+          {regUI ? (
+            <View>
+              <Text style={{ paddingRight: 8 }}>{i18n.t('location')}</Text>
+              <Picker
+                selectedValue={selectedCompostStand}
+                onValueChange={(stand: CompostStand) => {
+                  dispatch(setCompostStand(stand));
+                }}
+                style={styles.picker}
+              >
+                {Object.keys(CompostStand).map((stand) => (
+                  <Picker.Item key={stand} label={i18n.t(`deposit_compost_stand_${stand}`)} value={stand} />
+                ))}
+              </Picker>
+            </View>
+          ) : null}
 
-      <View style={{ padding: 8, flexDirection: 'row' }}>
-        <CustomButton
-          text={regUI ? i18n.t('auth_register') : i18n.t('auth_login')}
-          disabled={isRegButtonDisabled}
-          onPress={onSubmit}
-        />
-      </View>
-      <Image
-        source={require('/Users/Lenovo/app/assets/images/LiraShapiraLogo.jpeg')}
-        style={{ width: 200, height: 200 }}
-      />
-    </View>
-  );
+          <View style={{ padding: 8, flexDirection: 'row' }}>
+            <CustomButton
+              text={regUI ? i18n.t('auth_register') : i18n.t('auth_login')}
+              disabled={isRegButtonDisabled}
+              onPress={onSubmit}
+            />
+          </View>
+          <Image
+            source={require('/Users/Lenovo/app/assets/images/LiraShapiraLogo.jpeg')}
+            style={{ width: 200, height: 200 }}
+          />
+        </View>
+        );
 }
 
-const styles = StyleSheet.create({
-  headerContainer: {
-    alignItems: 'center',
-    backgroundColor: 'green',
-    paddingVertical: 16,
+        const styles = StyleSheet.create({
+          headerContainer: {
+          alignItems: 'center',
+        backgroundColor: 'green',
+        paddingVertical: 16,
   },
-  headerText: {
-    color: 'white',
+        headerText: {
+          color: 'white',
   },
-  container: {
-    marginTop: '50%',
-    marginBottom: '50%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+        container: {
+          marginTop: '50%',
+        marginBottom: '50%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
   },
-  submit: {
-    marginTop: 7,
+        submit: {
+          marginTop: 7,
   },
-  picker: {
-    marginTop: 1,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    height: 36,
-    marginHorizontal: 1,
-    alignItems: 'center',
-    width: '100%',
+        picker: {
+          marginTop: 1,
+        borderStyle: 'solid',
+        borderWidth: 1,
+        height: 36,
+        marginHorizontal: 1,
+        alignItems: 'center',
+        width: '100%',
   },
 });
