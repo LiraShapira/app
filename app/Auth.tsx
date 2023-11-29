@@ -186,7 +186,7 @@ export default function Auth() {
         />
       </View>
       <Image
-        source={require('/Users/Lenovo/app/app/images/LiraShapiraLogo.jpeg')}
+        source={require('/Users/Lenovo/app/assets/images/LiraShapiraLogo.jpeg')}
         style={{ width: 200, height: 200 }}
       />
     </View>

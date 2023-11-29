@@ -41,7 +41,7 @@ const heDictionary: Dictionary = {
   deposit_form_amount: 'כמות',
 
   location: 'בחר מיקום מתפריט גלילה',
-  deposit_compost_stand_blank: ' ',
+  deposit_compost_stand_blank: '',
   deposit_compost_stand_cafe_shapira: 'קפה שפירא ',
   deposit_compost_stand_masalant: 'מרכז קהילתי (ישראל מסלנט 27) ',
   deposit_compost_stand_hizkiyahu_hamelech: 'חזקיהו המלך ',
