@@ -12,7 +12,6 @@ import NumberInput from '../../components/form/NumberInput';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   resetForm,
-  selectCompostStand,
   selectNotes,
   selectValue,
   sendDepositForm,
@@ -29,21 +28,24 @@ import {
 } from '../../store/userSlice';
 import CustomButton from '../../components/utils/CustomButton';
 import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
-import { Picker } from '@react-native-picker/picker';
 import { CompostStand, DepositForm } from '../../types/Deposit';
 import { useRouter } from 'expo-router';
+import { getItem } from '../../utils/asyncStorage';
+import { StorageKeys } from '../../types/AsyncStorage';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
   const userId = useAppSelector(selectUserId);
   const value = useAppSelector(selectValue);
   const notes = useAppSelector(selectNotes);
-  const selectedCompostStand = useAppSelector(selectCompostStand);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const onPressSend = (e: any) => {
+  const onPressSend = async (e: any) => {
     // send form
+    const usersCompostStand = await getItem(StorageKeys.compostStand) as CompostStand
+    usersCompostStand && dispatch(setCompostStand(usersCompostStand));
+
     dispatch(sendDepositForm(userId))
       .unwrap()
       .then(({ data: transaction }) => {
@@ -55,7 +57,7 @@ export default function Deposit() {
         dispatch(setModalText(e.message));
         dispatch(setIsModalVisible(true));
       });
-      dispatch(resetForm());
+    dispatch(resetForm());
   };
 
   const onPressSkip = (e: any) => {
@@ -86,17 +88,8 @@ export default function Deposit() {
           </Text>
           <NumberInput style={styles.amountInput} />
         </View>
-          <View>
-
-        <Picker
-          selectedValue={selectedCompostStand}
-          onValueChange={(stand: CompostStand) => dispatch(setCompostStand(stand))}
-          >
-          {Object.keys(CompostStand).map((stand) => {
-            return <Picker.Item key={stand} label={i18n.t(`deposit_compost_stand_${stand}`)} value={stand} />;
-          })}
-        </Picker>
-          </View>
+        <View>
+        </View>
         <DepositFormSwitch
           onPress={(v: DepositForm['binStatus']) => dispatch(setBinStatus(v))}
           title={i18n.t('deposit_form_bin_status')}

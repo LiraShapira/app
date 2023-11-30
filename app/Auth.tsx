@@ -1,3 +1,9 @@
+import { Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
+import { selectCompostStand, setCompostStand } from '../store/depositFormSlice';
+import { CompostStand } from '../types/Deposit';
+import { Picker } from '@react-native-picker/picker';
 import { StyleSheet, TextInput, useColorScheme } from 'react-native';
 import { Text, View } from '../components/Themed';
 import Colors from '../constants/Colors';
@@ -23,6 +29,7 @@ import { CustomModal } from '../components/utils/CustomModal';
 import Registration from '../components/auth/Registration';
 
 export default function Auth() {
+
   const colorScheme = useColorScheme() ?? 'light';
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -30,15 +37,19 @@ export default function Auth() {
   const phoneNumber = useAppSelector(selectPhoneNumber);
   const firstName = useAppSelector(selectFirstName);
   const lastName = useAppSelector(selectLastName);
-
+  const selectedCompostStand = useAppSelector(selectCompostStand);
+  const isRegButtonDisabled = !phoneNumber || (regUI && (!firstName || !lastName || !selectedCompostStand));
   const onSubmit = () => {
     if (regUI) {
       dispatch(sendRegistrationForm())
         .unwrap()
         .then(({ data: user }) => {
-          if ({ user }) {
+          if (user) {
             setUser(user);
             setItem(StorageKeys.phoneNumber, user.phoneNumber);
+
+            setItem(StorageKeys.compostStand, selectedCompostStand);
+
             dispatch(setIsLoggedIn(true));
           }
           router.push('/Home');
@@ -51,9 +62,12 @@ export default function Auth() {
       dispatch(sendLoginForm())
         .unwrap()
         .then(({ data: user }) => {
-          if ({ user }) {
+          if (user) {
             setUser(user);
             setItem(StorageKeys.phoneNumber, user.phoneNumber);
+
+            setItem(StorageKeys.compostStand, selectedCompostStand);
+
             dispatch(setIsLoggedIn(true));
           }
           router.push('/Home');
@@ -64,6 +78,23 @@ export default function Auth() {
         });
     }
   };
+
+  useEffect(() => {
+    const retrieveCompostStand = async () => {
+      try {
+        const storedCompostStand = await AsyncStorage.getItem('compostStand');
+        if (storedCompostStand) {
+          const compostStand: CompostStand = storedCompostStand as CompostStand;
+          dispatch(setCompostStand(compostStand));
+        }
+      } catch (error) {
+        console.error('Error retrieving compostStand from local storage:', error);
+      }
+    };
+
+    retrieveCompostStand();
+  }, [dispatch]);
+
 
   const onFailedLogin = () => {
     dispatch(setIsModalVisible(false));
@@ -103,10 +134,10 @@ export default function Auth() {
           />
         </View>
         {regUI ? (
-         <Registration />
+          <Registration />
         ) : null}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{paddingRight: 8 }}>+972</Text>
+        <Text style={{paddingRight: 8 }}>+972</Text>
           <TextInput
             inputMode="numeric"
             style={{
@@ -119,27 +150,55 @@ export default function Auth() {
               height: 36,
               marginHorizontal: 1,
               width: '100%',
-              alignSelf: 'center', // Center the TextInput element horizontally
+              alignSelf: 'center',
             }}
             placeholder={ i18n.t('auth_phone_number') }
             placeholderTextColor={Colors[colorScheme].shading}
             onChangeText={(t) => dispatch(setPhoneNumber(t))}
           />
         </View>
+        {regUI ?
+          <Text style={{ paddingRight: 8 }}>{i18n.t('location')}</Text>
+          : null}
+        {regUI ?
+          <Picker
+            selectedValue={selectedCompostStand}
+            onValueChange={(stand: CompostStand) => {
+              dispatch(setCompostStand(stand));
+            }}
+            style={styles.picker}
+          >
+            {Object.keys(CompostStand).map((stand) => (
+              <Picker.Item key={stand} label={i18n.t(`deposit_compost_stand_${stand}`)} value={stand} />
+            ))}
+          </Picker>
+          : null}
       </View>
 
       <View style={{ padding: 8, flexDirection: 'row' }}>
         <CustomButton
           text={regUI ? i18n.t('auth_register') : i18n.t('auth_login')}
-          disabled={!phoneNumber || (regUI && (!firstName || !lastName))}
+          disabled={isRegButtonDisabled}
           onPress={onSubmit}
         />
       </View>
+      <Image
+        source={require('/Users/Lenovo/app/assets/images/LiraShapiraLogo.jpeg')}
+        style={{ width: 200, height: 200 }}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    alignItems: 'center',
+    backgroundColor: 'green',
+    paddingVertical: 16,
+  },
+  headerText: {
+    color: 'white',
+  },
   container: {
     marginTop: '50%',
     marginBottom: '50%',
@@ -150,5 +209,14 @@ const styles = StyleSheet.create({
   },
   submit: {
     marginTop: 7,
+  },
+  picker: {
+    marginTop: 1,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    height: 36,
+    marginHorizontal: 1,
+    alignItems: 'center',
+    width: '100%',
   },
 });

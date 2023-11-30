@@ -8,39 +8,26 @@ import { useDebounce } from '../hooks';
 import { useSelector } from 'react-redux';
 import { selectContacts } from '../store/userSlice';
 import SearchResultsInfo from '../components/Send/SearchResultsInfo';
+import {filterContactsCondition} from "./filterContactsCondition";
 
 export default function Send() {
   const [filterTerms, setFilterTerms] = useState<string>('');
   const [filteredContacts, setfilteredContacts] = useState<Contact[]>([]);
   const colorScheme = useColorScheme();
-  const debouncedFilterTerms = useDebounce(filterTerms, 300);
+  const debouncedFilterTerms: string = useDebounce(filterTerms, 300).toString();
   const contacts = useSelector(selectContacts);
-
-  // console.log('flatmap');
-  // const phoneNumbersFlatMap = contacts
-  //   .filter((c) => c.phoneNumbers?.length)
-  //   .flatMap((c) => c.phoneNumbers?.map((phoneNumber) => phoneNumber.number));
 
   // when filter terms change
   // set filtered contacts
   useEffect(() => {
-    const filterContacts = (c: Contact) => {
-      const lcFilterTerms = debouncedFilterTerms.toLowerCase();
-      if (c.phoneNumbers?.length) {
-        return (
-          c.firstName?.toLowerCase().includes(lcFilterTerms) ||
-          c.lastName?.toLowerCase().includes(lcFilterTerms)
-          // phoneNumbersFlatMap.findIndex((e) => e?.includes(filterTerms)) !== -1
-        );
-      }
-    };
 
     const filterBySearchTerm = () => {
       setfilteredContacts(
-        contacts.filter((c) => c.phoneNumbers?.length).filter(filterContacts)
+        contacts.filter(cont =>  filterContactsCondition(cont, debouncedFilterTerms))
       );
     };
     if (debouncedFilterTerms) filterBySearchTerm();
+
   }, [debouncedFilterTerms]);
 
   return (

@@ -33,6 +33,8 @@ export interface Dictionary {
   deposit_form_send: string;
   deposit_form_notes: string;
   deposit_form_amount: string;
+  location: string,
+  deposit_compost_stand_blank: string,
   deposit_compost_stand_cafe_shapira: string;
   deposit_compost_stand_masalant: string;
   deposit_compost_stand_hizkiyahu_hamelech: string;
@@ -80,4 +82,6 @@ export interface Dictionary {
   month_october_MMM: string;
   month_november_MMM: string;
   month_december_MMM: string;
+  main_title: string;
+  secondary_main_title: string;
 }
