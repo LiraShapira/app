@@ -84,7 +84,7 @@ export default function Deposit() {
               ...styles.amountLabel,
             }}
           >
-            {i18n.t('deposit_form_amount')}
+            { i18n.t('deposit_form_amount') }
           </Text>
           <NumberInput style={styles.amountInput} />
         </View>

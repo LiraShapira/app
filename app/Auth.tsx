@@ -137,7 +137,7 @@ export default function Auth() {
           <Registration />
         ) : null}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ paddingRight: 8 }}>+972</Text>
+        <Text style={{paddingRight: 8 }}>+972</Text>
           <TextInput
             inputMode="numeric"
             style={{
@@ -152,7 +152,7 @@ export default function Auth() {
               width: '100%',
               alignSelf: 'center',
             }}
-            placeholder={i18n.t('auth_phone_number')}
+            placeholder={ i18n.t('auth_phone_number') }
             placeholderTextColor={Colors[colorScheme].shading}
             onChangeText={(t) => dispatch(setPhoneNumber(t))}
           />
