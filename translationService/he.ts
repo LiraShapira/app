@@ -40,6 +40,8 @@ const heDictionary: Dictionary = {
   deposit_form_notes: 'הערות / הארות',
   deposit_form_amount: 'כמות',
 
+  location: 'בחר מיקום מתפריט גלילה',
+  deposit_compost_stand_blank: '',
   deposit_compost_stand_cafe_shapira: 'קפה שפירא ',
   deposit_compost_stand_masalant: 'מרכז קהילתי (ישראל מסלנט 27) ',
   deposit_compost_stand_hizkiyahu_hamelech: 'חזקיהו המלך ',
@@ -89,6 +91,9 @@ const heDictionary: Dictionary = {
   month_october_MMM: 'אוקטובר',
   month_november_MMM: 'נובמבר',
   month_december_MMM: 'דצמבר',
+
+  main_title: 'לירה שפירא - מטבע מקומי(ע״ר)',
+  secondary_main_title: 'הזבל שלך שווה כסף בשפירא',
 }
 
 export default heDictionary;
