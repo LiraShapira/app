@@ -18,7 +18,7 @@ export interface ButtonProps {
 
 const fontSizeMap = {
   s: 12,
-  m: 16,
+  m: 14,
   l: 24,
 };
 
@@ -60,7 +60,7 @@ export default function CustomButton({
 
 const styles = StyleSheet.create({
   submitButton: {
-    padding: 8,
+    padding: 10,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',

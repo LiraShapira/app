@@ -34,14 +34,14 @@ export const sendDepositForm = createAsyncThunk<
     const form = getState().depositForm;
 
     if (form.formTouched) {
-      requestBody = ({ 
+      requestBody = ({
         ...form,
         userId: userId,
         compostSmell: form.compostSmell
        })
     } else {
-      requestBody = ({ 
-        amount: form.amount, 
+      requestBody = ({
+        amount: form.amount,
         userId: userId,
         compostStand: form.compostStand
       })
@@ -76,10 +76,6 @@ export const depositFormSlice = createSlice({
       state.formTouched = true;
       state.notes = action.payload;
     },
-    toggleBinStatus: (state) => {
-      state.formTouched = true;
-      state.binStatus = (state.binStatus === "empty") ? "full" : "empty";
-    },
     toggleCompostSmell: (
       state
     ) => {
@@ -89,10 +85,22 @@ export const depositFormSlice = createSlice({
     toggleMissingDryMatter: (state) => {
       state.dryMatter = (state.dryMatter === 'no') ? 'yes' : 'no';
     },
+    toggleBugs: (state) => {
+      state.bugs = !state.bugs;
+    },
+    toggleScalesMissing: (state) => {
+      state.scalesMissing = !state.scalesMissing;
+    },
+    toggleCompostFull: (state) => {
+      state.compostFull = !state.compostFull;
+    },
+    toggleCleanAndTidy: (state) => {
+      state.cleanAndTidy = !state.cleanAndTidy;
+    },
+
     resetOptionalProperties: (state) => {
       delete state.dryMatter;
       delete state.compostSmell;
-      delete state.binStatus;
       state.notes = '';
       state.formTouched = false;
     },
@@ -102,7 +110,6 @@ export const depositFormSlice = createSlice({
     resetForm: (state) => {
       delete state.dryMatter;
       delete state.compostSmell;
-      delete state.binStatus;
       state.notes = '';
       state.formTouched = false;
       state.amount = 0;
@@ -131,8 +138,11 @@ export const {
   setCompostStand,
   setAmount,
   toggleCompostSmell,
-  toggleBinStatus,
-  toggleMissingDryMatter
+  toggleMissingDryMatter,
+  toggleScalesMissing,
+  toggleCompostFull,
+  toggleBugs,
+  toggleCleanAndTidy
 } = depositFormSlice.actions;
 
 export const selectDepositForm = (state: RootState) =>

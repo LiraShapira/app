@@ -10,7 +10,7 @@ export default function CustomTag(props: TagProps) {
     const colorScheme = useColorScheme() ?? 'light';
 
     return (
-        <View >
+        <View style={{ padding: 4 }}>
             <CustomButton
                 {...props}
                 textColor={props.active ? Colors['light'].text : Colors[colorScheme].highlight }

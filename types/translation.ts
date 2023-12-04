@@ -54,7 +54,10 @@ export interface Dictionary {
   compost_report_bin_full: string;
   compost_report_bin_smells: string;
   compost_report_missing_dry_matter: string,
-
+  compost_report_missing_bad_bugs: string;
+  compost_report_missing_scales: string;
+  compost_report_missing_clean_and_tidy: string;
+  
   send_search_title: string;
   send_search_searching_for: string;
   send_search_placeholder: string;
@@ -92,4 +95,4 @@ export interface Dictionary {
   month_december_MMM: string;
 }
 
-export type DictionaryWord = keyof Dictionary; 
+export type DictionaryWord = keyof Dictionary;

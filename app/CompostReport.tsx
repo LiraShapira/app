@@ -14,8 +14,11 @@ import {
   selectFormTouched,
   toggleCompostSmell,
   selectDepositForm,
-  toggleBinStatus,
   toggleMissingDryMatter,
+  toggleScalesMissing,
+  toggleCompostFull,
+  toggleCleanAndTidy,
+  toggleBugs,
 } from '../store/depositFormSlice';
 import i18n from '../translationService';
 import CustomButton from '../components/utils/CustomButton';
@@ -63,25 +66,42 @@ export default function CompostReport() {
 
   return (
     <View style={styles.compostReport}>
-      <Text style={{ fontSize: 40, padding: 12 }}>{i18n.t('compost_report_title')}</Text>
+      <Text style={{ fontSize: 40, padding: 12 }}>
+        {i18n.t('compost_report_title')}
+      </Text>
       <View style={styles.compostReport_form}>
-        <View style={{ flexDirection: 'row', gap: 8 }}>
+        <View style={styles.tagsContainer}>
           <CustomTag
             text={i18n.t('compost_report_bin_smells')}
             onPress={() => dispatch(toggleCompostSmell())}
             active={!!depositForm.compostSmell}
           />
           <CustomTag
-            text={i18n.t('compost_report_bin_full')}
-            onPress={() => dispatch(toggleBinStatus())}
-            active={depositForm.binStatus === 'full'}
+            text={i18n.t('compost_report_missing_dry_matter')}
+            onPress={() => dispatch(toggleMissingDryMatter())}
+            active={depositForm.dryMatter === 'no'}
           />
-        </View>
-        <CustomTag
-          text={i18n.t('compost_report_missing_dry_matter')}
-          onPress={() => dispatch(toggleMissingDryMatter())}
-          active={depositForm.dryMatter === 'no'}
-        />
+          <CustomTag
+            text={i18n.t('compost_report_missing_scales')}
+            onPress={() => dispatch(toggleScalesMissing())}
+            active={!!depositForm.scalesMissing}
+            />
+          <CustomTag
+            text={i18n.t('compost_report_missing_bad_bugs')}
+            onPress={() => dispatch(toggleBugs())}
+            active={!!depositForm.bugs}
+            />
+          <CustomTag
+            text={i18n.t('compost_report_bin_full')}
+            onPress={() => dispatch(toggleCompostFull())}
+            active={!!depositForm.compostFull}
+            />
+          <CustomTag
+            text={i18n.t('compost_report_missing_clean_and_tidy')}
+            onPress={() => dispatch(toggleCleanAndTidy())}
+            active={!!depositForm.cleanAndTidy}
+            />
+            </View>
         <View>
           <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
             {i18n.t('deposit_form_notes')}
@@ -116,12 +136,16 @@ const styles = StyleSheet.create({
   compostReport: {
     height: '100%',
     alignContent: 'space-between',
-    // justifyContent: 'stretch',
   },
   compostReport_form: {
     gap: 10,
     padding: 24,
-
+  },
+  tagsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap'
   },
   input: {
     height: 80,

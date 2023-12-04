@@ -40,11 +40,14 @@ deposit_form_bin_status: 'Bin status',
   deposit_form_send: 'Send',
   deposit_form_notes: 'Notes',
   deposit_form_amount: 'Amount',
-  
+
   compost_report_title: 'What\'s the status',
   compost_report_bin_full: 'compost bin full',
   compost_report_bin_smells: 'compost smells',
   compost_report_missing_dry_matter: 'missing dry matter',
+  compost_report_missing_bad_bugs: 'bad bugs',
+  compost_report_missing_scales: 'missing scales',
+  compost_report_missing_clean_and_tidy: 'clean and tidy',
 
   deposit_compost_stand_cafe_shapira: 'Cafe Shapira',
   deposit_compost_stand_masalant: 'Masalant 27',
