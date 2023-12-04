@@ -120,7 +120,6 @@ export default function CompostReport() {
           <CustomButton
             text={i18n.t('deposit_form_send')}
             onPress={onPressSend}
-            disabled={!formTouched}
           />
           <CustomButton
             text={i18n.t('deposit_form_skip')}

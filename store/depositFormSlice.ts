@@ -33,19 +33,10 @@ export const sendDepositForm = createAsyncThunk<
     let requestBody: FormWithUserId;
     const form = getState().depositForm;
 
-    if (form.formTouched) {
-      requestBody = ({
+    requestBody = ({
         ...form,
         userId: userId,
-        compostSmell: form.compostSmell
        })
-    } else {
-      requestBody = ({
-        amount: form.amount,
-        userId: userId,
-        compostStand: form.compostStand
-      })
-    }
 
     response = await saveDepositToDatabase(requestBody);
 

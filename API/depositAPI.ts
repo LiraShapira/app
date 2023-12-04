@@ -26,6 +26,10 @@ export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Pro
       dryMatterPresent: formWithUserId.dryMatter,
       notes: formWithUserId.notes,
       compostStand: formWithUserId.compostStand,
+      full: formWithUserId.compostFull,
+      bugs: formWithUserId.bugs,
+      cleanAndTidy: formWithUserId.cleanAndTidy,
+      scalesProblem: formWithUserId.scalesMissing
     }
   }
 
