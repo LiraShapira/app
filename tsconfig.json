@@ -2,10 +2,14 @@
   "baseUrl": ".",
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "types": ["jest"]
   },
   "paths": {
     "components/*": ["components/*"],
     "constants/*": ["constants/*"]
+  },
+  "jest": {
+    "preset": "react-native",
   }
 }

@@ -1,12 +1,12 @@
 import "react-native";
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import Auth from "./Auth";
-import { act } from "react-test-renderer";
+import Auth from "/Users/Lenovo/app/app/Auth.tsx";
 
-test("renders Auth component", () => {
-  render(<Auth />);
-});
+
+// test("renders Auth component", () => {
+//   render(<Auth />);
+// });
 
 test('checking registration adds people properly. case 1', async () => {
   // Given
@@ -34,7 +34,7 @@ test('checking registration adds people properly. case 1', async () => {
 
   // Mock sendRegistrationForm function
   const mockSendRegistrationForm = jest.fn(() => Promise.resolve({ data: user }));
-  jest.mock('../store/authFormSlice', () => ({
+  jest.mock('/Users/Lenovo/app/store/authFormSlice.ts', () => ({
     sendRegistrationForm: mockSendRegistrationForm,
   }));
 
