@@ -7,7 +7,7 @@ import Auth from "/Users/Lenovo/app/app/Auth.tsx";
 // test("renders Auth component", () => {
 //   render(<Auth />);
 // });
-
+console.log(process.env)
 test('checking registration adds people properly. case 1', async () => {
   // Given
   const user = {
