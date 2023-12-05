@@ -1,3 +1,4 @@
+console.log(process.env)
 import "react-native";
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
@@ -7,7 +8,6 @@ import Auth from "/Users/Lenovo/app/app/Auth.tsx";
 // test("renders Auth component", () => {
 //   render(<Auth />);
 // });
-console.log(process.env)
 test('checking registration adds people properly. case 1', async () => {
   // Given
   const user = {

@@ -9,6 +9,10 @@ module.exports = {
       tsconfig: "./tsconfig.json",
     },
   },
+  moduleNameMapper: {
+    '^i18n-js$': '<rootDir>/path-to-your-mock-file.js',
+  },
+
   testPathIgnorePatterns: [
     "./node_modules/",
     "@react-native",
