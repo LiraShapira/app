@@ -10,7 +10,7 @@ module.exports = {
     },
   },
   moduleNameMapper: {
-    '^i18n-js$': '<rootDir>/path-to-your-mock-file.js',
+    '^i18n-js$': '<rootDir>/mockfile.js',
   },
 
   testPathIgnorePatterns: [
