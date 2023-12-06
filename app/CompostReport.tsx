@@ -33,15 +33,14 @@ import { useRouter } from 'expo-router';
 import CustomTag from '../components/utils/CustomTag';
 
 export default function CompostReport() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() ?? 'light';
   const notes = useAppSelector(selectNotes);
   const dispatch = useAppDispatch();
   const userId = useAppSelector(selectUserId);
-  const formTouched = useAppSelector(selectFormTouched);
   const depositForm = useAppSelector(selectDepositForm);
   const router = useRouter();
 
-  const onPressSend = (e: any) => {
+  const onPressSend = () => {
     dispatch(sendDepositForm(userId))
       .unwrap()
       .then(({ data: transaction }) => {
@@ -52,7 +51,7 @@ export default function CompostReport() {
       });
   };
 
-  const onPressSkip = (_e: any) => {
+  const onPressSkip = () => {
     dispatch(resetOptionalProperties());
     dispatch(sendDepositForm(userId))
       .unwrap()
@@ -66,7 +65,7 @@ export default function CompostReport() {
 
   return (
     <View style={styles.compostReport}>
-      <Text style={{ fontSize: 40, padding: 12 }}>
+      <Text style={{ color: Colors[colorScheme].text, fontSize: 40, padding: 12 }}>
         {i18n.t('compost_report_title')}
       </Text>
       <View style={styles.compostReport_form}>
@@ -103,15 +102,15 @@ export default function CompostReport() {
             />
             </View>
         <View>
-          <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
+          <Text style={{ color: Colors[colorScheme].text }}>
             {i18n.t('deposit_form_notes')}
           </Text>
           <TextInput
             value={notes}
             onChangeText={(e) => dispatch(setNotes(e))}
             style={{
-              borderColor: Colors[colorScheme ?? 'light'].text,
-              color: Colors[colorScheme ?? 'light'].text,
+              borderColor: Colors[colorScheme].text,
+              color: Colors[colorScheme].text,
               ...styles.input,
             }}
           />
