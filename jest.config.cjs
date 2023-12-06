@@ -15,12 +15,12 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo-linked|expo-font|expo-constants|expo-localization|@react-native/js-polyfills)',
   ],
-  extensionsToTreatAsEsm: ['.ts', '.tsx', '.js', '.jsx'],
-  globals: {
-    'ts-jest': {
-      useESM: true,
-    },
-  },
+  // extensionsToTreatAsEsm: ['.ts', '.tsx', '.js', '.jsx'],
+  // globals: {
+  //   'ts-jest': {
+  //     useESM: true,
+  //   },
+  // },
   testEnvironment: 'node', // Add this line
   testRunner: 'jest-circus/runner', // Add this line
 };
