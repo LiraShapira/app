@@ -7,14 +7,12 @@ import { CompostStand, DepositForm } from '../types/Deposit';
 
 interface DepositFormState extends DepositForm {
   loading: boolean;
-  formTouched: boolean;
 }
 
 const initialState: DepositFormState = {
-  amount: 0,
+  amount: '',
   dryMatter: 'yes',
   loading: false,
-  formTouched: false,
   notes: '',
   compostStand: CompostStand.blank
 };
@@ -52,15 +50,7 @@ export const depositFormSlice = createSlice({
   name: 'depositForm',
   initialState,
   reducers: {
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      if (state.amount === 99) return;
-      state.amount += action.payload;
-    },
-    decrementByAmount: (state, action: PayloadAction<number>) => {
-      if (state.amount === 0) return;
-      state.amount -= action.payload;
-    },
-    setAmount: (state, action: PayloadAction<number>) => {
+    setAmount: (state, action: PayloadAction<string>) => {
       state.amount = action.payload;
     },
     setNotes: (state, action: PayloadAction<string>) => {
@@ -91,7 +81,6 @@ export const depositFormSlice = createSlice({
       delete state.dryMatter;
       delete state.compostSmell;
       state.notes = '';
-      state.formTouched = false;
     },
     setCompostStand: (state, action: PayloadAction<CompostStand>) => {
       state.compostStand = action.payload;
@@ -100,8 +89,7 @@ export const depositFormSlice = createSlice({
       delete state.dryMatter;
       delete state.compostSmell;
       state.notes = '';
-      state.formTouched = false;
-      state.amount = 0;
+      state.amount = '';
     },
   },
   extraReducers: (builder) => {
@@ -119,8 +107,6 @@ export const depositFormSlice = createSlice({
 });
 
 export const {
-  incrementByAmount,
-  decrementByAmount,
   resetForm,
   setNotes,
   resetOptionalProperties,
