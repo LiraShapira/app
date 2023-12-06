@@ -76,31 +76,41 @@ const NumberInputNumberPad = ({
   };
 
   return (
-    <View style={styles.numberPad}>
-      <Text
-        style={{ ...styles.numberPadValue, color: Colors[colorScheme].text }}
-      >
-        {value}
-      </Text>
-      <View style={styles.numberPadRow}>
-        <NumberPadButton n={'1'} onPress={onPress} />
-        <NumberPadButton n={'2'} onPress={onPress} />
-        <NumberPadButton n={'3'} onPress={onPress} />
+    <View style={{ flexDirection: 'column', gap: 20 }}>
+      <View>
+        <Text
+          style={{ ...styles.numberPadValue, color: Colors[colorScheme].text }}
+        >
+          {value}
+        </Text>
+        <View
+          style={{
+            borderBottomColor: Colors[colorScheme].text,
+            borderBottomWidth: 1,
+          }}
+        ></View>
       </View>
-      <View style={styles.numberPadRow}>
-        <NumberPadButton n={'4'} onPress={onPress} />
-        <NumberPadButton n={'5'} onPress={onPress} />
-        <NumberPadButton n={'6'} onPress={onPress} />
-      </View>
-      <View style={styles.numberPadRow}>
-        <NumberPadButton n={'7'} onPress={onPress} />
-        <NumberPadButton n={'8'} onPress={onPress} />
-        <NumberPadButton n={'9'} onPress={onPress} />
-      </View>
-      <View style={styles.numberPadRow}>
-        <NumberPadButton n={'.'} onPress={onPress} />
-        <NumberPadButton n={'0'} onPress={onPress} />
-        <NumberPadButton n={'ret'} onPress={onPress} />
+      <View style={styles.numberPad}>
+        <View style={styles.numberPadRow}>
+          <NumberPadButton n={'1'} onPress={onPress} />
+          <NumberPadButton n={'2'} onPress={onPress} />
+          <NumberPadButton n={'3'} onPress={onPress} />
+        </View>
+        <View style={styles.numberPadRow}>
+          <NumberPadButton n={'4'} onPress={onPress} />
+          <NumberPadButton n={'5'} onPress={onPress} />
+          <NumberPadButton n={'6'} onPress={onPress} />
+        </View>
+        <View style={styles.numberPadRow}>
+          <NumberPadButton n={'7'} onPress={onPress} />
+          <NumberPadButton n={'8'} onPress={onPress} />
+          <NumberPadButton n={'9'} onPress={onPress} />
+        </View>
+        <View style={styles.numberPadRow}>
+          <NumberPadButton n={'.'} onPress={onPress} />
+          <NumberPadButton n={'0'} onPress={onPress} />
+          <NumberPadButton n={'ret'} onPress={onPress} />
+        </View>
       </View>
     </View>
   );
@@ -111,9 +121,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     gap: 40,
+    alignItems: 'center'
   },
   numberPadValue: {
-    height: 100,
+    height: 60,
     fontSize: 45,
     alignSelf: 'center',
   },
