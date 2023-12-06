@@ -3,6 +3,10 @@ import "react-native";
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import Auth from "/Users/Lenovo/app/app/Auth.tsx";
+// Your test file
+import mocki18n from './mockfile.js'
+// ... your test code
+
 
 
 // test("renders Auth component", () => {
@@ -23,6 +27,8 @@ test('checking registration adds people properly. case 1', async () => {
     setItem: jest.fn(() => Promise.resolve()),
   }));
 
+  jest.mock('I18n', () => mocki18n)
+
   // Mock router
   const mockPush = jest.fn();
   const mockRouter = {
@@ -37,6 +43,18 @@ test('checking registration adds people properly. case 1', async () => {
   jest.mock('/Users/Lenovo/app/store/authFormSlice.ts', () => ({
     sendRegistrationForm: mockSendRegistrationForm,
   }));
+
+  // Mock getLocales
+jest.mock('expo-localization', () => ({
+  //getLocales: () => [{ languageCode: 'en' }].languageCode;// Adjust the languageCode as needed
+  getLocales: () =>{
+    const res = {
+      languageCode: 'en'
+    }
+    console.log(res);
+    return res;
+  }
+}));
 
   // When
   const { getByPlaceholderText, getByText } = render(<Auth />);
