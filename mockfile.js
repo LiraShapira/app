@@ -1,5 +1,5 @@
 // path-to-your-mock-file.js
-export class I18n {
+export class MockI18n{
     translations = {};
     locale = '';
   
@@ -7,5 +7,6 @@ export class I18n {
     currentLocale = () => ''; // Minimal implementation for getting the current locale
   }
   
-  export default I18n;
+  export default MockI18n;
+  
   

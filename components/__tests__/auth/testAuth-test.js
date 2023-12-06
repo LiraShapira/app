@@ -1,76 +1,57 @@
-console.log(process.env)
-import "react-native";
-import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import Auth from "/Users/Lenovo/app/app/Auth.tsx";
-// Your test file
-import mocki18n from './mockfile.js'
-// ... your test code
+// auth.test.js
+import { I18n } from '/Users/Lenovo/app/node_modules/i18n-js/dist/import/I18n.js'; // Adjust the import path based on your project structure
+import React from 'react';
+import { render, fireEvent, waitFor } from '@testing-library/react-native';
+import Auth from '/Users/Lenovo/app/app/Auth.tsx'; // Update the import path based on your project structure
 
-
-
-// test("renders Auth component", () => {
-//   render(<Auth />);
-// });
-test('checking registration adds people properly. case 1', async () => {
-  // Given
-  const user = {
-    firstName: "Bob",
-    lastName: "Builder",
-    phoneNumber: "0951555555",
-    compostStand: "harakevet"
-  };
-
-  // Mock AsyncStorage
-  jest.mock('@react-native-async-storage/async-storage', () => ({
-    getItem: jest.fn(() => Promise.resolve(null)),
-    setItem: jest.fn(() => Promise.resolve()),
-  }));
-
-  jest.mock('I18n', () => mocki18n)
-
-  // Mock router
-  const mockPush = jest.fn();
-  const mockRouter = {
-    push: mockPush,
-  };
-  jest.mock('expo-router', () => ({
-    useRouter: () => mockRouter,
-  }));
-
-  // Mock sendRegistrationForm function
-  const mockSendRegistrationForm = jest.fn(() => Promise.resolve({ data: user }));
-  jest.mock('/Users/Lenovo/app/store/authFormSlice.ts', () => ({
-    sendRegistrationForm: mockSendRegistrationForm,
-  }));
-
-  // Mock getLocales
-jest.mock('expo-localization', () => ({
-  //getLocales: () => [{ languageCode: 'en' }].languageCode;// Adjust the languageCode as needed
-  getLocales: () =>{
-    const res = {
-      languageCode: 'en'
-    }
-    console.log(res);
-    return res;
-  }
+// Mock any dependencies or Redux actions if needed
+jest.mock('/Users/Lenovo/app/store/authFormSlice.ts', () => ({
+  ...jest.requireActual('/Users/Lenovo/app/store/authFormSlice.ts'),
+  sendRegistrationForm: jest.fn(),
+  sendLoginForm: jest.fn(),
+  setPhoneNumber: jest.fn(),
 }));
 
-  // When
-  const { getByPlaceholderText, getByText } = render(<Auth />);
-  
-  // Set input values
-  fireEvent.changeText(getByPlaceholderText('Enter phone number'), user.phoneNumber);
+jest.mock('/Users/Lenovo/app/store/userSlice.ts', () => ({
+  ...jest.requireActual('/Users/Lenovo/app/store/userSlice.ts'),
+  setUser: jest.fn(),
+}));
 
-  // Set compost stand (assuming there is only one option in the Picker)
-  fireEvent.changeText(getByText('harakevet'));
+jest.mock('/Users/Lenovo/app/utils/asyncStorage.ts', () => ({
+  ...jest.requireActual('/Users/Lenovo/app/utils/asyncStorage.ts'),
+  setItem: jest.fn(),
+}));
 
-  // Click on the register button
-  fireEvent.press(getByText('Register'));
+jest.mock('expo-router', () => ({
+  ...jest.requireActual('expo-router'),
+  useRouter: jest.fn(() => ({ push: jest.fn() })),
+}));
 
-  // Then
-  await waitFor(() => {
-    expect(mockSendRegistrationForm).toHaveBeenCalled();
-    expect(mockRouter.push).toHaveBeenCalledWith('/Home');
+describe('Auth Component', () => {
+  test('renders correctly', () => {
+    const { getByText, getByPlaceholderText } = render(<Auth />);
+    
+    // Replace the following with actual text content or translations
+    expect(getByText('auth_register')).toBeTruthy();
+    expect(getByPlaceholderText('auth_phone_number')).toBeTruthy();
   });
+
+  test('handles registration form submission', async () => {
+    // Mock the response for successful registration
+    sendRegistrationForm.mockResolvedValueOnce({ data: { user: { phoneNumber: '1234567890' } } });
+
+    const { getByPlaceholderText, getByText } = render(<Auth />);
+
+    // Simulate user input
+    fireEvent.changeText(getByPlaceholderText('auth_phone_number'), '1234567890');
+
+    // Trigger form submission
+    fireEvent.press(getByText('auth_register'));
+
+    // Wait for the asynchronous operation to complete
+    await waitFor(() => expect(setUser).toHaveBeenCalledWith({ phoneNumber: '1234567890' }));
+  });
+
+  // Add more test cases for different scenarios as needed
 });
+

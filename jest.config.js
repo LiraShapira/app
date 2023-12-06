@@ -1,21 +1,19 @@
-module.exports = {
-  preset: "jest-expo",
-  transform: {
-    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
-  },
-  globals: {
-    "ts-jest": {
-      babelConfig: true,
-      tsconfig: "./tsconfig.json",
-    },
-  },
-  moduleNameMapper: {
-    '^i18n-js$': '<rootDir>/mockfile.js',
-  },
-
-  testPathIgnorePatterns: [
-    "./node_modules/",
-    "@react-native",
+// jest.config.js
+export default {
+  type: "module",
+  preset: 'jest-expo',
+  setupFilesAfterEnv: [
+    '@testing-library/react-native/jest-setup.js',
   ],
-  testEnvironment: "node",
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+  },
+  testMatch: [
+    '**/__tests__/**/*.[jt]s?(x)',
+    '**/?(*.)+(spec|test).[jt]s?(x)',
+  ],
+  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node'],
+  transformIgnorePatterns: [
+    'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo-linked|expo-font|expo-constants|expo-localization)',
+  ],
 };
