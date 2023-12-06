@@ -76,14 +76,14 @@ export const userSlice = createSlice({
     },
     setUserBalance: (state, action: PayloadAction<number | string>) => {
       if (typeof action.payload === 'string') {
-        state.user.accountBalance = parseInt(action.payload)
+        state.user.accountBalance = parseFloat(action.payload)
       } else {
         state.user.accountBalance = action.payload
       }
     },
     incrementUserBalance: (state, action: PayloadAction<number | string>) => {
       if (typeof action.payload === 'string') {
-        state.user.accountBalance += parseInt(action.payload)
+        state.user.accountBalance += parseFloat(action.payload)
       } else {
         state.user.accountBalance += action.payload
       }

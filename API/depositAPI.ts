@@ -21,7 +21,7 @@ export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Pro
   const requestBody = {
     userId: formWithUserId.userId,
     compostReport: {
-      depositWeight: formWithUserId.amount,
+      depositWeight: parseFloat(formWithUserId.amount),
       compostSmell: formWithUserId.compostSmell,
       dryMatterPresent: formWithUserId.dryMatter,
       notes: formWithUserId.notes,
