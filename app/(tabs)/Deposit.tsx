@@ -6,11 +6,11 @@ import {
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
-import NumberInput from '../../components/form/NumberInput';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import CustomButton from '../../components/utils/CustomButton';
-import { resetForm, selectValue } from '../../store/depositFormSlice';
+import { resetForm, selectValue, setAmount } from '../../store/depositFormSlice';
 import { useRouter } from 'expo-router';
+import NumberInputNumberPad from "../../components/form/NumberInputNumberPad";
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
@@ -26,6 +26,10 @@ export default function Deposit() {
     router.replace('/CompostReport');
   };
 
+ const onChangeValue = (newVal: string) => {
+   dispatch(setAmount(newVal));
+ }
+
   return (
     <View style={{ height: '100%', padding: 8 }}>
       <Text
@@ -38,7 +42,7 @@ export default function Deposit() {
         {i18n.t('deposit_title')}
       </Text>
       <View style={styles.depositSwitches}>
-        <NumberInput />
+        <NumberInputNumberPad value={value} setValue={onChangeValue} />
         <View style={styles.buttons}>
           <CustomButton
             text={i18n.t('continue')}
