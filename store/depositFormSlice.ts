@@ -16,7 +16,7 @@ const initialState: DepositFormState = {
   loading: false,
   formTouched: false,
   notes: '',
-  compostStand: CompostStand.hakaveret
+  compostStand: CompostStand.blank
 };
 
 export const sendDepositForm = createAsyncThunk<
@@ -64,13 +64,11 @@ export const depositFormSlice = createSlice({
       state.amount = action.payload;
     },
     setNotes: (state, action: PayloadAction<string>) => {
-      state.formTouched = true;
       state.notes = action.payload;
     },
     toggleCompostSmell: (
       state
     ) => {
-      state.formTouched = true;
       state.compostSmell = !state.compostSmell;
     },
     toggleMissingDryMatter: (state) => {

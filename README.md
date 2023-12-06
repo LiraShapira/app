@@ -40,6 +40,6 @@ Lira Shapira is looking for contributions! 🤚
 
 - git fork and clone the [server repo](https://github.com/LiraShapira/server)
 - From the root of server repo, run `npm i` then `npm run devstart` (you will need a running postgres server)
-- In the app repo, make a .env.local file using the .env.local.template file contents
+- In the app repo, make a .env file using the .env file contents
   - If you are viewing the app on mobile (using [Expo Go](https://docs.expo.dev/get-started/expo-go/)), you will need to replace 'localhost' in the EXPO_PUBLIC_SERVER_URL environment variables with your [Ipv4 address](https://www.geeksforgeeks.org/how-to-access-localhost-on-mobile-browsers/) to connect to the server. Alternitavely, look into using a tool like [ngrok](https://ngrok.com/).
 - run `npm run start` from the root of the app repo

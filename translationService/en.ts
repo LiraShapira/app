@@ -49,6 +49,8 @@ deposit_form_bin_status: 'Bin status',
   compost_report_missing_scales: 'missing scales',
   compost_report_missing_clean_and_tidy: 'clean and tidy',
 
+  location: 'Select location from drop down',
+  deposit_compost_stand_blank: '',
   deposit_compost_stand_cafe_shapira: 'Cafe Shapira',
   deposit_compost_stand_masalant: 'Masalant 27',
   deposit_compost_stand_hizkiyahu_hamelech: 'Hizkiyahu hamelech',
@@ -102,6 +104,9 @@ deposit_form_bin_status: 'Bin status',
   month_october_MMM: 'oct',
   month_november_MMM: 'nov',
   month_december_MMM: 'dec',
+
+  main_title: 'Lira Shapira Green Local Currency',
+  secondary_main_title: 'Garbage Worth Money In Shapira',
 }
 
 export default enDictionary;
