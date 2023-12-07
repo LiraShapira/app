@@ -7,7 +7,13 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "test": "cross-env NODE_ENV=test jest --watch-all"
+    "test": "cross-env jest --watch-all"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|i18n-js)"
+    ]
   },
   "dependencies": {
     "@expo/config-plugins": "~7.2.2",
@@ -42,11 +48,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@babel/preset-env": "^7.23.5",
     "@babel/preset-typescript": "^7.23.3",
     "@testing-library/react-native": "^12.4.1",
     "@types/jest": "^29.5.10",
     "@types/react": "~18.2.14",
+    "@types/react-test-renderer": "^18.0.7",
     "babel-jest": "^29.7.0",
     "babel-plugin-module-resolver": "^5.0.0",
     "cross-env": "^7.0.3",
