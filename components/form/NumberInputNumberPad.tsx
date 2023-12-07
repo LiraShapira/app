@@ -81,7 +81,7 @@ const NumberInputNumberPad = ({
             {value}
           </Text>
           <Text
-            style={{ fontSize: 20, color: Colors[colorScheme].tabIconDefault }}
+            style={{ position: 'absolute',  right: 0, fontSize: 20, color: Colors[colorScheme].tabIconDefault }}
           >
             {' '}{ i18n.t('deposit_form_kilogram') }
           </Text>

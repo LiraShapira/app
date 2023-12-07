@@ -15,7 +15,6 @@ export const parseNumberPadInput = (n: NumberLabel, oldValue: string): string | 
   // now we can assume newValue is valid number
   // now we test new value against constraints
   newValue = oldValue + n;
-  console.log({n, oldValue, newValNum: parseFloat(newValue)})
   // max 100
   if (parseFloat(newValue) > 100) return false;
   // max 2 decimal places
