@@ -3,6 +3,8 @@ import React from 'react';
 import LoadingPage from '../../utils/LoadingPage.tsx';
 import Registration from '../../auth/Registration.tsx';
 import { advancedRender } from '../../../tests'
+import Auth from '/Users/Lenovo/app/app/Auth.tsx'; // Update the import path based on your project structure
+import { fireEvent, waitFor } from '@testing-library/react-native';
 
 jest.mock('expo-localization', () => ({
   getLocales: () => [{ languageCode: 'en' }]
@@ -71,3 +73,36 @@ test('renders correctly', () => {
 //     expect(mockRouter.push).toHaveBeenCalledWith('/Home');
 //   });
 // });
+
+jest.mock('expo-router', () => ({
+  ...jest.requireActual('expo-router'),
+  useRouter: jest.fn(() => ({ push: jest.fn() })),
+}));
+
+describe('Auth Component', () => {
+  test('renders correctly', () => {
+    const { getByText, getByPlaceholderText } = advancedRender(<Auth />);
+    
+    // Replace the following with actual text content or translations
+    expect(getByText('auth_register')).toBeTruthy();
+    expect(getByPlaceholderText('auth_phone_number')).toBeTruthy();
+  });
+
+  test('handles registration form submission', async () => {
+    // Mock the response for successful registration
+    sendRegistrationForm.mockResolvedValueOnce({ data: { user: { phoneNumber: '1234567890' } } });
+
+    const { getByPlaceholderText, getByText } = advancedRender(<Auth />);
+
+    // Simulate user input
+    fireEvent.changeText(getByPlaceholderText('auth_phone_number'), '1234567890');
+
+    // Trigger form submission
+    fireEvent.press(getByText('auth_register'));
+
+    // Wait for the asynchronous operation to complete
+    await waitFor(() => expect(setUser).toHaveBeenCalledWith({ phoneNumber: '1234567890' }));
+  });
+
+  // Add more test cases for different scenarios as needed
+});
