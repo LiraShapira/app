@@ -36,6 +36,8 @@ export interface Dictionary {
   deposit_form_send: string;
   deposit_form_notes: string;
   deposit_form_amount: string;
+  deposit_form_kilogram: string;
+
   location: string,
   deposit_compost_stand_blank: string,
   deposit_compost_stand_cafe_shapira: string;
@@ -59,7 +61,7 @@ export interface Dictionary {
   compost_report_missing_bad_bugs: string;
   compost_report_missing_scales: string;
   compost_report_missing_clean_and_tidy: string;
-  
+
   send_search_title: string;
   send_search_searching_for: string;
   send_search_placeholder: string;

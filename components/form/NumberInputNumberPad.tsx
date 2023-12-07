@@ -3,10 +3,10 @@ import {
   useColorScheme,
   StyleSheet,
   View,
-  Pressable,
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import { parseNumberPadInput } from '../../utils/functions';
+import i18n from "../../translationService";
 
 export type NumberLabel =
   | '0'
@@ -30,10 +30,7 @@ interface NumberPadButtonProps {
 const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   return (
-    <Pressable
-      style={({ pressed }) => ({
-        // TODO backgroundColor: pressed ? 'none' : 'green'
-      })}
+    <View
     >
       {n === 'ret' ? (
         <View>
@@ -54,13 +51,13 @@ const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
           </Text>
         </View>
       )}
-    </Pressable>
+    </View>
   );
 };
 
 interface NumberInputNumberPadProps {
   value: string;
-  setValue: (n: string) => void;
+  setValue  : (n: string) => void;
 }
 
 const NumberInputNumberPad = ({
@@ -74,15 +71,21 @@ const NumberInputNumberPad = ({
     // NB! conditional on false required because 0 falsy value
     if (newValue !== false) setValue(newValue);
   };
-
   return (
     <View style={{ flexDirection: 'column', gap: 20 }}>
       <View>
-        <Text
-          style={{ ...styles.numberPadValue, color: Colors[colorScheme].text }}
-        >
-          {value}
-        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text
+            style={{ ...styles.numberPadValue, color: Colors[colorScheme].text }}
+          >
+            {value}
+          </Text>
+          <Text
+            style={{ fontSize: 20, color: Colors[colorScheme].tabIconDefault }}
+          >
+            {' '}{ i18n.t('deposit_form_kilogram') }
+          </Text>
+        </View>
         <View
           style={{
             borderBottomColor: Colors[colorScheme].text,
@@ -124,8 +127,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   numberPadValue: {
-    height: 60,
-    fontSize: 45,
+    height: 80,
+    fontSize: 48,
     alignSelf: 'center',
   },
   numberPadButton: {},
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
+    gap: 80
   },
 });
 

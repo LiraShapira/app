@@ -41,6 +41,7 @@ const heDictionary: Dictionary = {
   deposit_form_send: 'שלח',
   deposit_form_notes: 'הערות / הארות',
   deposit_form_amount: 'כמות',
+  deposit_form_kilogram: 'קילו',
 
   location: 'בחר מיקום מתפריט גלילה',
   deposit_compost_stand_blank: '',
