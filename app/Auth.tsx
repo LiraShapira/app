@@ -27,6 +27,7 @@ import { useState } from 'react';
 import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import { CustomModal } from '../components/utils/CustomModal';
 import Registration from '../components/auth/Registration';
+import React from 'react';
 
 export default function Auth() {
 
