@@ -1,8 +1,8 @@
 // auth.test.js
-import { I18n } from '/Users/Lenovo/app/node_modules/i18n-js/dist/import/I18n.js'; // Adjust the import path based on your project structure
+import { I18n } from 'i18n-js';
+import Auth from '/Users/Lenovo/app/app/Auth.tsx';
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
-import Auth from '/Users/Lenovo/app/app/Auth.tsx'; // Update the import path based on your project structure
 
 // Mock any dependencies or Redux actions if needed
 jest.mock('/Users/Lenovo/app/store/authFormSlice.ts', () => ({
