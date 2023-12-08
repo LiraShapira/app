@@ -8,8 +8,7 @@
     "components/*": ["components/*"],
     "constants/*": ["constants/*"]
   },
-  "include": [
-    "src/**/*.ts",  // Adjust the pattern based on your project structure
-    "jest.config.cjs"
+  "transformIgnorePatterns": [
+    "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
   ]
 }
