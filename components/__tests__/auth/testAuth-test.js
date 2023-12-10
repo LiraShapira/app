@@ -5,6 +5,9 @@ import Registration from '../../auth/Registration.tsx';
 import { advancedRender } from '../../../tests'
 import Auth from '/Users/Lenovo/app/app/Auth.tsx'; // Update the import path based on your project structure
 import { fireEvent, waitFor } from '@testing-library/react-native';
+import Auth from '/Users/Lenovo/app/app/Auth.tsx';
+import React from 'react';
+import { fireEvent, waitFor } from '@testing-library/react-native';
 
 jest.mock('expo-localization', () => ({
   getLocales: () => [{ languageCode: 'en' }]

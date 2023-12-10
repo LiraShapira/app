@@ -39,6 +39,8 @@ const enDictionary: Dictionary = {
   deposit_form_notes: 'Notes',
   deposit_form_amount: 'Amount',
 
+  location: 'Select location from drop down',
+  deposit_compost_stand_blank: '',
   deposit_compost_stand_cafe_shapira: 'Cafe Shapira',
   deposit_compost_stand_masalant: 'Masalant 27',
   deposit_compost_stand_hizkiyahu_hamelech: 'Hizkiyahu hamelech',
@@ -89,6 +91,9 @@ const enDictionary: Dictionary = {
   month_october_MMM: 'oct',
   month_november_MMM: 'nov',
   month_december_MMM: 'dec',
+
+  main_title: 'Lira Shapira Green Local Currency',
+  secondary_main_title: 'Garbage Worth Money In Shapira',
 }
 
 export default enDictionary;

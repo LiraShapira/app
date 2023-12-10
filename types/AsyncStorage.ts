@@ -4,4 +4,5 @@ export enum StorageKeys {
     firstName = 'firstName',
     lastName = 'lastName',
     amount = 'amount',
+    compostStand = 'compostStand',
 } 
