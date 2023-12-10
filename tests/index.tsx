@@ -1,9 +1,9 @@
 import { Provider } from "react-redux";
 import { store } from "../store";
-import renderer, { ReactTestRenderer } from 'react-test-renderer'; // Import ReactTestRendererJSON
+import { RenderResult, render } from '@testing-library/react-native';
 
-export const advancedRender = (e: JSX.Element): ReactTestRenderer => {
-    return renderer.create(
+export const advancedRender = (e: JSX.Element): RenderResult => {
+    return render(
         <Provider store={store}>
             {e}
         </Provider>);

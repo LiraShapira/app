@@ -1,10 +1,4 @@
-// asyncStorage.ts
-
-// Use a conditional import to handle the testing scenario
-const AsyncStorage = process.env.NODE_ENV === 'test'
-  ? require('mock-async-storage').default
-  : require('@react-native-async-storage/async-storage').default;
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StorageKeys } from '../types/AsyncStorage';
 
 export const setItem = async (key: StorageKeys, value: string) => {
