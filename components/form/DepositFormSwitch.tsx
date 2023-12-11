@@ -19,7 +19,7 @@ export default function DepositFormSwitch({
   const options = switchLabels.map((l, i) => ({ label: l, value: optionValues[i] }));
 
   return (
-    <View style={styles.depositSwitchContainer}>
+    <View>
       <View style={styles.depositSwitch}>
         <Text
           style={{
@@ -33,7 +33,6 @@ export default function DepositFormSwitch({
       <View style={styles.depositSwitchLabel}>
         <Switch
           buttonColor={Colors[colorScheme ?? 'light'].tint}
-          initial={1}
           onPress={onPress}
           selectedColor={Colors[colorScheme ?? 'light'].background}
           backgroundColor={Colors[colorScheme ?? 'light'].shading}
@@ -45,10 +44,6 @@ export default function DepositFormSwitch({
   );
 }
 const styles = StyleSheet.create({
-  depositSwitchContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
   depositSwitch: { flex: 1 },
   depositSwitchLabel: { flex: 1 },
   input: {

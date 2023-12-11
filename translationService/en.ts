@@ -6,7 +6,9 @@ const enDictionary: Dictionary = {
   no: 'no',
   some: 'some',
   cancel: 'Cancel',
+  continue: 'Continue',
 
+  // HOME
   tabs_wallet: 'wallet',
   auth_login: 'Login',
   auth_logout: 'Logout?',
@@ -24,11 +26,11 @@ const enDictionary: Dictionary = {
   dashboard_dashboard_buttons_request: 'request',
   dashboard_dashboard_buttons_scan: 'scan',
   home_transactions_title: 'My Activities',
-
   transactions_list_no_activities: 'No transactions to display',
 
+  // DEPOSIT
   deposit: 'Deposit',
-  deposit_title: 'What\'s the status?',
+  deposit_title: 'How much?',
   deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',
   deposit_form_bin_status_empty: 'empty',
@@ -38,6 +40,15 @@ const enDictionary: Dictionary = {
   deposit_form_send: 'Send',
   deposit_form_notes: 'Notes',
   deposit_form_amount: 'Amount',
+  deposit_form_kilogram: 'kg',
+
+  compost_report_title: 'What\'s the status',
+  compost_report_bin_full: 'compost bin full',
+  compost_report_bin_smells: 'compost smells',
+  compost_report_missing_dry_matter: 'missing dry matter',
+  compost_report_missing_bad_bugs: 'bad bugs',
+  compost_report_missing_scales: 'missing scales',
+  compost_report_missing_clean_and_tidy: 'clean and tidy',
 
   location: 'Select location from drop down',
   deposit_compost_stand_blank: '',
@@ -55,17 +66,20 @@ const enDictionary: Dictionary = {
   deposit_compost_stand_de_modina: 'de Modina',
   deposit_compost_stand_burma: 'Burma',
 
+  // SEND
   send_search_title: 'Who to send to?',
   send_search_searching_for: 'searching for: ',
   send_search_placeholder: 'Enter a name or phone number',
   sendamount_how_much: 'How much?',
-  sendamount_why: 'Why?',
+  sendamount_why: 'why',
+  // sendamount_amount: 'amount (kg)',
   sendamount_continue: 'continue',
   sendamount_back: 'Back to contacts',
   send_search_no_results: 'No results found for \'%{search}\'',
   send_search_no_results_send_to_number: 'Send to \'%{number}\'',
   sendamount_validate_amount: 'Please input a number between 1 - 99',
 
+  // MONTH UTILS
   month_january: 'january',
   month_february: 'february',
   month_march: 'march',

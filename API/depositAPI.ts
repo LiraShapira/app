@@ -4,7 +4,7 @@ import { DepositForm } from "../types/Deposit";
 import { Transaction } from "../types/Transaction";
 import { SERVER_URL } from "./config";
 
-interface FormWithUserId extends Omit<DepositForm, 'compostSmell'> {
+export interface FormWithUserId extends Omit<DepositForm, 'compostSmell'> {
   userId: string;
   compostSmell?: boolean;
 }
@@ -21,11 +21,15 @@ export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Pro
   const requestBody = {
     userId: formWithUserId.userId,
     compostReport: {
-      depositWeight: formWithUserId.amount,
+      depositWeight: parseFloat(formWithUserId.amount),
       compostSmell: formWithUserId.compostSmell,
       dryMatterPresent: formWithUserId.dryMatter,
       notes: formWithUserId.notes,
       compostStand: formWithUserId.compostStand,
+      full: formWithUserId.compostFull,
+      bugs: formWithUserId.bugs,
+      cleanAndTidy: formWithUserId.cleanAndTidy,
+      scalesProblem: formWithUserId.scalesMissing
     }
   }
 

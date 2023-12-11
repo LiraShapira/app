@@ -3,66 +3,32 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
-  TextInput,
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
-import DepositFormSwitch from '../../components/form/DepositFormSwitch';
-import NumberInput from '../../components/form/NumberInput';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  resetForm,
-  selectNotes,
-  selectValue,
-  sendDepositForm,
-  setBinStatus,
-  setCompostDryMatter,
-  setCompostSmell,
-  setCompostStand,
-  setNotes,
-} from '../../store/depositFormSlice';
-import {
-  addUserTransaction,
-  incrementUserBalance,
-  selectUserId,
-} from '../../store/userSlice';
 import CustomButton from '../../components/utils/CustomButton';
-import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
-import { CompostStand, DepositForm } from '../../types/Deposit';
+import { resetForm, selectValue, setAmount } from '../../store/depositFormSlice';
 import { useRouter } from 'expo-router';
-import { getItem } from '../../utils/asyncStorage';
-import { StorageKeys } from '../../types/AsyncStorage';
+import NumberInputNumberPad from "../../components/form/NumberInputNumberPad";
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
-  const userId = useAppSelector(selectUserId);
-  const value = useAppSelector(selectValue);
-  const notes = useAppSelector(selectNotes);
-  const dispatch = useAppDispatch();
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const value = useAppSelector(selectValue);
 
-  const onPressSend = async (e: any) => {
-    // send form
-    const usersCompostStand = await getItem(StorageKeys.compostStand) as CompostStand
-    usersCompostStand && dispatch(setCompostStand(usersCompostStand));
-
-    dispatch(sendDepositForm(userId))
-      .unwrap()
-      .then(({ data: transaction }) => {
-        dispatch(incrementUserBalance(transaction.amount));
-        dispatch(addUserTransaction(transaction));
-        router.push('/Home');
-      })
-      .catch((e) => {
-        dispatch(setModalText(e.message));
-        dispatch(setIsModalVisible(true));
-      });
+  const onPressCancel = () => {
     dispatch(resetForm());
+    router.replace('/Home');
+  };
+  const onPressContinue = () => {
+    router.replace('/CompostReport');
   };
 
-  const onPressSkip = (e: any) => {
-    // send empty form
-  };
+ const onChangeValue = (newVal: string) => {
+   dispatch(setAmount(newVal));
+ }
 
   return (
     <View style={{ height: '100%', padding: 8 }}>
@@ -71,74 +37,20 @@ export default function Deposit() {
           fontSize: 40,
           paddingVertical: 16,
           color: Colors[colorScheme ?? 'light'].text,
+          fontWeight: 700
         }}
       >
         {i18n.t('deposit_title')}
       </Text>
       <View style={styles.depositSwitches}>
-        <View style={styles.amount}>
-          <Text
-            style={{
-              color: Colors[colorScheme ?? 'light'].text,
-              fontSize: 18,
-              ...styles.amountLabel,
-            }}
-          >
-            { i18n.t('deposit_form_amount') }
-          </Text>
-          <NumberInput style={styles.amountInput} />
-        </View>
-        <View>
-        </View>
-        <DepositFormSwitch
-          onPress={(v: DepositForm['binStatus']) => dispatch(setBinStatus(v))}
-          title={i18n.t('deposit_form_bin_status')}
-          switchLabels={[
-            i18n.t('deposit_form_bin_status_full'),
-            i18n.t('deposit_form_bin_status_empty'),
-          ]}
-          optionValues={[true, false]}
-        />
-        <DepositFormSwitch
-          onPress={(v: DepositForm['compostSmell']) =>
-            dispatch(setCompostSmell(v))
-          }
-          title={i18n.t('deposit_form_bin_status_smell')}
-          optionValues={[false, true]}
-          switchLabels={[i18n.t('no'), i18n.t('yes')]}
-        />
-        <DepositFormSwitch
-          onPress={(v: DepositForm['dryMatter']) =>
-            dispatch(setCompostDryMatter(v))
-          }
-          title={i18n.t('deposit_form_dry_matter')}
-          optionValues={['no', 'some', 'yes']}
-          switchLabels={[i18n.t('no'), i18n.t('some'), i18n.t('yes')]}
-        />
-        <View>
-          <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
-            {i18n.t('deposit_form_notes')}
-          </Text>
-          <TextInput
-            value={notes}
-            onChangeText={(e) => dispatch(setNotes(e))}
-            style={{
-              borderColor: Colors[colorScheme ?? 'light'].text,
-              color: Colors[colorScheme ?? 'light'].text,
-              ...styles.input,
-            }}
-          />
-        </View>
+        <NumberInputNumberPad value={value} setValue={onChangeValue} />
         <View style={styles.buttons}>
           <CustomButton
-            text={i18n.t('deposit_form_send')}
-            onPress={onPressSend}
+            text={i18n.t('continue')}
+            onPress={onPressContinue}
             disabled={!value}
           />
-          {/* <CustomButton
-            text={i18n.t('deposit_form_skip')}
-            onPress={() => console.log('skip')}
-          /> */}
+          <CustomButton text={i18n.t('cancel')} onPress={onPressCancel} />
         </View>
       </View>
     </View>

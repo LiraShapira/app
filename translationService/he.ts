@@ -6,7 +6,9 @@ const heDictionary: Dictionary = {
   no: 'לא',
   some: 'מעט',
   cancel: 'ביטול',
+  continue: 'המשך',
 
+  // HOME
   tabs_wallet: 'ארנק',
 
   auth_login: 'כניסה',
@@ -25,11 +27,11 @@ const heDictionary: Dictionary = {
   dashboard_dashboard_buttons_request: 'בקשה',
   dashboard_dashboard_buttons_scan: 'סריקה',
   home_transactions_title: 'הפעילויות שלי',
-
   transactions_list_no_activities: 'אין פעילויות',
 
+  // DEPOSIT
   deposit: 'הפקדה',
-  deposit_title: 'מה הסטטוס?',
+  deposit_title: 'כמה להפקיד?',
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',
   deposit_form_bin_status_empty: 'פנוי',
@@ -39,6 +41,7 @@ const heDictionary: Dictionary = {
   deposit_form_send: 'שלח',
   deposit_form_notes: 'הערות / הארות',
   deposit_form_amount: 'כמות',
+  deposit_form_kilogram: 'קילו',
 
   location: 'בחר מיקום מתפריט גלילה',
   deposit_compost_stand_blank: '',
@@ -56,10 +59,20 @@ const heDictionary: Dictionary = {
   deposit_compost_stand_shiffer: 'השקמה ברחוב שיפר ',
   deposit_compost_stand_burma: 'חורשת בורמה',
 
+  compost_report_title: 'מה המצב של הקומפוסטר?',
+  compost_report_bin_full: 'הקומפוסטר מלא',
+  compost_report_bin_smells: 'איף יש ריח רע',
+  compost_report_missing_dry_matter: 'חסר לי חומר יבש',
+  compost_report_missing_bad_bugs: 'יש חרקים לא טובים',
+  compost_report_missing_scales: 'חסר משקל',
+  compost_report_missing_clean_and_tidy: 'נקייה ומסודרת',
+
+  // SEND
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
   send_search_placeholder: 'הזן שם או מספר טלפון',
   sendamount_how_much: 'כמה להעביר?',
+  // sendamount_amount: 'כמה (kg)?',
   sendamount_why: 'למה?',
   sendamount_continue: 'המשך',
   sendamount_back: 'חזרה למי',
@@ -67,6 +80,7 @@ const heDictionary: Dictionary = {
   send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
   sendamount_validate_amount: 'אנא הכנס מספר בין 1 - 99',
 
+  // MONTH UTILS
   month_january: '	ינואר',
   month_february: '	פברואר',
   month_march: '	מרץ',
