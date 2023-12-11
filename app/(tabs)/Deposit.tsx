@@ -37,6 +37,7 @@ export default function Deposit() {
           fontSize: 40,
           paddingVertical: 16,
           color: Colors[colorScheme ?? 'light'].text,
+          fontWeight: 700
         }}
       >
         {i18n.t('deposit_title')}

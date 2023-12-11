@@ -7,6 +7,7 @@ import {
 import Colors from '../../constants/Colors';
 import { parseNumberPadInput } from '../../utils/functions';
 import i18n from "../../translationService";
+import { getLocales } from 'expo-localization';
 
 export type NumberLabel =
   | '0'
@@ -35,7 +36,7 @@ const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
       {n === 'ret' ? (
         <View>
           <Text
-            style={{ color: Colors[colorScheme].text, fontSize: 30 }}
+            style={{ ...styles.numberPadButton, color: Colors[colorScheme].text }}
             onPress={() => onPress(n)}
           >
             x
@@ -44,7 +45,7 @@ const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
       ) : (
         <View>
           <Text
-            style={{ color: Colors[colorScheme].text, fontSize: 30 }}
+            style={{ ...styles.numberPadButton, color: Colors[colorScheme].text }}
             onPress={() => onPress(n)}
           >
             {n}
@@ -60,30 +61,35 @@ interface NumberInputNumberPadProps {
   setValue  : (n: string) => void;
 }
 
+const textDirection = getLocales()[0].textDirection || 'ltr'
 const NumberInputNumberPad = ({
   value,
   setValue,
 }: NumberInputNumberPadProps) => {
   const colorScheme = useColorScheme() ?? 'light';
-
   const onPress = (n: NumberLabel) => {
     const newValue = parseNumberPadInput(n, value);
     // NB! conditional on false required because 0 falsy value
     if (newValue !== false) setValue(newValue);
   };
-  return (
+  return ( 
     <View style={{ flexDirection: 'column', gap: 20 }}>
       <View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text
-            style={{ ...styles.numberPadValue, color: Colors[colorScheme].text }}
+            style={{ ...styles.inputtedValue, color: Colors[colorScheme].text }}
           >
             {value}
           </Text>
           <Text
-            style={{ position: 'absolute',  right: 0, fontSize: 20, color: Colors[colorScheme].tabIconDefault }}
+            style={{ 
+              position: 'absolute',
+              ...(textDirection === 'ltr' && { right: 100 }),
+              ...(textDirection === 'rtl' && { left: 100 }),
+              fontSize: 20,
+              color: Colors[colorScheme].tabIconDefault }}
           >
-            {' '}{ i18n.t('deposit_form_kilogram') }
+            { i18n.t('deposit_form_kilogram') }
           </Text>
         </View>
         <View
@@ -126,12 +132,15 @@ const styles = StyleSheet.create({
     gap: 40,
     alignItems: 'center'
   },
-  numberPadValue: {
+  inputtedValue: {
     height: 80,
     fontSize: 48,
-    alignSelf: 'center',
+    marginVertical: 0,
+    marginHorizontal: 'auto',
   },
-  numberPadButton: {},
+  numberPadButton: {
+    fontSize: 48,
+  },
   numberPadRow: {
     flexDirection: 'row',
     display: 'flex',

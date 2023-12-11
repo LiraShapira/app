@@ -60,8 +60,9 @@ export default function CustomButton({
 
 const styles = StyleSheet.create({
   submitButton: {
-    padding: 10,
-    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    borderRadius: 35,
     alignItems: 'center',
     justifyContent: 'center',
   },
