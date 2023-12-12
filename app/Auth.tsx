@@ -1,5 +1,4 @@
 import { Image } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import { selectCompostStand, setCompostStand } from '../store/depositFormSlice';
 import { CompostStand } from '../types/Deposit';
@@ -19,7 +18,7 @@ import {
   setPhoneNumber,
 } from '../store/authFormSlice';
 import CustomButton from '../components/utils/CustomButton';
-import { setItem } from '../utils/asyncStorage';
+import { setItem, getItem } from '../utils/asyncStorage';
 import { useRouter } from 'expo-router';
 import { StorageKeys } from '../types/AsyncStorage';
 import i18n from '../translationService';
@@ -27,6 +26,7 @@ import { useState } from 'react';
 import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import { CustomModal } from '../components/utils/CustomModal';
 import Registration from '../components/auth/Registration';
+import React from 'react';
 
 export default function Auth() {
 
@@ -82,7 +82,7 @@ export default function Auth() {
   useEffect(() => {
     const retrieveCompostStand = async () => {
       try {
-        const storedCompostStand = await AsyncStorage.getItem('compostStand');
+        const storedCompostStand = await getItem(StorageKeys.compostStand);
         if (storedCompostStand) {
           const compostStand: CompostStand = storedCompostStand as CompostStand;
           dispatch(setCompostStand(compostStand));
