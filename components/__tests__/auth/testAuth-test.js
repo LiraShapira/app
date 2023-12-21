@@ -5,6 +5,8 @@ import Auth from '../../../app/Auth.tsx';
 import { fireEvent, waitFor } from '@testing-library/react-native';
 import i18n from '../../../translationService'
 
+
+
 jest.mock('expo-localization', () => ({
   getLocales: () => [{ languageCode: 'en' }]
 }));
@@ -14,11 +16,10 @@ const mockSetItem = jest.fn(() => Promise.resolve());
 
 // Mock AsyncStorage
 jest.mock('@react-native-async-storage/async-storage', () => ({
-  default: {
-    getItem: mockGetItem,
-    setItem: mockSetItem,
-  }
+  getItem: jest.fn(),
+  setItem: jest.fn(),
 }));
+
 
 test('renders correctly', () => {
   const tree = advancedRender(
