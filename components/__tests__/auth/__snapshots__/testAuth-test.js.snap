@@ -57,46 +57,48 @@ exports[`renders correctly 1`] = `
 `;
 
 exports[`renders correctly 2`] = `
-<View
-  style={
-    {
-      "backgroundColor": "#fff",
-      "flexDirection": "row",
-      "gap": 8,
-    }
-  }
->
-  <TextInput
-    onChangeText={[Function]}
-    placeholder="First Name"
-    placeholderTextColor="#e0e0e0"
+<View>
+  <View
     style={
       {
-        "borderBottomColor": "#000",
-        "borderStyle": "solid",
-        "borderWidth": 1,
-        "color": "#000",
-        "flexBasis": "50%",
-        "height": 36,
-        "marginHorizontal": 1,
+        "backgroundColor": "#fff",
+        "flexDirection": "row",
+        "gap": 8,
       }
     }
-  />
-  <TextInput
-    onChangeText={[Function]}
-    placeholder="Last Name"
-    placeholderTextColor="#e0e0e0"
-    style={
-      {
-        "borderBottomColor": "#000",
-        "borderStyle": "solid",
-        "borderWidth": 1,
-        "color": "#000",
-        "flexBasis": "50%",
-        "height": 36,
-        "marginHorizontal": 1,
+  >
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="First Name"
+      placeholderTextColor="#e0e0e0"
+      style={
+        {
+          "borderBottomColor": "#000",
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "color": "#000",
+          "flexBasis": "50%",
+          "height": 36,
+          "marginHorizontal": 1,
+        }
       }
-    }
-  />
+    />
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="Last Name"
+      placeholderTextColor="#e0e0e0"
+      style={
+        {
+          "borderBottomColor": "#000",
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "color": "#000",
+          "flexBasis": "50%",
+          "height": 36,
+          "marginHorizontal": 1,
+        }
+      }
+    />
+  </View>
 </View>
 `;
