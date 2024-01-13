@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
-import { Text, View } from '../../components/Themed';
+import { Text } from '../../components/Themed';
+import GradientContainer from '../../components/utils/GradientContainer';
 
 export default function TabTwoScreen() {
   return (
-    <View style={styles.container}>
+    <GradientContainer styles={styles.container}>
       <Text style={styles.title}>Coming Soon...</Text>
-    </View>
+    </GradientContainer>
   );
 }
 

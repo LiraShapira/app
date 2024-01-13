@@ -1,26 +1,19 @@
-import { StyleSheet, useColorScheme } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Text, View } from '../../components/Themed';
-import Colors from '../../constants/Colors';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import Dashboard from '../../components/home/Dashboard';
 import i18n from '../../translationService';
 import { selectUser } from '../../store/userSlice';
 import { useAppSelector } from '../../hooks';
+import GradientContainer from "../../components/utils/GradientContainer";
 
 export default function Home() {
-  const colorScheme = useColorScheme();
   const user = useAppSelector(selectUser);
-
   return (
       <View style={styles.container}>
-        <View
-          style={{
-            backgroundColor: Colors[colorScheme ?? 'light'].shading,
-            width: '100%',
-          }}
-        >
+        <GradientContainer styles={{ height: '30%' }}>
           <Dashboard />
-        </View>
+        </GradientContainer>
         <View style={styles.transactionList}>
           <Text style={{ fontSize: 40 }}>
             {i18n.t('home_transactions_title')}
@@ -37,6 +30,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  dashboardContainer: {
+    width: '100%'
   },
   icon: {
     height: 70,

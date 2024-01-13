@@ -11,6 +11,7 @@ import CustomButton from '../../components/utils/CustomButton';
 import { resetForm, selectValue, setAmount } from '../../store/depositFormSlice';
 import { useRouter } from 'expo-router';
 import NumberInputNumberPad from "../../components/form/NumberInputNumberPad";
+import GradientContainer from "../../components/utils/GradientContainer";
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
@@ -31,7 +32,7 @@ export default function Deposit() {
  }
 
   return (
-    <View style={{ height: '100%', padding: 8 }}>
+    <GradientContainer endColor='#F8E0D3'>
       <Text
         style={{
           fontSize: 40,
@@ -53,11 +54,12 @@ export default function Deposit() {
           <CustomButton text={i18n.t('cancel')} onPress={onPressCancel} />
         </View>
       </View>
-    </View>
+    </GradientContainer>
   );
 }
 
 const styles = StyleSheet.create({
+  container: { height: '100%', padding: 8 },
   depositSwitches: {
     display: 'flex',
     flexDirection: 'column',
