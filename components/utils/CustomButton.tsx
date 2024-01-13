@@ -14,6 +14,7 @@ export interface ButtonProps {
   backgroundColor?: string; 
   onPress: (...args: any[]) => any;
   size?: 's' | 'm' | 'l';
+  transparent?: boolean;
 }
 
 const fontSizeMap = {
@@ -29,14 +30,24 @@ export default function CustomButton({
   size = 'm',
   textColor,
   backgroundColor,
+  transparent
 }: ButtonProps) {
-  const colorScheme = useColorScheme();
+  const calculatedBackgroundColor = backgroundColor ? backgroundColor : transparent ? 'transparent' : Colors.light.highlight;
+  const calculatedtextColor = textColor ? textColor:  transparent ? 'black' : 'white'; 
+
+  const transparentBorderStyles = {
+    borderColor: '#BFC9B7',
+    borderStyle: 'solid',
+    borderWidth: '2px'
+  }
 
   return (
     <View
       style={{
-        backgroundColor: backgroundColor || Colors[colorScheme ?? 'light'].shading,
+        backgroundColor: calculatedBackgroundColor,
+        ...(disabled && { opacity: 0.7 }),
         ...styles.submitButton,
+        ...(transparent && transparentBorderStyles)
       }}
     >
       <Pressable
@@ -48,7 +59,7 @@ export default function CustomButton({
           style={{
             fontWeight: '700',
             fontSize: fontSizeMap[size],
-            color: textColor || Colors[colorScheme ?? 'light'].text
+            color: calculatedtextColor
           }}
         >
           {text}

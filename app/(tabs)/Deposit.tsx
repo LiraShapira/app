@@ -51,7 +51,7 @@ export default function Deposit() {
             onPress={onPressContinue}
             disabled={!value}
           />
-          <CustomButton text={i18n.t('cancel')} onPress={onPressCancel} />
+          <CustomButton transparent={true} text={i18n.t('cancel')} onPress={onPressCancel} />
         </View>
       </View>
     </GradientContainer>
