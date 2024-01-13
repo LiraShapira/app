@@ -31,6 +31,7 @@ import {
 } from '../store/userSlice';
 import { useRouter } from 'expo-router';
 import CustomTag from '../components/utils/CustomTag';
+import GradientContainer from '../components/utils/GradientContainer';
 
 export default function CompostReport() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -64,7 +65,7 @@ export default function CompostReport() {
   };
 
   return (
-    <View style={styles.compostReport}>
+    <GradientContainer styles={styles.compostReport}>
       <Text style={{ color: Colors[colorScheme].text, fontSize: 40, padding: 12 }}>
         {i18n.t('compost_report_title')}
       </Text>
@@ -126,7 +127,7 @@ export default function CompostReport() {
           />
         </View>
       </View>
-    </View>
+    </GradientContainer>
   );
 }
 

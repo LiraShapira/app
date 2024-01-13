@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { selectContacts } from '../store/userSlice';
 import SearchResultsInfo from '../components/Send/SearchResultsInfo';
 import {filterContactsCondition} from "./filterContactsCondition";
+import GradientContainer from '../components/utils/GradientContainer'
 
 export default function Send() {
   const [filterTerms, setFilterTerms] = useState<string>('');
@@ -31,7 +32,7 @@ export default function Send() {
   }, [debouncedFilterTerms]);
 
   return (
-    <View style={{ padding: 8 }}>
+    <GradientContainer style={{ padding: 8 }}>
       <Text
         style={{
           fontSize: 24,
@@ -66,6 +67,6 @@ export default function Send() {
           contacts={debouncedFilterTerms ? filteredContacts : contacts}
         />
       </View>
-    </View>
+    </ GradientContainer>
   );
 }

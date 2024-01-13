@@ -1,24 +1,19 @@
-const tintColorLight = '#2f95dc';
-const tintColorDark = '#fff';
-
 export enum Light {
   text = '#000',
   background = '#fff',
   shading = '#e0e0e0',
-  highlight = '#BBE698',
-  tint = tintColorLight,
+  highlight = '#6CB041',
+  tint = '#4195B0',
   tabIconDefault = '#ccc',
-  tabIconSelected = tintColorLight,
 }
 
 export enum Dark {
   text = '#fff',
   background = '#000',
   shading = '#595858',
-  highlight = '#BBE698',
-  tint = tintColorDark,
+  highlight = '#6CB041',
+  tint = '#4195B0',
   tabIconDefault = '#ccc',
-  tabIconSelected = tintColorDark,
 }
 
 export type AppColor = Dark | Light;

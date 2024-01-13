@@ -13,8 +13,8 @@ export default function CustomTag(props: TagProps) {
         <View style={{ padding: 4 }}>
             <CustomButton
                 {...props}
-                textColor={props.active ? Colors['light'].text : Colors[colorScheme].highlight }
-                backgroundColor={props.active ? Colors[colorScheme].highlight : Colors['light'].background}
+                textColor={props.active ? 'black' : Colors[colorScheme].highlight }
+                backgroundColor={props.active ? Colors[colorScheme].highlight : 'white'}
             />
         </View>
     )
