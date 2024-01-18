@@ -14,6 +14,13 @@ export interface Transaction {
   amount: number;
   createdAt: string;
   reason: string;
+  isRequest: boolean;
+  users: [
+      {
+        firstName: string;
+        lastName: string;
+      }
+  ]
 }
 
 export type saveTransactionArgs = Pick<

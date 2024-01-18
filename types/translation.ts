@@ -24,6 +24,9 @@ export interface Dictionary {
   dashboard_dashboard_buttons_scan: string;
   home_transactions_title: string;
   transactions_list_no_activities: string;
+  transactions_list_received_from: string;
+  transactions_list_sent_to: string;
+  transactions_list_compost_deposit: string,
 
   deposit: string;
   deposit_title: string;
