@@ -82,6 +82,9 @@ const enDictionary: Dictionary = {
   send_search_no_results_send_to_number: 'Send to \'%{number}\'',
   sendamount_validate_amount: 'Please input a number between 1 - 99',
 
+  // REQUEST
+  request_search_title: 'Who to request from?',
+
   // MONTH UTILS
   month_january: 'january',
   month_february: 'february',

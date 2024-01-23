@@ -12,7 +12,7 @@ import {
   setReason,
   unsetChosenContact,
 } from '../store/sendFormSlice';
-import { useRouter } from 'expo-router';
+import {useLocalSearchParams, useRouter} from 'expo-router';
 import { useState } from 'react';
 import { Category } from '../types/Transaction';
 import {
@@ -34,6 +34,8 @@ export default function SendAmount() {
   const [amountError, setAmountError] = useState<boolean>(false);
   const [reasonError, setReasonError] = useState<boolean>(false);
   const userId = useAppSelector(selectUserId);
+  const params = useLocalSearchParams();
+  const { isRequest } = params;
 
   const onPressSend = () => {
     if (!chosenContact?.phoneNumbers) return;

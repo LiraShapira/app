@@ -4,7 +4,7 @@ import { CustomIcon } from '../utils/CustomIcon';
 import Colors from '../../constants/Colors';
 import { setChosenContact } from '../../store/sendFormSlice';
 import { useAppDispatch } from '../../hooks';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 interface ContactItemProps {
   contact: Contact;
@@ -14,10 +14,16 @@ export default function ContactItem({ contact }: ContactItemProps) {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const params = useLocalSearchParams();
+  const { isRequest } = params;
 
   const onSelectContact = () => {
     dispatch(setChosenContact(contact));
-    router.replace('/SendAmount');
+    if (isRequest) {
+      router.replace({ pathname: '/SendAmount', params: { isRequest } });
+    } else {
+      router.replace('/SendAmount');
+    }
   };
 
   return (

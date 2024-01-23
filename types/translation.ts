@@ -76,6 +76,8 @@ export interface Dictionary {
   send_search_no_results_send_to_number: string;
   sendamount_validate_amount: string;
 
+  request_search_title: string;
+
   month_january: string;
   month_february: string;
   month_march: string;

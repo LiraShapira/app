@@ -83,6 +83,9 @@ const heDictionary: Dictionary = {
   send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
   sendamount_validate_amount: 'אנא הכנס מספר בין 1 - 99',
 
+  // REQUEST
+  request_search_title: 'ממי לבקש?',
+
   // MONTH UTILS
   month_january: '	ינואר',
   month_february: '	פברואר',

@@ -43,7 +43,6 @@ export default function Dashboard() {
             style={{
               color: Colors[colorScheme ?? 'light'].text,
               textAlign: 'center',
-              opacity: 0.5,
             }}
           >
             {i18n.t('deposit')}
@@ -51,6 +50,8 @@ export default function Dashboard() {
         </View>
         <View style={styles.labeledButton}>
           <DashboardButton
+            route="/Send"
+            params={{ isRequest: true }}
             iconName="hand-coin-outline"
             iconLibrary="MaterialCommunityIcons"
           />
