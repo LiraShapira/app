@@ -3,7 +3,9 @@ import { Transaction } from '../../types/Transaction';
 import Colors from '../../constants/Colors';
 import { monthsLongForm } from '../../constants/Months';
 import i18n from '../../translationService';
-import { useMemo } from 'react';
+import {useMemo} from 'react';
+import TransactionItemAmount from "./TransactionItemAmount";
+import TransactionItemDescription from "./TransactionItemDescription";
 
 interface TransactionItemProps {
   income: boolean;
@@ -15,64 +17,43 @@ export default function TransactionItem({
   transaction,
 }: TransactionItemProps) {
   const colorScheme = useColorScheme();
-  
+
   const [day, month] = useMemo(() => {
     const date = new Date(transaction.createdAt);
     return [date.getDate(), monthsLongForm[date.getMonth()]];
   }, [transaction.createdAt])
-  
+
   return (
-    <View>
-      <View style={styles.transactionItem}>
-        <View style={styles.dateDisplay}>
-          <Text
-            style={{
-              fontWeight: '500',
-              fontSize: 25,
-              color: Colors[colorScheme ?? 'light'].text,
-            }}
-          >
-            {day}
-          </Text>
-          <Text
-            style={{
-              color: Colors[colorScheme ?? 'light'].text,
-            }}
-          >
-            {i18n.t(`month_${month}_MMM`)}
-          </Text>
+      <View>
+        <View style={styles.transactionItem}>
+          <View style={styles.dateDisplay}>
+            <Text
+                style={{
+                  fontWeight: '500',
+                  fontSize: 25,
+                  color: Colors[colorScheme ?? 'light'].text,
+                }}
+            >
+              {day}
+            </Text>
+            <Text
+                style={{
+                  color: Colors[colorScheme ?? 'light'].text,
+                }}
+            >
+              {i18n.t(`month_${month}_MMM`)}
+            </Text>
+          </View>
+          <TransactionItemDescription income={income} transaction={transaction}/>
+          <TransactionItemAmount income={income} amount={transaction.amount}/>
         </View>
-        <View style={styles.notesDisplay}>
-          <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
-            {transaction.reason === 'Deposit' ? i18n.t('deposit') : transaction.reason }
-          </Text>
-        </View>
-        <View style={styles.amountDisplay}>
-          <Text
+        <View
             style={{
-              fontSize: 20,
-              color: Colors[colorScheme ?? 'light'].text,
+              borderColor: Colors[colorScheme].shading,
+              ...styles.divider,
             }}
-          >
-            {income ? '+' : '-'}
-          </Text>
-          <Text
-            style={{
-              fontSize: 20,
-              color: Colors[colorScheme ?? 'light'].text,
-            }}
-          >
-            {transaction.amount}
-          </Text>
-        </View>
+        />
       </View>
-      <View
-        style={{
-          borderColor: Colors[colorScheme ?? 'light'].shading,
-          ...styles.divider,
-        }}
-      />
-    </View>
   );
 }
 
@@ -106,7 +87,8 @@ const styles = StyleSheet.create({
   },
   divider: {
     width: '100%',
-    padding: 12,
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
+    marginVertical: 12,
+    opacity: 0.5
   },
 });

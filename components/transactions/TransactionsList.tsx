@@ -41,8 +41,10 @@ const styles = StyleSheet.create({
   transactionList: {
     paddingVertical: 8,
     width: '100%',
-    // height: '50%',
     overflow: 'scroll',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   transactionItem: {
     display: 'flex',
