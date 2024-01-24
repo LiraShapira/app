@@ -14,26 +14,29 @@ import {
 } from '../store/sendFormSlice';
 import {useLocalSearchParams, useRouter} from 'expo-router';
 import { useState } from 'react';
-import { Category } from '../types/Transaction';
+import {Category, Transaction} from '../types/Transaction';
 import {
-  addUserTransaction,
+  addUserTransaction, selectUser,
   selectUserId,
   setUserBalance,
 } from '../store/userSlice';
 import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import { CustomModal } from '../components/utils/CustomModal';
 import { parsePhoneNumber } from 'libphonenumber-js';
+import {Contact} from "expo-contacts";
+import {User} from "../types/User";
 
 export default function SendAmount() {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
-  const chosenContact = useAppSelector(selectChosenContact);
-  const amount = useAppSelector(selectAmount);
-  const reason = useAppSelector(selectReason);
+  const chosenContact = useAppSelector<Contact>(selectChosenContact);
+  const amount = useAppSelector<number>(selectAmount);
+  const reason = useAppSelector<string>(selectReason);
+  const currentUser = useAppSelector<User>(selectUser);
   const router = useRouter();
   const [amountError, setAmountError] = useState<boolean>(false);
   const [reasonError, setReasonError] = useState<boolean>(false);
-  const userId = useAppSelector(selectUserId);
+  const currentUserId = useAppSelector<string>(selectUserId);
   const params = useLocalSearchParams();
   const { isRequest } = params;
 
@@ -41,24 +44,24 @@ export default function SendAmount() {
     if (!chosenContact?.phoneNumbers) return;
     const recipientPhoneNumber = chosenContact?.phoneNumbers[0].number;
     if (!recipientPhoneNumber) return;
-    const phoneNumber = parsePhoneNumber(recipientPhoneNumber, 'US')
+    const phoneNumber = parsePhoneNumber(recipientPhoneNumber, 'US');
     const newTransaction = {
-      recipientPhoneNumber: phoneNumber.nationalNumber,
+      recipientPhoneNumber: isRequest ? currentUserId : phoneNumber.nationalNumber as string,
       amount: amount,
       category: Category.MISC,
       reason: reason,
-      purchaserId: userId,
+      purchaserId: isRequest ? phoneNumber.nationalNumber as string : currentUserId,
+      ...(isRequest && { isRequest: true })
     };
+
     dispatch(saveTransaction(newTransaction))
       .unwrap()
-      .then(({ data: transaction }) => {
-        const currentUser = transaction.users.find(
-          (user) => user.id === userId
-        );
-        const { users, ...transactionWithoutUsers } = transaction;
-        dispatch(addUserTransaction(transactionWithoutUsers));
-        if (!currentUser) return;
-        dispatch(setUserBalance(currentUser.accountBalance));
+      .then(({ data: transaction }: { data: Transaction }) => {
+        dispatch(addUserTransaction(transaction));
+        if (!isRequest) {
+          const updatedBalance = currentUser.accountBalance - amount;
+          dispatch(setUserBalance(updatedBalance));
+        }
         dispatch(setAmount(0));
         dispatch(setReason(''));
         router.push('/Home');
@@ -105,7 +108,7 @@ export default function SendAmount() {
   const onModalChangeContact = () => {
     dispatch(setIsModalVisible(false));
     dispatch(unsetChosenContact());
-    router.replace('/Send');
+    router.back();
   };
 
   return (
@@ -179,7 +182,7 @@ export default function SendAmount() {
           text={i18n.t('sendamount_continue')}
         />
         <CustomButton
-          onPress={() => router.replace('/Send')}
+          onPress={() => router.back()}
           text={i18n.t('sendamount_back')}
         />
       </View>

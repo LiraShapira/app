@@ -27,6 +27,7 @@ export interface Dictionary {
   transactions_list_received_from: string;
   transactions_list_sent_to: string;
   transactions_list_compost_deposit: string,
+  transaction_request_to: string,
 
   deposit: string;
   deposit_title: string;

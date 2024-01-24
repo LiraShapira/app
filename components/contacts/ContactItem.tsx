@@ -20,9 +20,9 @@ export default function ContactItem({ contact }: ContactItemProps) {
   const onSelectContact = () => {
     dispatch(setChosenContact(contact));
     if (isRequest) {
-      router.replace({ pathname: '/SendAmount', params: { isRequest } });
+      router.push({ pathname: '/SendAmount', params: { isRequest } });
     } else {
-      router.replace('/SendAmount');
+      router.push('/SendAmount');
     }
   };
 

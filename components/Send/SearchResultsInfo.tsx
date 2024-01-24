@@ -2,7 +2,7 @@ import { View, Text, useColorScheme } from 'react-native';
 import i18n from '../../translationService';
 import CustomButton from '../utils/CustomButton';
 import { isPossiblePhoneNumber } from 'libphonenumber-js';
-import { useRouter } from 'expo-router';
+import {useLocalSearchParams, useRouter} from 'expo-router';
 import { ContactTypes } from 'expo-contacts';
 import { setChosenContact } from '../../store/sendFormSlice';
 import { useAppDispatch } from '../../hooks';
@@ -20,6 +20,8 @@ export default function SearchResultsInfo({
   const dispatch = useAppDispatch();
   const router = useRouter();
   const colorScheme = useColorScheme();
+  const params = useLocalSearchParams();
+  const { isRequest } = params;
 
   const onSendToPhoneNumber = () => {
     const fakeContact = {
@@ -35,7 +37,11 @@ export default function SearchResultsInfo({
       ],
     };
     dispatch(setChosenContact(fakeContact));
-    router.replace('/SendAmount');
+    if (isRequest) {
+      router.push({ pathname: '/SendAmount', params: { isRequest: true }});
+    } else {
+      router.push('/SendAmount');
+    }
   };
 
   return (

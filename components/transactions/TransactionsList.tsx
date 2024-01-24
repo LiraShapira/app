@@ -23,6 +23,7 @@ export default function TransactionsList({
             style={styles.transactionItem}
           >
             <TransactionItem
+              isRequest={transaction.isRequest}
               transaction={transaction}
               income={transaction.recipientId === currentUser.id}
             />

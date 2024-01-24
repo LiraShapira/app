@@ -3,7 +3,7 @@ import { RootState } from '.';
 import { Contact } from 'expo-contacts';
 import {
   Category,
-  saveTransactionArgs,
+  SaveTransactionArgs,
 } from '../types/Transaction';
 import {
   TransactionWithUsers,
@@ -32,7 +32,7 @@ const initialState: SendFormState = {
 
 export const saveTransaction = createAsyncThunk<
   SuccessApiResponse<TransactionWithUsers>,
-  saveTransactionArgs,
+  SaveTransactionArgs,
   { state: RootState }
 >(
   'user/saveTransaction',

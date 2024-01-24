@@ -30,6 +30,7 @@ const enDictionary: Dictionary = {
   transactions_list_received_from: 'Received from ',
   transactions_list_sent_to: 'Sent to ',
   transactions_list_compost_deposit: 'compost deposit',
+  transaction_request_to: 'Request from ',
 
   // DEPOSIT
   deposit: 'Deposit',

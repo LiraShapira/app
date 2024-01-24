@@ -113,6 +113,5 @@ export const selectUser = (state: RootState) => state.user.user;
 export const selectUserId = (state: RootState) => state.user.user.id;
 export const selectUserLoading = (state: RootState) => state.user.loading;
 export const selectContacts = (state: RootState) => state.user.contacts;
-export const selectIsConnected = (state: RootState) => state.user.isConnected;
 
 export default userSlice.reducer;

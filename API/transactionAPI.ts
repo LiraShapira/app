@@ -1,6 +1,6 @@
 import { mockTransaction, mockUser, mockUser2 } from "../Mocks/mockDB";
 import { ApiResponse } from "../types/APITypes";
-import { Transaction, saveTransactionArgs } from "../types/Transaction";
+import { Transaction, SaveTransactionArgs } from "../types/Transaction";
 import { User } from "../types/User";
 import { SERVER_URL } from "./config";
 
@@ -8,7 +8,7 @@ export interface TransactionWithUsers extends Transaction {
     users: [User, User]
 }
 
-export const saveTransactionToDatabase = async (partialTransaction: saveTransactionArgs): Promise<ApiResponse<TransactionWithUsers>> => {
+export const saveTransactionToDatabase = async (partialTransaction: SaveTransactionArgs): Promise<ApiResponse<TransactionWithUsers>> => {
     // return example transaction if in demo mode
     if (process.env.EXPO_PUBLIC_DEMO) return {
         data: {
