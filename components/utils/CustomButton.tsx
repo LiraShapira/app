@@ -3,15 +3,14 @@ import {
   Pressable,
   Text,
   StyleSheet,
-  useColorScheme,
 } from 'react-native';
 import Colors from '../../constants/Colors';
 
 export interface ButtonProps {
   text: string;
   disabled?: boolean;
-  textColor?: string; 
-  backgroundColor?: string; 
+  textColor?: string;
+  backgroundColor?: string;
   onPress: (...args: any[]) => any;
   size?: 's' | 'm' | 'l';
   transparent?: boolean;
@@ -33,7 +32,7 @@ export default function CustomButton({
   transparent
 }: ButtonProps) {
   const calculatedBackgroundColor = backgroundColor ? backgroundColor : transparent ? 'transparent' : Colors.light.highlight;
-  const calculatedtextColor = textColor ? textColor:  transparent ? 'black' : 'white'; 
+  const calculatedtextColor = textColor ? textColor:  transparent ? 'black' : 'white';
 
   const transparentBorderStyles = {
     borderColor: '#BFC9B7',

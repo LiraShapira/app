@@ -85,6 +85,7 @@ const heDictionary: Dictionary = {
 
   // REQUEST
   request_search_title: 'ממי לבקש?',
+  request_card_request_from: '%{name} מבקש.ת ממך',
 
   // MONTH UTILS
   month_january: '	ינואר',

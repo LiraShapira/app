@@ -85,6 +85,7 @@ const enDictionary: Dictionary = {
 
   // REQUEST
   request_search_title: 'Who to request from?',
+  request_card_request_from: 'Request from %{name}',
 
   // MONTH UTILS
   month_january: 'january',

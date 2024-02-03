@@ -78,6 +78,7 @@ export interface Dictionary {
   sendamount_validate_amount: string;
 
   request_search_title: string;
+  request_card_request_from: string;
 
   month_january: string;
   month_february: string;
