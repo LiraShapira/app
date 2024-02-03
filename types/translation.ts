@@ -79,6 +79,9 @@ export interface Dictionary {
 
   request_search_title: string;
   request_card_request_from: string;
+  request_card_accept: string,
+  request_card_refuse: string,
+  request_how_much: string,
 
   month_january: string;
   month_february: string;

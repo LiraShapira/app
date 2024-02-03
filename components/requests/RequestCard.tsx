@@ -4,8 +4,8 @@ import CustomButton from '../utils/CustomButton';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { User } from '../../types/User';
 import {handleRequest, loadUser, selectUser, setUser} from '../../store/userSlice';
-import {setIsLoggedIn} from "../../store/authFormSlice";
 import i18n from "../../translationService";
+import { getLocales } from 'expo-localization';
 
 export default function RequestCard() {
   const user = useAppSelector<User>(selectUser);
@@ -28,19 +28,23 @@ export default function RequestCard() {
       <View style={ styles.container }>
         <View style={styles.textBox}>
           <Text style={styles.name}>{ i18n.t('request_card_request_from', { name: request.users[0].firstName }) }</Text>
-          <Text style={styles.number}>{request.amount}</Text>
+          <View style={{ flexDirection: 'row' }} dir={getLocales()[0].textDirection || 'ltr'}>
+            <Text style={styles.number}>{request.amount}</Text>
+            <Text>{i18n.t('home_lira_shapira_currency_shorthand')}</Text>
+          </View>
           <Text style={styles.reason}>{request.reason}</Text>
         </View>
         <View style={styles.buttons}>
           <CustomButton
-            text={'Refuse'}
+            text={i18n.t('request_card_refuse')}
+
             transparent
             onPress={() => {
               onClick(false);
             }}
           />
           <CustomButton
-            text={'Accept'}
+            text={i18n.t('request_card_accept')}
             onPress={() => {
               onClick(true);
             }}

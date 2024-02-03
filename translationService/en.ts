@@ -84,8 +84,11 @@ const enDictionary: Dictionary = {
   sendamount_validate_amount: 'Please input a number between 1 - 99',
 
   // REQUEST
+  request_how_much: 'How much?',
   request_search_title: 'Who to request from?',
   request_card_request_from: 'Request from %{name}',
+  request_card_accept: 'accept',
+  request_card_refuse: 'refuse',
 
   // MONTH UTILS
   month_january: 'january',

@@ -41,8 +41,8 @@ export default function Dashboard() {
           />
           <Text
             style={{
+              ...styles.buttonLabel,
               color: Colors[colorScheme ?? 'light'].text,
-              textAlign: 'center',
             }}
           >
             {i18n.t('deposit')}
@@ -57,9 +57,8 @@ export default function Dashboard() {
           />
           <Text
             style={{
-              opacity: 0.5,
+              ...styles.buttonLabel,
               color: Colors[colorScheme ?? 'light'].text,
-              textAlign: 'center',
             }}
           >
             {i18n.t('dashboard_dashboard_buttons_request')}
@@ -73,8 +72,8 @@ export default function Dashboard() {
           />
           <Text
             style={{
+              ...styles.buttonLabel,
               color: Colors[colorScheme ?? 'light'].text,
-              textAlign: 'center',
             }}
           >
             {i18n.t('dashboard_dashboard_buttons_send')}
@@ -118,4 +117,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 16,
   },
+  buttonLabel: {
+  fontSize: 14,
+  fontWeight: '700',
+  textAlign: 'center',
+  }
 });

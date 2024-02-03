@@ -84,8 +84,11 @@ const heDictionary: Dictionary = {
   sendamount_validate_amount: 'אנא הכנס מספר בין 1 - 99',
 
   // REQUEST
+  request_how_much: 'כמה לבקש?',
   request_search_title: 'ממי לבקש?',
   request_card_request_from: '%{name} מבקש.ת ממך',
+  request_card_accept: 'העבר את הלירות',
+  request_card_refuse: 'סרב',
 
   // MONTH UTILS
   month_january: '	ינואר',

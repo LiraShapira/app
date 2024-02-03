@@ -50,6 +50,9 @@ export default function SendAmount() {
     if (!phoneNumber) return;
     try {
       const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'US').nationalNumber as string;
+      if (parsedPhoneNumber === currentUser.phoneNumber) {
+        throw new Error('Cannot send or make request to yourself');
+      }
       const {data: getUserIdByNumberData} = await dispatch(getUserIdByNumber(parsedPhoneNumber)).unwrap();
       const requesteeId = getUserIdByNumberData.userId;
       const newTransaction = {
@@ -76,7 +79,7 @@ export default function SendAmount() {
     } catch (e) {
       dispatch(setModalText(e.message));
       dispatch(setIsUserLoading(false));
-        dispatch(setIsModalVisible(true));
+      dispatch(setIsModalVisible(true));
       }
   };
 
@@ -132,7 +135,7 @@ export default function SendAmount() {
         <Text
           style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
         >
-          {i18n.t('sendamount_how_much')}
+          {isRequest ? i18n.t('request_how_much') : i18n.t('sendamount_how_much')}
         </Text>
         {amountError ? (
           <Text
