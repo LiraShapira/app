@@ -53,3 +53,29 @@ export const registerNewUser = async (fetchUserArgs: FetchUserArgs): Promise<Api
   }
 }
 
+export const fetchUserIdByNumber = async (phoneNumber: string): Promise<ApiResponse<{ userId: string }>> => {
+  if (process.env.EXPO_PUBLIC_DEMO) return {
+    data: {
+      userId: '12345678987654321'
+    },
+    status: 200
+  };
+  const jsonBody = JSON.stringify({ phoneNumber })
+  try {
+    const requestString = `${SERVER_URL}/userIdByNumber`;
+    const response = await fetch(requestString, {
+      method: 'POST',
+      body: jsonBody,
+      headers: {
+        'Content-Type': 'application/json', // Set the correct Content-Type header
+      },
+    })
+    const JSONresponse = await response.json()
+    if (response.status !== 200) {
+      throw new Error(JSONresponse.error);
+    }
+    return { data: JSONresponse, status: response.status };
+  } catch (e: any) {
+    return e;
+  }
+}
