@@ -16,6 +16,25 @@ import { FontAwesome5 } from '@expo/vector-icons';
 // so we created and added FontAwesome5 icon name type
 import { FontAwesome5IconNames } from './FontAwesome5IconNames';
 
+type LocalIcons = 'big_tic_icon' 
+| 'deposite_icon' 
+| 'events_icon' 
+| 'fruit_icon_1' 
+| 'fruit_icon_2' 
+| 'fruit_icon_3' 
+| 'fruit_icon_4' 
+| 'fruit_icon_5' 
+| 'fruit_icon_6' 
+| 'fruit_icon_7' 
+| 'medium_tick_icon_' 
+| 'request_icon_with_circle' 
+| 'request_icon' 
+| 'send_icon_with_circle' 
+| 'small_tick_icon' 
+| 'truck_icon' 
+| 'wallet_icon'
+
+
 // NOTE: FontAwesome5 icon names are not included in this type
 export type IconName = keyof typeof MaterialIcons.glyphMap | keyof typeof AntDesign.glyphMap | keyof typeof Entypo.glyphMap | keyof typeof EvilIcons.glyphMap |
   keyof typeof Feather.glyphMap |
@@ -28,6 +47,7 @@ export type IconName = keyof typeof MaterialIcons.glyphMap | keyof typeof AntDes
   keyof typeof Octicons.glyphMap |
   keyof typeof SimpleLineIcons.glyphMap |
   keyof typeof Zocial.glyphMap | FontAwesome5IconNames
+  | LocalIcons
 
 export type IconLibrary = 'AntDesign' |
   'Entypo' |
@@ -42,4 +62,5 @@ export type IconLibrary = 'AntDesign' |
   'MaterialIcons' |
   'Octicons' |
   'SimpleLineIcons' |
-  'Zocial'
+  'Zocial'| 
+  'Local'
