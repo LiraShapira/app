@@ -69,7 +69,7 @@ const heDictionary: Dictionary = {
   compost_report_missing_bad_bugs: 'יש חרקים לא טובים',
   compost_report_missing_scales: 'חסר משקל',
   compost_report_missing_clean_and_tidy: 'נקייה ומסודרת',
-
+  transaction_request_to: 'בקשה מ',
   // SEND
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
@@ -82,6 +82,13 @@ const heDictionary: Dictionary = {
   send_search_no_results: 'אין תוצאות ל\'%{search}\'',
   send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
   sendamount_validate_amount: 'אנא הכנס מספר בין 1 - 99',
+
+  // REQUEST
+  request_how_much: 'כמה לבקש?',
+  request_search_title: 'ממי לבקש?',
+  request_card_request_from: '%{name} מבקש.ת ממך',
+  request_card_accept: 'העבר את הלירות',
+  request_card_refuse: 'סרב',
 
   // MONTH UTILS
   month_january: '	ינואר',

@@ -27,6 +27,7 @@ export interface Dictionary {
   transactions_list_received_from: string;
   transactions_list_sent_to: string;
   transactions_list_compost_deposit: string,
+  transaction_request_to: string,
 
   deposit: string;
   deposit_title: string;
@@ -75,6 +76,12 @@ export interface Dictionary {
   send_search_no_results: string;
   send_search_no_results_send_to_number: string;
   sendamount_validate_amount: string;
+
+  request_search_title: string;
+  request_card_request_from: string;
+  request_card_accept: string,
+  request_card_refuse: string,
+  request_how_much: string,
 
   month_january: string;
   month_february: string;

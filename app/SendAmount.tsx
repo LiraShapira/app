@@ -12,59 +12,75 @@ import {
   setReason,
   unsetChosenContact,
 } from '../store/sendFormSlice';
-import { useRouter } from 'expo-router';
+import {useLocalSearchParams, useRouter} from 'expo-router';
 import { useState } from 'react';
-import { Category } from '../types/Transaction';
+import {Category, Transaction} from '../types/Transaction';
 import {
-  addUserTransaction,
-  selectUserId,
+  addUserTransaction, getUserIdByNumber, selectUser,
+  selectUserId, setIsUserLoading,
   setUserBalance,
 } from '../store/userSlice';
 import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import { CustomModal } from '../components/utils/CustomModal';
 import { parsePhoneNumber } from 'libphonenumber-js';
+import {Contact} from "expo-contacts";
+import {User} from "../types/User";
 
 export default function SendAmount() {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
-  const chosenContact = useAppSelector(selectChosenContact);
-  const amount = useAppSelector(selectAmount);
-  const reason = useAppSelector(selectReason);
+  const chosenContact = useAppSelector<Contact>(selectChosenContact);
+  const amount = useAppSelector<number>(selectAmount);
+  const reason = useAppSelector<string>(selectReason);
+  const currentUser = useAppSelector<User>(selectUser);
   const router = useRouter();
   const [amountError, setAmountError] = useState<boolean>(false);
   const [reasonError, setReasonError] = useState<boolean>(false);
-  const userId = useAppSelector(selectUserId);
+  const currentUserId = useAppSelector<string>(selectUserId);
+  const params = useLocalSearchParams();
+  const { isRequest } = params;
 
-  const onPressSend = () => {
+  const onPressSend = async () => {
+    dispatch(setIsUserLoading(true));
     if (!chosenContact?.phoneNumbers) return;
-    const recipientPhoneNumber = chosenContact?.phoneNumbers[0].number;
-    if (!recipientPhoneNumber) return;
-    const phoneNumber = parsePhoneNumber(recipientPhoneNumber, 'US')
-    const newTransaction = {
-      recipientPhoneNumber: phoneNumber.nationalNumber,
-      amount: amount,
-      category: Category.MISC,
-      reason: reason,
-      purchaserId: userId,
-    };
-    dispatch(saveTransaction(newTransaction))
-      .unwrap()
-      .then(({ data: transaction }) => {
-        const currentUser = transaction.users.find(
-          (user) => user.id === userId
-        );
-        const { users, ...transactionWithoutUsers } = transaction;
-        dispatch(addUserTransaction(transactionWithoutUsers));
-        if (!currentUser) return;
-        dispatch(setUserBalance(currentUser.accountBalance));
-        dispatch(setAmount(0));
-        dispatch(setReason(''));
-        router.push('/Home');
-      })
-      .catch((e) => {
-        dispatch(setModalText(e.message));
-        dispatch(setIsModalVisible(true));
-      });
+
+    // phone number for recipient in send flow and 'purchaser' (aka requestee) in request flow
+    const phoneNumber = chosenContact?.phoneNumbers[0].number;
+
+    if (!phoneNumber) return;
+    try {
+      const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'US').nationalNumber as string;
+      if (parsedPhoneNumber === currentUser.phoneNumber) {
+        throw new Error('Cannot send or make request to yourself');
+      }
+      const {data: getUserIdByNumberData} = await dispatch(getUserIdByNumber(parsedPhoneNumber)).unwrap();
+      const requesteeId = getUserIdByNumberData.userId;
+      const newTransaction = {
+        recipientPhoneNumber: isRequest ? currentUser.phoneNumber : parsedPhoneNumber,
+        amount: amount,
+        category: Category.MISC,
+        reason: reason,
+        // in a request the purchaserid is the id of person the request is sent to and is therefore not known
+        purchaserId: isRequest ? requesteeId : currentUserId,
+        ...(isRequest && {isRequest: true})
+      };
+
+      const { data: transaction } = await dispatch(saveTransaction(newTransaction)).unwrap();
+      dispatch(addUserTransaction(transaction));
+      if (!isRequest) {
+        const updatedBalance = currentUser.accountBalance - amount;
+        dispatch(setUserBalance(updatedBalance));
+      }
+      dispatch(setAmount(0));
+      dispatch(setReason(''));
+      dispatch(setIsUserLoading(false));
+      router.push('/Home');
+
+    } catch (e) {
+      dispatch(setModalText(e.message));
+      dispatch(setIsUserLoading(false));
+      dispatch(setIsModalVisible(true));
+      }
   };
 
   const onChangeAmount = (amount: string) => {
@@ -103,7 +119,7 @@ export default function SendAmount() {
   const onModalChangeContact = () => {
     dispatch(setIsModalVisible(false));
     dispatch(unsetChosenContact());
-    router.replace('/Send');
+    router.back();
   };
 
   return (
@@ -119,7 +135,7 @@ export default function SendAmount() {
         <Text
           style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
         >
-          {i18n.t('sendamount_how_much')}
+          {isRequest ? i18n.t('request_how_much') : i18n.t('sendamount_how_much')}
         </Text>
         {amountError ? (
           <Text
@@ -177,7 +193,7 @@ export default function SendAmount() {
           text={i18n.t('sendamount_continue')}
         />
         <CustomButton
-          onPress={() => router.replace('/Send')}
+          onPress={() => router.back()}
           text={i18n.t('sendamount_back')}
         />
       </View>

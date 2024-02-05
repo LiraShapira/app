@@ -9,12 +9,14 @@ interface DashboardButtonProps {
   iconName: IconName;
   iconLibrary: IconLibrary;
   route?: Route;
+  params?: object;
 }
 
 export default function DashboardButton({
   iconName,
   iconLibrary,
   route,
+  params = {}
 }: DashboardButtonProps) {
   const colorScheme = useColorScheme();
   const router = useRouter();
@@ -23,7 +25,7 @@ export default function DashboardButton({
     <>
       {route ? (
         <View style={{ ...styles.labeledButton, backgroundColor: 'grey' }}>
-          <Pressable onPress={() => router.push(route)}>
+          <Pressable onPress={() => router.push({ pathname: route, params })}>
             {({ pressed }) => (
               // TODO typing
               // @ts-ignore TODO typing

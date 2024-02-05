@@ -10,6 +10,7 @@ import { selectContacts } from '../store/userSlice';
 import SearchResultsInfo from '../components/Send/SearchResultsInfo';
 import {filterContactsCondition} from "./filterContactsCondition";
 import GradientContainer from '../components/utils/GradientContainer'
+import { useLocalSearchParams } from "expo-router";
 
 export default function Send() {
   const [filterTerms, setFilterTerms] = useState<string>('');
@@ -17,11 +18,12 @@ export default function Send() {
   const colorScheme = useColorScheme();
   const debouncedFilterTerms: string = useDebounce(filterTerms, 300).toString();
   const contacts = useSelector(selectContacts);
+  const params = useLocalSearchParams();
+  const { isRequest } = params;
 
   // when filter terms change
   // set filtered contacts
   useEffect(() => {
-
     const filterBySearchTerm = () => {
       setfilteredContacts(
         contacts.filter(cont =>  filterContactsCondition(cont, debouncedFilterTerms))
@@ -39,7 +41,10 @@ export default function Send() {
           color: Colors[colorScheme ?? 'light'].text,
         }}
       >
-        {i18n.t('send_search_title')}
+        {isRequest ?
+            i18n.t('request_search_title')
+            :
+            i18n.t('send_search_title')}
       </Text>
       <TextInput
         style={{

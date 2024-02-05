@@ -23,9 +23,9 @@ export interface Transaction {
   ]
 }
 
-export type saveTransactionArgs = Pick<
+export type SaveTransactionArgs = Pick<
   Transaction,
-  'category' | 'amount' | 'purchaserId' | 'reason'
+  'category' | 'amount' | 'purchaserId' | 'reason' | 'isRequest'
 > & {
   recipientPhoneNumber: string;
 };

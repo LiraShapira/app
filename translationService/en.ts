@@ -30,6 +30,7 @@ const enDictionary: Dictionary = {
   transactions_list_received_from: 'Received from ',
   transactions_list_sent_to: 'Sent to ',
   transactions_list_compost_deposit: 'compost deposit',
+  transaction_request_to: 'Request from ',
 
   // DEPOSIT
   deposit: 'Deposit',
@@ -81,6 +82,13 @@ const enDictionary: Dictionary = {
   send_search_no_results: 'No results found for \'%{search}\'',
   send_search_no_results_send_to_number: 'Send to \'%{number}\'',
   sendamount_validate_amount: 'Please input a number between 1 - 99',
+
+  // REQUEST
+  request_how_much: 'How much?',
+  request_search_title: 'Who to request from?',
+  request_card_request_from: 'Request from %{name}',
+  request_card_accept: 'accept',
+  request_card_refuse: 'refuse',
 
   // MONTH UTILS
   month_january: 'january',

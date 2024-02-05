@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { User, UserRole } from "../types/User";
-import { fetchUser } from "../API/userAPI";
+import {fetchUser, fetchUserIdByNumber} from "../API/userAPI";
 import { Transaction } from "../types/Transaction";
 import { fetchContacts } from "../API/contactsAPI";
 import { Contact } from "expo-contacts";
 import { SuccessApiResponse } from "../types/APITypes";
+import { updateRequestInDatabase } from "../API/transactionAPI";
 
 interface UserState {
   user: User;
@@ -56,6 +57,44 @@ export const loadContacts = createAsyncThunk<
   return contacts;
 });
 
+export const getUserIdByNumber = createAsyncThunk<
+  SuccessApiResponse<{ userId: string }>,
+  string,
+  { state: RootState }
+  >('user/getUserIdByNumber', async(phoneNumber: string) => {
+  const response = await fetchUserIdByNumber(phoneNumber);
+  if (!('data' in response)) {
+    throw new Error(response.message)
+  }
+  if (response.data) {
+    return response;
+  } else {
+    throw new Error('User not found');
+  }
+})
+
+interface handleRequestArgs {
+  transaction: Transaction;
+  isRequestAccepted: boolean;
+}
+
+export const handleRequest = createAsyncThunk<
+  SuccessApiResponse<Transaction>,
+  handleRequestArgs,
+  { state: RootState }>
+  ('user/handleRequest', async (handleRequestArgs) => {
+    const response = await updateRequestInDatabase(handleRequestArgs);
+    if (!('data' in response)) {
+      throw new Error(response.message)
+    }
+    if (response.data) {
+      return response;
+    } else {
+      throw new Error('User not found');
+    }
+  })
+
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -102,6 +141,15 @@ export const userSlice = createSlice({
       })
       .addCase(loadUser.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(handleRequest.pending, state => {
+        state.loading = true;
+      })
+      .addCase(handleRequest.fulfilled, state => {
+        state.loading = false;
+      })
+      .addCase(handleRequest.rejected, state => {
+        state.loading = false;
       });
   }
 });
@@ -113,6 +161,5 @@ export const selectUser = (state: RootState) => state.user.user;
 export const selectUserId = (state: RootState) => state.user.user.id;
 export const selectUserLoading = (state: RootState) => state.user.loading;
 export const selectContacts = (state: RootState) => state.user.contacts;
-export const selectIsConnected = (state: RootState) => state.user.isConnected;
 
 export default userSlice.reducer;

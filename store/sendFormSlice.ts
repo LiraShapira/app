@@ -3,10 +3,9 @@ import { RootState } from '.';
 import { Contact } from 'expo-contacts';
 import {
   Category,
-  saveTransactionArgs,
+  SaveTransactionArgs, Transaction,
 } from '../types/Transaction';
 import {
-  TransactionWithUsers,
   saveTransactionToDatabase,
 } from '../API/transactionAPI';
 import { SuccessApiResponse } from '../types/APITypes';
@@ -31,12 +30,12 @@ const initialState: SendFormState = {
 };
 
 export const saveTransaction = createAsyncThunk<
-  SuccessApiResponse<TransactionWithUsers>,
-  saveTransactionArgs,
+  SuccessApiResponse<Transaction>,
+  SaveTransactionArgs,
   { state: RootState }
 >(
   'user/saveTransaction',
-  async (saveTransactionArgs): Promise<SuccessApiResponse<TransactionWithUsers>> => {
+  async (saveTransactionArgs) => {
     const response = await saveTransactionToDatabase(saveTransactionArgs);
     if (!('data' in response)) {
       throw new Error(response.message)

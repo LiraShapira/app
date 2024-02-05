@@ -10,10 +10,12 @@ import TransactionItemDescription from "./TransactionItemDescription";
 interface TransactionItemProps {
   income: boolean;
   transaction: Transaction;
+  isRequest: boolean;
 }
 
 export default function TransactionItem({
   income,
+  isRequest,
   transaction,
 }: TransactionItemProps) {
   const colorScheme = useColorScheme();
@@ -44,8 +46,8 @@ export default function TransactionItem({
               {i18n.t(`month_${month}_MMM`)}
             </Text>
           </View>
-          <TransactionItemDescription income={income} transaction={transaction}/>
-          <TransactionItemAmount income={income} amount={transaction.amount}/>
+          <TransactionItemDescription isRequest={isRequest} income={income} transaction={transaction}/>
+          <TransactionItemAmount isRequest={isRequest}  income={income} amount={transaction.amount}/>
         </View>
         <View
             style={{

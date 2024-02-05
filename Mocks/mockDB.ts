@@ -9,7 +9,9 @@ export const mockTransaction: Transaction = {
   amount: 10,
   createdAt: new Date('2023-07-05').toDateString(),
   reason: 'bought a spade',
-  id: '123456'
+  id: '123456',
+  isRequest: false,
+  users: [{ firstName: 'Bill', lastName: 'Withers' }]
 }
 
 export const mockTransaction2: Transaction = {
@@ -19,7 +21,9 @@ export const mockTransaction2: Transaction = {
   amount: 14,
   createdAt: new Date('2023-07-06').toDateString(),
   reason: 'bought seeds',
-  id: '1234567'
+  id: '1234567',
+  isRequest: false,
+  users: [{ firstName: 'Bill', lastName: 'Withers' }]
 }
 
 export const mockTransaction3: Transaction = {
@@ -29,7 +33,9 @@ export const mockTransaction3: Transaction = {
   amount: 100,
   createdAt: new Date('2023-07-08').toDateString(),
   reason: 'בקשה ממירון גלברד',
-  id: '12345678'
+  id: '12345678',
+  isRequest: false,
+  users: [{ firstName: 'Bill', lastName: 'Withers' }]
 }
 
 export const mockUser: User = {
@@ -70,7 +76,7 @@ export const mockContacts: Contact[] = [
         id: "1345",
         isPrimary: false,
         label: "work",
-        number: "987654321",
+        number: "123456789",
       },
     ],
   },
@@ -208,5 +214,5 @@ export const mockContacts: Contact[] = [
         number: "+447912345683",
       },
     ],
-  }  
+  }
 ];
