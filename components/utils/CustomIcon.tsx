@@ -15,53 +15,49 @@ import {
   Zocial,
 } from '@expo/vector-icons';
 import { Text } from 'react-native';
-import { Icon } from '@expo/vector-icons/build/createIconSet';
+import {ExpoIcon, LocalIcon} from "../../types/Icons";
+import { SvgProps } from 'react-native-svg';
+import send_icon from "../../assets/icons/send_icon";
+import request_icon_with_circle from "../../assets/icons/request_icon_with_circle";
+import request_icon from "../../assets/icons/request_icon";
+import wallet_icon from "../../assets/icons/wallet_icon";
+import truck_icon from "../../assets/icons/truck_icon";
+import events_icon from "../../assets/icons/events_icon";
+import big_tick_icon from "../../assets/icons/big_tick_icon";
+import fruit_icon_7 from "../../assets/icons/fruit_icon_7";
+import fruit_icon_5 from "../../assets/icons/fruit_icon_5";
+import fruit_icon_6 from "../../assets/icons/fruit_icon_6";
+import fruit_icon_3 from "../../assets/icons/fruit_icon_3";
+import fruit_icon_4 from "../../assets/icons/fruit_icon_4";
+import fruit_icon_1 from "../../assets/icons/fruit_icon_1";
+import fruit_icon_2 from "../../assets/icons/fruit_icon_2";
+import deposit_icon from "../../assets/icons/deposit_icon";
+import send_icon_with_circle from "../../assets/icons/send_icon_with_circle";
+import small_tick_icon from "../../assets/icons/small_tick_icon";
+import medium_tick_icon from "../../assets/icons/medium_tick_icon";
 
-type GetMyClassT<C extends Icon<any, any>> = C extends Icon<infer T, any>
-  ? T
-  : unknown;
+export const iconMap: Record<LocalIcon, (n: SvgProps)=>JSX.Element> = {
+  big_tick_icon: big_tick_icon,
+  deposit_icon: deposit_icon,
+  events_icon: events_icon,
+  fruit_icon_1: fruit_icon_1,
+  fruit_icon_2: fruit_icon_2,
+  fruit_icon_3: fruit_icon_3,
+  fruit_icon_4: fruit_icon_4,
+  fruit_icon_5: fruit_icon_5,
+  fruit_icon_6: fruit_icon_6,
+  fruit_icon_7: fruit_icon_7,
+  medium_tick_icon: medium_tick_icon,
+  request_icon_with_circle: request_icon_with_circle,
+  request_icon: request_icon,
+  send_icon_with_circle: send_icon_with_circle,
+  send_icon: send_icon,
+  small_tick_icon: small_tick_icon,
+  truck_icon: truck_icon,
+  wallet_icon: wallet_icon,
+}
 
-type AntDesignIcon = GetMyClassT<typeof AntDesign>;
-type EvilIcon = GetMyClassT<typeof EvilIcons>;
-type EntypoIcon = GetMyClassT<typeof Entypo>;
-type FeatherIcon = GetMyClassT<typeof Feather>;
-type FontistoIcon = GetMyClassT<typeof Fontisto>;
-type FontAwesomeIcon = GetMyClassT<typeof FontAwesome>;
-type FontAwesome5Icon = GetMyClassT<typeof FontAwesome5>;
-type FoundationIcon = GetMyClassT<typeof Foundation>;
-type IoniconsIcon = GetMyClassT<typeof Ionicons>;
-type MaterialCommunityIconsIcon = GetMyClassT<typeof MaterialCommunityIcons>;
-type MaterialIconsIcon = GetMyClassT<typeof MaterialIcons>;
-type OcticonsIcon = GetMyClassT<typeof Octicons>;
-type SimpleLineIconsIcon = GetMyClassT<typeof SimpleLineIcons>;
-type ZocialIcon = GetMyClassT<typeof Zocial>;
-
-type ExpoIcon =
-  | {
-      iconLibraryName: 'AntDesign';
-      iconName: AntDesignIcon;
-    }
-  | {
-      iconLibraryName: 'EvilIcons';
-      iconName: EvilIcon;
-    }
-  | { iconLibraryName: 'Entypo'; iconName: EntypoIcon }
-  | { iconLibraryName: 'Feather'; iconName: FeatherIcon }
-  | { iconLibraryName: 'Fontisto'; iconName: FontistoIcon }
-  | { iconLibraryName: 'FontAwesome'; iconName: FontAwesomeIcon }
-  | { iconLibraryName: 'FontAwesome5'; iconName: FontAwesome5Icon }
-  | { iconLibraryName: 'Foundation'; iconName: FoundationIcon }
-  | { iconLibraryName: 'Ionicons'; iconName: IoniconsIcon }
-  | {
-      iconLibraryName: 'MaterialCommunityIcons';
-      iconName: MaterialCommunityIconsIcon;
-    }
-  | { iconLibraryName: 'MaterialIcons'; iconName: MaterialIconsIcon }
-  | { iconLibraryName: 'Octicons'; iconName: OcticonsIcon }
-  | { iconLibraryName: 'SimpleLineIcons'; iconName: SimpleLineIconsIcon }
-  | { iconLibraryName: 'Zocial'; iconName: ZocialIcon };
-
-type CustomIconProps = ExpoIcon & {
+export type CustomIconProps = ExpoIcon & {
   color?: string;
   size?: number;
   disabled?: boolean;
@@ -119,11 +115,16 @@ const DynamicIconComponent = ({
     case 'Zocial':
       Component = Zocial;
       break;
+    case 'Local':
+      Component = iconMap[iconName];
+      // custom props won't affect UI of local icons
+      return <Component/>
     default:
       // Set a default component or handle the error case
       Component = () => <Text>404</Text>;
       break;
   }
+
 
   return disabled ? (
     <Component

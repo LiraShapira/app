@@ -4,6 +4,7 @@ import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
 import { selectUser } from '../../store/userSlice';
 import { useAppSelector } from '../../hooks';
+import { IconLibrary } from '../../types/Icons';
 
 export default function Dashboard() {
   const colorScheme = useColorScheme();
@@ -36,8 +37,8 @@ export default function Dashboard() {
         <View style={styles.labeledButton}>
           <DashboardButton
             route="/Deposit"
-            iconName="leaf-circle-outline"
-            iconLibrary="MaterialCommunityIcons"
+            iconName='deposit_icon'
+            iconLibraryName={IconLibrary.Local}
           />
           <Text
             style={{
@@ -52,8 +53,8 @@ export default function Dashboard() {
           <DashboardButton
             route="/Send"
             params={{ isRequest: true }}
-            iconName="hand-coin-outline"
-            iconLibrary="MaterialCommunityIcons"
+            iconName="request_icon"
+            iconLibraryName={IconLibrary.Local}
           />
           <Text
             style={{
@@ -67,8 +68,8 @@ export default function Dashboard() {
         <View style={styles.labeledButton}>
           <DashboardButton
             route="/Send"
-            iconName="paper-plane"
-            iconLibrary="FontAwesome"
+            iconName="send_icon"
+            iconLibraryName={IconLibrary.Local}
           />
           <Text
             style={{
