@@ -69,7 +69,7 @@ const heDictionary: Dictionary = {
   compost_report_missing_bad_bugs: 'יש חרקים לא טובים',
   compost_report_missing_scales: 'חסר משקל',
   compost_report_missing_clean_and_tidy: 'נקייה ומסודרת',
-  transaction_request_to: 'בקשה מ',
+  transaction_request_to: 'בקשה ל',
   // SEND
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
