@@ -3,6 +3,7 @@ import { useColorScheme } from 'react-native';
 import Colors from '../../constants/Colors';
 import { CustomIcon } from '../../components/utils/CustomIcon';
 import i18n from '../../translationService';
+import { IconLibrary } from '../../types/Icons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -19,9 +20,9 @@ export default function TabLayout() {
           title: i18n.t('tabs_wallet'),
           tabBarIcon: ({ color }) => (
             <CustomIcon
-              iconName='wallet'
+              iconName='wallet_icon'
               size={25}
-              iconLibraryName='Entypo'
+              iconLibraryName={IconLibrary.Local}
               color={color}
             />
           ),
@@ -35,7 +36,7 @@ export default function TabLayout() {
           tabBarIcon: () => (
             <CustomIcon
               iconName="leaf-circle-outline"
-              iconLibraryName="MaterialCommunityIcons"
+              iconLibraryName={IconLibrary.MaterialCommunityIcons}
               size={55}
               color={Colors[colorScheme ?? 'light'].text}
             />
@@ -48,8 +49,8 @@ export default function TabLayout() {
           title: i18n.t('tabs_events'),
           tabBarIcon: ({ color }) => (
             <CustomIcon
-              iconName={'shopping-basket'}
-              iconLibraryName='FontAwesome'
+              iconName={'events_icon'}
+              iconLibraryName={IconLibrary.Local}
               size={25}
               color={color}
             />

@@ -183,7 +183,7 @@ export default function Auth() {
         />
       </View>
       <Image
-        source={require('../assets/images/LiraShapiraLogo.jpeg')}
+        source={require('../assets/icons/LiraShapiraLogo.jpeg')}
         style={{ width: 200, height: 200 }}
       />
     </View>

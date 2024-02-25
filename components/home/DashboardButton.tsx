@@ -1,36 +1,34 @@
 import { View, Pressable, StyleSheet, useColorScheme } from 'react-native';
 import { useRouter } from 'expo-router';
 import Colors from '../../constants/Colors';
-import { IconLibrary, IconName } from '../../types/Icons';
+import { ExpoIcon } from '../../types/Icons';
 import { Route } from '../../types/Routes';
 import { CustomIcon } from '../utils/CustomIcon';
 
-interface DashboardButtonProps {
-  iconName: IconName;
-  iconLibrary: IconLibrary;
+interface UniqueDashboardButtonProps {
   route?: Route;
   params?: object;
 }
 
+type DashboardButtonProps = UniqueDashboardButtonProps & ExpoIcon
+
 export default function DashboardButton({
   iconName,
-  iconLibrary,
+  iconLibraryName,
   route,
   params = {}
 }: DashboardButtonProps) {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() ?? 'light';
   const router = useRouter();
 
   return (
     <>
       {route ? (
-        <View style={{ ...styles.labeledButton, backgroundColor: 'grey' }}>
+        <View style={{ ...styles.labeledButton }}>
           <Pressable onPress={() => router.push({ pathname: route, params })}>
             {({ pressed }) => (
-              // TODO typing
-              // @ts-ignore TODO typing
               <CustomIcon
-                iconLibraryName={iconLibrary}
+                iconLibraryName={iconLibraryName}
                 iconName={iconName}
                 color={
                   pressed
@@ -53,10 +51,8 @@ export default function DashboardButton({
           >
             <Pressable>
               {() => (
-                // TODO typing
-                // @ts-ignore TODO typing
                 <CustomIcon
-                  iconLibraryName={iconLibrary}
+                  iconLibraryName={iconLibraryName}
                   iconName={iconName}
                   disabled
                   color={Colors[colorScheme ?? 'light'].text}
@@ -83,10 +79,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 5,
     borderRadius: 50,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
   },
   dashboard: {
     position: 'absolute',
