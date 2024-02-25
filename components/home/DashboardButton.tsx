@@ -24,7 +24,7 @@ export default function DashboardButton({
   return (
     <>
       {route ? (
-        <View style={{ ...styles.labeledButton, backgroundColor: Colors[colorScheme].background }}>
+        <View style={{ ...styles.labeledButton }}>
           <Pressable onPress={() => router.push({ pathname: route, params })}>
             {({ pressed }) => (
               <CustomIcon
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 5,
     borderRadius: 50,
-    boxShadow: '0px 4px 11px 1px #0000001A',
   },
   dashboard: {
     position: 'absolute',

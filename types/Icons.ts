@@ -35,36 +35,7 @@ export type LocalIcon = 'big_tick_icon'
   | 'small_tick_icon'
   | 'truck_icon'
   | 'wallet_icon'
-
-
-// NOTE: FontAwesome5 icon names are not included in this type
-// export type IconNameTest =
-//   keyof typeof MaterialIcons.glyphMap
-//   | keyof typeof AntDesign.glyphMap
-//   | keyof typeof Entypo.glyphMap
-//   | keyof typeof EvilIcons.glyphMap
-//   |
-//   keyof typeof Feather.glyphMap
-//   |
-//   keyof typeof Fontisto.glyphMap
-//   |
-//   keyof typeof FontAwesome.glyphMap
-//   |
-//   keyof typeof Foundation.glyphMap
-//   |
-//   keyof typeof Ionicons.glyphMap
-//   |
-//   keyof typeof MaterialCommunityIcons.glyphMap
-//   |
-//   keyof typeof MaterialIcons.glyphMap
-//   |
-//   keyof typeof Octicons.glyphMap
-//   |
-//   keyof typeof SimpleLineIcons.glyphMap
-//   |
-//   keyof typeof Zocial.glyphMap
-//   | FontAwesome5Icon
-//   | LocalIcon
+  | 'request_icon_with_circle_dark'
 
 export enum IconLibrary {
   AntDesign = 'AntDesign',

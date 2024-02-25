@@ -53,7 +53,7 @@ export default function Dashboard() {
           <DashboardButton
             route="/Send"
             params={{ isRequest: true }}
-            iconName="request_icon"
+            iconName="request_icon_with_circle"
             iconLibraryName={IconLibrary.Local}
           />
           <Text
@@ -68,7 +68,7 @@ export default function Dashboard() {
         <View style={styles.labeledButton}>
           <DashboardButton
             route="/Send"
-            iconName="send_icon"
+            iconName="send_icon_with_circle"
             iconLibraryName={IconLibrary.Local}
           />
           <Text
