@@ -4,10 +4,6 @@ import { FetchUserArgs, User } from "../types/User";
 import { SERVER_URL } from "./config";
 
 export const fetchUser = async (phoneNumber: string): Promise<ApiResponse<User>> => {
-  if (process.env.EXPO_PUBLIC_DEMO) return {
-    data: mockUser,
-    status: 200
-  };
   const jsonBody = JSON.stringify({ phoneNumber })
   try {
     const requestString = `${SERVER_URL}/user`;
@@ -29,10 +25,6 @@ export const fetchUser = async (phoneNumber: string): Promise<ApiResponse<User>>
 }
 
 export const registerNewUser = async (fetchUserArgs: FetchUserArgs): Promise<ApiResponse<User>> => {
-  if (process.env.EXPO_PUBLIC_DEMO) return {
-    data: mockUser,
-    status: 200
-  };
   const jsonBody = JSON.stringify(fetchUserArgs)
   try {
     const requestString = `${SERVER_URL}/register`;
@@ -54,12 +46,6 @@ export const registerNewUser = async (fetchUserArgs: FetchUserArgs): Promise<Api
 }
 
 export const fetchUserIdByNumber = async (phoneNumber: string): Promise<ApiResponse<{ userId: string }>> => {
-  if (process.env.EXPO_PUBLIC_DEMO) return {
-    data: {
-      userId: '12345678987654321'
-    },
-    status: 200
-  };
   const jsonBody = JSON.stringify({ phoneNumber })
   try {
     const requestString = `${SERVER_URL}/userIdByNumber`;

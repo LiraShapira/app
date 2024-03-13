@@ -4,18 +4,6 @@ import { Transaction, SaveTransactionArgs } from "../types/Transaction";
 import { SERVER_URL } from "./config";
 
 export const saveTransactionToDatabase = async (partialTransaction: SaveTransactionArgs): Promise<ApiResponse<Transaction>> => {
-    // return example transaction if in demo mode
-    if (process.env.EXPO_PUBLIC_DEMO) return {
-        data: {
-            ...mockTransaction,
-            users: [{
-                firstName: mockUser.firstName,
-                lastName: mockUser.lastName
-            }]
-        },
-        status: 201
-    };
-
     const jsonBody = JSON.stringify(partialTransaction)
     try {
         const requestString = `${SERVER_URL}/saveTransaction`;
