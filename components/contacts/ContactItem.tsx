@@ -11,7 +11,7 @@ interface ContactItemProps {
 }
 
 export default function ContactItem({ contact }: ContactItemProps) {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() ?? 'light';
   const dispatch = useAppDispatch();
   const router = useRouter();
   const params = useLocalSearchParams();
@@ -36,7 +36,7 @@ export default function ContactItem({ contact }: ContactItemProps) {
         }}
       >
         <CustomIcon
-          color={Colors[colorScheme ?? 'light'].text}
+          color={Colors[colorScheme].text}
           size={65}
           iconName='person-circle'
           iconLibraryName='Ionicons'
@@ -45,7 +45,7 @@ export default function ContactItem({ contact }: ContactItemProps) {
           <Text
             style={{
               fontSize: 15,
-              color: Colors[colorScheme ?? 'light'].text,
+              color: Colors[colorScheme].text,
             }}
           >
             {contact.firstName}{' '}

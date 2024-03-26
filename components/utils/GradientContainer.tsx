@@ -1,10 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
-import { ViewStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import { ViewProps } from 'react-native';
 
 interface GradientContainerProps {
   children: JSX.Element | JSX.Element[];
-  styles?: StyleProp<ViewStyle>;
+  styles?: ViewProps;
   startColor?: string;
   endColor?: string;
 }

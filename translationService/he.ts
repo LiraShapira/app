@@ -30,7 +30,7 @@ const heDictionary: Dictionary = {
   transactions_list_no_activities: 'אין פעילויות',
   transactions_list_received_from: 'העברה מ',
   transactions_list_sent_to: 'העברה ל',
-  transactions_list_compost_deposit: 'עבור קימפוסט ',
+  transactions_list_compost_deposit: 'עבור קומפוסט ',
 
   // DEPOSIT
   deposit: 'הפקדה',
