@@ -5,25 +5,25 @@ import Dashboard from '../../components/home/Dashboard';
 import i18n from '../../translationService';
 import { selectUser } from '../../store/userSlice';
 import { useAppSelector } from '../../hooks';
-import GradientContainer from "../../components/utils/GradientContainer";
-import RequestCard from "../../components/requests/RequestCard";
-import {User} from "../../types/User";
+import GradientContainer from '../../components/utils/GradientContainer';
+import RequestCard from '../../components/requests/RequestCard';
+import { User } from '../../types/User';
 
 export default function Home() {
   const user = useAppSelector<User>(selectUser);
   return (
-      <View style={styles.container}>
-        <GradientContainer styles={{ height: '30%' }}>
-          <Dashboard />
-        </GradientContainer>
-        <RequestCard/>
-        <View style={styles.transactionList}>
-          <Text style={{ fontSize: 40 }}>
-            {i18n.t('home_transactions_title')}
-          </Text>
-          <TransactionsList currentUser={user} />
-        </View>
+    <View style={styles.container}>
+      <GradientContainer styles={{ height: '30%' }}>
+        <Dashboard />
+      </GradientContainer>
+      <RequestCard />
+      <View style={styles.transactionList}>
+        <Text style={{ fontSize: 40 }}>
+          {i18n.t('home_transactions_title')}
+        </Text>
+        <TransactionsList currentUser={user} />
       </View>
+    </View>
   );
 }
 
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dashboardContainer: {
-    width: '100%'
+    width: '100%',
   },
   icon: {
     height: 70,
