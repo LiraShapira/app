@@ -35,6 +35,7 @@ const enDictionary: Dictionary = {
   // DEPOSIT
   deposit: 'Deposit',
   deposit_title: 'How much?',
+  deposit_modal_agree_checkbox: 'I guarantee my deposit is real',
   deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',
   deposit_form_bin_status_empty: 'empty',

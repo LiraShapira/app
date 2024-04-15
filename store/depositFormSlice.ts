@@ -7,6 +7,7 @@ import { CompostStand, DepositForm } from '../types/Deposit';
 
 interface DepositFormState extends DepositForm {
   loading: boolean;
+  guaranteedAccurate: boolean;
 }
 
 const initialState: DepositFormState = {
@@ -14,7 +15,8 @@ const initialState: DepositFormState = {
   dryMatter: 'yes',
   loading: false,
   notes: '',
-  compostStand: CompostStand.blank
+  compostStand: CompostStand.blank,
+  guaranteedAccurate: false
 };
 
 export const sendDepositForm = createAsyncThunk<
@@ -32,9 +34,9 @@ export const sendDepositForm = createAsyncThunk<
     const form = getState().depositForm;
 
     requestBody = ({
-        ...form,
-        userId: userId,
-       })
+      ...form,
+      userId: userId,
+    })
 
     response = await saveDepositToDatabase(requestBody);
 
@@ -91,6 +93,9 @@ export const depositFormSlice = createSlice({
       state.notes = '';
       state.amount = '';
     },
+    setGuaranteedAccurate: (state, action: PayloadAction<boolean>) => {
+      state.guaranteedAccurate = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -117,7 +122,8 @@ export const {
   toggleScalesMissing,
   toggleCompostFull,
   toggleBugs,
-  toggleCleanAndTidy
+  toggleCleanAndTidy,
+  setGuaranteedAccurate
 } = depositFormSlice.actions;
 
 export const selectDepositForm = (state: RootState) =>
@@ -126,7 +132,7 @@ export const selectDepositFormLoading = (state: RootState) =>
   state.depositForm.loading;
 export const selectValue = (state: RootState) => state.depositForm.amount;
 export const selectNotes = (state: RootState) => state.depositForm.notes;
-export const selectFormTouched = (state: RootState) => state.depositForm.formTouched;
 export const selectCompostStand = (state: RootState) => state.depositForm.compostStand;
+export const selectIsGuaranteedAccurate = (state: RootState) => state.depositForm.guaranteedAccurate;
 
 export default depositFormSlice.reducer;

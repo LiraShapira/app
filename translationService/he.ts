@@ -35,6 +35,7 @@ const heDictionary: Dictionary = {
   // DEPOSIT
   deposit: 'הפקדה',
   deposit_title: 'כמה להפקיד?',
+  deposit_modal_agree_checkbox: 'אני מתחייב.ת שהנתונים אמיתיים',
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',
   deposit_form_bin_status_empty: 'פנוי',
