@@ -35,6 +35,11 @@ const heDictionary: Dictionary = {
   // DEPOSIT
   deposit: 'הפקדה',
   deposit_title: 'כמה להפקיד?',
+  deposit_modal_amount: 'הפקדת %{amount} ק״ג זבל אורגני',
+  deposit_modal_stand_manager: 'מגיע לנאמן שלך 10% ',
+  deposit_modal_you_earn: 'You earned %{netAmount}',
+  deposit_modal_button_correct: 'רוצה לתקן',
+  deposit_modal_button_finish: 'סיימתי',
   deposit_modal_agree_checkbox: 'אני מתחייב.ת שהנתונים אמיתיים',
   deposit_form_bin_status: 'מצב הקומפוסטר',
   deposit_form_bin_status_full: 'מלא',

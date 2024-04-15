@@ -35,6 +35,11 @@ const enDictionary: Dictionary = {
   // DEPOSIT
   deposit: 'Deposit',
   deposit_title: 'How much?',
+  deposit_modal_amount: 'You deposited %{amount}kg of organic waste',
+  deposit_modal_stand_manager: '10% goes to the stand manager.',
+  deposit_modal_you_earn: 'You earned %{netAmount}',
+  deposit_modal_button_correct: 'correct amount',
+  deposit_modal_button_finish: 'finish',
   deposit_modal_agree_checkbox: 'I guarantee my deposit is real',
   deposit_form_bin_status: 'Bin status',
   deposit_form_bin_status_full: 'full',
