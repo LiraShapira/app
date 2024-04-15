@@ -44,10 +44,10 @@ export const CustomModal = ({ type = 'info', buttons }: CustomModalProps) => {
             <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
               {ModalText}
             </Text>
-            {buttons.map(({ text, onPress }) => {
+            {buttons.map((props) => {
               return (
-                <View key={text} style={{ marginTop: 5 }}>
-                  <CustomButton text={text} onPress={onPress} />
+                <View key={props.text} style={{ marginTop: 5 }}>
+                  <CustomButton {...props} />
                 </View>
               );
             })}
