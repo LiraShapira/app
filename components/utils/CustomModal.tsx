@@ -1,10 +1,4 @@
-import {
-  Text,
-  StyleSheet,
-  Modal,
-  View,
-  useColorScheme,
-} from 'react-native';
+import { Text, StyleSheet, Modal, View, useColorScheme } from 'react-native';
 import CustomButton, { ButtonProps } from './CustomButton';
 import {
   selectIsModalVisible,
@@ -16,20 +10,21 @@ import Colors from '../../constants/Colors';
 export interface CustomModalProps {
   buttons: ButtonProps[];
   type?: 'info' | 'error';
+  customElement?: JSX.Element;
 }
 
-export const CustomModal = ({ type = 'info', buttons }: CustomModalProps) => {
+export const CustomModal = ({
+  type = 'info',
+  buttons,
+  customElement,
+}: CustomModalProps) => {
   const isModalVisible = useAppSelector(selectIsModalVisible);
   const ModalText = useAppSelector(selectModalText);
   const colorScheme = useColorScheme();
 
   return (
     <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-      >
+      <Modal animationType='slide' transparent={true} visible={isModalVisible}>
         <View
           style={{
             backgroundColor: Colors[colorScheme ?? 'light'].background,
@@ -44,6 +39,7 @@ export const CustomModal = ({ type = 'info', buttons }: CustomModalProps) => {
             <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
               {ModalText}
             </Text>
+            {customElement}
             {buttons.map((props) => {
               return (
                 <View key={props.text} style={{ marginTop: 5 }}>
