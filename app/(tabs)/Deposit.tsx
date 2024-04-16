@@ -39,6 +39,7 @@ export default function Deposit() {
         `
       )
     );
+    dispatch(setGuaranteedAccurate(false));
     dispatch(setIsModalVisible(true));
   };
 
