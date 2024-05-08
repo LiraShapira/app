@@ -27,3 +27,13 @@ export const monthsShortForm: string[] = [
   'Nov',
   'Dec',
 ];
+
+export const daysLongForm: string[] = [
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday'
+]

@@ -1,11 +1,15 @@
-import { StyleSheet } from 'react-native';
-import { Text } from '../../components/Themed';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import GradientContainer from '../../components/utils/GradientContainer';
+import EventsList from '../../components/events/EventsList';
 
 export default function TabTwoScreen() {
   return (
     <GradientContainer styles={styles.container}>
-      <Text style={styles.title}>Coming Soon...</Text>
+      <View style={{ width: '90%' }}>
+        <ScrollView>
+          <EventsList />
+        </ScrollView>
+      </View>
     </GradientContainer>
   );
 }

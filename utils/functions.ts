@@ -21,3 +21,19 @@ export const parseNumberPadInput = (n: NumberLabel, oldValue: string): string | 
   if (newValue.includes('.') && newValue.split('.')[1].length > 2) return false;
   return oldValue + n;
 }
+
+
+// Function to format the date to 'DD.MM'
+export function formatDate(date: Date) {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  return `${day}.${month}`;
+}
+
+// Function to format the time to 'HH:MM'
+export function formatTime(date: Date) {
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  console.log({ date, hours, minutes })
+  return `${hours}:${minutes}`;
+}
