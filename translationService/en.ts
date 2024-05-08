@@ -123,6 +123,15 @@ const enDictionary: Dictionary = {
   month_november_MMM: 'nov',
   month_december_MMM: 'dec',
 
+  // DAYS
+  day_sunday: 'sunday',
+  day_monday: 'monday',
+  day_tuesday: 'tuesday',
+  day_wednesday: 'wednesday',
+  day_thursday: 'thursday',
+  day_friday: 'friday',
+  day_saturday: 'saturday',
+
   main_title: 'Lira Shapira Green Local Currency',
   secondary_main_title: 'Garbage Worth Money In Shapira',
 }

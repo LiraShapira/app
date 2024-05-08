@@ -1,6 +1,23 @@
+import { LSEvent } from "../types/LSEvents";
 import { Category, Transaction } from "../types/Transaction";
 import { User, UserRole } from "../types/User";
 import { Contact } from "expo-contacts";
+
+const today = new Date();
+const tomorrow = new Date();
+tomorrow.setDate(today.getDate() + 1);
+
+// Get the date one month from today
+const futureDate = new Date();
+futureDate.setMonth(today.getMonth() + 1);
+
+const futureDatePlusOneHour = new Date();
+futureDatePlusOneHour.setMonth(today.getMonth() + 1);
+futureDatePlusOneHour.setHours(today.getHours() + 1);
+
+const futureDatePlusOneDay = new Date();
+futureDatePlusOneDay.setMonth(today.getMonth() + 1);
+futureDatePlusOneDay.setDate(today.getDate() + 1);
 
 export const mockTransaction: Transaction = {
   recipientId: '1234355',
@@ -216,3 +233,69 @@ export const mockContacts: Contact[] = [
     ],
   }
 ];
+
+export const mockEvent1: LSEvent = {
+  id: '239rifjv23rfn',
+  startDate: today.toISOString(),
+  endDate: tomorrow.toISOString(),
+  title: 'Test Local Market',
+  description: 'An example event to demonstrate the local market ',
+  attendees: [{
+    role: 'seller',
+    user: mockUser,
+    productsForSale: ['granola', 'תכשיטים']
+  },
+  {
+    role: 'seller',
+    user: mockUser2,
+    productsForSale: ['hats']
+  }],
+  location: {
+    name: 'Tel Hubez',
+    coordinates: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12272.110261163607!2d34.77849904797926!3d32.05162391583166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4b7db0ff13cd%3A0x3de42a04d2cb8236!2z16rXnCDXl9eV15HXliDXlNeX15XXldeUINeU15fXp9ec15DXmdeqINeR16nXm9eV16DXqiDXqdek15nXqNeQ!5e0!3m2!1sen!2sil!4v1715154541848!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+  }
+}
+
+export const mockEvent2: LSEvent = {
+  id: 'ju930rotjgma23r-08ijm',
+  startDate: futureDate.toISOString(),
+  endDate: futureDatePlusOneHour.toISOString(),
+  title: 'shabbat singalong',
+  description: 'An example event for demonstration purposes',
+  attendees: [
+    {
+      role: 'seller',
+      user: mockUser,
+      productsForSale: ['granola']
+    }
+  ],
+  location: {
+    name: 'Tel Hubez',
+    coordinates: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12272.110261163607!2d34.77849904797926!3d32.05162391583166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4b7db0ff13cd%3A0x3de42a04d2cb8236!2z16rXnCDXl9eV15HXliDXlNeX15XXldeUINeU15fXp9ec15DXmdeqINeR16nXm9eV16DXqiDXqdek15nXqNeQ!5e0!3m2!1sen!2sil!4v1715154541848!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+  }
+}
+
+export const mockEvents: LSEvent[] = [
+  mockEvent1,
+  mockEvent2,
+  {
+    id: 'asd3f767n22sxpp08ijm',
+    startDate: futureDate.toISOString(),
+    endDate: futureDatePlusOneHour.toISOString(),
+    title: 'example event harvet',
+    description: 'An example event for demonstration purposes',
+    attendees: [
+      {
+        role: 'attendee',
+        user: mockUser,
+      },
+      {
+        role: 'attendee',
+        user: mockUser2,
+      }
+    ],
+    location: {
+      name: 'Tel Hubez',
+      coordinates: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12272.110261163607!2d34.77849904797926!3d32.05162391583166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4b7db0ff13cd%3A0x3de42a04d2cb8236!2z16rXnCDXl9eV15HXliDXlNeX15XXldeUINeU15fXp9ec15DXmdeqINeR16nXm9eV16DXqiDXqdek15nXqNeQ!5e0!3m2!1sen!2sil!4v1715154541848!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+    }
+  }]

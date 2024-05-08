@@ -113,6 +113,13 @@ export type DictionaryKey =
   'month_october_MMM' |
   'month_november_MMM' |
   'month_december_MMM' |
+  'day_sunday' |
+  'day_monday' |
+  'day_tuesday' |
+  'day_wednesday' |
+  'day_thursday' |
+  'day_friday' |
+  'day_saturday' |
   'main_title' |
   'secondary_main_title'
 

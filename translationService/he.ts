@@ -122,6 +122,14 @@ const heDictionary: Dictionary = {
   month_november_MMM: 'נובמבר',
   month_december_MMM: 'דצמבר',
 
+  day_sunday: 'ראשון',
+  day_monday: 'שני',
+  day_tuesday: 'שלישי',
+  day_wednesday: 'רביעי',
+  day_thursday: 'חמישי',
+  day_friday: 'שישי',
+  day_saturday: 'שבת',
+
   main_title: 'לירה שפירא - מטבע מקומי(ע״ר)',
   secondary_main_title: 'הזבל שלך שווה כסף בשפירא',
 }
