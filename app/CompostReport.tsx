@@ -11,7 +11,6 @@ import {
   resetForm,
   sendDepositForm,
   resetOptionalProperties,
-  selectFormTouched,
   toggleCompostSmell,
   selectDepositForm,
   toggleMissingDryMatter,

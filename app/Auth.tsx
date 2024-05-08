@@ -93,8 +93,7 @@ export default function Auth() {
     };
 
     retrieveCompostStand();
-  }, [dispatch]);
-
+  }, []);
 
   const onFailedLogin = () => {
     dispatch(setIsModalVisible(false));
