@@ -1,11 +1,11 @@
 import { View, Text, useColorScheme, StyleSheet } from 'react-native';
 import { Transaction } from '../../types/Transaction';
 import Colors from '../../constants/Colors';
-import { monthsLongForm } from '../../constants/Months';
+import { monthsLongForm } from '../../constants/Dates';
 import i18n from '../../translationService';
-import {useMemo} from 'react';
-import TransactionItemAmount from "./TransactionItemAmount";
-import TransactionItemDescription from "./TransactionItemDescription";
+import { useMemo } from 'react';
+import TransactionItemAmount from './TransactionItemAmount';
+import TransactionItemDescription from './TransactionItemDescription';
 
 interface TransactionItemProps {
   income: boolean;
@@ -23,39 +23,47 @@ export default function TransactionItem({
   const [day, month] = useMemo(() => {
     const date = new Date(transaction.createdAt);
     return [date.getDate(), monthsLongForm[date.getMonth()]];
-  }, [transaction.createdAt])
+  }, [transaction.createdAt]);
 
   return (
-      <View>
-        <View style={styles.transactionItem}>
-          <View style={styles.dateDisplay}>
-            <Text
-                style={{
-                  fontWeight: '500',
-                  fontSize: 25,
-                  color: Colors[colorScheme ?? 'light'].text,
-                }}
-            >
-              {day}
-            </Text>
-            <Text
-                style={{
-                  color: Colors[colorScheme ?? 'light'].text,
-                }}
-            >
-              {i18n.t(`month_${month}_MMM`)}
-            </Text>
-          </View>
-          <TransactionItemDescription isRequest={isRequest} income={income} transaction={transaction}/>
-          <TransactionItemAmount isRequest={isRequest}  income={income} amount={transaction.amount}/>
-        </View>
-        <View
+    <View>
+      <View style={styles.transactionItem}>
+        <View style={styles.dateDisplay}>
+          <Text
             style={{
-              borderColor: Colors[colorScheme].shading,
-              ...styles.divider,
+              fontWeight: '500',
+              fontSize: 25,
+              color: Colors[colorScheme ?? 'light'].text,
             }}
+          >
+            {day}
+          </Text>
+          <Text
+            style={{
+              color: Colors[colorScheme ?? 'light'].text,
+            }}
+          >
+            {i18n.t(`month_${month}_MMM`)}
+          </Text>
+        </View>
+        <TransactionItemDescription
+          isRequest={isRequest}
+          income={income}
+          transaction={transaction}
+        />
+        <TransactionItemAmount
+          isRequest={isRequest}
+          income={income}
+          amount={transaction.amount}
         />
       </View>
+      <View
+        style={{
+          borderColor: Colors[colorScheme].shading,
+          ...styles.divider,
+        }}
+      />
+    </View>
   );
 }
 
@@ -91,6 +99,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 2,
     marginVertical: 12,
-    opacity: 0.5
+    opacity: 0.5,
   },
 });
