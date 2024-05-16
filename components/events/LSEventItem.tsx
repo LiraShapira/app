@@ -15,7 +15,6 @@ import i18n from '../../translationService';
 import { formatDate, formatTime } from '../../utils/functions';
 import { Image } from 'expo-image';
 import CustomButton from '../utils/CustomButton';
-import appColors from '../../constants/Colors';
 import Colors from '../../constants/Colors';
 
 export default function LSEventItem({ event }: { event: LSEvent }) {
@@ -48,6 +47,7 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
     try {
       const result = await Share.share({
         message:
+          // TODO make dynamic
           'React Native | A framework for building native apps using React',
       });
       if (result.action === Share.sharedAction) {
@@ -73,25 +73,46 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
       <View style={styles.eventInfo}>
         <View style={{ flexDirection: 'row' }}>
           <Text>{i18n.t(`day_${day}`)}, </Text>
-          <Text>{dateDisplayText}</Text>
+          <Text style={{ color: Colors[colorScheme].text }}>
+            {dateDisplayText}
+          </Text>
         </View>
-        <Text style={{ fontSize: 24, fontWeight: 400 }}>{event.title}</Text>
-        <Text style={{ fontSize: 15 }}>{event.location.name}</Text>
-        <View style={{ flexDirection: 'row' }}>
+        <Text
+          style={{
+            color: Colors[colorScheme].text,
+            fontSize: 24,
+            fontWeight: 400,
+          }}
+        >
+          {event.title}
+        </Text>
+        <Text style={{ color: Colors[colorScheme].text, fontSize: 15 }}>
+          {event.location.name}
+        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <CustomIcon
-            iconLibraryName={IconLibrary.Local}
-            iconName='events_icon'
+            iconLibraryName={IconLibrary.Ionicons}
+            iconName='person-circle'
+            size={50}
+            color={'grey'}
           />
           <View>
-            <Text>{event.attendees.length} Attendees</Text>
-            <Text>
+            <Text styles={{ color: Colors[colorScheme].text }}>
+              {event.attendees.length} Attendees
+            </Text>
+            <Text style={{ color: Colors[colorScheme].text }}>
               {sellers.length} sellers is selling: {items.join(', ')}
             </Text>
           </View>
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton text='RSVP' onPress={() => console.log('send')} />
-          <CustomButton transparent text='share ' onPress={onShare} />
+          <CustomButton
+            textColor={Colors[colorScheme].text}
+            transparent
+            text='share '
+            onPress={onShare}
+          />
         </View>
       </View>
     </View>

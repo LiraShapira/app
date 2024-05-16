@@ -96,6 +96,9 @@ const heDictionary: Dictionary = {
   request_card_accept: 'העבר את הלירות',
   request_card_refuse: 'סרב',
 
+  // EVENTS
+  events_no_upcoming_event: 'אין אירועים השבוע',
+
   // MONTH UTILS
   month_january: '	ינואר',
   month_february: '	פברואר',

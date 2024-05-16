@@ -89,6 +89,8 @@ export type DictionaryKey =
   'request_card_refuse' |
   'request_how_much' |
 
+  'events_no_upcoming_event' |
+
   'month_january' |
   'month_february' |
   'month_march' |

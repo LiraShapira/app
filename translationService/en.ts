@@ -96,6 +96,9 @@ const enDictionary: Dictionary = {
   request_card_accept: 'accept',
   request_card_refuse: 'refuse',
 
+  // EVENTS
+  events_no_upcoming_event: 'There are no upcoming events',
+
   // MONTH UTILS
   month_january: 'january',
   month_february: 'february',
