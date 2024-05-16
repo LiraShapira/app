@@ -1,7 +1,7 @@
 import { View, Text, useColorScheme, StyleSheet } from 'react-native';
 import { Transaction } from '../../types/Transaction';
 import Colors from '../../constants/Colors';
-import { monthsLongForm } from '../../constants/Months';
+import { monthsLongForm } from '../../constants/Dates';
 import i18n from '../../translationService';
 import {useMemo} from 'react';
 import TransactionItemAmount from "./TransactionItemAmount";
