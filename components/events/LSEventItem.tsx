@@ -18,6 +18,9 @@ import {
   useColorScheme,
 } from 'react-native';
 import RadioForm from 'react-native-simple-radio-button';
+import { useRouter } from 'expo-router';
+import { setSelectedEvent } from '../../store/eventsSlice';
+import { useDispatch } from 'react-redux';
 
 const radio_props = [
   { label: 'seller', value: AttendeeRole.seller },
@@ -31,14 +34,26 @@ function isSeller(attendee: Attendee): attendee is Seller {
 
 export default function LSEventItem({ event }: { event: LSEvent }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [attendeeRole, setAttendeeRole] = useState('test');
+  const [attendeeRole, setAttendeeRole] = useState<AttendeeRole>(
+    AttendeeRole.seller
+  );
+  const dispatch = useDispatch();
 
+  const router = useRouter();
   const openModal = () => {
     setModalVisible(true);
   };
 
   const closeModal = () => {
     setModalVisible(false);
+  };
+
+  const onSelectRole = (role: AttendeeRole) => {
+    setModalVisible(false);
+    if (attendeeRole === AttendeeRole.seller) {
+      dispatch(setSelectedEvent(event));
+      router.push('/SellerOptions');
+    }
   };
 
   const colorScheme = useColorScheme() ?? 'light';
@@ -95,16 +110,17 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
       >
         <View
           style={{
+            padding: 15,
             height: '50%',
             marginTop: 'auto',
             backgroundColor: Colors[colorScheme].shading,
           }}
         >
+          <Text>X</Text>
           <Text style={styles.modalTitle}>Joining as a...</Text>
           <RadioForm radio_props={radio_props} onPress={setAttendeeRole} />
-          <Pressable onPress={closeModal}>
-            <Text>Close Modal</Text>
-          </Pressable>
+          <Pressable onPress={closeModal}></Pressable>
+          <CustomButton text='ok' onPress={onSelectRole}></CustomButton>
         </View>
       </Modal>
       <Pressable>

@@ -8,7 +8,7 @@ const arDictionary: Dictionary = {
   cancel: 'إلغاء',
   continue: 'متابعة',
 
-  // HOME 
+  // HOME
   tabs_wallet: 'محفظة',
 
   auth_login: 'تسجيل الدخول',
@@ -32,7 +32,7 @@ const arDictionary: Dictionary = {
   transactions_list_sent_to: 'تم الإرسال إلى',
   transactions_list_compost_deposit: 'إيداع السماد',
 
-   // DEPOSIT
+  // DEPOSIT
   deposit: 'إيداع',
   deposit_title: 'كم ترغب في إيداعه؟',
   deposit_modal_amount: 'تم إيداع %{amount} كغ من الفضلات العضوية',
@@ -83,12 +83,16 @@ const arDictionary: Dictionary = {
   send_search_placeholder: 'أدخل الاسم أو رقم الهاتف',
   sendamount_how_much: 'كم ترغب في التحويل؟',
   sendamount_why: 'لماذا؟',
-    // sendamount_amount: 'כמה (kg)?',
   sendamount_continue: 'متابعة',
   sendamount_back: 'العودة إلى البحث',
   send_search_no_results: 'لا توجد نتائج لـ \'%{search}\'',
   send_search_no_results_send_to_number: '، أرسل إلى \'%{number}\'',
   sendamount_validate_amount: 'الرجاء إدخال رقم بين 1 - 99',
+
+  // EVENTS
+  // TODO
+  seller_options_add_item: '+ להוסיף פריט',
+  seller_options_finish: 'סיימתי',
 
   // REQUEST
   request_how_much: 'كم تريد طلبه؟',
@@ -97,7 +101,7 @@ const arDictionary: Dictionary = {
   request_card_accept: 'قم بالتحويل',
   request_card_refuse: 'رفض',
 
-// MONTH UTILS
+  // MONTH UTILS
   month_january: 'يناير',
   month_february: 'فبراير',
   month_march: 'مارس',

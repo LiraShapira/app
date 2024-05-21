@@ -96,6 +96,10 @@ const heDictionary: Dictionary = {
   request_card_accept: 'העבר את הלירות',
   request_card_refuse: 'סרב',
 
+  // EVENTS
+  seller_options_add_item: '+ להוסיף פריט',
+  seller_options_finish: 'סיימתי',
+
   // MONTH UTILS
   month_january: '	ינואר',
   month_february: '	פברואר',

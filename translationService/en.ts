@@ -96,6 +96,10 @@ const enDictionary: Dictionary = {
   request_card_accept: 'accept',
   request_card_refuse: 'refuse',
 
+  // EVENTS
+  seller_options_add_item: '+ Add Item',
+  seller_options_finish: 'Finish',
+
   // MONTH UTILS
   month_january: 'january',
   month_february: 'february',

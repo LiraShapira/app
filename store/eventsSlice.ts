@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import { SuccessApiResponse } from '../types/APITypes';
-import { LSEvent } from '../types/LSEvents';
-import { fetchEvents } from '../API/eventsAPI';
+import { Attendee, LSEvent } from '../types/LSEvents';
+import { addAttendee, AddAttendeeArgs, fetchEvents } from '../API/eventsAPI';
 import { mockEvent1 } from '../Mocks/mockDB';
 
 interface EventsState {
@@ -29,6 +29,19 @@ export const loadEvents = createAsyncThunk<
       return response;
     }
   });
+
+export const sendNewAttendee = createAsyncThunk<
+  SuccessApiResponse<Attendee>,
+  AddAttendeeArgs,
+  { state: RootState }
+>('eventsSlice/addAttendee', async (addAttendeeArgs): Promise<SuccessApiResponse<Attendee>> => {
+  const response = await addAttendee(addAttendeeArgs);
+  if (!('data' in response)) {
+    throw new Error(response.message);
+  } else {
+    return response;
+  }
+})
 
 const eventsSlice = createSlice({
   name: 'events',
