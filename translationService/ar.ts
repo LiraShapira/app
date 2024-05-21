@@ -90,6 +90,9 @@ const arDictionary: Dictionary = {
   sendamount_validate_amount: 'الرجاء إدخال رقم بين 1 - 99',
 
   // EVENTS
+  events_no_upcoming_event: 'لا توجد أحداث قادمة',
+
+
   // TODO
   seller_options_add_item: '+ להוסיף פריט',
   seller_options_finish: 'סיימתי',
@@ -129,6 +132,13 @@ const arDictionary: Dictionary = {
 
   main_title: 'ليرة شفيرا - عملة محلية',
   secondary_main_title: 'قم بتحويل قمامتك إلى أموال في شفيرا',
+  day_sunday: "",
+  day_monday: "",
+  day_tuesday: "",
+  day_wednesday: "",
+  day_thursday: "",
+  day_friday: "",
+  day_saturday: ""
 }
 
 export default arDictionary;
