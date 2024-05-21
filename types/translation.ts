@@ -82,6 +82,7 @@ export type DictionaryKey =
   'send_search_no_results' |
   'send_search_no_results_send_to_number' |
   'sendamount_validate_amount' |
+  'events_no_upcoming_event' |
 
   'request_search_title' |
   'request_card_request_from' |
