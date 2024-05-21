@@ -34,6 +34,5 @@ export function formatDate(date: Date) {
 export function formatTime(date: Date) {
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
-  console.log({ date, hours, minutes })
   return `${hours}:${minutes}`;
 }

@@ -1,13 +1,19 @@
 import { User } from "./User";
 
-interface Seller {
-  role: 'seller';
+export enum AttendeeRole {
+  seller = 'seller',
+  attendee = 'attendee',
+  volunteer = 'volunteer'
+}
+
+export interface Seller {
+  role: AttendeeRole.seller;
   productsForSale: string[];
   user: User
 }
 
 export type Attendee = {
-  role: 'attendee' | 'volunteer';
+  role: AttendeeRole.attendee | AttendeeRole.volunteer;
   user: User
 } | Seller
 

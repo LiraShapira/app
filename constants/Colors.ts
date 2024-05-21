@@ -3,7 +3,7 @@ export enum Light {
   background = '#fff',
   backgroundHighlight1 = '#EBF5EB',
   backgroundHighlight2 = '#F2E4EB',
-  shading = '#e0e0e0',
+  shading = '#F8F8F8',
   highlight = '#6CB041',
   tint = '#4195B0',
   tabIconDefault = '#ccc',

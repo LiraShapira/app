@@ -1,28 +1,50 @@
-import {
-  Alert,
-  Share,
-  StyleSheet,
-  Text,
-  View,
-  useColorScheme,
-} from 'react-native';
-import { Attendee, LSEvent } from '../../types/LSEvents';
+import { Attendee, AttendeeRole, LSEvent, Seller } from '../../types/LSEvents';
 import { CustomIcon } from '../utils/CustomIcon';
 import { IconLibrary } from '../../types/Icons';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { daysLongForm } from '../../constants/Dates';
 import i18n from '../../translationService';
 import { formatDate, formatTime } from '../../utils/functions';
 import { Image } from 'expo-image';
 import CustomButton from '../utils/CustomButton';
-import appColors from '../../constants/Colors';
 import Colors from '../../constants/Colors';
+import {
+  Pressable,
+  Share,
+  View,
+  Text,
+  Modal,
+  StyleSheet,
+  useColorScheme,
+} from 'react-native';
+import RadioForm from 'react-native-simple-radio-button';
+
+const radio_props = [
+  { label: 'seller', value: AttendeeRole.seller },
+  { label: 'attendee', value: AttendeeRole.attendee },
+  { label: 'volunteer', value: AttendeeRole.volunteer },
+];
+
+function isSeller(attendee: Attendee): attendee is Seller {
+  return attendee.role === 'seller';
+}
 
 export default function LSEventItem({ event }: { event: LSEvent }) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [attendeeRole, setAttendeeRole] = useState('test');
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   const colorScheme = useColorScheme() ?? 'light';
   const { dateDisplayText, items, sellers, day } = useMemo(() => {
-    const sellers = event.attendees.filter((a) => a.role === 'seller');
-    const items = sellers.reduce((acc: string[], currentSeller: Attendee) => {
+    const sellers = event.attendees.filter(isSeller);
+    const items = sellers.reduce((acc: string[], currentSeller: Seller) => {
       return [...acc, ...currentSeller.productsForSale];
     }, []);
     const startDate = new Date(event.startDate);
@@ -47,10 +69,9 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
+        message: `check out this event from Lira Shapira: ${event.title}, ${dateDisplayText} `,
       });
-      if (result.action === Share.sharedAction) {
+      if (result?.action === Share.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType
         } else {
@@ -60,40 +81,83 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
         // dismissed
       }
     } catch (error: any) {
-      Alert.alert(error.message);
+      console.log(error.message);
     }
   };
 
   return (
     <View style={styles.LSEventItem}>
-      <Image
-        style={{ height: 173, borderRadius: '29px 29px 0 0', width: '100%' }}
-        source='../../assets/images/types-of-peppers-1-1200.jpg'
-      />
-      <View style={styles.eventInfo}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text>{i18n.t(`day_${day}`)}, </Text>
-          <Text>{dateDisplayText}</Text>
+      <Modal
+        transparent
+        visible={modalVisible}
+        animationType='slide'
+        onRequestClose={closeModal}
+      >
+        <View
+          style={{
+            height: '50%',
+            marginTop: 'auto',
+            backgroundColor: Colors[colorScheme].shading,
+          }}
+        >
+          <Text style={styles.modalTitle}>Joining as a...</Text>
+          <RadioForm radio_props={radio_props} onPress={setAttendeeRole} />
+          <Pressable onPress={closeModal}>
+            <Text>Close Modal</Text>
+          </Pressable>
         </View>
-        <Text style={{ fontSize: 24, fontWeight: 400 }}>{event.title}</Text>
-        <Text style={{ fontSize: 15 }}>{event.location.name}</Text>
-        <View style={{ flexDirection: 'row' }}>
-          <CustomIcon
-            iconLibraryName={IconLibrary.Local}
-            iconName='events_icon'
-          />
-          <View>
-            <Text>{event.attendees.length} Attendees</Text>
-            <Text>
-              {sellers.length} sellers is selling: {items.join(', ')}
+      </Modal>
+      <Pressable>
+        <Image
+          style={{ height: 173, borderRadius: '29px 29px 0 0', width: '100%' }}
+          source='../../assets/images/types-of-peppers-1-1200.jpg'
+        />
+        <View style={styles.eventInfo}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text>{i18n.t(`day_${day}`)}, </Text>
+            <Text style={{ color: Colors[colorScheme].text }}>
+              {dateDisplayText}
             </Text>
           </View>
+          <Text
+            style={{
+              color: Colors[colorScheme].text,
+              fontSize: 24,
+              fontWeight: 400,
+            }}
+          >
+            {event.title}
+          </Text>
+          <Text style={{ color: Colors[colorScheme].text, fontSize: 15 }}>
+            {event.location.name}
+          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <CustomIcon
+              iconLibraryName={IconLibrary.Ionicons}
+              iconName='person-circle'
+              size={50}
+              color={'grey'}
+            />
+            <View>
+              <Text styles={{ color: Colors[colorScheme].text }}>
+                {event.attendees.length} Attendees
+              </Text>
+              <Text style={{ color: Colors[colorScheme].text }}>
+                {sellers.length} sellers is selling: {items.join(', ')}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <CustomButton text='RSVP' onPress={openModal} />
+            <CustomButton
+              textColor={Colors[colorScheme].text}
+              transparent
+              text='share '
+              onPress={onShare}
+            />
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <CustomButton text='RSVP' onPress={() => console.log('send')} />
-          <CustomButton transparent text='share ' onPress={onShare} />
-        </View>
-      </View>
+      </Pressable>
     </View>
   );
 }
@@ -111,5 +175,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginHorizontal: 'auto',
   },
 });

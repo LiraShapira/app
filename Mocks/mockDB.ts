@@ -1,4 +1,4 @@
-import { LSEvent } from "../types/LSEvents";
+import { AttendeeRole, LSEvent } from "../types/LSEvents";
 import { Category, Transaction } from "../types/Transaction";
 import { User, UserRole } from "../types/User";
 import { Contact } from "expo-contacts";
@@ -56,8 +56,8 @@ export const mockTransaction3: Transaction = {
 }
 
 export const mockUser: User = {
-  firstName: 'simon',
-  lastName: 'test',
+  firstName: 'Simon',
+  lastName: 'Test',
   id: '1234',
   userLocalCompostStandId: 4,
   accountBalance: 154,
@@ -238,15 +238,15 @@ export const mockEvent1: LSEvent = {
   id: '239rifjv23rfn',
   startDate: today.toISOString(),
   endDate: tomorrow.toISOString(),
-  title: 'Test Local Market',
-  description: 'An example event to demonstrate the local market ',
+  title: 'Example LS Event',
+  description: 'An example event as a placeholder ',
   attendees: [{
-    role: 'seller',
+    role: AttendeeRole.seller,
     user: mockUser,
     productsForSale: ['granola', 'תכשיטים']
   },
   {
-    role: 'seller',
+    role: AttendeeRole.seller,
     user: mockUser2,
     productsForSale: ['hats']
   }],
@@ -264,7 +264,7 @@ export const mockEvent2: LSEvent = {
   description: 'An example event for demonstration purposes',
   attendees: [
     {
-      role: 'seller',
+      role: AttendeeRole.seller,
       user: mockUser,
       productsForSale: ['granola']
     }
@@ -286,11 +286,11 @@ export const mockEvents: LSEvent[] = [
     description: 'An example event for demonstration purposes',
     attendees: [
       {
-        role: 'attendee',
+        role: AttendeeRole.attendee,
         user: mockUser,
       },
       {
-        role: 'attendee',
+        role: AttendeeRole.attendee,
         user: mockUser2,
       }
     ],
