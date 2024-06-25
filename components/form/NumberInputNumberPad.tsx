@@ -1,12 +1,7 @@
-import {
-  Text,
-  useColorScheme,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Text, useColorScheme, StyleSheet, View } from 'react-native';
 import Colors from '../../constants/Colors';
 import { parseNumberPadInput } from '../../utils/functions';
-import i18n from "../../translationService";
+import i18n from '../../translationService';
 import { getLocales } from 'expo-localization';
 
 export type NumberLabel =
@@ -31,12 +26,14 @@ interface NumberPadButtonProps {
 const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   return (
-    <View
-    >
+    <View>
       {n === 'ret' ? (
         <View>
           <Text
-            style={{ ...styles.numberPadButton, color: Colors[colorScheme].text }}
+            style={{
+              ...styles.numberPadButton,
+              color: Colors[colorScheme].text,
+            }}
             onPress={() => onPress(n)}
           >
             x
@@ -45,7 +42,10 @@ const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
       ) : (
         <View>
           <Text
-            style={{ ...styles.numberPadButton, color: Colors[colorScheme].text }}
+            style={{
+              ...styles.numberPadButton,
+              color: Colors[colorScheme].text,
+            }}
             onPress={() => onPress(n)}
           >
             {n}
@@ -58,13 +58,17 @@ const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
 
 interface NumberInputNumberPadProps {
   value: string;
-  setValue  : (n: string) => void;
+  setValue: (n: string) => void;
+  prependedText?: string;
+  appendedText?: string;
 }
 
-const textDirection = getLocales()[0].textDirection || 'ltr'
+const textDirection = getLocales()[0].textDirection || 'ltr';
 const NumberInputNumberPad = ({
   value,
   setValue,
+  prependedText,
+  appendedText,
 }: NumberInputNumberPadProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const onPress = (n: NumberLabel) => {
@@ -72,25 +76,41 @@ const NumberInputNumberPad = ({
     // NB! conditional on false required because 0 falsy value
     if (newValue !== false) setValue(newValue);
   };
-  return ( 
+  return (
     <View style={{ flexDirection: 'column', gap: 20 }}>
       <View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {prependedText && (
+            <Text
+              style={{
+                position: 'absolute',
+                ...(textDirection === 'ltr' && { left: 60 }),
+                ...(textDirection === 'rtl' && { right: 60 }),
+                fontSize: 20,
+                color: Colors[colorScheme].text,
+              }}
+            >
+              {prependedText}
+            </Text>
+          )}
           <Text
             style={{ ...styles.inputtedValue, color: Colors[colorScheme].text }}
           >
             {value}
           </Text>
-          <Text
-            style={{ 
-              position: 'absolute',
-              ...(textDirection === 'ltr' && { right: 100 }),
-              ...(textDirection === 'rtl' && { left: 100 }),
-              fontSize: 20,
-              color: Colors[colorScheme].tabIconDefault }}
-          >
-            { i18n.t('deposit_form_kilogram') }
-          </Text>
+          {appendedText && (
+            <Text
+              style={{
+                position: 'absolute',
+                ...(textDirection === 'ltr' && { right: 60 }),
+                ...(textDirection === 'rtl' && { left: 60 }),
+                fontSize: 20,
+                color: Colors[colorScheme].text,
+              }}
+            >
+              {appendedText}
+            </Text>
+          )}
         </View>
         <View
           style={{
@@ -130,7 +150,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     gap: 40,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   inputtedValue: {
     height: 80,
@@ -146,7 +166,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-    gap: 80
+    gap: 80,
   },
 });
 

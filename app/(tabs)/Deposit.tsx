@@ -6,7 +6,7 @@ import CustomButton from '../../components/utils/CustomButton';
 import {
   resetForm,
   selectIsGuaranteedAccurate,
-  selectValue,
+  selectDepositValue,
   setAmount,
   setGuaranteedAccurate,
 } from '../../store/depositFormSlice';
@@ -21,7 +21,7 @@ export default function Deposit() {
   const colorScheme = useColorScheme();
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const value = useAppSelector(selectValue);
+  const depositValue = useAppSelector(selectDepositValue);
   const isGuaranteedAccurate = useAppSelector(selectIsGuaranteedAccurate);
 
   const onPressCancel = () => {
@@ -31,10 +31,10 @@ export default function Deposit() {
   const onPressContinue = () => {
     dispatch(
       setModalText(
-        `${i18n.t('deposit_modal_amount', { amount: value })}
+        `${i18n.t('deposit_modal_amount', { amount: depositValue })}
         ${i18n.t('deposit_modal_stand_manager')}
         ${i18n.t('deposit_modal_you_earn', {
-          netAmount: parseFloat(value) * 0.9,
+          netAmount: parseFloat(depositValue) * 0.9,
         })}
         `
       )
@@ -84,12 +84,16 @@ export default function Deposit() {
         {i18n.t('deposit_title')}
       </Text>
       <View style={styles.depositSwitches}>
-        <NumberInputNumberPad value={value} setValue={onChangeValue} />
+        <NumberInputNumberPad
+          appendedText={i18n.t('deposit_form_kilogram')}
+          value={depositValue}
+          setValue={onChangeValue}
+        />
         <View style={styles.buttons}>
           <CustomButton
             text={i18n.t('continue')}
             onPress={onPressContinue}
-            disabled={!value}
+            disabled={!depositValue}
           />
           <CustomButton
             transparent={true}
