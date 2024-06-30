@@ -23,43 +23,36 @@ export const CustomModal = ({
   const colorScheme = useColorScheme();
 
   return (
-    <View style={styles.centeredView}>
-      <Modal animationType='slide' transparent={true} visible={isModalVisible}>
-        <View
-          style={{
-            backgroundColor: Colors[colorScheme ?? 'light'].background,
-            borderColor: type === 'info' ? 'blue' : 'red',
-            borderWidth: isModalVisible ? 2 : 0,
-            borderRadius: 20,
-            margin: 20,
-            top: '30%',
-          }}
-        >
-          <View style={styles.modalView}>
-            <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
-              {ModalText}
-            </Text>
-            {customElement}
-            {buttons.map((props) => {
-              return (
-                <View key={props.text} style={{ marginTop: 5 }}>
-                  <CustomButton {...props} />
-                </View>
-              );
-            })}
-          </View>
+    <Modal animationType='slide' transparent={true} visible={isModalVisible}>
+      <View
+        style={{
+          backgroundColor: Colors[colorScheme ?? 'light'].background,
+          borderColor: type === 'info' ? 'blue' : 'red',
+          borderWidth: isModalVisible ? 2 : 0,
+          borderRadius: 20,
+          margin: 20,
+          top: '30%',
+        }}
+      >
+        <View style={styles.modalView}>
+          <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
+            {ModalText}
+          </Text>
+          {customElement}
+          {buttons.map((props) => {
+            return (
+              <View key={props.text} style={{ marginTop: 5 }}>
+                <CustomButton {...props} />
+              </View>
+            );
+          })}
         </View>
-      </Modal>
-    </View>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   modalView: {
     borderRadius: 20,
     borderStyle: 'solid',

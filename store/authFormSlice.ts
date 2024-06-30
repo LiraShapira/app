@@ -6,6 +6,7 @@ import { setUser } from './userSlice';
 import { User } from '../types/User';
 import { StorageKeys } from '../types/AsyncStorage';
 import { SuccessApiResponse } from '../types/APITypes';
+import { parsePhoneNumber } from 'libphonenumber-js';
 
 interface AuthForm {
   firstName: string;
@@ -28,22 +29,23 @@ const initialState: AuthFormState = {
 
 export const sendLoginForm = createAsyncThunk<
   SuccessApiResponse<User>,
-  string | undefined,
+  undefined,
   { state: RootState }
->('authForm/sendLoginForm', async (_userId: string | undefined, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
+>('authForm/sendLoginForm', async (_u, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
   const { phoneNumber } = getState().authForm;
-    const response = await fetchUser(phoneNumber);
-    if (!('data' in response)) {
-      throw new Error(response.message)
-    }
-    if (response.data) {
-      dispatch(resetForm());
-      setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
-      dispatch(setUser(response.data))
-      return response;
-    } else {
-      throw new Error('User not found');
-    }
+  const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'IL').nationalNumber;
+  const response = await fetchUser(parsedPhoneNumber);
+  if (!('data' in response)) {
+    throw new Error(response.message)
+  }
+  if (response.data) {
+    dispatch(resetForm());
+    setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
+    dispatch(setUser(response.data))
+    return response;
+  } else {
+    throw new Error('User not found');
+  }
 });
 
 export const sendRegistrationForm = createAsyncThunk<
@@ -52,18 +54,18 @@ export const sendRegistrationForm = createAsyncThunk<
   { state: RootState }
 >('authForm/sendRegistrationForm', async (_userId: string | undefined, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
   const { phoneNumber, firstName, lastName } = getState().authForm;
-    const response = await registerNewUser({ phoneNumber, firstName, lastName });
-    if (!('data' in response)) {
-      throw new Error(response.message)
-    }
-    if (response.data) {
-      dispatch(resetForm());
-      setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
-      dispatch(setUser(response.data))
-      return response;
-    } else {
-      throw new Error('User not found');
-    }
+  const response = await registerNewUser({ phoneNumber, firstName, lastName });
+  if (!('data' in response)) {
+    throw new Error(response.message)
+  }
+  if (response.data) {
+    dispatch(resetForm());
+    setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
+    dispatch(setUser(response.data))
+    return response;
+  } else {
+    throw new Error('User not found');
+  }
 });
 
 const authFormSlice = createSlice({

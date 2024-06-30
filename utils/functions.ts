@@ -1,6 +1,7 @@
+import { parsePhoneNumber } from "libphonenumber-js";
 import { NumberLabel } from "../components/form/NumberInputNumberPad";
 
-export const parseNumberPadInput = (n: NumberLabel, oldValue: string): string | false => {
+export const parseNumberPadInputForDeposit = (n: NumberLabel, oldValue: string): string | false => {
   let newValue = oldValue;
   // always allow backspace
   if (n === 'ret') {
@@ -20,6 +21,17 @@ export const parseNumberPadInput = (n: NumberLabel, oldValue: string): string | 
   // max 2 decimal places
   if (newValue.includes('.') && newValue.split('.')[1].length > 2) return false;
   return oldValue + n;
+}
+
+export const parseNumberPadInputForPhoneNumber = (n: NumberLabel, oldValue: string): string | false => {
+  if (n === 'ret') {
+    return oldValue.length === 1 ? '' : oldValue.slice(0, -1);
+  }
+  let newValue = oldValue + n;
+  if (oldValue.length === 13) return oldValue;
+  return newValue;
+
+
 }
 
 
