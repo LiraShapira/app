@@ -52,13 +52,13 @@ export default function AuthPhoneEntry() {
     dispatch(sendLoginForm())
       .unwrap()
       .then(({ data: user }) => {
-        // if (user) {
-        //   dispatch(setUser(user));
-        //   setItem(StorageKeys.phoneNumber, user.phoneNumber);
-        //   setItem(StorageKeys.compostStand, selectedCompostStand);
-        // router.push('/Home');
-        // return
-        // }
+        if (user) {
+          dispatch(setUser(user));
+          setItem(StorageKeys.phoneNumber, user.phoneNumber);
+          setItem(StorageKeys.compostStand, selectedCompostStand);
+          router.push('/Home');
+          return;
+        }
         const phoneNumberForTwilio = parsePhoneNumber(phoneNumber, 'IL')
           .formatInternational()
           .split(' ')
