@@ -1,11 +1,24 @@
-import { parsePhoneNumber } from "libphonenumber-js";
 import { NumberLabel } from "../components/form/NumberInputNumberPad";
+
+export const parseNumberPadInputForOTP = (n: NumberLabel, oldValue: string): string | false => {
+  if (oldValue.length === 7) return false;
+  if (n === 'ret') {
+    return oldValue.slice(0, -1);
+  }
+  // prevent adding decimal point
+  if (n === '.') {
+    return false;
+  }
+
+  return oldValue + n;
+
+}
 
 export const parseNumberPadInputForDeposit = (n: NumberLabel, oldValue: string): string | false => {
   let newValue = oldValue;
   // always allow backspace
   if (n === 'ret') {
-    return oldValue.slice(0, -1) || '';
+    return oldValue.slice(0, -1);
   }
   // prevent adding decimal point if one exists
   if (oldValue.includes('.') && n === '.') {
@@ -25,7 +38,7 @@ export const parseNumberPadInputForDeposit = (n: NumberLabel, oldValue: string):
 
 export const parseNumberPadInputForPhoneNumber = (n: NumberLabel, oldValue: string): string | false => {
   if (n === 'ret') {
-    return oldValue.length === 1 ? '' : oldValue.slice(0, -1);
+    return oldValue.slice(0, -1);
   }
   let newValue = oldValue + n;
   if (oldValue.length === 13) return oldValue;

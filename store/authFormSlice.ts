@@ -7,6 +7,7 @@ import { User } from '../types/User';
 import { StorageKeys } from '../types/AsyncStorage';
 import { SuccessApiResponse } from '../types/APITypes';
 import { parsePhoneNumber } from 'libphonenumber-js';
+import { checkSmsVerification, sendSmsVerification } from '../API/twilioAPI';
 
 interface AuthForm {
   firstName: string;
@@ -22,7 +23,7 @@ interface AuthFormState extends AuthForm {
 const initialState: AuthFormState = {
   firstName: '',
   lastName: '',
-  phoneNumber: '',
+  phoneNumber: '05',
   loading: false,
   isLoggedIn: false,
 };
@@ -45,6 +46,38 @@ export const sendLoginForm = createAsyncThunk<
     return response;
   } else {
     throw new Error('User not found');
+  }
+});
+
+export const sendVerificationCode = createAsyncThunk<
+  SuccessApiResponse<{ success: boolean }>,
+  string,
+  { state: RootState }
+>('authForm/sendVerificationCode', async (phoneNumber): Promise<SuccessApiResponse<{ success: boolean }>> => {
+  const response = await sendSmsVerification(phoneNumber);
+  if (!('data' in response)) {
+    throw new Error('error sending code')
+  }
+  if (response.data) {
+    return response;
+  } else {
+    throw new Error('error sending code');
+  }
+});
+
+export const checkVerificationCode = createAsyncThunk<
+  SuccessApiResponse<{ success: boolean }>,
+  { code: string, phoneNumber: string },
+  { state: RootState }
+>('authForm/checkVerificationCode', async ({ phoneNumber, code }): Promise<SuccessApiResponse<{ success: boolean }>> => {
+  const response = await checkSmsVerification(phoneNumber, code);
+  if (!('data' in response)) {
+    throw new Error('error verifying code')
+  }
+  if (response.data) {
+    return response;
+  } else {
+    throw new Error('error verifying code');
   }
 });
 

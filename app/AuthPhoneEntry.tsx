@@ -1,13 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
 import { selectCompostStand, setCompostStand } from '../store/depositFormSlice';
-import { CompostStand } from '../types/Deposit';
 import { Text, View, StyleSheet, useColorScheme } from 'react-native';
 import { setUser } from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import {
   selectPhoneNumber,
   sendLoginForm,
+  sendVerificationCode,
   setIsLoggedIn,
   setPhoneNumber,
 } from '../store/authFormSlice';
@@ -24,13 +22,14 @@ import NumberInputNumberPad, {
 } from '../components/form/NumberInputNumberPad';
 import { parseNumberPadInputForPhoneNumber } from '../utils/functions';
 import { parsePhoneNumber } from 'libphonenumber-js';
+import { sendSmsVerification } from '../API/twilioAPI';
 
 export default function AuthPhoneEntry() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const phoneNumber = useAppSelector(selectPhoneNumber);
   const selectedCompostStand = useAppSelector(selectCompostStand);
-  const [isNumberError, setIsNumberError] = useState<boolean>(false);
+  const [isNumberError, setIsNumberError] = useState<boolean>(true);
 
   const onChangePhoneNumber = (n: NumberLabel) => {
     const newNumber = parseNumberPadInputForPhoneNumber(n, phoneNumber);
@@ -41,10 +40,9 @@ export default function AuthPhoneEntry() {
         if (parsedPhoneNumber.isPossible() && parsedPhoneNumber.isValid()) {
           setIsNumberError(false);
         } else {
-          throw new Error('parsed number not possible or valid');
+          throw new Error(i18n.t('auth_number_error'));
         }
       } catch (e) {
-        console.log(e);
         // TODO dynamic descriptive error text for user
         setIsNumberError(true);
       }
@@ -54,17 +52,47 @@ export default function AuthPhoneEntry() {
     dispatch(sendLoginForm())
       .unwrap()
       .then(({ data: user }) => {
-        if (user) {
-          setUser(user);
-          setItem(StorageKeys.phoneNumber, user.phoneNumber);
-          setItem(StorageKeys.compostStand, selectedCompostStand);
-          dispatch(setIsLoggedIn(true));
-        }
-        router.push('/Home');
+        // if (user) {
+        //   dispatch(setUser(user));
+        //   setItem(StorageKeys.phoneNumber, user.phoneNumber);
+        //   setItem(StorageKeys.compostStand, selectedCompostStand);
+        // router.push('/Home');
+        // return
+        // }
+        const phoneNumberForTwilio = parsePhoneNumber(phoneNumber, 'IL')
+          .formatInternational()
+          .split(' ')
+          .join('');
+
+        dispatch(sendVerificationCode(phoneNumberForTwilio))
+          .unwrap()
+          .then(() => {
+            console.log('received');
+            router.push('/AuthCodeValidation');
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       })
       .catch((e) => {
-        dispatch(setModalText(e.message));
-        dispatch(setIsModalVisible(true));
+        if (e.message === 'User not found') {
+          const phoneNumberForTwilio = parsePhoneNumber(phoneNumber, 'IL')
+            .formatInternational()
+            .split(' ')
+            .join('');
+
+          dispatch(sendVerificationCode(phoneNumberForTwilio))
+            .unwrap()
+            .then(() => {
+              router.push('/AuthCodeValidation');
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else {
+          dispatch(setModalText(e.message));
+          dispatch(setIsModalVisible(true));
+        }
       });
   };
 

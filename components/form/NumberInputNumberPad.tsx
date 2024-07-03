@@ -1,7 +1,5 @@
 import { Text, useColorScheme, StyleSheet, View } from 'react-native';
 import Colors from '../../constants/Colors';
-import { parseNumberPadInput } from '../../utils/functions';
-import i18n from '../../translationService';
 import { getLocales } from 'expo-localization';
 
 export type NumberLabel =
@@ -58,24 +56,22 @@ const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
 
 interface NumberInputNumberPadProps {
   value: string;
-  setValue: (n: string) => void;
+  isError?: boolean;
   prependedText?: string;
   appendedText?: string;
+  onButtonPress: (n: NumberLabel) => void;
 }
 
 const textDirection = getLocales()[0].textDirection || 'ltr';
 const NumberInputNumberPad = ({
   value,
-  setValue,
   prependedText,
   appendedText,
+  onButtonPress,
+  isError = false,
 }: NumberInputNumberPadProps) => {
   const colorScheme = useColorScheme() ?? 'light';
-  const onPress = (n: NumberLabel) => {
-    const newValue = parseNumberPadInput(n, value);
-    // NB! conditional on false required because 0 falsy value
-    if (newValue !== false) setValue(newValue);
-  };
+
   return (
     <View style={{ flexDirection: 'column', gap: 20 }}>
       <View>
@@ -121,24 +117,24 @@ const NumberInputNumberPad = ({
       </View>
       <View style={styles.numberPad}>
         <View style={styles.numberPadRow}>
-          <NumberPadButton n={'1'} onPress={onPress} />
-          <NumberPadButton n={'2'} onPress={onPress} />
-          <NumberPadButton n={'3'} onPress={onPress} />
+          <NumberPadButton n={'1'} onPress={onButtonPress} />
+          <NumberPadButton n={'2'} onPress={onButtonPress} />
+          <NumberPadButton n={'3'} onPress={onButtonPress} />
         </View>
         <View style={styles.numberPadRow}>
-          <NumberPadButton n={'4'} onPress={onPress} />
-          <NumberPadButton n={'5'} onPress={onPress} />
-          <NumberPadButton n={'6'} onPress={onPress} />
+          <NumberPadButton n={'4'} onPress={onButtonPress} />
+          <NumberPadButton n={'5'} onPress={onButtonPress} />
+          <NumberPadButton n={'6'} onPress={onButtonPress} />
         </View>
         <View style={styles.numberPadRow}>
-          <NumberPadButton n={'7'} onPress={onPress} />
-          <NumberPadButton n={'8'} onPress={onPress} />
-          <NumberPadButton n={'9'} onPress={onPress} />
+          <NumberPadButton n={'7'} onPress={onButtonPress} />
+          <NumberPadButton n={'8'} onPress={onButtonPress} />
+          <NumberPadButton n={'9'} onPress={onButtonPress} />
         </View>
         <View style={styles.numberPadRow}>
-          <NumberPadButton n={'.'} onPress={onPress} />
-          <NumberPadButton n={'0'} onPress={onPress} />
-          <NumberPadButton n={'ret'} onPress={onPress} />
+          <NumberPadButton n={'.'} onPress={onButtonPress} />
+          <NumberPadButton n={'0'} onPress={onButtonPress} />
+          <NumberPadButton n={'ret'} onPress={onButtonPress} />
         </View>
       </View>
     </View>
