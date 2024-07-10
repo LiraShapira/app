@@ -27,7 +27,7 @@ export default function Dashboard() {
             ...styles.title,
           }}
         >
-          {user.accountBalance}
+          {user.accountBalance.toFixed(1)}
         </Text>
         <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
           {i18n.t('home_lira_shapira_currency_shorthand')}
@@ -36,7 +36,7 @@ export default function Dashboard() {
       <View style={styles.buttonsContainer}>
         <View style={styles.labeledButton}>
           <DashboardButton
-            route="/Deposit"
+            route='/Deposit'
             iconName='deposit_icon'
             iconLibraryName={IconLibrary.Local}
           />
@@ -51,9 +51,9 @@ export default function Dashboard() {
         </View>
         <View style={styles.labeledButton}>
           <DashboardButton
-            route="/Send"
+            route='/Send'
             params={{ isRequest: true }}
-            iconName="request_icon_with_circle"
+            iconName='request_icon_with_circle'
             iconLibraryName={IconLibrary.Local}
           />
           <Text
@@ -67,8 +67,8 @@ export default function Dashboard() {
         </View>
         <View style={styles.labeledButton}>
           <DashboardButton
-            route="/Send"
-            iconName="send_icon_with_circle"
+            route='/Send'
+            iconName='send_icon_with_circle'
             iconLibraryName={IconLibrary.Local}
           />
           <Text
@@ -119,8 +119,8 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   buttonLabel: {
-  fontSize: 14,
-  fontWeight: '700',
-  textAlign: 'center',
-  }
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
 });
