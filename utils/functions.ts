@@ -31,8 +31,8 @@ export const parseNumberPadInputForDeposit = (n: NumberLabel, oldValue: string):
   newValue = oldValue + n;
   // max 100
   if (parseFloat(newValue) > 100) return false;
-  // max 2 decimal places
-  if (newValue.includes('.') && newValue.split('.')[1].length > 2) return false;
+  // max 1 decimal place
+  if (newValue.includes('.') && newValue.split('.')[1].length > 1) return false;
   return oldValue + n;
 }
 
