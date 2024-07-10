@@ -20,15 +20,11 @@ import {
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { getItem } from '../utils/asyncStorage';
 import { StorageKeys } from '../types/AsyncStorage';
-import {
-  selectAuthFormLoading,
-  selectIsLoggedIn,
-  setIsLoggedIn,
-} from '../store/authFormSlice';
-import AuthPhoneEntry from './AuthPhoneEntry';
+import { selectAuthFormLoading, setIsLoggedIn } from '../store/authFormSlice';
 import LoadingPage from '../components/utils/LoadingPage';
 import { selectDepositFormLoading } from '../store/depositFormSlice';
 import { selectSendFormLoading } from '../store/sendFormSlice';
+import { selectIsAppLoading } from '../store/appStateSlice';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -67,6 +63,7 @@ function RootLayoutNav() {
   const isAuthLoading = useAppSelector(selectAuthFormLoading);
   const isDepositFormLoading = useAppSelector(selectDepositFormLoading);
   const isSendFormLoading = useAppSelector(selectSendFormLoading);
+  const isAppLoading = useAppSelector(selectIsAppLoading);
   const router = useRouter();
   useEffect(() => {
     dispatch(loadContacts());
@@ -115,6 +112,7 @@ function RootLayoutNav() {
           loading={
             isUserLoading ||
             isAuthLoading ||
+            isAppLoading ||
             isDepositFormLoading ||
             isSendFormLoading
           }
@@ -126,6 +124,8 @@ function RootLayoutNav() {
           />
           <Stack.Screen name='AuthNameEntry' options={{ headerShown: false }} />
           <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+          <Stack.Screen name='SellerOptions' options={{ headerShown: false }} />
+          <Stack.Screen name='Send' options={{ headerShown: false }} />
         </Stack>
       </ThemeProvider>
     </>

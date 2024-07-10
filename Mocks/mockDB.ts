@@ -64,7 +64,8 @@ export const mockUser: User = {
   createdAt: new Date('2023-07-05').toDateString(),
   transactions: [mockTransaction, mockTransaction2, mockTransaction3],
   phoneNumber: '123456789',
-  role: UserRole.ADMIN
+  role: UserRole.ADMIN,
+  adminCompostStandId: null
 }
 
 export const mockUser2: User = {
@@ -76,7 +77,8 @@ export const mockUser2: User = {
   createdAt: new Date('2023-07-05').toDateString(),
   transactions: [mockTransaction, mockTransaction2, mockTransaction3],
   phoneNumber: '987654321',
-  role: UserRole.BASIC
+  role: UserRole.BASIC,
+  adminCompostStandId: null
 }
 
 export const mockTransactions: Transaction[] = [mockTransaction, mockTransaction2, mockTransaction3]

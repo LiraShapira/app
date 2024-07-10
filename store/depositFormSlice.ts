@@ -130,7 +130,7 @@ export const selectDepositForm = (state: RootState) =>
   state.depositForm;
 export const selectDepositFormLoading = (state: RootState) =>
   state.depositForm.loading;
-export const selectValue = (state: RootState) => state.depositForm.amount;
+export const selectDepositValue = (state: RootState) => state.depositForm.amount;
 export const selectNotes = (state: RootState) => state.depositForm.notes;
 export const selectCompostStand = (state: RootState) => state.depositForm.compostStand;
 export const selectIsGuaranteedAccurate = (state: RootState) => state.depositForm.guaranteedAccurate;

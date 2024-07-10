@@ -8,9 +8,9 @@ import { useDebounce } from '../hooks';
 import { useSelector } from 'react-redux';
 import { selectContacts } from '../store/userSlice';
 import SearchResultsInfo from '../components/Send/SearchResultsInfo';
-import {filterContactsCondition} from "./filterContactsCondition";
-import GradientContainer from '../components/utils/GradientContainer'
-import { useLocalSearchParams } from "expo-router";
+import { filterContactsCondition } from './filterContactsCondition';
+import GradientContainer from '../components/utils/GradientContainer';
+import { useLocalSearchParams } from 'expo-router';
 
 export default function Send() {
   const [filterTerms, setFilterTerms] = useState<string>('');
@@ -26,11 +26,12 @@ export default function Send() {
   useEffect(() => {
     const filterBySearchTerm = () => {
       setfilteredContacts(
-        contacts.filter(cont =>  filterContactsCondition(cont, debouncedFilterTerms))
+        contacts.filter((cont) =>
+          filterContactsCondition(cont, debouncedFilterTerms)
+        )
       );
     };
     if (debouncedFilterTerms) filterBySearchTerm();
-
   }, [debouncedFilterTerms]);
 
   return (
@@ -41,10 +42,9 @@ export default function Send() {
           color: Colors[colorScheme ?? 'light'].text,
         }}
       >
-        {isRequest ?
-            i18n.t('request_search_title')
-            :
-            i18n.t('send_search_title')}
+        {isRequest
+          ? i18n.t('request_search_title')
+          : i18n.t('send_search_title')}
       </Text>
       <TextInput
         style={{
@@ -59,7 +59,7 @@ export default function Send() {
         placeholder={i18n.t('send_search_placeholder')}
         placeholderTextColor={Colors[colorScheme ?? 'light'].shading}
         onChangeText={setFilterTerms}
-      ></TextInput>
+      />
       {debouncedFilterTerms && (
         <SearchResultsInfo
           debouncedFilterTerms={debouncedFilterTerms}
@@ -72,6 +72,6 @@ export default function Send() {
           contacts={debouncedFilterTerms ? filteredContacts : contacts}
         />
       </View>
-    </ GradientContainer>
+    </GradientContainer>
   );
 }

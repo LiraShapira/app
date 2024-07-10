@@ -17,6 +17,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name='Home'
         options={{
+          headerShown: false,
           title: i18n.t('tabs_wallet'),
           tabBarIcon: ({ color }) => (
             <CustomIcon
@@ -31,11 +32,12 @@ export default function TabLayout() {
       <Tabs.Screen
         name='Deposit'
         options={{
+          headerShown: false,
           href: null,
           title: i18n.t('deposit'),
           tabBarIcon: () => (
             <CustomIcon
-              iconName="leaf-circle-outline"
+              iconName='leaf-circle-outline'
               iconLibraryName={IconLibrary.MaterialCommunityIcons}
               size={55}
               color={Colors[colorScheme ?? 'light'].text}

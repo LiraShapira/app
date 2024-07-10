@@ -11,11 +11,14 @@ import {
   setGuaranteedAccurate,
 } from '../../store/depositFormSlice';
 import { useRouter } from 'expo-router';
-import NumberInputNumberPad from '../../components/form/NumberInputNumberPad';
+import NumberInputNumberPad, {
+  NumberLabel,
+} from '../../components/form/NumberInputNumberPad';
 import GradientContainer from '../../components/utils/GradientContainer';
 import { CustomModal } from '../../components/utils/CustomModal';
 import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
 import DepositFormCheckBox from '../../components/DepositFormCheckbox';
+import { parseNumberPadInputForDeposit } from '../../utils/functions';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
@@ -43,10 +46,6 @@ export default function Deposit() {
     dispatch(setIsModalVisible(true));
   };
 
-  const onChangeValue = (newVal: string) => {
-    dispatch(setAmount(newVal));
-  };
-
   const onPressModal = () => {
     dispatch(setIsModalVisible(false));
     router.replace('/CompostReport');
@@ -55,6 +54,13 @@ export default function Deposit() {
   const onPressModalCorrect = () => {
     dispatch(setIsModalVisible(false));
     dispatch(setGuaranteedAccurate(false));
+  };
+  const onPressNumberPadInput = (n: NumberLabel) => {
+    const newValue = parseNumberPadInputForDeposit(n, depositValue);
+    // NB! conditional on false required because 0 falsy value
+    if (newValue !== false) {
+      dispatch(setAmount(newValue));
+    }
   };
 
   return (
@@ -85,9 +91,9 @@ export default function Deposit() {
       </Text>
       <View style={styles.depositSwitches}>
         <NumberInputNumberPad
+          onButtonPress={onPressNumberPadInput}
           appendedText={i18n.t('deposit_form_kilogram')}
           value={depositValue}
-          setValue={onChangeValue}
         />
         <View style={styles.buttons}>
           <CustomButton

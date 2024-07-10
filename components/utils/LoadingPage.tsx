@@ -1,28 +1,26 @@
-import {
-  Modal,
-  View,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
+import { Modal, View, StyleSheet, ActivityIndicator } from 'react-native';
 
 interface LoadingPageProps {
   loading: boolean;
 }
 
 const LoadingPage = ({ loading }: LoadingPageProps) => {
-
   return (
     <View style={styles.centeredView}>
-      <Modal animationType="none" transparent={true} visible={loading}>
+      <Modal animationType='none' transparent visible={loading}>
         <View
           style={{
             position: 'absolute',
             top: '30%',
-            right: '40%'
+            right: '40%',
           }}
         >
           <View style={styles.modalView}>
-            <ActivityIndicator size='large' style={{ padding: 35 }} color="#00ff00" />
+            <ActivityIndicator
+              size='large'
+              style={{ padding: 35 }}
+              color='#00ff00'
+            />
           </View>
         </View>
       </Modal>

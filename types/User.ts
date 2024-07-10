@@ -15,6 +15,7 @@ export interface User {
   createdAt: string
   transactions: Transaction[]
   phoneNumber: string
+  adminCompostStandId: number | null;
 }
 
 export interface FetchUserArgs {
