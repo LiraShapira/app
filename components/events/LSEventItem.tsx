@@ -24,7 +24,7 @@ import {
   setSelectedEvent,
 } from '../../store/eventsSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectUser, setIsUserLoading } from '../../store/userSlice';
+import { selectUser } from '../../store/userSlice';
 import LSEventItemPeopleDetails from './LSEventItemPeopleDetails';
 import { setAppLoading } from '../../store/appStateSlice';
 
@@ -66,7 +66,7 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
   }, []);
 
   const onSelectRole = () => {
-    dispatch(setIsUserLoading(true));
+    dispatch(setAppLoading(true));
     if (attendeeRole === 'not_attending') {
       dispatch(deleteAttendee({ userId: user.id, eventId: event.id }))
         .unwrap()
@@ -75,9 +75,13 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
         });
       setModalVisible(false);
     } else if (attendeeRole !== AttendeeRole.seller) {
+      const userWithoutTransactions = {
+        ...user,
+        transactions: [],
+      };
       const attendee: Attendee = {
         role: attendeeRole,
-        user,
+        user: userWithoutTransactions,
         userId: user.id,
       };
       dispatch(sendNewAttendee({ attendee, eventId: event.id }))
@@ -93,7 +97,7 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
       router.push('/SellerOptions');
     }
     setModalVisible(false);
-    dispatch(setIsUserLoading(false));
+    dispatch(setAppLoading(false));
   };
 
   const colorScheme = useColorScheme() ?? 'light';

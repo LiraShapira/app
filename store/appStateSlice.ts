@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
 
-interface SendFormState {
+interface AppState {
   isModalVisible: boolean;
   loading: boolean;
   modalText: string;
 }
 
-const initialState: SendFormState = {
+const initialState: AppState = {
   loading: false,
   isModalVisible: false,
   modalText: ''
