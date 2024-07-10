@@ -46,6 +46,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name='Events'
         options={{
+          headerShown: false,
           title: i18n.t('tabs_events'),
           tabBarIcon: ({ color }) => (
             <CustomIcon

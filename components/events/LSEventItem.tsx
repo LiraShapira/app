@@ -1,7 +1,5 @@
-import { Attendee, AttendeeRole, LSEvent, Seller } from '../../types/LSEvents';
-import { CustomIcon } from '../utils/CustomIcon';
-import { IconLibrary } from '../../types/Icons';
-import { useMemo, useState } from 'react';
+import { Attendee, AttendeeRole, LSEvent } from '../../types/LSEvents';
+import { useEffect, useState } from 'react';
 import { daysLongForm } from '../../constants/Dates';
 import i18n from '../../translationService';
 import { formatDate, formatTime } from '../../utils/functions';
@@ -19,25 +17,33 @@ import {
 } from 'react-native';
 import RadioForm from 'react-native-simple-radio-button';
 import { useRouter } from 'expo-router';
-import { setSelectedEvent } from '../../store/eventsSlice';
-import { useDispatch } from 'react-redux';
+import {
+  deleteAttendee,
+  sendNewAttendee,
+  setEvents,
+  setSelectedEvent,
+} from '../../store/eventsSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectUser, setIsUserLoading } from '../../store/userSlice';
+import LSEventItemPeopleDetails from './LSEventItemPeopleDetails';
+import { setAppLoading } from '../../store/appStateSlice';
 
 const radio_props = [
-  { label: 'seller', value: AttendeeRole.seller },
-  { label: 'attendee', value: AttendeeRole.attendee },
-  { label: 'volunteer', value: AttendeeRole.volunteer },
+  { label: i18n.t('ls_event_item_seller'), value: AttendeeRole.seller },
+  { label: i18n.t('ls_event_item_attendee'), value: AttendeeRole.attendee },
+  { label: i18n.t('ls_event_item_volunteer'), value: AttendeeRole.volunteer },
+  { label: i18n.t('ls_event_item_not_attending'), value: 'not_attending' },
 ];
 
-function isSeller(attendee: Attendee): attendee is Seller {
-  return attendee.role === 'seller';
-}
+type AttendanceOptions = AttendeeRole | 'not_attending';
 
 export default function LSEventItem({ event }: { event: LSEvent }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [attendeeRole, setAttendeeRole] = useState<AttendeeRole>(
+  const user = useAppSelector(selectUser);
+  const [attendeeRole, setAttendeeRole] = useState<AttendanceOptions>(
     AttendeeRole.seller
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const router = useRouter();
   const openModal = () => {
@@ -48,38 +54,57 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
     setModalVisible(false);
   };
 
-  const onSelectRole = (role: AttendeeRole) => {
-    setModalVisible(false);
-    if (attendeeRole === AttendeeRole.seller) {
+  useEffect(() => {
+    const isUserAttendee = event.attendees.find(
+      (attendee) => attendee.userId === user.id
+    );
+    if (isUserAttendee) {
+      setAttendeeRole(isUserAttendee.role);
+    } else {
+      setAttendeeRole('not_attending');
+    }
+  }, []);
+
+  const onSelectRole = () => {
+    dispatch(setIsUserLoading(true));
+    if (attendeeRole === 'not_attending') {
+      dispatch(deleteAttendee({ userId: user.id, eventId: event.id }))
+        .unwrap()
+        .then(({ data: updatedEvents }) => {
+          dispatch(setEvents(updatedEvents));
+        });
+      setModalVisible(false);
+    } else if (attendeeRole !== AttendeeRole.seller) {
+      const attendee: Attendee = {
+        role: attendeeRole,
+        user,
+        userId: user.id,
+      };
+      dispatch(sendNewAttendee({ attendee, eventId: event.id }))
+        .unwrap()
+        .then(({ data: updatedEvents }) => {
+          dispatch(setEvents(updatedEvents));
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+    } else if (attendeeRole === AttendeeRole.seller) {
       dispatch(setSelectedEvent(event));
       router.push('/SellerOptions');
     }
+    setModalVisible(false);
+    dispatch(setIsUserLoading(false));
   };
 
   const colorScheme = useColorScheme() ?? 'light';
-  const { dateDisplayText, items, sellers, day } = useMemo(() => {
-    const sellers = event.attendees.filter(isSeller);
-    const items = sellers.reduce((acc: string[], currentSeller: Seller) => {
-      return [...acc, ...currentSeller.productsForSale];
-    }, []);
-    const startDate = new Date(event.startDate);
-    const endDate = new Date(event.endDate);
-    const startDateFormatted = formatDate(startDate);
-    const startTimeFormatted = formatTime(startDate);
 
-    // Format the end date
-    const endTimeFormatted = formatTime(endDate);
-
-    // Combine the formatted dates and times
-    const dateDisplayText = `${startDateFormatted} ${startTimeFormatted}-${endTimeFormatted}`;
-
-    return {
-      dateDisplayText,
-      items,
-      sellers,
-      day: daysLongForm[startDate.getDay()],
-    };
-  }, [event.id]);
+  const startDate = new Date(event.startDate);
+  const endDate = new Date(event.endDate);
+  const startDateFormatted = formatDate(startDate);
+  const startTimeFormatted = formatTime(startDate);
+  const endTimeFormatted = formatTime(endDate);
+  const dateDisplayText = `${startDateFormatted} ${startTimeFormatted}-${endTimeFormatted}`;
+  const day = daysLongForm[startDate.getDay()];
 
   const onShare = async () => {
     try {
@@ -111,14 +136,34 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
         <View
           style={{
             padding: 15,
-            height: '50%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            height: '40%',
             marginTop: 'auto',
             backgroundColor: Colors[colorScheme].shading,
           }}
         >
-          <Text>X</Text>
-          <Text style={styles.modalTitle}>Joining as a...</Text>
-          <RadioForm radio_props={radio_props} onPress={setAttendeeRole} />
+          <View>
+            <Pressable onPress={closeModal}>
+              <Text>X</Text>
+            </Pressable>
+            <Text style={styles.modalTitle}>
+              {i18n.t('ls_event_item_joining_as')}
+            </Text>
+            <View
+              style={{
+                margin: 12,
+                borderBottomColor: 'grey',
+                borderBottomWidth: 1,
+              }}
+            />
+          </View>
+          <RadioForm
+            initial={radio_props.findIndex((e) => e.value === attendeeRole)}
+            radio_props={radio_props}
+            onPress={setAttendeeRole}
+          />
           <Pressable onPress={closeModal}></Pressable>
           <CustomButton text='ok' onPress={onSelectRole}></CustomButton>
         </View>
@@ -139,7 +184,7 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
             style={{
               color: Colors[colorScheme].text,
               fontSize: 24,
-              fontWeight: 400,
+              fontWeight: '400',
             }}
           >
             {event.title}
@@ -147,28 +192,16 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
           <Text style={{ color: Colors[colorScheme].text, fontSize: 15 }}>
             {event.location.name}
           </Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <CustomIcon
-              iconLibraryName={IconLibrary.Ionicons}
-              iconName='person-circle'
-              size={50}
-              color={'grey'}
-            />
-            <View>
-              <Text styles={{ color: Colors[colorScheme].text }}>
-                {event.attendees.length} Attendees
-              </Text>
-              <Text style={{ color: Colors[colorScheme].text }}>
-                {sellers.length} sellers is selling: {items.join(', ')}
-              </Text>
-            </View>
-          </View>
+          <LSEventItemPeopleDetails event={event} />
           <View style={styles.buttonContainer}>
-            <CustomButton text='RSVP' onPress={openModal} />
+            <CustomButton
+              text={i18n.t('ls_event_item_rsvp')}
+              onPress={openModal}
+            />
             <CustomButton
               textColor={Colors[colorScheme].text}
               transparent
-              text='share '
+              text='share'
               onPress={onShare}
             />
           </View>

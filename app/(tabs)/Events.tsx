@@ -6,9 +6,7 @@ export default function TabTwoScreen() {
   return (
     <GradientContainer styles={styles.container}>
       <View style={{ width: '90%' }}>
-        <ScrollView>
-          <EventsList />
-        </ScrollView>
+        <EventsList />
       </View>
     </GradientContainer>
   );

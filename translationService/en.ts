@@ -7,9 +7,9 @@ const enDictionary: Dictionary = {
   some: 'some',
   cancel: 'Cancel',
   continue: 'Continue',
+  generic_error: 'We are having problems. Please try again later',
 
-  // HOME
-  tabs_wallet: 'wallet',
+  // AUTH
   auth_login: 'Login',
   auth_logout: 'Logout?',
   auth_register: 'Register',
@@ -18,6 +18,10 @@ const enDictionary: Dictionary = {
   auth_phone_number: 'Phone Number',
   auth_first_name: 'First Name',
   auth_last_name: 'Last Name',
+  auth_number_error: 'Number not valid',
+
+  // HOME
+  tabs_wallet: 'wallet',
   tabs_market: 'market',
   tabs_events: 'events',
   home_lira_shapira_currency_you_have: 'You have:',
@@ -60,6 +64,7 @@ const enDictionary: Dictionary = {
   compost_report_missing_scales: 'missing scales',
   compost_report_missing_clean_and_tidy: 'clean and tidy',
 
+  // COMPOST STANDS
   location: 'Select location from drop down',
   deposit_compost_stand_blank: '',
   deposit_compost_stand_cafe_shapira: 'Cafe Shapira',
@@ -97,6 +102,15 @@ const enDictionary: Dictionary = {
   request_card_refuse: 'refuse',
 
   // EVENTS
+  events_list_no_events: 'no upcoming events',
+  ls_event_item_people_details_attendees: ' friends joining',
+  ls_event_item_people_details_vendors: ' friends selling: ',
+  ls_event_item_rsvp: 'RSVP',
+  ls_event_item_seller: 'seller',
+  ls_event_item_attendee: 'attendee',
+  ls_event_item_volunteer: 'volunteer',
+  ls_event_item_not_attending: 'not attending',
+  ls_event_item_joining_as: 'Joining as...',
   seller_options_add_item: '+ Add Item',
   seller_options_finish: 'Finish',
 

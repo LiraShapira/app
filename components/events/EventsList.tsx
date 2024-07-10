@@ -1,41 +1,58 @@
-import { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { ScrollView, Text, StyleSheet, View } from 'react-native';
 import LSEventItem from './LSEventItem';
-import { LSEvent } from '../../types/LSEvents';
 import Card from '../utils/Card';
 import i18n from '../../translationService';
-import { loadEvents } from '../../store/eventsSlice';
-import { useAppDispatch } from '../../hooks';
+import { loadEvents, selectEvents, setEvents } from '../../store/eventsSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setAppLoading } from '../../store/appStateSlice';
 
 export default function EventsList() {
-  const [events, setEvents] = useState<LSEvent[]>([]);
   const dispatch = useAppDispatch();
+  const events = useAppSelector(selectEvents);
 
   useEffect(() => {
+    dispatch(setAppLoading(true));
     dispatch(loadEvents())
       .unwrap()
       .then(({ data: events }) => {
-        setEvents(events);
+        dispatch(setEvents(events));
+        dispatch(setAppLoading(false));
       });
   }, []);
 
-  return events.length ? (
-    events.map((event) => (
-      <Card key={event.id}>
-        <LSEventItem event={event} />
-      </Card>
-    ))
-  ) : (
-    <Text
-      style={{
-        fontSize: 15,
-        fontWeight: '700',
-        marginHorizontal: '50%',
-        marginVertical: '10%',
-        width: '100%',
-      }}
-    >
-      Hello
-    </Text>
+  return (
+    <View style={styles.flexContainer}>
+      <ScrollView style={styles.scrollContainer}>
+        {events.length ? (
+          events.map((event) => (
+            <Card key={event.id}>
+              <LSEventItem event={event} />
+            </Card>
+          ))
+        ) : (
+          <Text style={styles.noEventsText}>
+            {i18n.t('events_list_no_events')}
+          </Text>
+        )}
+      </ScrollView>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  flexContainer: {
+    flex: 1,
+  },
+  scrollContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+  noEventsText: {
+    fontSize: 15,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginVertical: '10%',
+    width: '100%',
+  },
+});

@@ -7,10 +7,9 @@ const heDictionary: Dictionary = {
   some: 'מעט',
   cancel: 'ביטול',
   continue: 'המשך',
+  generic_error: 'יש בעיה. בבקשה נסה שוב מאוחר יותר.',
 
-  // HOME
-  tabs_wallet: 'ארנק',
-
+  // AUTH
   auth_login: 'כניסה',
   auth_logout: 'להתנתק?',
   auth_register: 'הרשמה',
@@ -19,6 +18,10 @@ const heDictionary: Dictionary = {
   auth_phone_number: 'מספר טלפון',
   auth_first_name: 'שם פרטי',
   auth_last_name: 'שם משפחה',
+  auth_number_error: 'מספר הטלפון אינו חוקי',
+
+  // HOME
+  tabs_wallet: 'ארנק',
   tabs_market: 'שוק',
   tabs_events: 'אירועים',
   home_lira_shapira_currency_you_have: 'כמה יש?',
@@ -76,11 +79,13 @@ const heDictionary: Dictionary = {
   compost_report_missing_scales: 'חסר משקל',
   compost_report_missing_clean_and_tidy: 'נקייה ומסודרת',
   transaction_request_to: 'בקשה ל',
+
   // SEND
   send_search_title: 'למי להעביר?',
   send_search_searching_for: 'מחפש אחר',
   send_search_placeholder: 'הזן שם או מספר טלפון',
   sendamount_how_much: 'כמה להעביר?',
+
   // sendamount_amount: 'כמה (kg)?',
   sendamount_why: 'למה?',
   sendamount_continue: 'המשך',
@@ -97,6 +102,15 @@ const heDictionary: Dictionary = {
   request_card_refuse: 'סרב',
 
   // EVENTS
+  events_list_no_events: 'אין אירועים קרובים',
+  ls_event_item_joining_as: 'מגיע.ה כ...',
+  ls_event_item_people_details_attendees: ' חברים מהשכונה יגיעו',
+  ls_event_item_people_details_vendors: 'שכנים מוכרים :',
+  ls_event_item_rsvp: 'מגיע.ה',
+  ls_event_item_seller: 'מוכר.ת',
+  ls_event_item_attendee: 'אורח.ת',
+  ls_event_item_volunteer: 'מתנדב.ת',
+  ls_event_item_not_attending: 'לא מסתדר לי הפעם',
   seller_options_add_item: '+ להוסיף פריט',
   seller_options_finish: 'סיימתי',
 

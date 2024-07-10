@@ -1,9 +1,4 @@
-import {
-  View,
-  Pressable,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { View, Pressable, Text, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 
 export interface ButtonProps {
@@ -12,33 +7,37 @@ export interface ButtonProps {
   textColor?: string;
   backgroundColor?: string;
   onPress: (...args: any[]) => any;
-  size?: 's' | 'm' | 'l';
   transparent?: boolean;
+  showDeleteButton?: boolean;
+  onDelete?: (text: string) => void;
 }
-
-const fontSizeMap = {
-  s: 12,
-  m: 14,
-  l: 24,
-};
 
 export default function CustomButton({
   text,
+  onDelete = () => {},
+  showDeleteButton,
   onPress,
   disabled = false,
-  size = 'm',
   textColor,
   backgroundColor,
-  transparent
+  transparent,
 }: ButtonProps) {
-  const calculatedBackgroundColor = backgroundColor ? backgroundColor : transparent ? 'transparent' : Colors.light.highlight;
-  const calculatedtextColor = textColor ? textColor:  transparent ? 'black' : 'white';
+  const calculatedBackgroundColor = backgroundColor
+    ? backgroundColor
+    : transparent
+    ? 'transparent'
+    : Colors.light.highlight;
+  const calculatedtextColor = textColor
+    ? textColor
+    : transparent
+    ? 'black'
+    : 'white';
 
   const transparentBorderStyles = {
     borderColor: '#BFC9B7',
     borderStyle: 'solid',
-    borderWidth: '2px'
-  }
+    borderWidth: '2px',
+  };
 
   return (
     <View
@@ -46,7 +45,9 @@ export default function CustomButton({
         backgroundColor: calculatedBackgroundColor,
         ...(disabled && { opacity: 0.7 }),
         ...styles.submitButton,
-        ...(transparent && transparentBorderStyles)
+        ...(transparent && transparentBorderStyles),
+        flexDirection: 'row',
+        gap: 10,
       }}
     >
       <Pressable
@@ -57,13 +58,18 @@ export default function CustomButton({
         <Text
           style={{
             fontWeight: '700',
-            fontSize: fontSizeMap[size],
-            color: calculatedtextColor
+            fontSize: 14,
+            color: calculatedtextColor,
           }}
         >
           {text}
         </Text>
       </Pressable>
+      {showDeleteButton && (
+        <Pressable onPress={(e) => onDelete(text)}>
+          <Text>x</Text>
+        </Pressable>
+      )}
     </View>
   );
 }

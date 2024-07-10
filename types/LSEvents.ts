@@ -10,11 +10,13 @@ export interface Seller {
   role: AttendeeRole.seller;
   productsForSale: string[];
   user: User
+  userId: string;
 }
 
 export type Attendee = {
   role: AttendeeRole.attendee | AttendeeRole.volunteer;
-  user: User
+  user: User;
+  userId: string;
 } | Seller
 
 export interface LSEvent {
@@ -27,5 +29,7 @@ export interface LSEvent {
   location: {
     name: string;
     coordinates: string;
+    address: string;
+    link: string;
   }
 }

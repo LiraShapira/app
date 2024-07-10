@@ -21,3 +21,11 @@ export const getItem = async (key: StorageKeys): Promise<string | null> => {
         return null;
     }
 }
+
+export const removeItem = async (key: StorageKeys): Promise<void> => {
+    try {
+        await AsyncStorage.removeItem(key);
+    } catch (e) {
+        console.log(e);
+    }
+}

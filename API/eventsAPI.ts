@@ -14,7 +14,6 @@ export const fetchEvents = async (): Promise<ApiResponse<LSEvent[]>> => {
     status: 200
   };
   try {
-    return { data: mockEvents, status: 200 };
     const requestString = `${SERVER_URL}/events`;
     const response = await fetch(requestString)
     const JSONresponse = await response.json()
@@ -28,13 +27,38 @@ export const fetchEvents = async (): Promise<ApiResponse<LSEvent[]>> => {
   }
 }
 
-export const addAttendee = async (addAttendeeArgs: AddAttendeeArgs): Promise<ApiResponse<Attendee>> => {
+export const addAttendee = async (addAttendeeArgs: AddAttendeeArgs): Promise<ApiResponse<LSEvent[]>> => {
   try {
     const requestString = `${SERVER_URL}/addAttendee`;
-    return { data: addAttendeeArgs.attendee, status: 200 }
     const response = await fetch(requestString, {
       method: 'POST',
       body: JSON.stringify(addAttendeeArgs),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const JSONresponse = await response.json()
+
+    if (response.status == 400) {
+      throw new Error(JSONresponse.error);
+    }
+    return { data: JSONresponse, status: response.status };
+  } catch (e: any) {
+    return e;
+  }
+}
+
+export interface RemoveAttendeeArgs {
+  userId: string;
+  eventId: string;
+}
+
+export const removeAttendee = async (removeAttendeeArgs: RemoveAttendeeArgs): Promise<ApiResponse<LSEvent[]>> => {
+  try {
+    const requestString = `${SERVER_URL}/removeAttendee`;
+    const response = await fetch(requestString, {
+      method: 'DELETE',
+      body: JSON.stringify(removeAttendeeArgs),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -49,3 +73,5 @@ export const addAttendee = async (addAttendeeArgs: AddAttendeeArgs): Promise<Api
     return e;
   }
 }
+
+
