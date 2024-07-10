@@ -126,6 +126,7 @@ function RootLayoutNav() {
           <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
           <Stack.Screen name='SellerOptions' options={{ headerShown: false }} />
           <Stack.Screen name='Send' options={{ headerShown: false }} />
+          <Stack.Screen name='CompostReport' options={{ headerShown: false }} />
         </Stack>
       </ThemeProvider>
     </>

@@ -10,7 +10,6 @@ import {
   selectNotes,
   resetForm,
   sendDepositForm,
-  resetOptionalProperties,
   toggleCompostSmell,
   selectDepositForm,
   toggleMissingDryMatter,
@@ -52,7 +51,6 @@ export default function CompostReport() {
   };
 
   const onPressSkip = () => {
-    dispatch(resetOptionalProperties());
     dispatch(sendDepositForm(userId))
       .unwrap()
       .then(({ data: transaction }) => {
@@ -65,7 +63,9 @@ export default function CompostReport() {
 
   return (
     <GradientContainer styles={styles.compostReport}>
-      <Text style={{ color: Colors[colorScheme].text, fontSize: 40, padding: 12 }}>
+      <Text
+        style={{ color: Colors[colorScheme].text, fontSize: 40, padding: 12 }}
+      >
         {i18n.t('compost_report_title')}
       </Text>
       <View style={styles.compostReport_form}>
@@ -84,23 +84,23 @@ export default function CompostReport() {
             text={i18n.t('compost_report_missing_scales')}
             onPress={() => dispatch(toggleScalesMissing())}
             active={!!depositForm.scalesMissing}
-            />
+          />
           <CustomTag
             text={i18n.t('compost_report_missing_bad_bugs')}
             onPress={() => dispatch(toggleBugs())}
             active={!!depositForm.bugs}
-            />
+          />
           <CustomTag
             text={i18n.t('compost_report_bin_full')}
             onPress={() => dispatch(toggleCompostFull())}
             active={!!depositForm.compostFull}
-            />
+          />
           <CustomTag
             text={i18n.t('compost_report_missing_clean_and_tidy')}
             onPress={() => dispatch(toggleCleanAndTidy())}
             active={!!depositForm.cleanAndTidy}
-            />
-            </View>
+          />
+        </View>
         <View>
           <Text style={{ color: Colors[colorScheme].text }}>
             {i18n.t('deposit_form_notes')}
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   input: {
     height: 80,

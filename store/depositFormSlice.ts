@@ -15,7 +15,7 @@ const initialState: DepositFormState = {
   dryMatter: 'yes',
   loading: false,
   notes: '',
-  compostStand: CompostStand.blank,
+  compostStand: CompostStand.hakaveret,
   guaranteedAccurate: false
 };
 
@@ -78,19 +78,17 @@ export const depositFormSlice = createSlice({
     toggleCleanAndTidy: (state) => {
       state.cleanAndTidy = !state.cleanAndTidy;
     },
-
-    resetOptionalProperties: (state) => {
-      delete state.dryMatter;
-      delete state.compostSmell;
-      state.notes = '';
-    },
     setCompostStand: (state, action: PayloadAction<CompostStand>) => {
       state.compostStand = action.payload;
     },
     resetForm: (state) => {
       delete state.dryMatter;
-      delete state.compostSmell;
+      state.compostSmell = false;
       state.notes = '';
+      state.bugs = false;
+      state.cleanAndTidy = false;
+      state.scalesMissing = false;
+      state.compostFull = false;
       state.amount = '';
     },
     setGuaranteedAccurate: (state, action: PayloadAction<boolean>) => {
@@ -114,7 +112,6 @@ export const depositFormSlice = createSlice({
 export const {
   resetForm,
   setNotes,
-  resetOptionalProperties,
   setCompostStand,
   setAmount,
   toggleCompostSmell,

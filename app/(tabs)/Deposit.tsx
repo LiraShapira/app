@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, useColorScheme } from 'react-native';
+import { View, StyleSheet, Text, useColorScheme, Platform } from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -9,6 +9,8 @@ import {
   selectDepositValue,
   setAmount,
   setGuaranteedAccurate,
+  selectCompostStand,
+  setCompostStand,
 } from '../../store/depositFormSlice';
 import { useRouter } from 'expo-router';
 import NumberInputNumberPad, {
@@ -19,6 +21,11 @@ import { CustomModal } from '../../components/utils/CustomModal';
 import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
 import DepositFormCheckBox from '../../components/DepositFormCheckbox';
 import { parseNumberPadInputForDeposit } from '../../utils/functions';
+import { Picker } from '@react-native-picker/picker';
+import { useEffect } from 'react';
+import { compostStands } from '../../utils/compostStands';
+import { StorageKeys } from '../../types/AsyncStorage';
+import { getItem, setItem } from '../../utils/asyncStorage';
 
 export default function Deposit() {
   const colorScheme = useColorScheme();
@@ -26,12 +33,15 @@ export default function Deposit() {
   const dispatch = useAppDispatch();
   const depositValue = useAppSelector(selectDepositValue);
   const isGuaranteedAccurate = useAppSelector(selectIsGuaranteedAccurate);
+  const compostStand = useAppSelector(selectCompostStand);
 
   const onPressCancel = () => {
     dispatch(resetForm());
     router.replace('/Home');
   };
   const onPressContinue = () => {
+    setItem(StorageKeys.compostStand, compostStand);
+
     dispatch(
       setModalText(
         `${i18n.t('deposit_modal_amount', { amount: depositValue })}
@@ -63,6 +73,12 @@ export default function Deposit() {
     }
   };
 
+  useEffect(() => {
+    getItem(StorageKeys.compostStand).then((stand) => {
+      if (stand) dispatch(setCompostStand(stand));
+    });
+  }, []);
+
   return (
     <GradientContainer endColor='#F8E0D3'>
       <CustomModal
@@ -79,6 +95,24 @@ export default function Deposit() {
         ]}
         customElement={<DepositFormCheckBox />}
       />
+      <Picker
+        style={{
+          borderRadius: 10,
+          margin: 10,
+          padding: 5,
+          fontSize: 14,
+        }}
+        selectedValue={compostStand}
+        onValueChange={(stand) => dispatch(setCompostStand(stand))}
+      >
+        {compostStands.map((stand) => (
+          <Picker.Item
+            key={stand}
+            label={i18n.t(`deposit_compost_stand_${stand}`)}
+            value={stand}
+          />
+        ))}
+      </Picker>
       <Text
         style={{
           fontSize: 40,
