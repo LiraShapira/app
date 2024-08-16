@@ -1,12 +1,10 @@
-import { selectCompostStand, setCompostStand } from '../store/depositFormSlice';
-import { Text, View, StyleSheet, useColorScheme } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { setUser } from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import {
   selectPhoneNumber,
   sendLoginForm,
   sendVerificationCode,
-  setIsLoggedIn,
   setPhoneNumber,
 } from '../store/authFormSlice';
 import CustomButton from '../components/utils/CustomButton';
@@ -22,13 +20,11 @@ import NumberInputNumberPad, {
 } from '../components/form/NumberInputNumberPad';
 import { parseNumberPadInputForPhoneNumber } from '../utils/functions';
 import { parsePhoneNumber } from 'libphonenumber-js';
-import { sendSmsVerification } from '../API/twilioAPI';
 
 export default function AuthPhoneEntry() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const phoneNumber = useAppSelector(selectPhoneNumber);
-  const selectedCompostStand = useAppSelector(selectCompostStand);
   const [isNumberError, setIsNumberError] = useState<boolean>(true);
 
   const onChangePhoneNumber = (n: NumberLabel) => {
@@ -55,7 +51,6 @@ export default function AuthPhoneEntry() {
         if (user) {
           dispatch(setUser(user));
           setItem(StorageKeys.phoneNumber, user.phoneNumber);
-          setItem(StorageKeys.compostStand, selectedCompostStand);
           router.push('/Home');
           return;
         }

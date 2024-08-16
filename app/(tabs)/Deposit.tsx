@@ -80,7 +80,7 @@ export default function Deposit() {
   }, []);
 
   return (
-    <GradientContainer endColor='#F8E0D3'>
+    <GradientContainer>
       <CustomModal
         buttons={[
           {
