@@ -74,7 +74,7 @@ export default function AuthPhoneEntry() {
           const phoneNumberForTwilio = parsePhoneNumber(phoneNumber, 'IL')
             .formatInternational()
             .split(' ')
-            .join('');
+            .join('')
 
           dispatch(sendVerificationCode(phoneNumberForTwilio))
             .unwrap()
