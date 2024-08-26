@@ -12,19 +12,22 @@ import {
   setReason,
   unsetChosenContact,
 } from '../store/sendFormSlice';
-import {useLocalSearchParams, useRouter} from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
-import {Category, Transaction} from '../types/Transaction';
+import { Category, Transaction } from '../types/Transaction';
 import {
-  addUserTransaction, getUserIdByNumber, selectUser,
-  selectUserId, setIsUserLoading,
+  addUserTransaction,
+  getUserIdByNumber,
+  selectUser,
+  selectUserId,
+  setIsUserLoading,
   setUserBalance,
 } from '../store/userSlice';
 import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import { CustomModal } from '../components/utils/CustomModal';
 import { parsePhoneNumber } from 'libphonenumber-js';
-import {Contact} from "expo-contacts";
-import {User} from "../types/User";
+import { Contact } from 'expo-contacts';
+import { User } from '../types/User';
 
 export default function SendAmount() {
   const colorScheme = useColorScheme();
@@ -41,31 +44,48 @@ export default function SendAmount() {
   const { isRequest } = params;
 
   const onPressSend = async () => {
-    dispatch(setIsUserLoading(true));
     if (!chosenContact?.phoneNumbers) return;
 
     // phone number for recipient in send flow and 'purchaser' (aka requestee) in request flow
     const phoneNumber = chosenContact?.phoneNumbers[0].number;
 
     if (!phoneNumber) return;
+    if (currentUser?.accountBalance <= 0) {
+      throw new Error('not enough');
+    }
+
+    if (amount > currentUser?.accountBalance) {
+      dispatch(setModalText('Not enough funds'));
+      dispatch(setIsModalVisible(true));
+      return;
+    }
+    dispatch(setIsUserLoading(true));
+
     try {
-      const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'US').nationalNumber as string;
+      const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'US')
+        .nationalNumber as string;
       if (parsedPhoneNumber === currentUser.phoneNumber) {
         throw new Error('Cannot send or make request to yourself');
       }
-      const {data: getUserIdByNumberData} = await dispatch(getUserIdByNumber(parsedPhoneNumber)).unwrap();
+      const { data: getUserIdByNumberData } = await dispatch(
+        getUserIdByNumber(parsedPhoneNumber)
+      ).unwrap();
       const requesteeId = getUserIdByNumberData.userId;
       const newTransaction = {
-        recipientPhoneNumber: isRequest ? currentUser.phoneNumber : parsedPhoneNumber,
+        recipientPhoneNumber: isRequest
+          ? currentUser.phoneNumber
+          : parsedPhoneNumber,
         amount: amount,
         category: Category.MISC,
         reason: reason,
         // in a request the purchaserid is the id of person the request is sent to and is therefore not known
         purchaserId: isRequest ? requesteeId : currentUserId,
-        ...(isRequest && {isRequest: true})
+        ...(isRequest && { isRequest: true }),
       };
 
-      const { data: transaction } = await dispatch(saveTransaction(newTransaction)).unwrap();
+      const { data: transaction } = await dispatch(
+        saveTransaction(newTransaction)
+      ).unwrap();
       dispatch(addUserTransaction(transaction));
       if (!isRequest) {
         const updatedBalance = currentUser.accountBalance - amount;
@@ -75,12 +95,11 @@ export default function SendAmount() {
       dispatch(setReason(''));
       dispatch(setIsUserLoading(false));
       router.push('/Home');
-
     } catch (e) {
       dispatch(setModalText(e.message));
       dispatch(setIsUserLoading(false));
       dispatch(setIsModalVisible(true));
-      }
+    }
   };
 
   const onChangeAmount = (amount: string) => {
@@ -135,13 +154,15 @@ export default function SendAmount() {
         <Text
           style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
         >
-          {isRequest ? i18n.t('request_how_much') : i18n.t('sendamount_how_much')}
+          {isRequest
+            ? i18n.t('request_how_much')
+            : i18n.t('sendamount_how_much')}
         </Text>
         {amountError ? (
           <Text
             style={{ fontSize: 10, color: Colors[colorScheme ?? 'light'].tint }}
           >
-            { i18n.t('sendamount_validate_amount') }
+            {i18n.t('sendamount_validate_amount')}
           </Text>
         ) : null}
         <TextInput
@@ -163,7 +184,7 @@ export default function SendAmount() {
         <Text
           style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
         >
-          { i18n.t('sendamount_why') }
+          {i18n.t('sendamount_why')}
         </Text>
         <TextInput
           maxLength={15}

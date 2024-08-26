@@ -102,7 +102,7 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
       if (typeof action.payload.accountBalance === 'string') {
-        state.user.accountBalance = parseFloat(action.payload.accountBalance)
+        state.user.accountBalance = 50// parseFloat(action.payload.accountBalance)
       } else {
         state.user.accountBalance = action.payload.accountBalance
       }
