@@ -50,12 +50,12 @@ export default function SendAmount() {
     const phoneNumber = chosenContact?.phoneNumbers[0].number;
 
     if (!phoneNumber) return;
-    if (currentUser?.accountBalance <= 0) {
-      throw new Error('not enough');
-    }
 
-    if (amount > currentUser?.accountBalance) {
-      dispatch(setModalText('Not enough funds'));
+    if (
+      currentUser?.accountBalance <= 0 ||
+      amount > currentUser?.accountBalance
+    ) {
+      dispatch(setModalText(i18n.t('sendamount_not_enough_funds')));
       dispatch(setIsModalVisible(true));
       return;
     }
