@@ -85,6 +85,7 @@ const heDictionary: Dictionary = {
   send_search_searching_for: 'מחפש אחר',
   send_search_placeholder: 'הזן שם או מספר טלפון',
   sendamount_how_much: 'כמה להעביר?',
+  sendamount_not_enough_funds: 'אין מספיק כספים',
 
   // sendamount_amount: 'כמה (kg)?',
   sendamount_why: 'למה?',

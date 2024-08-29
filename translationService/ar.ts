@@ -88,6 +88,8 @@ const arDictionary: Dictionary = {
   send_search_no_results: 'لا توجد نتائج لـ \'%{search}\'',
   send_search_no_results_send_to_number: '، أرسل إلى \'%{number}\'',
   sendamount_validate_amount: 'الرجاء إدخال رقم بين 1 - 99',
+  sendamount_not_enough_funds: 'لا يوجد أموال كافية  ',
+
 
   // EVENTS
   // TODO
