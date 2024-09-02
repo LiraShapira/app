@@ -34,6 +34,7 @@ const heDictionary: Dictionary = {
   transactions_list_received_from: 'העברה מ',
   transactions_list_sent_to: 'העברה ל',
   transactions_list_compost_deposit: 'עבור קומפוסט ',
+  You_have_prevented_kilos_of_garbage:'מנעת עד כה  {{co2e}} קילו זבל להטמנה',
 
   // DEPOSIT
   deposit: 'הפקדה',

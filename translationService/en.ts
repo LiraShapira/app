@@ -35,6 +35,8 @@ const enDictionary: Dictionary = {
   transactions_list_sent_to: 'Sent to ',
   transactions_list_compost_deposit: 'compost deposit',
   transaction_request_to: 'Request to ',
+  You_have_prevented_kilos_of_garbage:'You have prevented {{co2e}} kilos of garbage',
+
 
   // DEPOSIT
   deposit: 'Deposit',

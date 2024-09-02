@@ -10,8 +10,8 @@ interface TransactionsListProps {
 }
 
 export default function TransactionsList({
-                                           currentUser,
-                                         }: TransactionsListProps) {
+  currentUser,
+}: TransactionsListProps) {
   const colorScheme = useColorScheme();
 
   return (

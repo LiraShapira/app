@@ -10,13 +10,13 @@ interface UniqueDashboardButtonProps {
   params?: object;
 }
 
-type DashboardButtonProps = UniqueDashboardButtonProps & ExpoIcon
+type DashboardButtonProps = UniqueDashboardButtonProps & ExpoIcon;
 
 export default function DashboardButton({
   iconName,
   iconLibraryName,
   route,
-  params = {}
+  params = {},
 }: DashboardButtonProps) {
   const colorScheme = useColorScheme() ?? 'light';
   const router = useRouter();

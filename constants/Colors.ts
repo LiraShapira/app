@@ -7,7 +7,8 @@ export enum Light {
   highlight = '#6CB041',
   tint = '#4195B0',
   tabIconDefault = '#ccc',
-  warning = '#B04141'
+  warning = '#B04141',
+  cardBackground = '#EBF5EB',
 }
 
 export enum Dark {
@@ -19,7 +20,8 @@ export enum Dark {
   highlight = '#6CB041',
   tint = '#4195B0',
   tabIconDefault = '#ccc',
-  warning = '#B04141'
+  warning = '#B04141',
+  cardBackground = '#EBF5EB',
 }
 
 export type AppColor = Dark | Light;
@@ -31,7 +33,7 @@ interface AppColors {
 
 const appColors: AppColors = {
   dark: Dark,
-  light: Light
+  light: Light,
 };
 
-export default appColors
+export default appColors;

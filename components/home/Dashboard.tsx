@@ -5,34 +5,13 @@ import i18n from '../../translationService';
 import { selectUser } from '../../store/userSlice';
 import { useAppSelector } from '../../hooks';
 import { IconLibrary } from '../../types/Icons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-export default function Dashboard() {
+const ButtonGroup = () => {
   const colorScheme = useColorScheme();
-  const user = useAppSelector(selectUser);
 
   return (
-    <View style={styles.dashboard}>
-      <Text
-        style={{
-          color: Colors[colorScheme ?? 'light'].text,
-          ...styles.subtitle,
-        }}
-      >
-        {i18n.t('home_lira_shapira_currency_you_have')}
-      </Text>
-      <View style={styles.amountDisplay}>
-        <Text
-          style={{
-            color: Colors[colorScheme ?? 'light'].text,
-            ...styles.title,
-          }}
-        >
-          {user.accountBalance.toFixed(1)}
-        </Text>
-        <Text style={{ color: Colors[colorScheme ?? 'light'].text }}>
-          {i18n.t('home_lira_shapira_currency_shorthand')}
-        </Text>
-      </View>
+    <View style={{ position: 'relative', zIndex: 1 }}>
       <View style={styles.buttonsContainer}>
         <View style={styles.labeledButton}>
           <DashboardButton
@@ -83,44 +62,143 @@ export default function Dashboard() {
       </View>
     </View>
   );
+};
+interface Transaction {
+  amount: string;
+  category: string;
+}
+const calculateCO2E = (transactionHistory = [], amountPerKg = 0.41) => {
+  const sumDeposits = transactionHistory.reduce((acc, item: Transaction) => {
+    return item?.category.toLocaleLowerCase() === 'deposit'
+      ? acc + parseFloat(item?.amount)
+      : acc;
+  }, 0);
+  const total = sumDeposits * amountPerKg;
+  return parseFloat(total + '').toFixed(2);
+};
+export default function Dashboard() {
+  const colorScheme = useColorScheme();
+  const user = useAppSelector(selectUser);
+  return (
+    <View>
+      <View style={styles.headerContainer}>
+        <Text style={styles.nameLable}>hello {user.firstName} </Text>
+        <Text style={styles.hamburgerMenu}>
+          <FontAwesome name='bars' size={30} color='black' />
+        </Text>
+      </View>
+
+      <View style={styles.dashboard}>
+        <Text
+          style={{
+            color: Colors[colorScheme ?? 'light'].text,
+            ...styles.subtitle,
+          }}
+        >
+          {i18n.t('home_lira_shapira_currency_you_have')}
+        </Text>
+        <View style={styles.amountDisplay}>
+          <Text
+            style={{
+              color: Colors[colorScheme ?? 'light'].text,
+              ...styles.title,
+            }}
+          >
+            {user.accountBalance.toFixed(1)}
+          </Text>
+          <Text
+            style={{ color: Colors[colorScheme ?? 'light'].text, ...styles.LS }}
+          >
+            {i18n.t('home_lira_shapira_currency_shorthand')}
+          </Text>
+        </View>
+      </View>
+      <Text style={styles.co2eText}>
+        {i18n.t('You_have_prevented_kilos_of_garbage', {
+          co2e: calculateCO2E(user.transactions ?? [], 0.41),
+        })}
+        <FontAwesome name='truck' size={30} color='#e1a6a6' />
+      </Text>
+      <ButtonGroup />
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   dashboard: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginVertical: 28,
+    flexDirection: 'row',
+    paddingTop: 40,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 10,
+    marginRight: 10,
   },
   amountDisplay: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 17,
     textAlign: 'center',
-    marginBottom: 10,
-    width: '100%',
+    margin: 10,
   },
   labeledButton: {
-    display: 'flex',
     flexDirection: 'column',
     alignContent: 'center',
     textAlign: 'center',
     justifyContent: 'center',
+    position: 'relative',
+  },
+  shadowPhantom: {
+    shadowColor: '#272424',
+    shadowOffset: { width: -1, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    borderRadius: 50,
+    height: 70,
+    width: 68,
+    top: -10,
+    position: 'absolute',
   },
   buttonsContainer: {
+    display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'center',
+    top: 60,
     gap: 16,
+    zIndex: 2,
   },
   buttonLabel: {
     fontSize: 14,
     fontWeight: '700',
     textAlign: 'center',
   },
+  co2eText: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    fontWeight: 500,
+    paddingHorizontal: 15,
+  },
+  LS: {
+    display: 'flex',
+    justifyContent: 'center',
+    fontWeight: 500,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+  },
+  nameLable: {
+    fontSize: 18,
+    textAlign: 'center',
+    flex: 2,
+  },
+  hamburgerMenu: {},
 });

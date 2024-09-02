@@ -31,6 +31,7 @@ const arDictionary: Dictionary = {
   transactions_list_received_from: 'تم الاستلام من',
   transactions_list_sent_to: 'تم الإرسال إلى',
   transactions_list_compost_deposit: 'إيداع السماد',
+  You_have_prevented_kilos_of_garbage:'لقد منعت حتى الآن دفن {{co2e}} كيلوغرام من القمامة في مكب النفايات',
 
   // DEPOSIT
   deposit: 'إيداع',

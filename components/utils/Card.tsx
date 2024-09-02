@@ -12,7 +12,7 @@ export default function Card({
     <View
       style={{
         ...styles.card,
-        backgroundColor: Colors[colorScheme].background,
+        backgroundColor: Colors[colorScheme].cardBackground,
       }}
     >
       {children}
@@ -22,9 +22,11 @@ export default function Card({
 
 const styles = StyleSheet.create({
   card: {
-    margin: 8,
-    borderRadius: 29,
-    shadowColor: '#171717',
+    marginHorizontal: 8,
+    borderRadius: 18,
+    paddingTop: 12,
+    paddingBottom: 12,
+    shadowColor: '#272424',
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
