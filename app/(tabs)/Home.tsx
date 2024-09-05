@@ -13,12 +13,12 @@ export default function Home() {
   const user = useAppSelector<User>(selectUser);
   return (
     <View style={styles.container}>
-      <GradientContainer styles={{ height: 'auto' }}>
+      <GradientContainer styles={{ height:  'auto' }}>
         <Dashboard />
       </GradientContainer>
+
       <View
         style={{
-          backgroundColor: '#fff',
           paddingTop: 75,
           paddingBottom: 10,
           zIndex: -1,
@@ -29,6 +29,7 @@ export default function Home() {
       >
         <RequestCard />
       </View>
+
       <View style={styles.transactionList}>
         <Text style={{ fontSize: 40 }}>
           {i18n.t('home_transactions_title')}

@@ -6,6 +6,7 @@ import { selectUser } from '../../store/userSlice';
 import { useAppSelector } from '../../hooks';
 import { IconLibrary } from '../../types/Icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Category, Transaction } from '../../types/Transaction';
 
 const ButtonGroup = () => {
   const colorScheme = useColorScheme();
@@ -63,26 +64,26 @@ const ButtonGroup = () => {
     </View>
   );
 };
-interface Transaction {
-  amount: string;
-  category: string;
-}
-const calculateCO2E = (transactionHistory = [], amountPerKg = 0.41) => {
+
+const calculateGarbagePrevented = (transactionHistory = []) => {
   const sumDeposits = transactionHistory.reduce((acc, item: Transaction) => {
-    return item?.category.toLocaleLowerCase() === 'deposit'
-      ? acc + parseFloat(item?.amount)
+    return item?.category in Category &&
+      item?.category.toLocaleLowerCase() === 'deposit'
+      ? acc + parseFloat(item?.amount + '')
       : acc;
   }, 0);
-  const total = sumDeposits * amountPerKg;
-  return parseFloat(total + '').toFixed(2);
+
+  
+  return parseFloat(sumDeposits + '').toFixed(2);
 };
 export default function Dashboard() {
   const colorScheme = useColorScheme();
   const user = useAppSelector(selectUser);
+  console.log("dashboard ")
   return (
     <View>
       <View style={styles.headerContainer}>
-        <Text style={styles.nameLable}>hello {user.firstName} </Text>
+        <Text style={styles.nameLabel}>hello {user.firstName} </Text>
         <Text style={styles.hamburgerMenu}>
           <FontAwesome name='bars' size={30} color='black' />
         </Text>
@@ -114,8 +115,8 @@ export default function Dashboard() {
         </View>
       </View>
       <Text style={styles.co2eText}>
-        {i18n.t('You_have_prevented_kilos_of_garbage', {
-          co2e: calculateCO2E(user.transactions ?? [], 0.41),
+        {i18n.t('dashboard_You_have_prevented_kilos_of_garbage', {
+          kilos: calculateGarbagePrevented(user.transactions ?? []),
         })}
         <FontAwesome name='truck' size={30} color='#e1a6a6' />
       </Text>
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
   },
-  nameLable: {
+  nameLabel: {
     fontSize: 18,
     textAlign: 'center',
     flex: 2,

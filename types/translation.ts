@@ -33,7 +33,7 @@ export type DictionaryKey =
   'transactions_list_sent_to' |
   'transactions_list_compost_deposit' |
   'transaction_request_to' |
-  'You_have_prevented_kilos_of_garbage'|
+  'dashboard_You_have_prevented_kilos_of_garbage'|
 
   // DEPOSIT
   'deposit' |
