@@ -8,6 +8,7 @@ const heDictionary: Dictionary = {
   cancel: 'ביטול',
   continue: 'המשך',
   generic_error: 'יש בעיה. בבקשה נסה שוב מאוחר יותר.',
+  dashboard_greeting_message: 'היי {{name}}',
 
   // AUTH
   auth_login: 'כניסה',

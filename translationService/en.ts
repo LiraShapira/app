@@ -8,6 +8,7 @@ const enDictionary: Dictionary = {
   cancel: 'Cancel',
   continue: 'Continue',
   generic_error: 'We are having problems. Please try again later',
+  dashboard_greeting_message: 'hello {{name}}',
 
   // AUTH
   auth_login: 'Login',

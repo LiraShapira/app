@@ -6,7 +6,8 @@ export type DictionaryKey =
   'cancel' |
   'continue' |
   'generic_error' |
-
+  'dashboard_greeting_message'|
+  
   // AUTH
   'auth_login' |
   'auth_logout' |
@@ -17,7 +18,7 @@ export type DictionaryKey =
   'auth_first_name' |
   'auth_last_name' |
   'auth_number_error' |
-
+  
   // HOME
   'tabs_wallet' |
   'tabs_market' |

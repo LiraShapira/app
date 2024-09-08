@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, useColorScheme } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  useColorScheme,
+  Dimensions,
+} from 'react-native';
 import DashboardButton from './DashboardButton';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
@@ -73,17 +79,23 @@ const calculateGarbagePrevented = (transactionHistory = []) => {
       : acc;
   }, 0);
 
-  
   return parseFloat(sumDeposits + '').toFixed(2);
 };
 export default function Dashboard() {
   const colorScheme = useColorScheme();
   const user = useAppSelector(selectUser);
-  console.log("dashboard ")
+  console.log('dashboard ');
   return (
     <View>
       <View style={styles.headerContainer}>
-        <Text style={styles.nameLabel}>hello {user.firstName} </Text>
+        <Text
+          style={{
+            color: Colors[colorScheme ?? 'light'].text,
+            ...styles.nameLabel,
+          }}
+        >
+  {i18n.t('dashboard_greeting_message', { name: user.firstName })}
+  </Text>
         <Text style={styles.hamburgerMenu}>
           <FontAwesome name='bars' size={30} color='black' />
         </Text>
@@ -114,7 +126,12 @@ export default function Dashboard() {
           </Text>
         </View>
       </View>
-      <Text style={styles.co2eText}>
+      <Text
+        style={{
+          color: Colors[colorScheme ?? 'light'].text,
+          ...styles.co2eText,
+        }}
+      >
         {i18n.t('dashboard_You_have_prevented_kilos_of_garbage', {
           kilos: calculateGarbagePrevented(user.transactions ?? []),
         })}
@@ -181,10 +198,10 @@ const styles = StyleSheet.create({
   },
   co2eText: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
     fontWeight: 500,
-    paddingHorizontal: 15,
+    gap: 10,
   },
   LS: {
     display: 'flex',
