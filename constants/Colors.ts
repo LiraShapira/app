@@ -8,7 +8,7 @@ export enum Light {
   tint = '#4195B0',
   tabIconDefault = '#ccc',
   warning = '#B04141',
-  cardBackground = '#EBF5EB',
+  
 }
 
 export enum Dark {
@@ -21,7 +21,6 @@ export enum Dark {
   tint = '#4195B0',
   tabIconDefault = '#ccc',
   warning = '#B04141',
-  cardBackground = '#EBF5EB',
 }
 
 export type AppColor = Dark | Light;

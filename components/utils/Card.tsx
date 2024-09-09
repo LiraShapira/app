@@ -12,7 +12,7 @@ export default function Card({
     <View
       style={{
         ...styles.card,
-        backgroundColor: Colors[colorScheme].cardBackground,
+        backgroundColor: Colors[colorScheme].backgroundHighlight1,
       }}
     >
       {children}
