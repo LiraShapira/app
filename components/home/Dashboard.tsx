@@ -75,7 +75,7 @@ const calculateGarbagePrevented = (transactionHistory = []) => {
   const sumDeposits = transactionHistory.reduce((acc, item: Transaction) => {
     return item?.category in Category &&
       item?.category.toLocaleLowerCase() === 'deposit'
-      ? acc + item?.amount
+      ? acc + parseFloat(item?.amount + '')
       : acc;
   }, 0);
 
