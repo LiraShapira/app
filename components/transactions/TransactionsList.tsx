@@ -10,8 +10,8 @@ interface TransactionsListProps {
 }
 
 export default function TransactionsList({
-                                           currentUser,
-                                         }: TransactionsListProps) {
+  currentUser,
+}: TransactionsListProps) {
   const colorScheme = useColorScheme();
 
   return (
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   transactionList: {
     paddingVertical: 8,
     width: '100%',
-    overflow: 'scroll',
+    overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'

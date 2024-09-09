@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import Dashboard from '../../components/home/Dashboard';
@@ -11,18 +11,29 @@ import { User } from '../../types/User';
 
 export default function Home() {
   const user = useAppSelector<User>(selectUser);
+
   return (
     <View style={styles.container}>
-      <GradientContainer styles={{ height: '30%' }}>
+      <GradientContainer styles={{ height: 'auto' }}>
         <Dashboard />
       </GradientContainer>
-      <RequestCard />
-      <View style={styles.transactionList}>
-        <Text style={{ fontSize: 40 }}>
-          {i18n.t('home_transactions_title')}
-        </Text>
-        <TransactionsList currentUser={user} />
+
+      <View
+        style={{
+          paddingTop: 75,
+          paddingBottom: 10,
+          zIndex: -1,
+          width: '100%',
+          position: 'relative',
+          height: 'auto',
+        }}
+      >
+        <RequestCard />
       </View>
+      <Text style={{ fontSize: 40 }}>{i18n.t('home_transactions_title')}</Text>
+      <ScrollView style={{ width: '100%' }}>
+        <TransactionsList currentUser={user} />
+      </ScrollView>
     </View>
   );
 }
@@ -46,12 +57,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     borderRadius: 50,
     fontSize: 40,
-  },
-  transactionList: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'flex-start',
-    paddingHorizontal: 8,
   },
   separator: {
     marginVertical: 30,

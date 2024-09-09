@@ -128,7 +128,9 @@ export default function Deposit() {
           onButtonPress={onPressNumberPadInput}
           appendedText={i18n.t('deposit_form_kilogram')}
           value={depositValue}
-        />
+          
+          />
+          
         <View style={styles.buttons}>
           <CustomButton
             text={i18n.t('continue')}
@@ -144,6 +146,7 @@ export default function Deposit() {
       </View>
     </GradientContainer>
   );
+  
 }
 
 const styles = StyleSheet.create({

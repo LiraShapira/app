@@ -8,6 +8,7 @@ const heDictionary: Dictionary = {
   cancel: 'ביטול',
   continue: 'המשך',
   generic_error: 'יש בעיה. בבקשה נסה שוב מאוחר יותר.',
+  dashboard_greeting_message: 'היי {{name}}',
 
   // AUTH
   auth_login: 'כניסה',
@@ -34,6 +35,7 @@ const heDictionary: Dictionary = {
   transactions_list_received_from: 'העברה מ',
   transactions_list_sent_to: 'העברה ל',
   transactions_list_compost_deposit: 'עבור קומפוסט ',
+  dashboard_You_have_prevented_kilos_of_garbage:'מנעת עד כה  {{kilos}} קילו זבל להטמנה',
 
   // DEPOSIT
   deposit: 'הפקדה',
