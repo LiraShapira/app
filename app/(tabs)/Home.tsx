@@ -58,13 +58,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     fontSize: 40,
   },
-  // transactionList: {
-  //   width: '100%',
-  //   display: 'flex',
-  //   alignItems: 'flex-start',
-  //   backgroundColor: 'grey',
-   
-  // },
   separator: {
     marginVertical: 30,
     height: 1,

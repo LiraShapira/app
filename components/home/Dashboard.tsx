@@ -75,7 +75,7 @@ const calculateGarbagePrevented = (transactionHistory = []) => {
   const sumDeposits = transactionHistory.reduce((acc, item: Transaction) => {
     return item?.category in Category &&
       item?.category.toLocaleLowerCase() === 'deposit'
-      ? acc + parseFloat(item?.amount + '')
+      ? acc + item?.amount
       : acc;
   }, 0);
 
@@ -84,7 +84,6 @@ const calculateGarbagePrevented = (transactionHistory = []) => {
 export default function Dashboard() {
   const colorScheme = useColorScheme();
   const user = useAppSelector(selectUser);
-  console.log('dashboard ');
   return (
     <View>
       <View style={styles.headerContainer}>
@@ -94,8 +93,8 @@ export default function Dashboard() {
             ...styles.nameLabel,
           }}
         >
-  {i18n.t('dashboard_greeting_message', { name: user.firstName })}
-  </Text>
+          {i18n.t('dashboard_greeting_message', { name: user.firstName })}
+        </Text>
         <Text style={styles.hamburgerMenu}>
           <FontAwesome name='bars' size={30} color='black' />
         </Text>

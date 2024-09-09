@@ -9,7 +9,6 @@ const enDictionary: Dictionary = {
   continue: 'Continue',
   generic_error: 'We are having problems. Please try again later',
   dashboard_greeting_message: 'hello {{name}}',
-
   // AUTH
   auth_login: 'Login',
   auth_logout: 'Logout?',
@@ -37,8 +36,6 @@ const enDictionary: Dictionary = {
   transactions_list_compost_deposit: 'compost deposit',
   transaction_request_to: 'Request to ',
   dashboard_You_have_prevented_kilos_of_garbage:'You have prevented {{kilos}} kilos of garbage',
-
-
   // DEPOSIT
   deposit: 'Deposit',
   deposit_title: 'How much?',

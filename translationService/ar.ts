@@ -8,8 +8,6 @@ const arDictionary: Dictionary = {
   cancel: 'إلغاء',
   continue: 'متابعة',
   dashboard_greeting_message: 'مرحبًا {{name}}',
-
-
   // HOME
   tabs_wallet: 'محفظة',
 
