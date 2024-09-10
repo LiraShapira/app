@@ -13,7 +13,6 @@ interface AuthForm {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-
 }
 interface AuthFormState extends AuthForm {
   loading: boolean;
@@ -32,79 +31,113 @@ export const sendLoginForm = createAsyncThunk<
   SuccessApiResponse<User>,
   undefined,
   { state: RootState }
->('authForm/sendLoginForm', async (_u, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
-  const { phoneNumber } = getState().authForm;
-  const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'IL').nationalNumber;
-  const response = await fetchUser(parsedPhoneNumber);
-  if (!('data' in response)) {
-    throw new Error(response.message)
+>(
+  'authForm/sendLoginForm',
+  async (_u, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
+    const { phoneNumber } = getState().authForm;
+    dispatch(setIsLoading(true));
+    const parsedPhoneNumber = parsePhoneNumber(
+      phoneNumber,
+      'IL'
+    ).nationalNumber;
+    const response = await fetchUser(parsedPhoneNumber);
+    if (!('data' in response)) {
+      dispatch(setIsLoading(false));
+
+      throw new Error(response.message);
+    }
+    if (response.data) {
+      dispatch(resetForm());
+      setItem(StorageKeys.phoneNumber, response.data.phoneNumber);
+      dispatch(setUser(response.data));
+      dispatch(setIsLoading(false));
+
+      return response;
+    } else {
+      dispatch(setIsLoading(false));
+      throw new Error('User not found');
+    }
   }
-  if (response.data) {
-    dispatch(resetForm());
-    setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
-    dispatch(setUser(response.data))
-    return response;
-  } else {
-    throw new Error('User not found');
-  }
-});
+);
 
 export const sendVerificationCode = createAsyncThunk<
   SuccessApiResponse<{ success: boolean }>,
   string,
   { state: RootState }
->('authForm/sendVerificationCode', async (phoneNumber): Promise<SuccessApiResponse<{ success: boolean }>> => {
-  const response = await sendSmsVerification(phoneNumber);
-  if (!('data' in response)) {
-    throw new Error('error sending code')
+>(
+  'authForm/sendVerificationCode',
+  async (phoneNumber): Promise<SuccessApiResponse<{ success: boolean }>> => {
+    const response = await sendSmsVerification(phoneNumber);
+    if (!('data' in response)) {
+      throw new Error('error sending code');
+    }
+    if (response.data) {
+      return response;
+    } else {
+      throw new Error('error sending code');
+    }
   }
-  if (response.data) {
-    return response;
-  } else {
-    throw new Error('error sending code');
-  }
-});
+);
 
 export const checkVerificationCode = createAsyncThunk<
   SuccessApiResponse<{ success: boolean }>,
-  { code: string, phoneNumber: string },
+  { code: string; phoneNumber: string },
   { state: RootState }
->('authForm/checkVerificationCode', async ({ phoneNumber, code }): Promise<SuccessApiResponse<{ success: boolean }>> => {
-  const response = await checkSmsVerification(phoneNumber, code);
-  if (!('data' in response)) {
-    throw new Error('error verifying code')
+>(
+  'authForm/checkVerificationCode',
+  async ({
+    phoneNumber,
+    code,
+  }): Promise<SuccessApiResponse<{ success: boolean }>> => {
+    const response = await checkSmsVerification(phoneNumber, code);
+    if (!('data' in response)) {
+      throw new Error('error verifying code');
+    }
+    if (response.data) {
+      return response;
+    } else {
+      throw new Error('error verifying code');
+    }
   }
-  if (response.data) {
-    return response;
-  } else {
-    throw new Error('error verifying code');
-  }
-});
+);
 
 export const sendRegistrationForm = createAsyncThunk<
   SuccessApiResponse<User>,
   string | undefined,
   { state: RootState }
->('authForm/sendRegistrationForm', async (_userId: string | undefined, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
-  const { phoneNumber, firstName, lastName } = getState().authForm;
-  const response = await registerNewUser({ phoneNumber, firstName, lastName });
-  if (!('data' in response)) {
-    throw new Error(response.message)
+>(
+  'authForm/sendRegistrationForm',
+  async (
+    _userId: string | undefined,
+    { getState, dispatch }
+  ): Promise<SuccessApiResponse<User>> => {
+    const { phoneNumber, firstName, lastName } = getState().authForm;
+    const response = await registerNewUser({
+      phoneNumber,
+      firstName,
+      lastName,
+    });
+    if (!('data' in response)) {
+      throw new Error(response.message);
+    }
+    if (response.data) {
+      dispatch(resetForm());
+      setItem(StorageKeys.phoneNumber, response.data.phoneNumber);
+      dispatch(setUser(response.data));
+      return response;
+    } else {
+      throw new Error('User not found');
+    }
   }
-  if (response.data) {
-    dispatch(resetForm());
-    setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
-    dispatch(setUser(response.data))
-    return response;
-  } else {
-    throw new Error('User not found');
-  }
-});
+);
 
 const authFormSlice = createSlice({
   name: 'authForm',
   initialState,
   reducers: {
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
     setFirstName: (state, action: PayloadAction<string>) => {
       state.firstName = action.payload;
     },
@@ -119,11 +152,11 @@ const authFormSlice = createSlice({
     },
     setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
-    }
+    },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(sendLoginForm.pending, state => {
+      .addCase(sendLoginForm.pending, (state) => {
         state.loading = true;
       })
       .addCase(sendLoginForm.fulfilled, (state) => {
@@ -132,7 +165,7 @@ const authFormSlice = createSlice({
       .addCase(sendLoginForm.rejected, (state) => {
         state.loading = false;
       })
-      .addCase(sendRegistrationForm.pending, state => {
+      .addCase(sendRegistrationForm.pending, (state) => {
         state.loading = true;
       })
       .addCase(sendRegistrationForm.fulfilled, (state) => {
@@ -150,19 +183,19 @@ export const {
   setPhoneNumber,
   resetForm,
   setIsLoggedIn,
+  setIsLoading,
 } = authFormSlice.actions;
 
-export const selectFirstName = (state: RootState) => state.authForm.firstName
+export const selectFirstName = (state: RootState) => state.authForm.firstName;
 
+export const selectLastName = (state: RootState) => state.authForm.lastName;
 
-export const selectLastName = (state: RootState) => state.authForm.lastName
-
-
-export const selectPhoneNumber = (state: RootState) => state.authForm.phoneNumber
-
+export const selectPhoneNumber = (state: RootState) =>
+  state.authForm.phoneNumber;
 
 export const selectIsLoggedIn = (state: RootState) => state.authForm.isLoggedIn;
 
-export const selectAuthFormLoading = (state: RootState) => state.authForm.loading;
+export const selectAuthFormLoading = (state: RootState) =>
+  state.authForm.loading;
 
 export default authFormSlice.reducer;
