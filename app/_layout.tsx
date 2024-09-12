@@ -29,18 +29,15 @@ export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
-
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: '(tabs)',
 };
-
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
   });
-
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
@@ -84,9 +81,15 @@ function RootLayoutNav() {
               dispatch(setIsLoggedIn(true));
               router.push('/Home');
             }
+          })
+          .catch(() => {
+            router.push('/AuthPhoneEntry');
+            dispatch(setIsUserLoading(false));
           });
+      } else {
+        router.push('/AuthPhoneEntry');
+        dispatch(setIsUserLoading(false));
       }
-      router.push('/AuthPhoneEntry');
     } else {
       getItem(StorageKeys.phoneNumber).then((phoneNumber) => {
         if (phoneNumber) {
@@ -107,17 +110,9 @@ function RootLayoutNav() {
 
   return (
     <>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <LoadingPage
-          loading={
-            isUserLoading ||
-            isAuthLoading ||
-            isAppLoading ||
-            isDepositFormLoading ||
-            isSendFormLoading
-          }
-        />
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
+          <Stack.Screen name='index' options={{ headerShown: false }} />
           <Stack.Screen
             name='AuthPhoneEntry'
             options={{ headerShown: false }}
