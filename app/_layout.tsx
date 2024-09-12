@@ -81,9 +81,15 @@ function RootLayoutNav() {
               dispatch(setIsLoggedIn(true));
               router.push('/Home');
             }
+          })
+          .catch(() => {
+            router.push('/AuthPhoneEntry');
+            dispatch(setIsUserLoading(false));
           });
+      } else {
+        router.push('/AuthPhoneEntry');
+        dispatch(setIsUserLoading(false));
       }
-      router.push('/AuthPhoneEntry');
     } else {
       getItem(StorageKeys.phoneNumber).then((phoneNumber) => {
         if (phoneNumber) {
@@ -104,17 +110,9 @@ function RootLayoutNav() {
 
   return (
     <>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <LoadingPage
-          loading={
-            isUserLoading ||
-            isAuthLoading ||
-            isAppLoading ||
-            isDepositFormLoading ||
-            isSendFormLoading
-          }
-        />
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
+          <Stack.Screen name='index' options={{ headerShown: false }} />
           <Stack.Screen
             name='AuthPhoneEntry'
             options={{ headerShown: false }}
