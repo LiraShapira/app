@@ -60,6 +60,7 @@ interface NumberInputNumberPadProps {
   prependedText?: string;
   appendedText?: string;
   onButtonPress: (n: NumberLabel) => void;
+  onChangeText: (n: NumberLabel) => void;
 }
 
 const textDirection = getLocales()[0].textDirection || 'ltr';
