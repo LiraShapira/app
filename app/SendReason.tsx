@@ -115,6 +115,7 @@ export default function SendReason() {
     if (!reason) {
       setReasonError(true);
 
+  dispatch(setReason(reason));
       return;
     }
     setReasonError(false);
