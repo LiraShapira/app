@@ -25,7 +25,6 @@ import LoadingPage from '../components/utils/LoadingPage';
 import { selectDepositFormLoading } from '../store/depositFormSlice';
 import { selectSendFormLoading } from '../store/sendFormSlice';
 import { selectIsAppLoading } from '../store/appStateSlice';
-import StepsComponentCopy from './StepsComponentCopy';
 import React from 'react';
 
 export {
@@ -138,17 +137,11 @@ function RootLayoutNav() {
           <Stack.Screen name='CompostReport' options={{ headerShown: false }} />
           <Stack.Screen
             name='SendAmount'
-            options={{
-              header: () => <StepsComponentCopy steps={steps} />,
-              headerShown: false,
-            }}
+      
           />
           <Stack.Screen
             name='SendReason'
-            options={{
-              header: () => <StepsComponentCopy steps={steps} />,
-              headerShown: false,
-            }}
+      
           />
         </Stack>
       </ThemeProvider>

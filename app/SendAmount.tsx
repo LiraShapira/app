@@ -27,66 +27,6 @@ export default function SendAmount() {
   const params = useLocalSearchParams();
   const { isRequest } = params;
 
-  // const onPressSend = async () => {
-  //   if (!chosenContact?.phoneNumbers) return;
-
-  //   // phone number for recipient in send flow and 'purchaser' (aka requestee) in request flow
-  //   const phoneNumber = chosenContact?.phoneNumbers[0].number;
-
-  //   if (!phoneNumber) return;
-
-  //   if (
-  //     currentUser?.accountBalance <= 0 ||
-  //     amount > currentUser?.accountBalance
-  //   ) {
-  //     dispatch(setModalText(i18n.t('sendamount_not_enough_funds')));
-  //     dispatch(setIsModalVisible(true));
-  //     return;
-  //   }
-  //   dispatch(setIsUserLoading(true));
-
-  //   try {
-  //     const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'US')
-  //       .nationalNumber as string;
-  //     if (parsedPhoneNumber === currentUser.phoneNumber) {
-  //       throw new Error('Cannot send or make request to yourself');
-  //     }
-  //     const { data: getUserIdByNumberData } = await dispatch(
-  //       getUserIdByNumber(parsedPhoneNumber)
-  //     ).unwrap();
-  //     const requesteeId = getUserIdByNumberData.userId;
-  //     const newTransaction = {
-  //       recipientPhoneNumber: isRequest
-  //         ? currentUser.phoneNumber
-  //         : parsedPhoneNumber,
-  //       amount: amount,
-  //       category: Category.MISC,
-  //       reason: reason,
-  //       // in a request the purchaserid is the id of person the request is sent to and is therefore not known
-  //       purchaserId: isRequest ? requesteeId : currentUserId,
-  //       ...(isRequest && { isRequest: true }),
-  //     };
-
-  //     const { data: transaction } = await dispatch(
-  //       saveTransaction(newTransaction)
-  //     ).unwrap();
-  //     dispatch(addUserTransaction(transaction));
-  //     if (!isRequest) {
-  //       const updatedBalance = currentUser.accountBalance - amount;
-  //       dispatch(setUserBalance(updatedBalance));
-  //     }
-  //     dispatch(setAmount(0));
-  //     dispatch(setReason(''));
-  //     dispatch(setIsUserLoading(false));
-  //     router.push('/Home');
-  //   } catch (e) {
-  //     dispatch(setModalText(e.message));
-  //     dispatch(setIsUserLoading(false));
-  //     dispatch(setIsModalVisible(true));
-  //   }
-  //   console.log('test');
-  // };
-
   const onChangeAmount = (amount: string) => {
     if (!amount) {
       setAmountError(true);
@@ -191,6 +131,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     top: 40,
     padding: 10,
-
   },
 });
