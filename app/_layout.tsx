@@ -25,6 +25,8 @@ import LoadingPage from '../components/utils/LoadingPage';
 import { selectDepositFormLoading } from '../store/depositFormSlice';
 import { selectSendFormLoading } from '../store/sendFormSlice';
 import { selectIsAppLoading } from '../store/appStateSlice';
+import React from 'react';
+
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -105,9 +107,15 @@ function RootLayoutNav() {
     dispatch(setIsUserLoading(false));
   }, []);
 
+  const steps = [
+    { label: 'Step 1', current: true, completed: false },
+    { label: 'Step 2', current: false, completed: false },
+    { label: 'Step 3', current: false, completed: false },
+  ];
+
   return (
     <>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <LoadingPage
           loading={
             isUserLoading ||
@@ -127,6 +135,14 @@ function RootLayoutNav() {
           <Stack.Screen name='SellerOptions' options={{ headerShown: false }} />
           <Stack.Screen name='Send' options={{ headerShown: false }} />
           <Stack.Screen name='CompostReport' options={{ headerShown: false }} />
+          <Stack.Screen
+            name='SendAmount'
+      
+          />
+          <Stack.Screen
+            name='SendReason'
+      
+          />
         </Stack>
       </ThemeProvider>
     </>
