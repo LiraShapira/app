@@ -104,7 +104,6 @@ function RootLayoutNav() {
       });
     }
 
-    dispatch(setIsUserLoading(false));
   }, []);
 
   const steps = [

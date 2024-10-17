@@ -36,7 +36,7 @@ export const loadUser = createAsyncThunk<
   SuccessApiResponse<User>,
   string,
   { state: RootState }
->('user/fetchUser', async (phoneNumber: string) => {
+>('user/loadUser', async (phoneNumber: string) => {
   const response = await fetchUser(phoneNumber);
   if (!('data' in response)) {
     throw new Error(response.message);
