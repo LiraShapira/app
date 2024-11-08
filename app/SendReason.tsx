@@ -34,10 +34,11 @@ import { parsePhoneNumber } from 'libphonenumber-js';
 import { User } from '../types/User';
 import { Contact } from 'expo-contacts';
 import { CustomModal } from '../components/utils/CustomModal';
+import GradientContainer from '../components/utils/GradientContainer';
 
 export default function SendReason() {
   const colorScheme = useColorScheme();
-  const [reasonError, setReasonError] = useState<boolean>(false);
+  const [reasonError, setReasonError] = useState<boolean>(true);
   const router = useRouter();
   const currentUser = useAppSelector<User>(selectUser);
   const chosenContact = useAppSelector<Contact>(selectChosenContact);
@@ -112,10 +113,10 @@ export default function SendReason() {
   };
 
   const onChangeReason = (reason: string) => {
+    console.log(reason)
     if (!reason) {
       setReasonError(true);
-
-  dispatch(setReason(reason));
+      dispatch(setReason(reason));
       return;
     }
     setReasonError(false);
@@ -135,44 +136,46 @@ export default function SendReason() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: Colors[colorScheme ?? 'light'].backgroundHighlight1 }]}>
-      <CustomModal
-        type='error'
-        buttons={[
-          { text: i18n.t('cancel'), onPress: onModalCancel },
-          { text: i18n.t('sendamount_back'), onPress: onModalChangeContact },
-        ]}
-      />
-      <Text
-        style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
-      >
-        {i18n.t('sendamount_why')}
-      </Text>
-      <TextInput
-        maxLength={15}
-        style={{
-          fontSize: 44,
-          textAlign: 'center',
-          color: Colors[colorScheme ?? 'light'].text,
-          borderBottomColor: Colors[colorScheme ?? 'light'].text,
-          borderBottomWidth: 1,
-          width: '60%',
-        }}
-        onChangeText={onChangeReason}
-        inputMode='text'
-      />
-      <View style={styles.buttonContainer}>
-        <CustomButton
-          disabled={!reason || reasonError}
-          onPress={onPressSend}
-          text={i18n.t('sendamount_continue')}
+    <GradientContainer>
+      <View style={styles.container}>
+        <CustomModal
+          type="error"
+          buttons={[
+            { text: i18n.t('cancel'), onPress: onModalCancel },
+            { text: i18n.t('sendamount_back'), onPress: onModalChangeContact },
+          ]}
         />
-        <CustomButton
-          onPress={() => router.back()}
-          text={i18n.t('sendamount_back')}
+        <Text
+          style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
+        >
+          {i18n.t('sendamount_why')}
+        </Text>
+        <TextInput
+          maxLength={15}
+          style={{
+            fontSize: 44,
+            textAlign: 'center',
+            color: Colors[colorScheme ?? 'light'].text,
+            borderBottomColor: Colors[colorScheme ?? 'light'].text,
+            borderBottomWidth: 1,
+            width: '60%',
+          }}
+          onChangeText={onChangeReason}
+          inputMode="text"
         />
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            disabled={!reason || reasonError}
+            onPress={onPressSend}
+            text={i18n.t('sendamount_continue')}
+          />
+          <CustomButton
+            onPress={() => router.back()}
+            text={i18n.t('sendamount_back')}
+          />
+        </View>
       </View>
-    </View>
+    </GradientContainer>
   );
 }
 
