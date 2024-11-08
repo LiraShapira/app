@@ -51,7 +51,6 @@ export default function AuthCodeValidation() {
 
   return (
     <GradientContainer>
-      <>
         <View
           style={{
             height: '90%',
@@ -71,7 +70,6 @@ export default function AuthCodeValidation() {
             <Text style={styles.numberErrorText}>6 digit required</Text>
           )}
         </View>
-      </>
     </GradientContainer>
   );
 }

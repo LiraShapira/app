@@ -82,7 +82,6 @@ function RootLayoutNav() {
         .then(({ data: user }) => {
           if (user) {
             dispatch(setUser(user));
-            localStorage.setItem('phoneNumber', user.phoneNumber);
             dispatch(setIsLoggedIn(true));
             router.push('/Home');
           }
