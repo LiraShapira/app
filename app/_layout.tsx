@@ -73,21 +73,23 @@ function RootLayoutNav() {
 
   useEffect(() => {
     dispatch(setIsUserLoading(true));
-
+    
     if (Platform.OS === 'web') {
       const phoneNumber = localStorage.getItem('phoneNumber');
       if (phoneNumber) {
         dispatch(loadUser(phoneNumber))
-          .unwrap()
-          .then(({ data: user }) => {
-            if (user) {
-              dispatch(setUser(user));
-              localStorage.setItem('phoneNumber', user.phoneNumber);
-              dispatch(setIsLoggedIn(true));
-              router.push('/Home');
-            }
-          });
+        .unwrap()
+        .then(({ data: user }) => {
+          if (user) {
+            dispatch(setUser(user));
+            localStorage.setItem('phoneNumber', user.phoneNumber);
+            dispatch(setIsLoggedIn(true));
+            router.push('/Home');
+          }
+        });
       }
+      
+      dispatch(setIsUserLoading(false));
       router.push('/AuthPhoneEntry');
     } else {
       getItem(StorageKeys.phoneNumber).then((phoneNumber) => {
@@ -100,17 +102,13 @@ function RootLayoutNav() {
                 dispatch(setIsLoggedIn(true));
               }
             });
+        } else {
+          dispatch(setIsUserLoading(false));
+          router.push('/AuthPhoneEntry');
         }
       });
     }
-
   }, []);
-
-  const steps = [
-    { label: 'Step 1', current: true, completed: false },
-    { label: 'Step 2', current: false, completed: false },
-    { label: 'Step 3', current: false, completed: false },
-  ];
 
   return (
     <>

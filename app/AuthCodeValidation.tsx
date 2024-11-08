@@ -44,7 +44,6 @@ export default function AuthCodeValidation() {
 
   const onButtonPress = (n: NumberLabel) => {
     const newCode = parseNumberPadInputForOTP(n, code);
-    console.log({ n, newCode });
     if (newCode) {
       setCode(newCode);
     }
