@@ -69,7 +69,8 @@ export default function SendAmount() {
       style={[
         styles.container,
         {
-          backgroundColor: Colors[colorScheme ?? 'light'].backgroundHighlight1,
+          backgroundColor:
+            colorScheme === 'light' ? Colors.light.backgroundHighlight1 : '',
         },
       ]}
     >
