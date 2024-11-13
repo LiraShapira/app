@@ -180,30 +180,31 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
         <View style={styles.eventInfo}>
           <View style={{ flexDirection: 'row' }}>
             <Text>{i18n.t(`day_${day}`)}, </Text>
-            <Text style={{ color: Colors[colorScheme].text }}>
-              {dateDisplayText}
-            </Text>
+            <Text>{dateDisplayText}</Text>
           </View>
           <Text
             style={{
-              color: Colors[colorScheme].text,
               fontSize: 24,
               fontWeight: '400',
             }}
           >
             {event.title}
           </Text>
-          <Text style={{ color: Colors[colorScheme].text, fontSize: 15 }}>
+          <Text
+            style={{
+              fontSize: 15,
+            }}
+          >
             {event.location.name}
           </Text>
           <LSEventItemPeopleDetails event={event} />
           <View style={styles.buttonContainer}>
             <CustomButton
+              textColor={Colors[colorScheme].text}
               text={i18n.t('ls_event_item_rsvp')}
               onPress={openModal}
             />
             <CustomButton
-              textColor={Colors[colorScheme].text}
               transparent
               text='share'
               onPress={onShare}
@@ -216,10 +217,11 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
 }
 
 const styles = StyleSheet.create({
-  LSEventItem: {},
+  LSEventItem: {
+    borderRadius: 29,
+  },
   eventInfo: {
     justifyContent: 'space-between',
-    gap: 5,
     margin: 10,
   },
   buttonContainer: {

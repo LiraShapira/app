@@ -23,31 +23,19 @@ export default function EventsList() {
 
   return (
     <View style={styles.flexContainer}>
-      <ScrollView style={styles.scrollContainer}>
-        {events.length ? (
-          events.map((event) => (
-            <Card key={event.id}>
-              <LSEventItem event={event} />
-            </Card>
-          ))
-        ) : (
-          <Text style={styles.noEventsText}>
-            {i18n.t('events_list_no_events')}
-          </Text>
-        )}
-      </ScrollView>
+      {events.length > 0 &&
+        events.map((event) => (
+          <Card key={event.id}>
+            <LSEventItem event={event} />
+          </Card>
+        ))}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  flexContainer: {
-    flex: 1,
-  },
-  scrollContainer: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
+  flexContainer: {},
+
   noEventsText: {
     fontSize: 15,
     fontWeight: '700',
