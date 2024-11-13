@@ -23,6 +23,7 @@ import { setModalText, setIsModalVisible } from '../store/appStateSlice';
 import { setUser } from '../store/userSlice';
 import { StorageKeys } from '../types/AsyncStorage';
 import { setItem } from '../utils/asyncStorage';
+import { parsePhoneNumber } from 'libphonenumber-js';
 
 export default function AuthNameEntry() {
   const colorScheme = useColorScheme() || 'light';
@@ -37,7 +38,9 @@ export default function AuthNameEntry() {
       .then(({ data: user }) => {
         if (user) {
           dispatch(setUser(user));
-          setItem(StorageKeys.phoneNumber, user.phoneNumber);
+          // save phoneNumber locally in format 5******** (9 digits) 
+          const parsedPhoneNumber = parsePhoneNumber(user.phoneNumber, 'IL').nationalNumber;
+          setItem(StorageKeys.phoneNumber, parsedPhoneNumber);
         }
         router.push('/Home');
       })
