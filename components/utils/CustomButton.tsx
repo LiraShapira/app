@@ -36,7 +36,7 @@ export default function CustomButton({
   const transparentBorderStyles = {
     borderColor: '#BFC9B7',
     borderStyle: 'solid',
-    borderWidth: '2px',
+    borderWidth: 2,
   };
 
   return (
