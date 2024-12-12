@@ -84,10 +84,10 @@ function RootLayoutNav() {
             router.push('/Home');
           }
         });
+      } else { 
+        dispatch(setIsUserLoading(false));
+        router.push('/AuthPhoneEntry');
       }
-      
-      dispatch(setIsUserLoading(false));
-      router.push('/AuthPhoneEntry');
     } else {
       getItem(StorageKeys.phoneNumber).then((phoneNumber) => {
         if (phoneNumber) {
