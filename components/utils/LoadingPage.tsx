@@ -17,7 +17,7 @@ const LoadingPage = ({ loading }: LoadingPageProps) => {
         >
           <View style={styles.modalView}>
             <ActivityIndicator
-              size='large'
+              size={36}
               style={{ padding: 35 }}
               color='#00ff00'
             />

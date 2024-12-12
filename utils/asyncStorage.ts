@@ -35,9 +35,10 @@ export const getItem = async <K extends StorageKeys>(key: K): Promise<StorageVal
         try {
             const value = await AsyncStorage.getItem(key);
             if (value === null) {
-                throw new Error(`No value for key ${key}`);
+                return null;
+            } else {
+                return value as StorageValue<K>;
             }
-            return value as StorageValue<K>;
         } catch (e) {
             console.log(e);
             return null;
