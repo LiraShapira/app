@@ -4,11 +4,12 @@
     "slug": "liraShapiraApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/lira-shapira.png",
+    "icon": "./assets/icons/lira-shapira.png",
     "scheme": "myapp",
+    "newArchEnabled": true,
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/icons/lira-shapira.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +24,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/lira-shapira.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
@@ -44,7 +45,8 @@
         }
       ],
       "expo-localization",
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "extra": {
       "supportsRTL": true,
