@@ -28,24 +28,6 @@ export default function SendAmount() {
   const params = useLocalSearchParams();
   const { isRequest } = params;
 
-  const onChangeAmount = (amount: string) => {
-    if (!amount) {
-      setAmountError(true);
-      return;
-    }
-    if (!parseInt(amount)) {
-      setAmountError(true);
-      return;
-    }
-
-    if (Number.isNaN(parseInt(amount))) {
-      setAmountError(true);
-      return;
-    }
-    setAmountError(false);
-    dispatch(setAmount(parseInt(amount)));
-  };
-
   const onModalCancel = () => {
     dispatch(setAmount(0));
     dispatch(setReason(''));
@@ -89,7 +71,6 @@ export default function SendAmount() {
           <NumberInputNumberPad
             onButtonPress={onPressNumberPadInput}
             value={amount.toString()}
-            onChangeText={onChangeAmount}
           />
         </View>
         <View style={styles.buttonContainer}>

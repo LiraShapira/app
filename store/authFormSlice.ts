@@ -34,6 +34,7 @@ export const sendLoginForm = createAsyncThunk<
   { state: RootState }
 >('authForm/sendLoginForm', async (_u, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
   const { phoneNumber } = getState().authForm;
+  // send number in format 5******** (9 digits)
   const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'IL').nationalNumber;
   const response = await fetchUser(parsedPhoneNumber);
   if (!('data' in response)) {
@@ -41,7 +42,6 @@ export const sendLoginForm = createAsyncThunk<
   }
   if (response.data) {
     dispatch(resetForm());
-    setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
     dispatch(setUser(response.data))
     return response;
   } else {
@@ -87,13 +87,14 @@ export const sendRegistrationForm = createAsyncThunk<
   { state: RootState }
 >('authForm/sendRegistrationForm', async (_userId: string | undefined, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
   const { phoneNumber, firstName, lastName } = getState().authForm;
-  const response = await registerNewUser({ phoneNumber, firstName, lastName });
+  // send number in format 5******** (9 digits)
+  const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'IL').nationalNumber;
+  const response = await registerNewUser({ phoneNumber: parsedPhoneNumber, firstName, lastName });
   if (!('data' in response)) {
     throw new Error(response.message)
   }
   if (response.data) {
     dispatch(resetForm());
-    setItem(StorageKeys.phoneNumber, response.data.phoneNumber)
     dispatch(setUser(response.data))
     return response;
   } else {

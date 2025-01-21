@@ -29,11 +29,11 @@ const LSEventItemPeopleDetails: React.FC<LSEventItemPeopleDetailsProps> = ({
       <CustomIcon
         iconLibraryName={IconLibrary.Ionicons}
         iconName='person-circle'
-        size={50}
+        size={45}
         color='grey'
       />
       <View>
-        <Text style={[styles.text, { color: Colors[colorScheme].text }]}>
+        <Text style={[styles.text]}>
           {event.attendees.length}
           {i18n.t('ls_event_item_people_details_attendees')}
         </Text>

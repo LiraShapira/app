@@ -24,11 +24,11 @@ import { parsePhoneNumber } from 'libphonenumber-js';
 export default function AuthPhoneEntry() {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const phoneNumber = useAppSelector(selectPhoneNumber);
+  const displayedPhoneNumber = useAppSelector(selectPhoneNumber);
   const [isNumberError, setIsNumberError] = useState<boolean>(true);
 
   const onChangePhoneNumber = (n: NumberLabel) => {
-    const newNumber = parseNumberPadInputForPhoneNumber(n, phoneNumber);
+    const newNumber = parseNumberPadInputForPhoneNumber(n, displayedPhoneNumber);
     if (newNumber !== false) {
       try {
         dispatch(setPhoneNumber(newNumber));
@@ -50,28 +50,16 @@ export default function AuthPhoneEntry() {
       .then(({ data: user }) => {
         if (user) {
           dispatch(setUser(user));
-          setItem(StorageKeys.phoneNumber, user.phoneNumber);
+          // save phoneNumber locally in format 5******** (9 digits) 
+          const parsedPhoneNumber = parsePhoneNumber(user.phoneNumber, 'IL').nationalNumber;
+          setItem(StorageKeys.phoneNumber, parsedPhoneNumber);
           router.push('/Home');
-          return;
         }
-        const phoneNumberForTwilio = parsePhoneNumber(phoneNumber, 'IL')
-          .formatInternational()
-          .split(' ')
-          .join('');
-
-        dispatch(sendVerificationCode(phoneNumberForTwilio))
-          .unwrap()
-          .then(() => {
-            console.log('received');
-            router.push('/AuthCodeValidation');
-          })
-          .catch((e) => {
-            console.log(e);
-          });
       })
       .catch((e) => {
         if (e.message === 'User not found') {
-          const phoneNumberForTwilio = parsePhoneNumber(phoneNumber, 'IL')
+          // send to Twilio in format +9725******* 
+          const phoneNumberForTwilio = parsePhoneNumber(displayedPhoneNumber, 'IL')
             .formatInternational()
             .split(' ')
             .join('')
@@ -102,7 +90,7 @@ export default function AuthPhoneEntry() {
           }}
         >
           <NumberInputNumberPad
-            value={phoneNumber}
+            value={displayedPhoneNumber}
             onButtonPress={onChangePhoneNumber}
           />
           <CustomButton
