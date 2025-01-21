@@ -95,9 +95,6 @@ export default function Dashboard() {
         >
           {i18n.t('dashboard_greeting_message', { name: user.firstName })}
         </Text>
-        <Text style={styles.hamburgerMenu}>
-          <FontAwesome name='bars' size={30} color='black' />
-        </Text>
       </View>
 
       <View style={styles.dashboard}>
@@ -217,5 +214,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flex: 2,
   },
-  hamburgerMenu: {},
 });

@@ -17,9 +17,10 @@ import NumberInputNumberPad, {
   NumberLabel,
 } from '../components/form/NumberInputNumberPad';
 import { parseNumberPadInputForDeposit } from '../utils/functions';
+import GradientContainer from '../components/utils/GradientContainer';
 
 export default function SendAmount() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() ?? 'light';
   const dispatch = useAppDispatch();
   const amount = useAppSelector<number>(selectAmount);
   const router = useRouter();
@@ -47,58 +48,48 @@ export default function SendAmount() {
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor:
-            colorScheme === 'light' ? Colors.light.backgroundHighlight1 : '',
-        },
-      ]}
-    >
-      <CustomModal
-        type='error'
-        buttons={[
-          { text: i18n.t('cancel'), onPress: onModalCancel },
-          { text: i18n.t('sendamount_back'), onPress: onModalChangeContact },
-        ]}
-      />
-      <View>
-        <Text
-          style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
-        >
-          {isRequest
-            ? i18n.t('request_how_much')
-            : i18n.t('sendamount_how_much')}
-        </Text>
-        {amountError ? (
-          <Text
-            style={{ fontSize: 10, color: Colors[colorScheme ?? 'light'].tint }}
-          >
-            {i18n.t('sendamount_validate_amount')}
+    <GradientContainer>
+      <View style={[styles.container]}>
+        <CustomModal
+          type="error"
+          buttons={[
+            { text: i18n.t('cancel'), onPress: onModalCancel },
+            { text: i18n.t('sendamount_back'), onPress: onModalChangeContact },
+          ]}
+        />
+        <View>
+          <Text style={{ fontSize: 24, color: Colors[colorScheme].text }}>
+            {isRequest
+              ? i18n.t('request_how_much')
+              : i18n.t('sendamount_how_much')}
           </Text>
-        ) : null}
-        <NumberInputNumberPad
-          onButtonPress={onPressNumberPadInput}
-          value={amount.toString()}
-        />
+          {amountError ? (
+            <Text style={{ fontSize: 10, color: Colors[colorScheme].tint }}>
+              {i18n.t('sendamount_validate_amount')}
+            </Text>
+          ) : null}
+          <NumberInputNumberPad
+            onButtonPress={onPressNumberPadInput}
+            value={amount.toString()}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            disabled={!amount || amountError}
+            onPress={() => {
+              router.push(
+                isRequest ? '/SendReason?isRequest=true' : '/SendReason'
+              );
+            }}
+            text={i18n.t('sendamount_continue')}
+          />
+          <CustomButton
+            onPress={() => router.back()}
+            text={i18n.t('sendamount_back')}
+          />
+        </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <CustomButton
-          disabled={!amount || amountError}
-          onPress={() => {
-            router.push(
-              isRequest ? '/SendReason?isRequest=true' : '/SendReason'
-            );
-          }}
-          text={i18n.t('sendamount_continue')}
-        />
-        <CustomButton
-          onPress={() => router.back()}
-          text={i18n.t('sendamount_back')}
-        />
-      </View>
-    </View>
+    </GradientContainer>
   );
 }
 const styles = StyleSheet.create({
