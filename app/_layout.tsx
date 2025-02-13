@@ -97,6 +97,7 @@ function RootLayoutNav() {
               if (user) {
                 dispatch(setUser(user));
                 dispatch(setIsLoggedIn(true));
+                router.push('/Home');
               }
             });
         } else {
