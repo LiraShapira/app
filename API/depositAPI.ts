@@ -10,13 +10,6 @@ export interface FormWithUserId extends Omit<DepositForm, 'compostSmell'> {
 }
 
 export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Promise<ApiResponse<Transaction>> => {
-  // return example transaction if in demo mode
-  if (process.env.EXPO_PUBLIC_DEMO) return {
-    data: {
-      ...mockTransaction,
-    },
-    status: 201
-  };
 
   const requestBody = {
     userId: formWithUserId.userId,
