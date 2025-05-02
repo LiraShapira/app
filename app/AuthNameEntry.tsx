@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderBottomWidth: 1,
     width: '100%',
-    height: 24,
+    height: 40, // ⬅️ increase this
     marginVertical: 0,
     marginHorizontal: 'auto',
-  },
+  }
 });

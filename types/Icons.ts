@@ -20,7 +20,6 @@ import { Icon } from "@expo/vector-icons/build/createIconSet";
 export type LocalIcon = 'big_tick_icon'
   | 'deposit_icon'
   | 'events_icon'
-  | 'events_icon_active'
   | 'fruit_icon_1'
   | 'fruit_icon_2'
   | 'fruit_icon_3'

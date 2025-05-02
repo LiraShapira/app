@@ -24,7 +24,6 @@ import request_icon from '../../assets/icons/request_icon';
 import wallet_icon from '../../assets/icons/wallet_icon';
 import truck_icon from '../../assets/icons/truck_icon';
 import events_icon from '../../assets/icons/events_icon';
-import events_icon_active from '../../assets/icons/events_icon_active';
 import big_tick_icon from '../../assets/icons/big_tick_icon';
 import fruit_icon_7 from '../../assets/icons/fruit_icon_7';
 import fruit_icon_5 from '../../assets/icons/fruit_icon_5';
@@ -43,7 +42,6 @@ export const iconMap: Record<string, (n: SvgProps) => JSX.Element> = {
   big_tick_icon: big_tick_icon,
   deposit_icon: deposit_icon,
   events_icon: events_icon,
-  [`events_icon_${appColors.light.tint}`]: events_icon_active,
   fruit_icon_1: fruit_icon_1,
   fruit_icon_2: fruit_icon_2,
   fruit_icon_3: fruit_icon_3,
