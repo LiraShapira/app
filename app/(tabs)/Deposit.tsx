@@ -97,6 +97,7 @@ export default function Deposit() {
       />
       <Picker
         style={{
+          color: Colors[colorScheme ?? 'light'].text,
           borderRadius: 10,
           margin: 10,
           padding: 5,
@@ -110,6 +111,7 @@ export default function Deposit() {
             key={stand}
             label={i18n.t(`deposit_compost_stand_${stand}`)}
             value={stand}
+            color={Colors[colorScheme ?? 'light'].text}
           />
         ))}
       </Picker>
@@ -128,9 +130,9 @@ export default function Deposit() {
           onButtonPress={onPressNumberPadInput}
           appendedText={i18n.t('deposit_form_kilogram')}
           value={depositValue}
-          
-          />
-          
+
+        />
+
         <View style={styles.buttons}>
           <CustomButton
             text={i18n.t('continue')}
@@ -146,7 +148,7 @@ export default function Deposit() {
       </View>
     </GradientContainer>
   );
-  
+
 }
 
 const styles = StyleSheet.create({
@@ -154,8 +156,8 @@ const styles = StyleSheet.create({
   depositSwitches: {
     display: 'flex',
     flexDirection: 'column',
-    paddingVertical: 16,
-    paddingHorizontal: 8,
+    paddingVertical: 32,
+    paddingHorizontal: 24,
     alignContent: 'center',
     justifyContent: 'space-between',
     alignItems: 'stretch',
