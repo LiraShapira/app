@@ -15,23 +15,27 @@ import i18n from '../translationService';
 import { useState } from 'react';
 import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import GradientContainer from '../components/utils/GradientContainer';
-import NumberInputNumberPad, {
-  NumberLabel,
-} from '../components/form/NumberInputNumberPad';
+import NumberInputNumberPad from '../components/form/NumberInputNumberPad';
 import { parseNumberPadInputForPhoneNumber } from '../utils/functions';
 import { parsePhoneNumber } from 'libphonenumber-js';
+import { NumberLabel } from '../components/form/NumberInputNumberPad';
 
 export default function AuthPhoneEntry() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const displayedPhoneNumber = useAppSelector(selectPhoneNumber);
-  const [isNumberError, setIsNumberError] = useState<boolean>(true);
+
+  // Track validation and whether the input has been touched
+  const [isNumberError, setIsNumberError] = useState(false);
+  const [isTouched, setIsTouched] = useState(false);
 
   const onChangePhoneNumber = (n: NumberLabel) => {
+    setIsTouched(true);
     const newNumber = parseNumberPadInputForPhoneNumber(n, displayedPhoneNumber);
     if (newNumber !== false) {
+      dispatch(setPhoneNumber(newNumber));
+
       try {
-        dispatch(setPhoneNumber(newNumber));
         const parsedPhoneNumber = parsePhoneNumber(newNumber, 'IL');
         if (parsedPhoneNumber.isPossible() && parsedPhoneNumber.isValid()) {
           setIsNumberError(false);
@@ -39,18 +43,17 @@ export default function AuthPhoneEntry() {
           throw new Error(i18n.t('auth_number_error'));
         }
       } catch (e) {
-        // TODO dynamic descriptive error text for user
         setIsNumberError(true);
       }
     }
   };
+
   const onSubmit = () => {
     dispatch(sendLoginForm())
       .unwrap()
       .then(({ data: user }) => {
         if (user) {
           dispatch(setUser(user));
-          // save phoneNumber locally in format 5******** (9 digits) 
           const parsedPhoneNumber = parsePhoneNumber(user.phoneNumber, 'IL').nationalNumber;
           setItem(StorageKeys.phoneNumber, parsedPhoneNumber);
           router.push('/Home');
@@ -58,20 +61,15 @@ export default function AuthPhoneEntry() {
       })
       .catch((e) => {
         if (e.message === 'User not found') {
-          // send to Twilio in format +9725******* 
           const phoneNumberForTwilio = parsePhoneNumber(displayedPhoneNumber, 'IL')
             .formatInternational()
             .split(' ')
-            .join('')
+            .join('');
 
           dispatch(sendVerificationCode(phoneNumberForTwilio))
             .unwrap()
-            .then(() => {
-              router.push('/AuthCodeValidation');
-            })
-            .catch((e) => {
-              console.log(e);
-            });
+            .then(() => router.push('/AuthCodeValidation'))
+            .catch(console.error);
         } else {
           dispatch(setModalText(e.message));
           dispatch(setIsModalVisible(true));
@@ -79,35 +77,35 @@ export default function AuthPhoneEntry() {
       });
   };
 
+  // Disable continue button until input is touched and valid
+  const isContinueDisabled = !isTouched || isNumberError;
+
   return (
     <GradientContainer>
-      <>
-        <View
-          style={{
-            height: '90%',
-            justifyContent: 'space-around',
-            padding: 24,
-          }}
-        >
-          <NumberInputNumberPad
-            value={displayedPhoneNumber}
-            onButtonPress={onChangePhoneNumber}
-          />
-          <CustomButton
-            text={i18n.t('continue')}
-            disabled={isNumberError}
-            onPress={onSubmit}
-          />
-        </View>
-        <View style={{ height: 30 }}>
-          {isNumberError && (
-            <Text style={styles.numberErrorText}>Number not valid</Text>
-          )}
-        </View>
-      </>
+      <View style={{ height: '90%', justifyContent: 'space-around', padding: 24 }}>
+        <NumberInputNumberPad
+          allowDecimal={false}
+          value={displayedPhoneNumber}
+          onButtonPress={onChangePhoneNumber}
+        />
+        <CustomButton
+          text={i18n.t('continue')}
+          disabled={isContinueDisabled}
+          onPress={onSubmit}
+        />
+      </View>
+
+      <View style={{ height: 30 }}>
+        {isTouched && isNumberError && (
+          <Text style={styles.numberErrorText}>
+            {i18n.t('auth_number_error')}
+          </Text>
+        )}
+      </View>
     </GradientContainer>
   );
 }
+
 
 const styles = StyleSheet.create({
   numberErrorText: {

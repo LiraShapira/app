@@ -1,6 +1,7 @@
-import { Text, useColorScheme, StyleSheet, View } from 'react-native';
+import { Text, useColorScheme, StyleSheet, View, Pressable, Vibration } from 'react-native';
 import Colors from '../../constants/Colors';
 import { getLocales } from 'expo-localization';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export type NumberLabel =
   | '0'
@@ -21,36 +22,32 @@ interface NumberPadButtonProps {
   onPress: (n: NumberLabel) => void;
 }
 
-const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
+export const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
   const colorScheme = useColorScheme() ?? 'light';
+
   return (
-    <View>
+    <Pressable
+      onPress={() => {
+        // vibrate for 10ms
+        Vibration.vibrate(10);
+        onPress(n);
+      }}
+      style={({ pressed }) => [
+        styles.buttonContainer,
+        // dim when pressed
+        { opacity: pressed ? 0.5 : 1 },
+      ]}
+    >
       {n === 'ret' ? (
-        <View>
-          <Text
-            style={{
-              ...styles.numberPadButton,
-              color: Colors[colorScheme].text,
-            }}
-            onPress={() => onPress(n)}
-          >
-            x
-          </Text>
-        </View>
+        <MaterialIcons
+          name="backspace"
+          size={24}
+          color={Colors[colorScheme].text}
+        />
       ) : (
-        <View>
-          <Text
-            style={{
-              ...styles.numberPadButton,
-              color: Colors[colorScheme].text,
-            }}
-            onPress={() => onPress(n)}
-          >
-            {n}
-          </Text>
-        </View>
+        <Text style={[styles.buttonText, { color: Colors[colorScheme].text }]}>{n}</Text>
       )}
-    </View>
+    </Pressable>
   );
 };
 
@@ -59,16 +56,17 @@ interface NumberInputNumberPadProps {
   isError?: boolean;
   prependedText?: string;
   appendedText?: string;
+  allowDecimal?: boolean;
   onButtonPress: (n: NumberLabel) => void;
 }
 
 const textDirection = getLocales()[0].textDirection || 'ltr';
-const   NumberInputNumberPad = ({
+const NumberInputNumberPad = ({
   value,
   prependedText,
   appendedText,
   onButtonPress,
-  isError = false,
+  allowDecimal = true
 }: NumberInputNumberPadProps) => {
   const colorScheme = useColorScheme() ?? 'light';
 
@@ -132,7 +130,12 @@ const   NumberInputNumberPad = ({
           <NumberPadButton n={'9'} onPress={onButtonPress} />
         </View>
         <View style={styles.numberPadRow}>
-          <NumberPadButton n={'.'} onPress={onButtonPress} />
+          {allowDecimal ? (
+            <NumberPadButton n={'.'} onPress={onButtonPress} />
+          ) : (
+            // placeholder to keep grid alignment
+            <View style={styles.numberPadPlaceholder} />
+          )}
           <NumberPadButton n={'0'} onPress={onButtonPress} />
           <NumberPadButton n={'ret'} onPress={onButtonPress} />
         </View>
@@ -147,6 +150,23 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 40,
     alignItems: 'center',
+  },
+  buttonContainer: {
+    flex: 1,
+    margin: 4,
+    aspectRatio: 1,        // make it square
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+  },
+  numberPadPlaceholder: {
+    flex: 1,
+    margin: 4,
+    aspectRatio: 1,
+  },
+  buttonText: {
+    fontSize: 38,
+    fontWeight: '600',
   },
   inputtedValue: {
     height: 80,
