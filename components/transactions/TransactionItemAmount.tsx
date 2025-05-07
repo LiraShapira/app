@@ -1,37 +1,37 @@
-import {Text, useColorScheme, StyleSheet, View} from "react-native";
+import { Text, useColorScheme, StyleSheet, View } from "react-native";
 import Colors from "../../constants/Colors";
 
 interface TransactionItemAmountProps {
   income: boolean;
-  amount: number;
+  amount: number | string;
   isRequest: boolean;
 }
 
-export default function TransactionItemAmount({income, amount, isRequest}: TransactionItemAmountProps) {
+export default function TransactionItemAmount({ income, amount, isRequest }: TransactionItemAmountProps) {
   const colorScheme = useColorScheme() ?? 'light';
   const color = isRequest ? Colors.light.tint : income ? Colors.light.highlight : Colors.light.warning;
 
   return (
-    <View style={ styles.amountDisplay }>
+    <View style={styles.amountDisplay}>
       {
         isRequest ? null : (<Text
-          style={ {
+          style={{
             color,
             fontSize: 24,
             fontWeight: '600'
-          } }
+          }}
         >
-          { income ? '+' : '-' }
+          {income ? '+' : '-'}
         </Text>)
       }
       <Text
-        style={ {
+        style={{
           color,
           fontSize: 24,
           fontWeight: '600'
-        } }
+        }}
       >
-        { amount }
+        {typeof amount == 'string' ? parseFloat(amount).toFixed(2) : amount.toFixed(2)}
       </Text>
     </View>
   )
