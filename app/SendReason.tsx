@@ -41,7 +41,7 @@ export default function SendReason() {
   const [reasonError, setReasonError] = useState<boolean>(true);
   const router = useRouter();
   const currentUser = useAppSelector<User>(selectUser);
-  const chosenContact = useAppSelector<Contact>(selectChosenContact);
+  const chosenContact = useAppSelector<Contact | undefined>(selectChosenContact);
   const amount = useAppSelector<number>(selectAmount);
   const reason = useAppSelector<string>(selectReason);
   const currentUserId = useAppSelector<string>(selectUserId);
@@ -59,8 +59,8 @@ export default function SendReason() {
     if (!chosenContact?.phoneNumbers) return;
     // phone number for recipient in send flow and 'purchaser' (aka requestee) in request flow
     const phoneNumber = chosenContact?.phoneNumbers[0].number;
-    if (!phoneNumber) return;
-    if (
+    if (!phoneNumber) throw new Error("Selected user is missing a phone number");
+    if (!isRequest &&
       currentUser?.accountBalance <= 0 ||
       amount > currentUser?.accountBalance
     ) {
@@ -70,7 +70,7 @@ export default function SendReason() {
     }
     dispatch(setIsUserLoading(true));
     try {
-      const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'US')
+      const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'IL')
         .nationalNumber as string;
       if (parsedPhoneNumber === currentUser.phoneNumber) {
         throw new Error('Cannot send or make request to yourself');
