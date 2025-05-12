@@ -42,20 +42,25 @@ export default function CompostReport() {
   const onPressSend = () => {
     dispatch(sendDepositForm(userId))
       .unwrap()
-      .then(({ data: transaction }) => {
-        dispatch(incrementUserBalance(transaction.amount));
-        dispatch(addUserTransaction(transaction));
+      .then(({ data: transactions }) => {
+        transactions.forEach((transaction) => {
+          dispatch(incrementUserBalance(transaction.amount));
+          dispatch(addUserTransaction(transaction));
+        });
         router.replace('/Home');
         dispatch(resetForm());
       });
   };
 
+  // TODO skip sending form
   const onPressSkip = () => {
     dispatch(sendDepositForm(userId))
       .unwrap()
-      .then(({ data: transaction }) => {
-        dispatch(incrementUserBalance(transaction.amount));
-        dispatch(addUserTransaction(transaction));
+      .then(({ data: transactions }) => {
+        transactions.forEach((transaction) => {
+          dispatch(incrementUserBalance(transaction.amount));
+          dispatch(addUserTransaction(transaction));
+        });
         router.replace('/Home');
         dispatch(resetForm());
       });
