@@ -13,17 +13,17 @@ import i18n from '../../translationService';
 import { getLocales } from 'expo-localization';
 
 export default function RequestCard() {
-  const user = useAppSelector<User>(selectUser);
-  const request = user.transactions.filter(
-    (t) => t.isRequest && t.recipientId !== user.id
+  const currentUser = useAppSelector<User>(selectUser);
+  const request = currentUser.transactions.filter(
+    (t) => t.isRequest && t.recipientId !== currentUser.id
   )[0];
   const dispatch = useAppDispatch();
-
+  const userId = currentUser.id;
   const onClick = async (isRequestAccepted: boolean) => {
     const transaction = await dispatch(
       handleRequest({ transaction: request, isRequestAccepted })
     );
-    dispatch(loadUser(user.phoneNumber))
+    dispatch(loadUser(currentUser.phoneNumber))
       .unwrap()
       .then(({ data: user }) => {
         if (user) {
@@ -37,7 +37,7 @@ export default function RequestCard() {
         <View style={styles.textBox}>
           <Text style={styles.name}>
             {i18n.t('request_card_request_from', {
-              name: request.users[0].firstName,
+              name: request.users.find((u) => u.id === request.recipientId)?.firstName,
             })}
           </Text>
           <View
