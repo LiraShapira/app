@@ -83,6 +83,9 @@ export default function AuthPhoneEntry() {
   return (
     <GradientContainer>
       <View style={{ height: '90%', justifyContent: 'space-around', padding: 24 }}>
+        <Text>
+          {i18n.t('enter_number')}
+        </Text>
         <NumberInputNumberPad
           allowDecimal={false}
           value={displayedPhoneNumber}
