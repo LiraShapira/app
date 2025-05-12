@@ -20,7 +20,7 @@ const initialState: DepositFormState = {
 };
 
 export const sendDepositForm = createAsyncThunk<
-  SuccessApiResponse<Transaction>,
+  SuccessApiResponse<Transaction[]>,
   string,
   { state: RootState }
 >(
@@ -28,8 +28,8 @@ export const sendDepositForm = createAsyncThunk<
   async (
     userId: string,
     { getState }
-  ): Promise<SuccessApiResponse<Transaction>> => {
-    let response: ApiResponse<Transaction>;
+  ): Promise<SuccessApiResponse<Transaction[]>> => {
+    let response: ApiResponse<Transaction[]>;
     let requestBody: FormWithUserId;
     const form = getState().depositForm;
 

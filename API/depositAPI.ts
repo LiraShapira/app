@@ -9,7 +9,7 @@ export interface FormWithUserId extends Omit<DepositForm, 'compostSmell'> {
   compostSmell?: boolean;
 }
 
-export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Promise<ApiResponse<Transaction>> => {
+export const saveDepositToDatabase = async (formWithUserId: FormWithUserId): Promise<ApiResponse<Transaction[]>> => {
 
   const requestBody = {
     userId: formWithUserId.userId,

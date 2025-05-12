@@ -16,10 +16,17 @@ export interface Transaction {
   reason: string;
   isRequest: boolean;
   users: [
-      {
-        firstName: string;
-        lastName: string;
-      }
+    {
+      id: string;
+      userLocalCompostStandId: number
+      accountBalance: number
+      createdAt: string
+      transactions: Transaction[]
+      phoneNumber: string
+      adminCompostStandId: number | null;
+      firstName: string;
+      lastName: string;
+    }
   ]
 }
 

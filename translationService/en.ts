@@ -15,6 +15,7 @@ const enDictionary: Dictionary = {
   auth_register: 'Register',
   auth_to_login: 'To Login',
   auth_to_register: 'To Register',
+  enter_number: 'Please enter your phone number to get started',
   auth_phone_number: 'Phone Number',
   auth_first_name: 'First Name',
   auth_last_name: 'Last Name',
@@ -34,8 +35,10 @@ const enDictionary: Dictionary = {
   transactions_list_received_from: 'Received from ',
   transactions_list_sent_to: 'Sent to ',
   transactions_list_compost_deposit: 'compost deposit',
+  transaction_item_description_stand_admin_payment: 'Compost Stand Manager',
   transaction_request_to: 'Request to ',
-  dashboard_You_have_prevented_kilos_of_garbage:'You have prevented {{kilos}} kilos of garbage',
+  dashboard_You_have_prevented_kilos_of_garbage: 'You have prevented {{kilos}} kilos of garbage',
+
   // DEPOSIT
   deposit: 'Deposit',
   deposit_title: 'How much?',
