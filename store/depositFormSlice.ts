@@ -19,6 +19,39 @@ const initialState: DepositFormState = {
   guaranteedAccurate: false
 };
 
+export const sendSkippedDepositForm = createAsyncThunk<
+  SuccessApiResponse<Transaction[]>,
+  string,
+  { state: RootState }
+>(
+  'depositForm/sendSkippedDepositForm',
+  async (
+    userId: string,
+    { getState }
+  ): Promise<SuccessApiResponse<Transaction[]>> => {
+    let response: ApiResponse<Transaction[]>;
+    const form = getState().depositForm;
+    const { amount, compostStand } = form;
+    const requestBody: {
+      userId: string;
+      amount: string;
+      compostStand: CompostStand;
+    } = {
+      userId,
+      amount,
+      compostStand
+    };
+
+    response = await saveDepositToDatabase(requestBody);
+
+    if (!('data' in response)) {
+      throw new Error(response.message);
+    }
+
+    return response;
+  }
+);
+
 export const sendDepositForm = createAsyncThunk<
   SuccessApiResponse<Transaction[]>,
   string,

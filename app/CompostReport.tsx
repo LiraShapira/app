@@ -17,6 +17,7 @@ import {
   toggleCompostFull,
   toggleCleanAndTidy,
   toggleBugs,
+  sendSkippedDepositForm,
 } from '../store/depositFormSlice';
 import i18n from '../translationService';
 import CustomButton from '../components/utils/CustomButton';
@@ -52,9 +53,8 @@ export default function CompostReport() {
       });
   };
 
-  // TODO skip sending form
   const onPressSkip = () => {
-    dispatch(sendDepositForm(userId))
+    dispatch(sendSkippedDepositForm(userId))
       .unwrap()
       .then(({ data: transactions }) => {
         transactions.forEach((transaction) => {
