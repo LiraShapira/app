@@ -31,6 +31,7 @@ import {
 import { useRouter } from 'expo-router';
 import CustomTag from '../components/utils/CustomTag';
 import GradientContainer from '../components/utils/GradientContainer';
+import { useState } from 'react';
 
 export default function CompostReport() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -39,6 +40,8 @@ export default function CompostReport() {
   const userId = useAppSelector(selectUserId);
   const depositForm = useAppSelector(selectDepositForm);
   const router = useRouter();
+  const [isTouched, setIsTouched] = useState(false);
+
 
   const onPressSend = () => {
     dispatch(sendDepositForm(userId))
@@ -66,6 +69,11 @@ export default function CompostReport() {
       });
   };
 
+  const onChangeForm = (func: () => any) => {
+    setIsTouched(true);
+    dispatch(func());
+  };
+
   return (
     <GradientContainer styles={styles.compostReport}>
       <Text
@@ -77,32 +85,32 @@ export default function CompostReport() {
         <View style={styles.tagsContainer}>
           <CustomTag
             text={i18n.t('compost_report_bin_smells')}
-            onPress={() => dispatch(toggleCompostSmell())}
+            onPress={() => onChangeForm(toggleCompostSmell)}
             active={!!depositForm.compostSmell}
           />
           <CustomTag
             text={i18n.t('compost_report_missing_dry_matter')}
-            onPress={() => dispatch(toggleMissingDryMatter())}
-            active={depositForm.dryMatter === 'no'}
+            onPress={() => onChangeForm(toggleMissingDryMatter)}
+            active={!!depositForm.missingDryMatter}
           />
           <CustomTag
             text={i18n.t('compost_report_missing_scales')}
-            onPress={() => dispatch(toggleScalesMissing())}
+            onPress={() => onChangeForm(toggleScalesMissing)}
             active={!!depositForm.scalesMissing}
           />
           <CustomTag
             text={i18n.t('compost_report_missing_bad_bugs')}
-            onPress={() => dispatch(toggleBugs())}
+            onPress={() => onChangeForm(toggleBugs)}
             active={!!depositForm.bugs}
           />
           <CustomTag
             text={i18n.t('compost_report_bin_full')}
-            onPress={() => dispatch(toggleCompostFull())}
+            onPress={() => onChangeForm(toggleCompostFull)}
             active={!!depositForm.compostFull}
           />
           <CustomTag
             text={i18n.t('compost_report_missing_clean_and_tidy')}
-            onPress={() => dispatch(toggleCleanAndTidy())}
+            onPress={() => onChangeForm(toggleCleanAndTidy)}
             active={!!depositForm.cleanAndTidy}
           />
         </View>
@@ -122,6 +130,7 @@ export default function CompostReport() {
         </View>
         <View style={styles.buttons}>
           <CustomButton
+            disabled={!isTouched}
             text={i18n.t('deposit_form_send')}
             onPress={onPressSend}
           />
