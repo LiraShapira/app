@@ -90,6 +90,7 @@ const heDictionary: Dictionary = {
   send_search_placeholder: 'הזן שם או מספר טלפון',
   sendamount_how_much: 'כמה להעביר?',
   sendamount_not_enough_funds: 'אין מספיק כספים',
+  sendreason_self_send_error: 'לא ניתן לשלוח כסף לעצמך',
 
   // sendamount_amount: 'כמה (kg)?',
   sendamount_why: 'למה?',

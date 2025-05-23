@@ -50,26 +50,20 @@ export default function SendReason() {
   const { isRequest } = params;
 
   const onPressSend = async () => {
-    if (!reason || reasonError) {
-      setReasonError(true);
-      dispatch(setModalText('not enough funds')); // tale care of this later on
-      dispatch(setIsModalVisible(true));
-      return;
-    }
-    if (!chosenContact?.phoneNumbers) return;
-    // phone number for recipient in send flow and 'purchaser' (aka requestee) in request flow
-    const phoneNumber = chosenContact?.phoneNumbers[0].number;
-    if (!phoneNumber) throw new Error("Selected user is missing a phone number");
-    if (!isRequest &&
-      currentUser?.accountBalance <= 0 ||
-      amount > currentUser?.accountBalance
-    ) {
-      dispatch(setModalText(i18n.t('sendamount_not_enough_funds')));
-      dispatch(setIsModalVisible(true));
-      return;
-    }
-    dispatch(setIsUserLoading(true));
     try {
+      dispatch(setIsUserLoading(true));
+      if (!chosenContact?.phoneNumbers || !chosenContact?.phoneNumbers[0].number) {
+        throw new Error("Selected user is missing a phone number");
+      }
+      const phoneNumber = chosenContact.phoneNumbers[0].number;
+      if (!isRequest && (
+        currentUser?.accountBalance <= 0 ||
+        amount > currentUser?.accountBalance
+      )
+      ) {
+        throw new Error(i18n.t('sendamount_not_enough_funds'));
+      }
+
       const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'IL')
         .nationalNumber as string;
       if (parsedPhoneNumber === currentUser.phoneNumber) {
@@ -105,7 +99,7 @@ export default function SendReason() {
     } catch (e) {
       console.error('Transaction error:', e);
       const errorMessage =
-        e instanceof Error ? e.message : 'WRONG PHONE NUMBER';
+        e instanceof Error ? e.message : i18n.t('generic_error');
       dispatch(setModalText(errorMessage));
       dispatch(setIsUserLoading(false));
       dispatch(setIsModalVisible(true));
@@ -113,7 +107,6 @@ export default function SendReason() {
   };
 
   const onChangeReason = (reason: string) => {
-    console.log(reason)
     if (!reason) {
       setReasonError(true);
       dispatch(setReason(reason));

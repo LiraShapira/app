@@ -95,6 +95,7 @@ export type DictionaryKey =
   'send_search_no_results_send_to_number' |
   'sendamount_validate_amount' |
   'sendamount_not_enough_funds' |
+  'sendreason_self_send_error' |
 
   // REQUEST
   'request_search_title' |

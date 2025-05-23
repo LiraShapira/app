@@ -97,6 +97,7 @@ const enDictionary: Dictionary = {
   send_search_no_results_send_to_number: 'Send to \'%{number}\'',
   sendamount_validate_amount: 'Please input a number between 1 - 99',
   sendamount_not_enough_funds: 'Not enough funds',
+  sendreason_self_send_error: "Cannot send or make request to yourself",
 
   // REQUEST
   request_how_much: 'How much?',
