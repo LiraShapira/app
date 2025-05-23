@@ -14,7 +14,7 @@ export interface ButtonProps {
 
 export default function CustomButton({
   text,
-  onDelete = () => {},
+  onDelete,
   showDeleteButton,
   onPress,
   disabled = false,
@@ -22,55 +22,52 @@ export default function CustomButton({
   backgroundColor,
   transparent,
 }: ButtonProps) {
-  const calculatedBackgroundColor = backgroundColor
+  const bg = backgroundColor
     ? backgroundColor
     : transparent
-    ? 'transparent'
-    : Colors.light.highlight;
-  const calculatedtextColor = textColor
+      ? 'transparent'
+      : Colors.light.highlight;
+  const fg = textColor
     ? textColor
     : transparent
-    ? 'black'
-    : 'white';
+      ? 'black'
+      : 'white';
 
   const transparentBorderStyles = {
     borderColor: '#BFC9B7',
-    borderStyle: 'solid',
+    borderStyle: 'solid' as const,
     borderWidth: 2,
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: calculatedBackgroundColor,
-        ...(disabled && { opacity: 0.7 }),
-        ...styles.submitButton,
-        ...(transparent && transparentBorderStyles),
-        flexDirection: 'row',
-        gap: 10,
-      }}
+    <Pressable
+      disabled={disabled}
+      onPress={onPress}
+      style={[
+        styles.submitButton,
+        { backgroundColor: bg },
+        transparent && transparentBorderStyles,
+        disabled && { opacity: 0.7 },
+        { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+      ]}
     >
-      <Pressable
-        disabled={disabled}
-        style={{ opacity: disabled ? 0.4 : 1 }}
-        onPress={onPress}
+      <Text
+        style={{
+          fontWeight: '700',
+          fontSize: 14,
+          color: fg,
+          marginRight: showDeleteButton ? 10 : 0,  // replace `gap`
+        }}
       >
-        <Text
-          style={{
-            fontWeight: '700',
-            fontSize: 14,
-            color: calculatedtextColor,
-          }}
-        >
-          {text}
-        </Text>
-      </Pressable>
+        {text}
+      </Text>
+
       {showDeleteButton && (
-        <Pressable onPress={(e) => onDelete(text)}>
-          <Text>x</Text>
+        <Pressable onPress={() => onDelete?.(text)}>
+          <Text style={{ color: fg }}>×</Text>
         </Pressable>
       )}
-    </View>
+    </Pressable>
   );
 }
 
@@ -81,6 +78,6 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    height:40,
+    height: 40,
   },
 });
