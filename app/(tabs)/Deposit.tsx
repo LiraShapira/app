@@ -28,7 +28,7 @@ import { StorageKeys } from '../../types/AsyncStorage';
 import { getItem, setItem } from '../../utils/asyncStorage';
 
 export default function Deposit() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() ?? 'light';
   const router = useRouter();
   const dispatch = useAppDispatch();
   const depositValue = useAppSelector(selectDepositValue);
@@ -95,31 +95,38 @@ export default function Deposit() {
         ]}
         customElement={<DepositFormCheckBox />}
       />
-      <Picker
+
+      <View
         style={{
-          color: Colors[colorScheme ?? 'light'].text,
+          backgroundColor: Colors[colorScheme].highlight,
           borderRadius: 10,
           margin: 10,
-          padding: 5,
-          fontSize: 14,
+          paddingHorizontal: 10,
         }}
-        selectedValue={compostStand}
-        onValueChange={(stand) => dispatch(setCompostStand(stand))}
       >
-        {compostStands.map((stand) => (
-          <Picker.Item
-            key={stand}
-            label={i18n.t(`deposit_compost_stand_${stand}`)}
-            value={stand}
-            color={Colors[colorScheme ?? 'light'].text}
-          />
-        ))}
-      </Picker>
+        <Picker
+          selectedValue={compostStand}
+          onValueChange={(stand) => dispatch(setCompostStand(stand))}
+          style={{
+            fontSize: 18,
+            height: 50,
+          }}
+          mode="dropdown"
+        >
+          {compostStands.map((stand) => (
+            <Picker.Item
+              key={stand}
+              label={i18n.t(`deposit_compost_stand_${stand}`)}
+              value={stand}
+            />
+          ))}
+        </Picker>
+      </View>
       <Text
         style={{
           fontSize: 40,
           paddingVertical: 16,
-          color: Colors[colorScheme ?? 'light'].text,
+          color: Colors[colorScheme].text,
           fontWeight: 700,
         }}
       >
