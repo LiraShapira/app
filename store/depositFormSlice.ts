@@ -12,9 +12,7 @@ interface DepositFormState extends DepositForm {
 
 const initialState: DepositFormState = {
   amount: '',
-  dryMatter: 'yes',
   loading: false,
-  notes: '',
   compostStand: CompostStand.hakaveret,
   guaranteedAccurate: false
 };
@@ -97,7 +95,7 @@ export const depositFormSlice = createSlice({
       state.compostSmell = !state.compostSmell;
     },
     toggleMissingDryMatter: (state) => {
-      state.dryMatter = (state.dryMatter === 'no') ? 'yes' : 'no';
+      state.missingDryMatter = !state.missingDryMatter;
     },
     toggleBugs: (state) => {
       state.bugs = !state.bugs;
@@ -115,13 +113,13 @@ export const depositFormSlice = createSlice({
       state.compostStand = action.payload;
     },
     resetForm: (state) => {
-      delete state.dryMatter;
-      state.compostSmell = false;
-      state.notes = '';
-      state.bugs = false;
-      state.cleanAndTidy = false;
-      state.scalesMissing = false;
-      state.compostFull = false;
+      delete state.missingDryMatter;
+      delete state.compostSmell;
+      delete state.notes;
+      delete state.bugs;
+      delete state.cleanAndTidy;
+      delete state.scalesMissing;
+      delete state.compostFull;
       state.amount = '';
     },
     setGuaranteedAccurate: (state, action: PayloadAction<boolean>) => {

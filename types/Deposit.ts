@@ -17,7 +17,7 @@ export enum CompostStand {
 export interface DepositForm {
   amount: string;
   compostSmell?: boolean;
-  dryMatter?: 'no' | 'some' | 'yes';
+  missingDryMatter?: boolean;
   bugs?: boolean;
   scalesMissing?: boolean;
   compostFull?: boolean;
