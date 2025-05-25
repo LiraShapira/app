@@ -22,7 +22,7 @@ export default function Home() {
         style={{
           paddingTop: 75,
           paddingBottom: 10,
-          zIndex: -1,
+          zIndex: 0,
           width: '100%',
           position: 'relative',
           height: 'auto',

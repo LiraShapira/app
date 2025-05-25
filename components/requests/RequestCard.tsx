@@ -49,8 +49,7 @@ export default function RequestCard() {
           </View>
           <Text style={styles.reason}>{request.reason}</Text>
         </View>
-
-        <View style={styles.buttomContainer}>
+        <View style={styles.buttonContainer}>
           <View style={styles.refusButton}>
             <CustomButton
               text={i18n.t('request_card_refuse')}
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginRight: 10,
   },
-  buttomContainer: {
+  buttonContainer: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -116,6 +115,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   acceptButton: {
-    width: '85%',
+    width: '45%',
   },
 });
