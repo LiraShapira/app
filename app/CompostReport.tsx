@@ -32,6 +32,7 @@ import { useRouter } from 'expo-router';
 import CustomTag from '../components/utils/CustomTag';
 import GradientContainer from '../components/utils/GradientContainer';
 import { useState } from 'react';
+import { setAppLoading, setIsModalVisible, setModalText } from '../store/appStateSlice';
 
 export default function CompostReport() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -42,31 +43,52 @@ export default function CompostReport() {
   const router = useRouter();
   const [isTouched, setIsTouched] = useState(false);
 
-
   const onPressSend = () => {
+    dispatch(setAppLoading(true));
     dispatch(sendDepositForm(userId))
       .unwrap()
       .then(({ data: transactions }) => {
         transactions.forEach((transaction) => {
-          dispatch(incrementUserBalance(transaction.amount));
+          if (transaction.recipientId === userId) {
+            dispatch(incrementUserBalance(transaction.amount));
+          }
           dispatch(addUserTransaction(transaction));
         });
-        router.replace('/Home');
         dispatch(resetForm());
+      })
+      .catch(e => {
+        console.error("Error sending deposit form:", e);
+        dispatch(setModalText(e.message));
+        dispatch(setIsModalVisible(true));
+      })
+      .finally(() => {
+        router.replace('/Home');
+        dispatch(setAppLoading(false));
       });
   };
 
   const onPressSkip = () => {
+    dispatch(setAppLoading(true));
     dispatch(sendSkippedDepositForm(userId))
       .unwrap()
       .then(({ data: transactions }) => {
         transactions.forEach((transaction) => {
-          dispatch(incrementUserBalance(transaction.amount));
+          if (transaction.recipientId === userId) {
+            dispatch(incrementUserBalance(transaction.amount));
+          }
           dispatch(addUserTransaction(transaction));
-        });
-        router.replace('/Home');
+        })
+      })
+      .catch(e => {
+        console.error("Error sending deposit form:", e);
+        dispatch(setModalText(e.message));
+        dispatch(setIsModalVisible(true));
+      })
+      .finally(() => {
         dispatch(resetForm());
-      });
+        router.replace('/Home');
+        dispatch(setAppLoading(false));
+      });;
   };
 
   const onChangeForm = (func: () => any) => {
