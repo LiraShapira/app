@@ -8,7 +8,7 @@ import CustomButton from '../components/utils/CustomButton';
 import { useRouter } from 'expo-router';
 import i18n from '../translationService';
 import { useState } from 'react';
-import { setIsModalVisible, setModalText } from '../store/appStateSlice';
+import { setAppLoading, setIsModalVisible, setModalText } from '../store/appStateSlice';
 import GradientContainer from '../components/utils/GradientContainer';
 import { parsePhoneNumber } from 'libphonenumber-js';
 import NumberInputNumberPad, {
@@ -23,23 +23,25 @@ export default function AuthCodeValidation() {
   const phoneNumber = useAppSelector(selectPhoneNumber);
 
   const onSubmit = () => {
-    try {
-      const phoneNumberForTwilio = parsePhoneNumber(phoneNumber, 'IL')
-        .formatInternational()
-        .split(' ')
-        .join('');
+    dispatch(setAppLoading(true));
+    const phoneNumberForTwilio = parsePhoneNumber(phoneNumber, 'IL')
+      .formatInternational()
+      .split(' ')
+      .join('');
 
-      dispatch(
-        checkVerificationCode({ phoneNumber: phoneNumberForTwilio, code })
-      )
-        .unwrap()
-        .then(() => {
-          router.push('/AuthNameEntry');
-        });
-    } catch (e: any) {
-      dispatch(setModalText(e.message));
-      dispatch(setIsModalVisible(true));
-    }
+    dispatch(
+      checkVerificationCode({ phoneNumber: phoneNumberForTwilio, code })
+    )
+      .unwrap()
+      .then(() => {
+        router.push('/AuthNameEntry');
+      })
+      .catch((e: any) => {
+        dispatch(setModalText(e.message));
+        dispatch(setIsModalVisible(true));
+      }).finally(() => {
+        dispatch(setAppLoading(false));
+      })
   };
 
   const onButtonPress = (n: NumberLabel) => {
@@ -51,25 +53,25 @@ export default function AuthCodeValidation() {
 
   return (
     <GradientContainer>
-        <View
-          style={{
-            height: '90%',
-            justifyContent: 'space-around',
-            padding: 24,
-          }}
-        >
-          <NumberInputNumberPad value={code} onButtonPress={onButtonPress} />
-          <CustomButton
-            text={i18n.t('continue')}
-            disabled={code.length !== 6}
-            onPress={onSubmit}
-          />
-        </View>
-        <View style={{ height: 30 }}>
-          {code.length !== 6 && (
-            <Text style={styles.numberErrorText}>6 digit required</Text>
-          )}
-        </View>
+      <View
+        style={{
+          height: '90%',
+          justifyContent: 'space-around',
+          padding: 24,
+        }}
+      >
+        <NumberInputNumberPad value={code} onButtonPress={onButtonPress} />
+        <CustomButton
+          text={i18n.t('continue')}
+          disabled={code.length !== 6}
+          onPress={onSubmit}
+        />
+      </View>
+      <View style={{ height: 30 }}>
+        {code.length !== 6 && (
+          <Text style={styles.numberErrorText}>6 digit required</Text>
+        )}
+      </View>
     </GradientContainer>
   );
 }

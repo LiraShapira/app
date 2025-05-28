@@ -13,7 +13,7 @@ import { useRouter } from 'expo-router';
 import { StorageKeys } from '../types/AsyncStorage';
 import i18n from '../translationService';
 import { useState } from 'react';
-import { setIsModalVisible, setModalText } from '../store/appStateSlice';
+import { setAppLoading, setIsModalVisible, setModalText } from '../store/appStateSlice';
 import GradientContainer from '../components/utils/GradientContainer';
 import NumberInputNumberPad from '../components/form/NumberInputNumberPad';
 import { parseNumberPadInputForPhoneNumber } from '../utils/functions';
@@ -49,6 +49,7 @@ export default function AuthPhoneEntry() {
   };
 
   const onSubmit = () => {
+    dispatch(setAppLoading(true));
     dispatch(sendLoginForm())
       .unwrap()
       .then(({ data: user }) => {
@@ -74,6 +75,8 @@ export default function AuthPhoneEntry() {
           dispatch(setModalText(e.message));
           dispatch(setIsModalVisible(true));
         }
+      }).finally(() => {
+        dispatch(setAppLoading(false));
       });
   };
 
