@@ -59,7 +59,7 @@ export default function Send() {
           alignSelf: 'center', // Center the TextInput element horizontally
         }}
         placeholder={i18n.t('send_search_placeholder')}
-        placeholderTextColor={Colors[colorScheme ?? 'light'].shading}
+        placeholderTextColor={Colors[colorScheme ?? 'light'].text}
         onChangeText={setFilterTerms}
       />
       {debouncedFilterTerms && (
