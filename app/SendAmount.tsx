@@ -18,7 +18,7 @@ import NumberInputNumberPad, {
 } from '../components/form/NumberInputNumberPad';
 import { parseNumberPadInputForDeposit } from '../utils/functions';
 import GradientContainer from '../components/utils/GradientContainer';
-import SendFlowHeader from '../components/Send/SendFlowHeader';
+import SendFlowHeader from '../components/utils/StepsHeader';
 
 export default function SendAmount() {
   const colorScheme = useColorScheme() ?? 'light';

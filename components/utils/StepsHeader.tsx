@@ -2,15 +2,16 @@ import { View, Text, StyleSheet, useColorScheme, Pressable } from 'react-native'
 import { useRouter } from 'expo-router';
 import i18n from '../../translationService';
 import Colors from '../../constants/Colors';
-import { CustomIcon } from '../utils/CustomIcon';
+import { CustomIcon } from './CustomIcon';
 import { IconLibrary } from '../../types/Icons';
+import { getLocales } from 'expo-localization';
 
 export type SendStage = 'who' | 'amount' | 'reason';
 
 interface SendFlowHeaderProps {
   stage: SendStage;
 }
-
+const textDirection = getLocales()[0].textDirection || 'ltr';
 export default function SendFlowHeader({ stage }: SendFlowHeaderProps) {
   const colorScheme = useColorScheme() ?? 'light';
   const router = useRouter();
@@ -22,24 +23,38 @@ export default function SendFlowHeader({ stage }: SendFlowHeaderProps) {
   ];
 
   const currentIndex = stages.findIndex((s) => s.key === stage);
-
+  const arrowStyle = textDirection === 'rtl' ? { marginLeft: 15 } : { marginRight: 25 };
   return (
     <View style={styles.container}>
       <View style={styles.bubbles}>
-        {stages.map((s, index) => (
-          <View
-            key={s.key}
-            style={[
-              styles.bubble,
-              {
-                backgroundColor: Colors[colorScheme].backgroundHighlight1,
-                opacity: index < currentIndex ? 0.5 : 1,
-              },
-            ]}
-          >
-            <Text style={{ color: Colors[colorScheme].text }}>{s.label}</Text>
-          </View>
-        ))}
+        {(textDirection === 'rtl' ? [...stages].reverse() : stages).map((s, index, arr) => {
+          // Adjust index for RTL so currentIndex matches correct bubble
+          const displayIndex = textDirection === 'rtl' ? stages.length - 1 - index : index;
+          const isLast = index === arr.length - 1;
+          return (
+            <View key={s.key} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View
+                style={[
+                  styles.bubble,
+                  {
+                    backgroundColor: Colors[colorScheme].background,
+                    opacity: displayIndex < currentIndex ? 0.5 : 1,
+                  },
+                ]}
+              >
+                <Text style={{ color: Colors[colorScheme].text }}>{s.label}</Text>
+              </View>
+              {!isLast && (
+                <CustomIcon
+                  iconLibraryName={IconLibrary.Entypo}
+                  iconName={textDirection === 'rtl' ? 'arrow-left' : 'arrow-right'}
+                  size={18}
+                  color={Colors[colorScheme].background}
+                />
+              )}
+            </View>
+          );
+        })}
       </View>
       <Pressable style={styles.close} onPress={() => router.push('/Home')}>
         <CustomIcon

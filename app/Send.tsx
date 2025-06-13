@@ -8,7 +8,7 @@ import { useDebounce } from '../hooks';
 import { useSelector } from 'react-redux';
 import { selectContacts } from '../store/userSlice';
 import SearchResultsInfo from '../components/Send/SearchResultsInfo';
-import SendFlowHeader from '../components/Send/SendFlowHeader';
+import SendFlowHeader from '../components/utils/StepsHeader';
 import { filterContactsCondition } from './filterContactsCondition';
 import GradientContainer from '../components/utils/GradientContainer';
 import { useLocalSearchParams } from 'expo-router';

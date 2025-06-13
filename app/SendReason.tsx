@@ -35,7 +35,7 @@ import { User } from '../types/User';
 import { Contact } from 'expo-contacts';
 import { CustomModal } from '../components/utils/CustomModal';
 import GradientContainer from '../components/utils/GradientContainer';
-import SendFlowHeader from '../components/Send/SendFlowHeader';
+import SendFlowHeader from '../components/utils/StepsHeader';
 
 export default function SendReason() {
   const colorScheme = useColorScheme();
