@@ -53,6 +53,8 @@ const arDictionary: Dictionary = {
   deposit_form_amount: 'الكمية',
   deposit_form_kilogram: 'كغ',
 
+  deposit_choose_location: 'اختر موقع الإيداع',
+
   location: 'اختر موقعًا من القائمة المنسدلة',
   deposit_compost_stand_blank: '',
   deposit_compost_stand_cafe_shapira: 'مقهى شفيرا',

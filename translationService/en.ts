@@ -59,6 +59,8 @@ const enDictionary: Dictionary = {
   deposit_form_amount: 'Amount',
   deposit_form_kilogram: 'kg',
 
+  deposit_choose_location: 'Choose deposit location',
+
   compost_report_title: 'What\'s the status',
   compost_report_bin_full: 'compost bin full',
   compost_report_bin_smells: 'compost smells',
