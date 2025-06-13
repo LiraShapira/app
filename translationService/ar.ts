@@ -31,7 +31,7 @@ const arDictionary: Dictionary = {
   transactions_list_received_from: 'تم الاستلام من',
   transactions_list_sent_to: 'تم الإرسال إلى',
   transactions_list_compost_deposit: 'إيداع السماد',
-  dashboard_You_have_prevented_kilos_of_garbage:'لقد منعت حتى الآن دفن {{kilos}} كيلوغرام من القمامة في مكب النفايات',
+  dashboard_You_have_prevented_kilos_of_garbage: 'لقد منعت حتى الآن دفن {{kilos}} كيلوغرام من القمامة في مكب النفايات',
 
   // DEPOSIT
   deposit: 'إيداع',
@@ -95,11 +95,11 @@ const arDictionary: Dictionary = {
 
 
   // EVENTS
-  // TODO
   seller_options_add_item: '+ להוסיף פריט',
   seller_options_finish: 'סיימתי',
 
   // REQUEST
+  request_search_no_results_send_to_number: 'طلب من \'%{number}\'',
   request_how_much: 'كم تريد طلبه؟',
   request_search_title: 'من مَن تريد الطلب؟',
   request_card_request_from: '%{name} يطلب منك',

@@ -216,7 +216,7 @@ export default function LSEventItem({ event, listPosition }: { event: LSEvent, l
             />
             <CustomButton
               transparent
-              text='share'
+              text={i18n.t('ls_event_item_share')}
               onPress={onShare}
             />
           </View>

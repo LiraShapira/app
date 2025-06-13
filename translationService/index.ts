@@ -14,7 +14,13 @@ const translations = {
 };
 const i18n = new I18n(translations);
 const deviceLanguage = getLocales()[0].languageCode;
-// Set the locale once at the beginning of your app.
-i18n.locale = deviceLanguage;
+// Set the locale once at the beginning of your app or use English as default
+i18n.locale = deviceLanguage ?? 'en';
+
+// if a key is missing in the current locale, fallback to English
+i18n.enableFallback = true;
+// Set the default locale to English
+i18n.defaultLocale = 'en';
+
 
 export default i18n;

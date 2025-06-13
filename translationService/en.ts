@@ -121,6 +121,7 @@ const enDictionary: Dictionary = {
   ls_event_item_joining_as: 'Joining as...',
   seller_options_add_item: '+ Add Item',
   seller_options_finish: 'Finish',
+  ls_event_item_share: 'Share',
 
   // MONTH UTILS
   month_january: 'january',

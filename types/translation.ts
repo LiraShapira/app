@@ -118,6 +118,7 @@ export type DictionaryKey =
   'ls_event_item_not_attending' |
   'seller_options_add_item' |
   'seller_options_finish' |
+  'ls_event_item_share' |
 
   'month_january' |
   'month_february' |

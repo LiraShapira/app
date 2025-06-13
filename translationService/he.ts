@@ -36,7 +36,7 @@ const heDictionary: Dictionary = {
   transactions_list_received_from: 'העברה מ',
   transactions_list_sent_to: 'העברה ל',
   transactions_list_compost_deposit: 'עבור קומפוסט ',
-  transaction_item_description_stand_admin_payment: 'מנהל דוכן קומפוסט',
+  transaction_item_description_stand_admin_payment: 'מנהל.ת דוכן קומפוסט',
   dashboard_You_have_prevented_kilos_of_garbage: 'מנעת עד כה  {{kilos}} קילו זבל להטמנה',
 
   // DEPOSIT
@@ -122,6 +122,7 @@ const heDictionary: Dictionary = {
   ls_event_item_not_attending: 'לא מסתדר לי הפעם',
   seller_options_add_item: '+ להוסיף פריט',
   seller_options_finish: 'סיימתי',
+  ls_event_item_share: 'שתף',
 
   // MONTH UTILS
   month_january: '	ינואר',
