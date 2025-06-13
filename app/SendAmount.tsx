@@ -18,6 +18,7 @@ import NumberInputNumberPad, {
 } from '../components/form/NumberInputNumberPad';
 import { parseNumberPadInputForDeposit } from '../utils/functions';
 import GradientContainer from '../components/utils/GradientContainer';
+import SendFlowHeader from '../components/utils/StepsHeader';
 
 export default function SendAmount() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -49,6 +50,7 @@ export default function SendAmount() {
 
   return (
     <GradientContainer>
+      <SendFlowHeader stage='amount' />
       <View style={[styles.container]}>
         <CustomModal
           type="error"

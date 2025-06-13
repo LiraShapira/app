@@ -88,6 +88,9 @@ export type DictionaryKey =
   'send_search_title' |
   'send_search_searching_for' |
   'send_search_placeholder' |
+  'send_flow_header_who' |
+  'send_flow_header_how_much' |
+  'send_flow_header_why' |
   'sendamount_how_much' |
   'sendamount_why' |
   'sendamount_continue' |

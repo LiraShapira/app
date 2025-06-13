@@ -35,6 +35,7 @@ import { User } from '../types/User';
 import { Contact } from 'expo-contacts';
 import { CustomModal } from '../components/utils/CustomModal';
 import GradientContainer from '../components/utils/GradientContainer';
+import SendFlowHeader from '../components/utils/StepsHeader';
 
 export default function SendReason() {
   const colorScheme = useColorScheme();
@@ -130,6 +131,7 @@ export default function SendReason() {
 
   return (
     <GradientContainer>
+      <SendFlowHeader stage='reason' />
       <View style={styles.container}>
         <CustomModal
           type="error"
