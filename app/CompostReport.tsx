@@ -142,7 +142,10 @@ export default function CompostReport() {
           </Text>
           <TextInput
             value={notes}
-            onChangeText={(e) => dispatch(setNotes(e))}
+            onChangeText={(e) => {
+              setIsTouched(true);
+              dispatch(setNotes(e));
+            }}
             style={{
               borderColor: Colors[colorScheme].text,
               color: Colors[colorScheme].text,
