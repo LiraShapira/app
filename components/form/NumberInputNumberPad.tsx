@@ -1,4 +1,4 @@
-import { Text, useColorScheme, StyleSheet, View, Pressable, Vibration } from 'react-native';
+import { Text, useColorScheme, StyleSheet, View, Pressable } from 'react-native';
 import Colors from '../../constants/Colors';
 import { getLocales } from 'expo-localization';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -28,13 +28,10 @@ export const NumberPadButton = ({ n, onPress }: NumberPadButtonProps) => {
   return (
     <Pressable
       onPress={() => {
-        // vibrate for 10ms
-        Vibration.vibrate(10);
         onPress(n);
       }}
       style={({ pressed }) => [
         styles.buttonContainer,
-        // dim when pressed
         { opacity: pressed ? 0.5 : 1 },
       ]}
     >
