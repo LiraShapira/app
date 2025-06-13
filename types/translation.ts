@@ -57,6 +57,7 @@ export type DictionaryKey =
   'deposit_form_notes' |
   'deposit_form_amount' |
   'deposit_form_kilogram' |
+  'deposit_choose_location' |
 
   // COMPOST STANDS
   'location' |

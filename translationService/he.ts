@@ -59,6 +59,8 @@ const heDictionary: Dictionary = {
   deposit_form_amount: 'כמות',
   deposit_form_kilogram: 'קילו',
 
+  deposit_choose_location: 'בחר מיקום הפקדה',
+
   location: 'בחר מיקום מתפריט גלילה',
   deposit_compost_stand_blank: '',
   deposit_compost_stand_cafe_shapira: 'קפה שפירא ',
