@@ -42,7 +42,7 @@ export default function SendFlowHeader({ stage }: SendFlowHeaderProps) {
                   },
                 ]}
               >
-                <Text style={{ color: Colors[colorScheme].text }}>{s.label}</Text>
+                <Text style={{ marginHorizontal: 4, color: Colors[colorScheme].text }}>{s.label}</Text>
               </View>
               {!isLast && (
                 <CustomIcon
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
   },
   bubbles: {
     flexDirection: 'row',
-    gap: 10,
   },
   bubble: {
     paddingHorizontal: 10,
