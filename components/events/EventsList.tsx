@@ -24,9 +24,9 @@ export default function EventsList() {
   return (
     <View style={styles.flexContainer}>
       {events.length > 0 &&
-        events.map((event) => (
+        events.map((event, n) => (
           <Card key={event.id}>
-            <LSEventItem event={event} />
+            <LSEventItem listPosition={n} event={event} />
           </Card>
         ))}
     </View>

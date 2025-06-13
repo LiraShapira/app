@@ -37,7 +37,7 @@ const radio_props = [
 
 type AttendanceOptions = AttendeeRole | 'not_attending';
 
-export default function LSEventItem({ event }: { event: LSEvent }) {
+export default function LSEventItem({ event, listPosition }: { event: LSEvent, listPosition: number }) {
   const [modalVisible, setModalVisible] = useState(false);
   const user = useAppSelector(selectUser);
   const [attendeeRole, setAttendeeRole] = useState<AttendanceOptions>(
@@ -129,8 +129,18 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
     }
   };
 
+  const returnImageByIndex = () => {
+    const images = [
+      require('../../assets/images/1.jpg'),
+      require('../../assets/images/2.jpg'),
+      require('../../assets/images/3.jpg'),
+    ];
+    return images[listPosition % images.length];
+  }
+
+
   return (
-    <View style={styles.LSEventItem}>
+    <View>
       <Modal
         transparent
         visible={modalVisible}
@@ -175,7 +185,7 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
       <Pressable>
         <Image
           style={{ height: 173, borderRadius: '29px 29px 0 0', width: '100%' }}
-          source='../../assets/images/types-of-peppers-1-1200.jpg'
+          source={returnImageByIndex()}
         />
         <View style={styles.eventInfo}>
           <View style={{ flexDirection: 'row' }}>
@@ -217,9 +227,6 @@ export default function LSEventItem({ event }: { event: LSEvent }) {
 }
 
 const styles = StyleSheet.create({
-  LSEventItem: {
-    borderRadius: 29,
-  },
   eventInfo: {
     justifyContent: 'space-between',
     margin: 10,
