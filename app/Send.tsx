@@ -42,7 +42,7 @@ export default function Send() {
           color: Colors[colorScheme ?? 'light'].text,
         }}
       >
-        {isRequest
+        {isRequest === 'true'
           ? i18n.t('request_search_title')
           : i18n.t('send_search_title')}
       </Text>

@@ -102,6 +102,7 @@ const enDictionary: Dictionary = {
   sendreason_self_send_error: "Cannot send or make request to yourself",
 
   // REQUEST
+  request_search_no_results_send_to_number: 'Request from \'%{number}\'',
   request_how_much: 'How much?',
   request_search_title: 'Who to request from?',
   request_card_request_from: 'Request from %{name}',

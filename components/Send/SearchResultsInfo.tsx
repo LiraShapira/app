@@ -36,10 +36,9 @@ export default function SearchResultsInfo({
         },
       ],
     };
-    console.log(fakeContact);
     dispatch(setChosenContact(fakeContact));
     if (isRequest) {
-      router.push({ pathname: "/SendAmount", params: { isRequest: true } });
+      router.push({ pathname: "/SendAmount", params: { isRequest: 'true' } });
     } else {
       router.push("/SendAmount");
     }
@@ -53,14 +52,17 @@ export default function SearchResultsInfo({
             style={{
               color: Colors[colorScheme ?? "light"].text,
             }}
-          >
-            {i18n.t("send_search_no_results", { search: debouncedFilterTerms })}
+          >{
+              i18n.t("send_search_no_results", { search: debouncedFilterTerms })
+            }
           </Text>
           {/* if search is done for valid number, allow user to send directly to this number */}
           {isPossiblePhoneNumber(debouncedFilterTerms, "IL") === true && (
             <View>
               <CustomButton
-                text={i18n.t("send_search_no_results_send_to_number", {
+                text={isRequest == 'true' ? i18n.t("request_search_no_results_send_to_number", {
+                  number: debouncedFilterTerms,
+                }) : i18n.t("send_search_no_results_send_to_number", {
                   number: debouncedFilterTerms,
                 })}
                 onPress={onSendToPhoneNumber}

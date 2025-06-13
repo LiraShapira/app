@@ -103,6 +103,7 @@ const heDictionary: Dictionary = {
   sendamount_validate_amount: 'אנא הכנס מספר בין 1 - 99',
 
   // REQUEST
+  request_search_no_results_send_to_number: 'בקשה מ\'%{number}\'',
   request_how_much: 'כמה לבקש?',
   request_search_title: 'ממי לבקש?',
   request_card_request_from: '%{name} מבקש.ת ממך',
