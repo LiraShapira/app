@@ -8,6 +8,7 @@ import { useDebounce } from '../hooks';
 import { useSelector } from 'react-redux';
 import { selectContacts } from '../store/userSlice';
 import SearchResultsInfo from '../components/Send/SearchResultsInfo';
+import SendFlowHeader from '../components/Send/SendFlowHeader';
 import { filterContactsCondition } from './filterContactsCondition';
 import GradientContainer from '../components/utils/GradientContainer';
 import { useLocalSearchParams } from 'expo-router';
@@ -36,6 +37,7 @@ export default function Send() {
 
   return (
     <GradientContainer style={{ padding: 8 }}>
+      <SendFlowHeader stage='who' />
       <Text
         style={{
           fontSize: 24,
