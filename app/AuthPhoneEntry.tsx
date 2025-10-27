@@ -85,23 +85,29 @@ export default function AuthPhoneEntry() {
 
   return (
     <GradientContainer>
-      <View style={{ height: '90%', justifyContent: 'space-around', padding: 24 }}>
-        <Text>
-          {i18n.t('enter_number')}
-        </Text>
-        <NumberInputNumberPad
-          allowDecimal={false}
-          value={displayedPhoneNumber}
-          onButtonPress={onChangePhoneNumber}
-        />
-        <CustomButton
-          text={i18n.t('continue')}
-          disabled={isContinueDisabled}
-          onPress={onSubmit}
-        />
+      <View style={{ flex: 1, padding: 16 }}>
+        <View style={{ flex: 0.15, justifyContent: 'center' }}>
+          <Text>
+            {i18n.t('enter_number')}
+          </Text>
+        </View>
+        <View style={{ flex: 0.7, justifyContent: 'center' }}>
+          <NumberInputNumberPad
+            allowDecimal={false}
+            value={displayedPhoneNumber}
+            onButtonPress={onChangePhoneNumber}
+          />
+        </View>
+        <View style={{ flex: 0.15, justifyContent: 'center' }}>
+          <CustomButton
+            text={i18n.t('continue')}
+            disabled={isContinueDisabled}
+            onPress={onSubmit}
+          />
+        </View>
       </View>
 
-      <View style={{ height: 30 }}>
+      <View style={{ minHeight: 30, maxHeight: 40, paddingHorizontal: 16 }}>
         {isTouched && isNumberError && (
           <Text style={styles.numberErrorText}>
             {i18n.t('auth_number_error')}

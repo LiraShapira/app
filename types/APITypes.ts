@@ -3,4 +3,10 @@ export interface SuccessApiResponse<T> {
   status: number;
 }
 
-export type ApiResponse<T> = SuccessApiResponse<T> | Error
+export interface ErrorApiResponse {
+  data: null;
+  status: number;
+  error: string;
+}
+
+export type ApiResponse<T> = SuccessApiResponse<T> | ErrorApiResponse

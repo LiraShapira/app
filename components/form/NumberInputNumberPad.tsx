@@ -68,9 +68,9 @@ const NumberInputNumberPad = ({
   const colorScheme = useColorScheme() ?? 'light';
 
   return (
-    <View style={{ flexDirection: 'column', gap: 20 }}>
+    <View style={{ flexDirection: 'column', gap: 12 }}>
       <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', minHeight: 60 }}>
           {prependedText && (
             <Text
               style={{
@@ -85,6 +85,7 @@ const NumberInputNumberPad = ({
             </Text>
           )}
           <Text
+            numberOfLines={1}
             style={{ ...styles.inputtedValue, color: Colors[colorScheme].text }}
           >
             {value}
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
   numberPad: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 40,
+    gap: 20,
     alignItems: 'center',
   },
   buttonContainer: {
@@ -162,14 +163,15 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   buttonText: {
-    fontSize: 38,
+    fontSize: 32,
     fontWeight: '600',
   },
   inputtedValue: {
-    height: 80,
-    fontSize: 48,
+    fontSize: 36,
     marginVertical: 0,
     marginHorizontal: 'auto',
+    maxWidth: '100%',
+    textAlign: 'center',
   },
   numberPadButton: {
     fontSize: 48,
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-    gap: 80,
+    gap: 40,
   },
 });
 

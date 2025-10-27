@@ -14,16 +14,23 @@ export const sendSmsVerification = async (phoneNumber: string): Promise<ApiRespo
       },
       body: data,
     });
+    
     const json = await response.json();
 
-    if (response.status !== 200) {
-      throw new Error(json.error)
+    if (!response.ok) {
+      const errorMessage = json.error || `HTTP ${response.status}: ${response.statusText}`;
+      throw new Error(errorMessage);
     }
 
     return { status: 200, data: json };
   } catch (error: any) {
-    console.error(error);
-    return error;
+    console.error('Error in sendSmsVerification:', error);
+    // Return a proper error response instead of the raw error
+    return { 
+      status: 500, 
+      data: null, 
+      error: error.message || 'Failed to send verification code' 
+    };
   }
 };
 
@@ -42,13 +49,20 @@ export const checkSmsVerification = async (phoneNumber: string, code: string): P
       body: data,
     });
 
-    const json: { success: boolean } = await response.json();
-    if (response.status !== 200) {
-      throw new Error()
+    const json = await response.json();
+    
+    if (!response.ok) {
+      const errorMessage = json.error || `HTTP ${response.status}: ${response.statusText}`;
+      throw new Error(errorMessage);
     }
+    
     return { data: json, status: 200 };
   } catch (error: any) {
-    console.error(error);
-    return error
+    console.error('Error in checkSmsVerification:', error);
+    return { 
+      status: 500, 
+      data: null, 
+      error: error.message || 'Failed to verify code' 
+    };
   }
 };

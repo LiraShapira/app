@@ -18,7 +18,7 @@ interface UserState {
 const initialState: UserState = {
   user: {
     accountBalance: 0,
-    createdAt: new Date().toDateString(),
+    createdAt: new Date().toISOString(),
     id: '',
     transactions: [],
     userLocalCompostStandId: 1,

@@ -52,10 +52,10 @@
       "supportsRTL": true,
       "router": {
         "origin": false
-      },
-      "eas": {
-        "projectId": "47b4332c-23be-46af-9ff2-4522e86e281f"
       }
+    },
+    "updates": {
+      "enabled": false
     }
   }
 }
