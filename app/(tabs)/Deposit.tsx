@@ -112,6 +112,7 @@ export default function Deposit() {
           borderRadius: 10,
           margin: 10,
           paddingHorizontal: 10,
+          paddingVertical: 8,
         }}
       >
         <Picker
@@ -119,7 +120,7 @@ export default function Deposit() {
           onValueChange={(stand) => dispatch(setCompostStand(stand))}
           style={{
             fontSize: 18,
-            height: 50,
+            height: 60,
           }}
           mode="dropdown"
         >
@@ -147,7 +148,6 @@ export default function Deposit() {
           onButtonPress={onPressNumberPadInput}
           appendedText={i18n.t('deposit_form_kilogram')}
           value={depositValue}
-
         />
 
         <View style={styles.buttons}>
@@ -173,12 +173,12 @@ const styles = StyleSheet.create({
   depositSwitches: {
     display: 'flex',
     flexDirection: 'column',
-    paddingVertical: 32,
+    paddingVertical: 20,
     paddingHorizontal: 24,
-    alignContent: 'center',
     justifyContent: 'space-between',
     alignItems: 'stretch',
-    height: '80%',
+    flex: 1,
+    minHeight: 0,
   },
   depositSwitchContainer: {
     display: 'flex',
@@ -205,6 +205,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    paddingBottom: 30,
+    paddingTop: 20,
+    marginTop: 'auto',
   },
   submitButton: {
     borderRadius: 200,

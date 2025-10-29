@@ -49,7 +49,10 @@ export default function CompostReport() {
       .unwrap()
       .then(({ data: transactions }) => {
         transactions.forEach((transaction) => {
+          console.log('Transaction received:', transaction);
+          console.log('Transaction amount:', transaction.amount, 'Type:', typeof transaction.amount);
           if (transaction.recipientId === userId) {
+            console.log('Incrementing balance by:', transaction.amount);
             dispatch(incrementUserBalance(transaction.amount));
           }
           dispatch(addUserTransaction(transaction));

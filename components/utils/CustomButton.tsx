@@ -73,11 +73,12 @@ export default function CustomButton({
 
 const styles = StyleSheet.create({
   submitButton: {
-    paddingVertical: 10,
+    paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 40,
+    height: 50,
+    minHeight: 50,
   },
 });

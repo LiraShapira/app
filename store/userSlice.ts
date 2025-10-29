@@ -120,11 +120,24 @@ export const userSlice = createSlice({
       }
     },
     incrementUserBalance: (state, action: PayloadAction<number | string>) => {
-      if (typeof action.payload === 'string') {
-        state.user.accountBalance += parseFloat(action.payload);
-      } else {
-        state.user.accountBalance += action.payload;
-      }
+      console.log('incrementUserBalance called with:', action.payload, 'Type:', typeof action.payload);
+      console.log('Current balance:', state.user.accountBalance, 'Type:', typeof state.user.accountBalance);
+      
+      // Ensure current balance is a number
+      const currentBalance = typeof state.user.accountBalance === 'string' 
+        ? parseFloat(state.user.accountBalance) 
+        : state.user.accountBalance;
+      
+      // Ensure amount to add is a number
+      const amountToAdd = typeof action.payload === 'string' 
+        ? parseFloat(action.payload) 
+        : action.payload;
+      
+      console.log('Current balance (as number):', currentBalance);
+      console.log('Amount to add (as number):', amountToAdd);
+      
+      state.user.accountBalance = currentBalance + amountToAdd;
+      console.log('New balance:', state.user.accountBalance, 'Type:', typeof state.user.accountBalance);
     },
   },
   extraReducers: (builder) => {
