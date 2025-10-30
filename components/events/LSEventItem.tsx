@@ -184,7 +184,7 @@ export default function LSEventItem({ event, listPosition }: { event: LSEvent, l
       </Modal>
       <Pressable>
         <Image
-          style={{ height: 173, borderRadius: '29px 29px 0 0', width: '100%' }}
+          style={{ height: 173, borderRadius: 29, width: '100%' }}
           source={returnImageByIndex()}
         />
         <View style={styles.eventInfo}>

@@ -11,6 +11,8 @@ import { User } from '../../types/User';
 
 export default function Home() {
   const user = useAppSelector<User>(selectUser);
+  // Diagnostics: log the user object and transactions (on tab load)
+  console.log('Home.tsx - user object:', user);
 
   return (
     <View style={styles.container}>
