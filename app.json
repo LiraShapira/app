@@ -19,7 +19,8 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSContactsUsageDescription": "Allow Lira Shapira to access your contacts."
+        "NSContactsUsageDescription": "Allow Lira Shapira to access your contacts.",
+        "ExpoLocalization_supportsRTL": true
       }
     },
     "android": {
@@ -52,6 +53,9 @@
       "supportsRTL": true,
       "router": {
         "origin": false
+      },
+      "eas": {
+        "projectId": "b8da41f0-4936-473f-8d59-b62e8eaba407"
       }
     },
     "updates": {
