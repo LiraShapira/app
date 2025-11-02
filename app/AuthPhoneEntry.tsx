@@ -107,7 +107,7 @@ export default function AuthPhoneEntry() {
         </View>
       </View>
 
-      <View style={{ minHeight: 30, maxHeight: 40, paddingHorizontal: 16 }}>
+      <View style={{ minHeight: 40, paddingHorizontal: 16, paddingBottom: 5 }}>
         {isTouched && isNumberError && (
           <Text style={styles.numberErrorText}>
             {i18n.t('auth_number_error')}
@@ -121,11 +121,8 @@ export default function AuthPhoneEntry() {
 
 const styles = StyleSheet.create({
   numberErrorText: {
-    display: 'flex',
-    height: 24,
-    margin: 24,
     fontSize: 20,
     color: 'red',
-    justifyContent: 'center',
+    textAlign: 'center',
   },
 });

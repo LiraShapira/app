@@ -14,10 +14,14 @@ export default function TransactionsList({
 }: TransactionsListProps) {
   const colorScheme = useColorScheme();
 
+  const sortedTransactions = [...currentUser.transactions].sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+
   return (
     <View style={ styles.transactionList }>
-      { currentUser.transactions.length ? (
-        currentUser.transactions.map((transaction: Transaction, i) => {
+      { sortedTransactions.length ? (
+        sortedTransactions.map((transaction: Transaction, i) => {
             const isRequestToCurrentUser = transaction.isRequest && transaction.purchaserId === currentUser.id;
             return isRequestToCurrentUser ? null :
               (
@@ -33,7 +37,7 @@ export default function TransactionsList({
                 </View>
               )
           }
-        ).reverse()
+        )
       ) : (
         <Text
           style={ {fontSize: 24, color: Colors[colorScheme ?? 'light'].text} }
