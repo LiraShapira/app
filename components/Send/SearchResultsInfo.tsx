@@ -3,14 +3,14 @@ import i18n from "../../translationService";
 import CustomButton from "../utils/CustomButton";
 import { isPossiblePhoneNumber, parsePhoneNumber } from "libphonenumber-js";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ContactTypes } from "expo-contacts";
-import { setChosenContact } from "../../store/sendFormSlice";
+import { setChosenUser } from "../../store/sendFormSlice";
 import { useAppDispatch } from "../../hooks";
 import Colors from "../../constants/Colors";
+import { User, UserRole } from "../../types/User";
 
 interface SearchResultsInfoProps {
   debouncedFilterTerms: string;
-  noContacts: boolean;
+  noContacts: boolean; // Keeping the prop name for compatibility, but it now refers to users
 }
 
 export default function SearchResultsInfo({
@@ -24,19 +24,21 @@ export default function SearchResultsInfo({
   const { isRequest } = params;
 
   const onSendToPhoneNumber = () => {
-    const fakeContact = {
-      id: "1",
-      contactType: ContactTypes.Person,
-      name: "fake contact",
-      phoneNumbers: [
-        {
-          label: "fake",
-          id: "1",
-          number: parsePhoneNumber(debouncedFilterTerms, "IL").nationalNumber,
-        },
-      ],
+    // Create a minimal User object for phone number search
+    const phoneNumber = parsePhoneNumber(debouncedFilterTerms, "IL").nationalNumber;
+    const fakeUser: User = {
+      id: "temp-phone-search",
+      firstName: "",
+      lastName: "",
+      role: UserRole.BASIC,
+      userLocalCompostStandId: 1,
+      accountBalance: 0,
+      createdAt: new Date().toISOString(),
+      transactions: [],
+      phoneNumber: phoneNumber,
+      adminCompostStandId: null,
     };
-    dispatch(setChosenContact(fakeContact));
+    dispatch(setChosenUser(fakeUser));
     if (isRequest) {
       router.push({ pathname: "/SendAmount", params: { isRequest: 'true' } });
     } else {

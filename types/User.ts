@@ -16,6 +16,8 @@ export interface User {
   transactions: Transaction[]
   phoneNumber: string
   adminCompostStandId: number | null;
+  isVerified?: boolean | null;
+  isBanned?: boolean;
 }
 
 export interface FetchUserArgs {

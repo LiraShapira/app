@@ -12,27 +12,24 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   saveTransaction,
   selectAmount,
-  selectChosenContact,
+  selectChosenUser,
   selectReason,
   setAmount,
   setReason,
-  unsetChosenContact,
+  unsetChosenUser,
 } from '../store/sendFormSlice';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { setIsModalVisible, setModalText } from '../store/appStateSlice';
 import {
   addUserTransaction,
-  getUserIdByNumber,
   selectUser,
   selectUserId,
   setIsUserLoading,
   setUserBalance,
 } from '../store/userSlice';
 import { Category } from '../types/Transaction';
-import { parsePhoneNumber } from 'libphonenumber-js';
 import { User } from '../types/User';
-import { Contact } from 'expo-contacts';
 import { CustomModal } from '../components/utils/CustomModal';
 import GradientContainer from '../components/utils/GradientContainer';
 import SendFlowHeader from '../components/utils/StepsHeader';
@@ -42,7 +39,7 @@ export default function SendReason() {
   const [reasonError, setReasonError] = useState<boolean>(true);
   const router = useRouter();
   const currentUser = useAppSelector<User>(selectUser);
-  const chosenContact = useAppSelector<Contact | undefined>(selectChosenContact);
+  const chosenUser = useAppSelector<User | undefined>(selectChosenUser);
   const amount = useAppSelector<number>(selectAmount);
   const reason = useAppSelector<string>(selectReason);
   const currentUserId = useAppSelector<string>(selectUserId);
@@ -53,10 +50,9 @@ export default function SendReason() {
   const onPressSend = async () => {
     try {
       dispatch(setIsUserLoading(true));
-      if (!chosenContact?.phoneNumbers || !chosenContact?.phoneNumbers[0].number) {
+      if (!chosenUser?.phoneNumber) {
         throw new Error("Selected user is missing a phone number");
       }
-      const phoneNumber = chosenContact.phoneNumbers[0].number;
       if (!isRequest && (
         currentUser?.accountBalance <= 0 ||
         amount > currentUser?.accountBalance
@@ -65,24 +61,19 @@ export default function SendReason() {
         throw new Error(i18n.t('sendamount_not_enough_funds'));
       }
 
-      const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'IL')
-        .nationalNumber as string;
-      if (parsedPhoneNumber === currentUser.phoneNumber) {
+      if (chosenUser.id === currentUser.id) {
         throw new Error('Cannot send or make request to yourself');
       }
-      const { data: getUserIdByNumberData } = await dispatch(
-        getUserIdByNumber(parsedPhoneNumber)
-      ).unwrap();
-      const requesteeId = getUserIdByNumberData.userId;
+      
       const newTransaction = {
         recipientPhoneNumber: isRequest
           ? currentUser.phoneNumber
-          : parsedPhoneNumber,
+          : chosenUser.phoneNumber,
         amount: amount,
         category: Category.MISC,
         reason: reason,
         // in a request the purchaserid is the id of person the request is sent to and is therefore not known
-        purchaserId: isRequest ? requesteeId : currentUserId,
+        purchaserId: isRequest ? chosenUser.id : currentUserId,
         ...(isRequest && { isRequest: true }),
       };
       const { data: transaction } = await dispatch(
@@ -123,9 +114,9 @@ export default function SendReason() {
     dispatch(setIsModalVisible(false));
     router.push('/Home');
   };
-  const onModalChangeContact = () => {
+  const onModalChangeUser = () => {
     dispatch(setIsModalVisible(false));
-    dispatch(unsetChosenContact());
+    dispatch(unsetChosenUser());
     router.back();
   };
 
@@ -137,7 +128,7 @@ export default function SendReason() {
           type="error"
           buttons={[
             { text: i18n.t('cancel'), onPress: onModalCancel },
-            { text: i18n.t('sendamount_back'), onPress: onModalChangeContact },
+            { text: i18n.t('sendamount_back'), onPress: onModalChangeUser },
           ]}
         />
         <Text

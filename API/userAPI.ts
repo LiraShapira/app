@@ -79,3 +79,22 @@ export const fetchUserIdByNumber = async (phoneNumber: string): Promise<ApiRespo
     return e;
   }
 }
+
+export const fetchAllUsers = async (): Promise<ApiResponse<User[]>> => {
+  try {
+    const requestString = `${SERVER_URL}/users`;
+    const response = await fetch(requestString, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const JSONresponse = await response.json()
+    if (response.status !== 200) {
+      throw new Error(JSONresponse.error || 'Failed to fetch users');
+    }
+    return { data: JSONresponse, status: response.status };
+  } catch (e: any) {
+    return e;
+  }
+}

@@ -7,7 +7,7 @@ import {
   selectAmount,
   setAmount,
   setReason,
-  unsetChosenContact,
+  unsetChosenUser,
 } from '../store/sendFormSlice';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -35,9 +35,9 @@ export default function SendAmount() {
     dispatch(setIsModalVisible(false));
     router.push('/Home');
   };
-  const onModalChangeContact = () => {
+  const onModalChangeUser = () => {
     dispatch(setIsModalVisible(false));
-    dispatch(unsetChosenContact());
+    dispatch(unsetChosenUser());
     router.back();
   };
   const onPressNumberPadInput = (n: NumberLabel) => {
@@ -56,7 +56,7 @@ export default function SendAmount() {
           type="error"
           buttons={[
             { text: i18n.t('cancel'), onPress: onModalCancel },
-            { text: i18n.t('sendamount_back'), onPress: onModalChangeContact },
+            { text: i18n.t('sendamount_back'), onPress: onModalChangeUser },
           ]}
         />
         <View>

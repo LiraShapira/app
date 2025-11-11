@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
-import { Contact } from 'expo-contacts';
+import { User } from '../types/User';
 import {
   Category,
   SaveTransactionArgs, Transaction,
@@ -15,7 +15,7 @@ export interface ErrorResponse {
 }
 
 interface SendFormState {
-  chosenContact?: Contact;
+  chosenUser?: User;
   amount: number;
   loading: boolean;
   reason: string;
@@ -48,11 +48,11 @@ export const sendFormSlice = createSlice({
   name: 'sendForm',
   initialState,
   reducers: {
-    setChosenContact: (state, action: PayloadAction<Contact>) => {
-      state.chosenContact = action.payload;
+    setChosenUser: (state, action: PayloadAction<User>) => {
+      state.chosenUser = action.payload;
     },
-    unsetChosenContact: (state) => {
-      delete state.chosenContact;
+    unsetChosenUser: (state) => {
+      delete state.chosenUser;
     },
     setAmount: (state, action: PayloadAction<number>) => {
       state.amount = action.payload;
@@ -75,11 +75,11 @@ export const sendFormSlice = createSlice({
   },
 });
 
-export const { setChosenContact, unsetChosenContact, setReason, setAmount } =
+export const { setChosenUser, unsetChosenUser, setReason, setAmount } =
   sendFormSlice.actions;
 
-export const selectChosenContact = (state: RootState) =>
-  state.sendForm.chosenContact;
+export const selectChosenUser = (state: RootState) =>
+  state.sendForm.chosenUser;
 export const selectSendFormLoading = (state: RootState) => state.sendForm.loading;
 export const selectAmount = (state: RootState) => state.sendForm.amount;
 export const selectReason = (state: RootState) => state.sendForm.reason;

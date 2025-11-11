@@ -1,39 +1,49 @@
 import { Text, TextInput, View, useColorScheme } from 'react-native';
-import ContactList from '../components/contacts/ContactList';
+import UserList from '../components/users/UserList';
 import { useEffect, useState } from 'react';
 import i18n from '../translationService';
 import Colors from '../constants/Colors';
-import { Contact } from 'expo-contacts';
+import { User } from '../types/User';
 import { useDebounce } from '../hooks';
-import { useSelector } from 'react-redux';
-import { selectContacts } from '../store/userSlice';
+import { useAppSelector, useAppDispatch } from '../hooks';
+import { selectAllUsers, loadAllUsers, selectUser } from '../store/userSlice';
 import SearchResultsInfo from '../components/Send/SearchResultsInfo';
 import SendFlowHeader from '../components/utils/StepsHeader';
-import { filterContactsCondition } from './filterContactsCondition';
+import { filterUsersCondition } from './filterUsersCondition';
 import GradientContainer from '../components/utils/GradientContainer';
 import { useLocalSearchParams } from 'expo-router';
 
 export default function Send() {
   const [filterTerms, setFilterTerms] = useState<string>('');
-  const [filteredContacts, setfilteredContacts] = useState<Contact[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const colorScheme = useColorScheme();
   const debouncedFilterTerms: string = useDebounce(filterTerms, 300).toString();
-  const contacts = useSelector(selectContacts);
+  const allUsers = useAppSelector(selectAllUsers);
+  const currentUser = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
   const params = useLocalSearchParams();
   const { isRequest } = params;
 
-  // when filter terms change
-  // set filtered contacts
+  // Load users on mount
   useEffect(() => {
-    const filterBySearchTerm = () => {
-      setfilteredContacts(
-        contacts.filter((cont) =>
-          filterContactsCondition(cont, debouncedFilterTerms)
+    dispatch(loadAllUsers());
+  }, [dispatch]);
+
+  // Filter out current user and apply search filter
+  useEffect(() => {
+    // Filter out current user from the list
+    const otherUsers = allUsers.filter((user) => user.id !== currentUser.id);
+    
+    if (debouncedFilterTerms) {
+      setFilteredUsers(
+        otherUsers.filter((user) =>
+          filterUsersCondition(user, debouncedFilterTerms)
         )
       );
-    };
-    if (debouncedFilterTerms) filterBySearchTerm();
-  }, [debouncedFilterTerms]);
+    } else {
+      setFilteredUsers(otherUsers);
+    }
+  }, [debouncedFilterTerms, allUsers, currentUser.id]);
 
   return (
     <GradientContainer style={{ padding: 8 }}>
@@ -65,14 +75,12 @@ export default function Send() {
       {debouncedFilterTerms && (
         <SearchResultsInfo
           debouncedFilterTerms={debouncedFilterTerms}
-          noContacts={filteredContacts.length === 0}
+          noContacts={filteredUsers.length === 0}
         />
       )}
 
       <View style={{ height: '100%' }}>
-        <ContactList
-          contacts={debouncedFilterTerms ? filteredContacts : contacts}
-        />
+        <UserList users={filteredUsers} />
       </View>
     </GradientContainer>
   );
