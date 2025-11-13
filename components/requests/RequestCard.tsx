@@ -14,7 +14,7 @@ import { getLocales } from 'expo-localization';
 
 export default function RequestCard() {
   const currentUser = useAppSelector<User>(selectUser);
-  const request = currentUser.transactions.filter(
+  const request = (currentUser.transactions || []).filter(
     (t) => t.isRequest && t.recipientId !== currentUser.id
   )[0];
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ export default function RequestCard() {
         <View style={styles.textBox}>
           <Text style={styles.name}>
             {i18n.t('request_card_request_from', {
-              name: request.users.find((u) => u.id === request.recipientId)?.firstName,
+              name: (request.users || []).find((u) => u.id === request.recipientId)?.firstName || '',
             })}
           </Text>
           <View

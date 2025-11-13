@@ -19,10 +19,11 @@ export default function TransactionItemDescription({ transaction, income, isRequ
   const isStandAdminPayment = transaction.reason === 'StandAdminPayment';
   const topTextPrefix = isRequest ? i18n.t('transaction_request_to') : income ? i18n.t('transactions_list_received_from') : i18n.t('transactions_list_sent_to');
   const currentUser = useAppSelector<User>(selectUser);
+  const users = Array.isArray(transaction.users) ? transaction.users : [];
   const otherUser =
-    transaction.users.find(u => u.id !== currentUser.id) ||
-    transaction.users[0];
-  const topText = topTextPrefix + otherUser.firstName;
+    users.find(u => u && u.id !== currentUser.id) ||
+    users[0];
+  const topText = topTextPrefix + (otherUser?.firstName || '');
 
   return (
     <View style={{ ...styles.notesDisplay }}>

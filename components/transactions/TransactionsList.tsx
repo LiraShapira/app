@@ -14,7 +14,7 @@ export default function TransactionsList({
 }: TransactionsListProps) {
   const colorScheme = useColorScheme();
 
-  const sortedTransactions = [...currentUser.transactions].sort((a, b) => {
+  const sortedTransactions = [...(currentUser.transactions || [])].sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 

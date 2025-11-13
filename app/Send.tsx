@@ -32,7 +32,7 @@ export default function Send() {
   // Filter out current user and apply search filter
   useEffect(() => {
     // Filter out current user from the list
-    const otherUsers = allUsers.filter((user) => user.id !== currentUser.id);
+    const otherUsers = (allUsers || []).filter((user) => user.id !== currentUser.id);
     
     if (debouncedFilterTerms) {
       setFilteredUsers(

@@ -10,6 +10,7 @@ import { updateRequestInDatabase } from '../API/transactionAPI';
 
 interface UserState {
   user: User;
+  users: User[];
   contacts: Contact[];
   loading: boolean;
   isConnected: boolean;
@@ -27,6 +28,7 @@ const initialState: UserState = {
     phoneNumber: '',
     role: UserRole.BASIC,
   },
+  users: [],
   contacts: [],
   loading: false,
   isConnected: false,
@@ -117,9 +119,26 @@ export const userSlice = createSlice({
       } else {
         state.user.accountBalance = action.payload.accountBalance;
       }
+      // Ensure transactions is always an array
+      if (!state.user.transactions) {
+        state.user.transactions = [];
+      }
+      // Ensure all transactions have a users array to prevent crashes
+      state.user.transactions = state.user.transactions.map(t => ({
+        ...t,
+        users: Array.isArray(t.users) ? t.users : []
+      }));
     },
     addUserTransaction: (state, action: PayloadAction<Transaction>) => {
-      state.user.transactions.push(action.payload);
+      if (!state.user.transactions) {
+        state.user.transactions = [];
+      }
+      // Ensure the transaction has a users array (even if empty) to prevent crashes
+      const transaction = {
+        ...action.payload,
+        users: Array.isArray(action.payload.users) ? action.payload.users : []
+      };
+      state.user.transactions.push(transaction);
     },
     setIsUserLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
