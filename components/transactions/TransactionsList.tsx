@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     gap: 5,
     textAlign: 'center',
-    width: '90%',
-    paddingHorizontal: 4,
+    width: '70%',
+    paddingHorizontal: 12,
+    alignSelf: 'center',
+    marginEnd:75
   },
 });
