@@ -27,9 +27,8 @@ export default function SendFlowHeader({ stage }: SendFlowHeaderProps) {
   return (
     <View style={styles.container}>
       <View style={styles.bubbles}>
-        {(textDirection === 'rtl' ? [...stages].reverse() : stages).map((s, index, arr) => {
-          // Adjust index for RTL so currentIndex matches correct bubble
-          const displayIndex = textDirection === 'rtl' ? stages.length - 1 - index : index;
+        {stages.map((s, index, arr) => {
+          const displayIndex = index;
           const isLast = index === arr.length - 1;
           return (
             <View key={s.key} style={{ flexDirection: 'row', alignItems: 'center' }}>
