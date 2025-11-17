@@ -26,6 +26,7 @@ import { useEffect } from 'react';
 import { compostStands } from '../../utils/compostStands';
 import { StorageKeys } from '../../types/AsyncStorage';
 import { getItem, setItem } from '../../utils/asyncStorage';
+import { CompostStand } from '../../types/Deposit';
 
 export default function Deposit() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -40,6 +41,9 @@ export default function Deposit() {
     router.replace('/Home');
   };
   const onPressContinue = () => {
+    if (!compostStand || !depositValue) {
+      return;
+    }
     setItem(StorageKeys.compostStand, compostStand);
 
     dispatch(
@@ -74,9 +78,8 @@ export default function Deposit() {
   };
 
   useEffect(() => {
-    getItem(StorageKeys.compostStand).then((stand) => {
-      if (stand) dispatch(setCompostStand(stand));
-    });
+    // Reset compost stand to blank when component mounts
+    dispatch(setCompostStand('' as CompostStand));
   }, []);
 
   return (
@@ -116,7 +119,7 @@ export default function Deposit() {
         }}
       >
         <Picker
-          selectedValue={compostStand}
+          selectedValue={compostStand || ''}
           onValueChange={(stand) => dispatch(setCompostStand(stand))}
           style={{
             fontSize: 18,
@@ -124,6 +127,7 @@ export default function Deposit() {
           }}
           mode="dropdown"
         >
+          <Picker.Item label={i18n.t('deposit_compost_stand_blank')} value="" />
           {compostStands.map((stand) => (
             <Picker.Item
               key={stand}
@@ -154,7 +158,7 @@ export default function Deposit() {
           <CustomButton
             text={i18n.t('continue')}
             onPress={onPressContinue}
-            disabled={!depositValue}
+            disabled={!depositValue || !compostStand}
           />
           <CustomButton
             transparent={true}

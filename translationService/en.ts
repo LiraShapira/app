@@ -71,7 +71,7 @@ const enDictionary: Dictionary = {
 
   // COMPOST STANDS
   location: 'Select location from drop down',
-  deposit_compost_stand_blank: '',
+  deposit_compost_stand_blank: 'Select compost stand',
   deposit_compost_stand_cafe_shapira: 'Cafe Shapira',
   deposit_compost_stand_masalant: 'Masalant 27',
   deposit_compost_stand_hizkiyahu_hamelech: 'Hizkiyahu hamelech',

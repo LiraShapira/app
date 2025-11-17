@@ -19,7 +19,6 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSContactsUsageDescription": "Allow Lira Shapira to access your contacts.",
         "ExpoLocalization_supportsRTL": true
       }
     },
@@ -28,10 +27,7 @@
         "foregroundImage": "./assets/icons/lira-shapira.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.READ_CONTACTS",
-        "android.permission.WRITE_CONTACTS"
-      ],
+      "permissions": [],
       "package": "com.gilreich1.liraShapiraApp"
     },
     "web": {
@@ -39,12 +35,6 @@
       "favicon": "./assets/icons/favicon.png"
     },
     "plugins": [
-      [
-        "expo-contacts",
-        {
-          "contactsPermission": "Allow Lira Shapira to access your contacts."
-        }
-      ],
       "expo-localization",
       "expo-router",
       "expo-font"

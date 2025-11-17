@@ -56,7 +56,7 @@ const arDictionary: Dictionary = {
   deposit_choose_location: 'اختر موقع الإيداع',
 
   location: 'اختر موقعًا من القائمة المنسدلة',
-  deposit_compost_stand_blank: '',
+  deposit_compost_stand_blank: 'اختر موقع السماد',
   deposit_compost_stand_cafe_shapira: 'مقهى شفيرا',
   deposit_compost_stand_masalant: 'مركز المجتمع (27 إسرائيل مسالانت)',
   deposit_compost_stand_hizkiyahu_hamelech: 'حزقيا الملك',

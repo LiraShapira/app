@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../store';
 import {
-  loadContacts,
   loadUser,
   selectUserLoading,
   setIsUserLoading,
@@ -65,9 +64,6 @@ function RootLayoutNav() {
   const isSendFormLoading = useAppSelector(selectSendFormLoading);
   const isAppLoading = useAppSelector(selectIsAppLoading);
   const router = useRouter();
-  useEffect(() => {
-    dispatch(loadContacts());
-  });
 
   useEffect(() => {
     dispatch(setIsUserLoading(true));

@@ -62,7 +62,7 @@ const heDictionary: Dictionary = {
   deposit_choose_location: 'בחר מיקום הפקדה',
 
   location: 'בחר מיקום מתפריט גלילה',
-  deposit_compost_stand_blank: '',
+  deposit_compost_stand_blank: 'בחר מיקום קומפוסט',
   deposit_compost_stand_cafe_shapira: 'קפה שפירא ',
   deposit_compost_stand_masalant: 'מרכז קהילתי (ישראל מסלנט 27) ',
   deposit_compost_stand_hizkiyahu_hamelech: 'חזקיהו המלך ',

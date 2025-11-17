@@ -3,15 +3,12 @@ import { RootState } from '../store';
 import { User, UserRole } from '../types/User';
 import { fetchUser, fetchUserIdByNumber, fetchAllUsers } from '../API/userAPI';
 import { Transaction } from '../types/Transaction';
-import { fetchContacts } from '../API/contactsAPI';
-import { Contact } from 'expo-contacts';
 import { SuccessApiResponse } from '../types/APITypes';
 import { updateRequestInDatabase } from '../API/transactionAPI';
 
 interface UserState {
   user: User;
   users: User[];
-  contacts: Contact[];
   loading: boolean;
   isConnected: boolean;
 }
@@ -29,7 +26,6 @@ const initialState: UserState = {
     role: UserRole.BASIC,
   },
   users: [],
-  contacts: [],
   loading: false,
   isConnected: false,
 };
@@ -48,15 +44,6 @@ export const loadUser = createAsyncThunk<
   } else {
     throw new Error('User not found');
   }
-});
-
-export const loadContacts = createAsyncThunk<
-  Contact[],
-  void,
-  { state: RootState }
->('user/fetchContacts', async () => {
-  const contacts = await fetchContacts();
-  return contacts;
 });
 
 export const loadAllUsers = createAsyncThunk<
@@ -173,9 +160,6 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadContacts.fulfilled, (state, action) => {
-        state.contacts = action.payload; // Update contacts directly on the slice
-      })
       .addCase(loadAllUsers.fulfilled, (state, action) => {
         state.users = action.payload;
       })
@@ -211,7 +195,6 @@ export const {
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserId = (state: RootState) => state.user.user.id;
 export const selectUserLoading = (state: RootState) => state.user.loading;
-export const selectContacts = (state: RootState) => state.user.contacts;
 export const selectAllUsers = (state: RootState) => state.user.users;
 
 export default userSlice.reducer;
