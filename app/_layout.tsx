@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot, Stack, useRouter } from 'expo-router';
-import { Platform, useColorScheme } from 'react-native';
+import { Platform, useColorScheme, StatusBar } from 'react-native';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../store';
@@ -24,6 +24,7 @@ import { selectDepositFormLoading } from '../store/depositFormSlice';
 import { selectSendFormLoading } from '../store/sendFormSlice';
 import { selectIsAppLoading } from '../store/appStateSlice';
 import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -47,10 +48,12 @@ export default function RootLayout() {
 
   return (
     <>
-      <Provider store={store}>
-        {!loaded && <Slot />}
-        {loaded && <RootLayoutNav />}
-      </Provider>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          {!loaded && <Slot />}
+          {loaded && <RootLayoutNav />}
+        </Provider>
+      </SafeAreaProvider>
     </>
   );
 }
@@ -108,6 +111,10 @@ function RootLayoutNav() {
 
   return (
     <>
+      <StatusBar
+        barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+        translucent={false}
+      />
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <LoadingPage
           loading={
