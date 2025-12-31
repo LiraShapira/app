@@ -134,6 +134,7 @@ export default function LSEventItem({ event, listPosition }: { event: LSEvent, l
       require('../../assets/images/1.jpg'),
       require('../../assets/images/2.jpg'),
       require('../../assets/images/3.jpg'),
+      require('../../assets/images/4.jpg'),
     ];
     return images[listPosition % images.length];
   }
