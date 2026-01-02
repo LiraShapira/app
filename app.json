@@ -18,8 +18,10 @@
     ],
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.gilreich1.liraShapiraApp",
       "infoPlist": {
-        "ExpoLocalization_supportsRTL": true
+        "ExpoLocalization_supportsRTL": true,
+        "NSContactsUsageDescription": "This app needs access to your contacts to help you find and send money to people in your contact list."
       }
     },
     "android": {

@@ -1,5 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { useColorScheme, ViewProps } from 'react-native';
+import { useColorScheme, ViewProps, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface GradientContainerProps {
   children: JSX.Element | JSX.Element[];
@@ -27,7 +28,12 @@ export default function GradientContainer({
         ...styles,
       }}
     >
-      {children}
+      <SafeAreaView
+        style={{ flex: 1 }}
+        edges={Platform.OS === 'ios' ? ['top', 'bottom'] : []}
+      >
+        {children}
+      </SafeAreaView>
     </LinearGradient>
   );
 }
