@@ -18,7 +18,7 @@ export default function Home() {
   const colorScheme = useColorScheme();
   const [verifyMessageInfo, setVerifyMessageInfo] = useState<string>('');
   const [isLoadingMessage, setIsLoadingMessage] = useState<boolean>(true);
-  
+
   // Diagnostics: log the user object and transactions (on tab load)
   console.log('Home.tsx - user object:', user);
 
@@ -83,7 +83,7 @@ export default function Home() {
   // User is verified and not banned - show normal dashboard
   return (
     <View style={styles.container}>
-      <GradientContainer styles={{ height: 'auto' }}>
+      <GradientContainer styles={{ height: 'auto', flex: 0 }} safeAreaStyle={{ flex: 0 }}>
         <Dashboard />
       </GradientContainer>
 
