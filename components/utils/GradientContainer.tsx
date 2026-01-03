@@ -28,12 +28,16 @@ export default function GradientContainer({
         ...styles,
       }}
     >
-      <SafeAreaView
-        style={{ flex: 1 }}
-        edges={Platform.OS === 'ios' ? ['top', 'bottom'] : []}
-      >
-        {children}
-      </SafeAreaView>
+      {Platform.OS === 'ios' ? (
+        <SafeAreaView
+          style={{ flex: 1 }}
+          edges={['top', 'bottom']}
+        >
+          {children}
+        </SafeAreaView>
+      ) : (
+        children
+      )}
     </LinearGradient>
   );
 }

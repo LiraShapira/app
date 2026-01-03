@@ -57,7 +57,7 @@ const LSEventItemPeopleDetails: React.FC<LSEventItemPeopleDetailsProps> = ({
             {i18n.t('ls_event_item_people_details_attendees')}
           </Text>
           <Pressable onPress={openModal} style={styles.plusButton}>
-            <Text style={styles.plusButtonText}>+</Text>
+            <Text style={styles.plusButtonText}>See list</Text>
           </Pressable>
         </View>
         {sellers.length > 0 && (
@@ -80,9 +80,6 @@ const LSEventItemPeopleDetails: React.FC<LSEventItemPeopleDetailsProps> = ({
               <Text style={styles.modalTitle}>
                 {i18n.t('ls_event_item_people_details_attendees')} ({event.attendees.length})
               </Text>
-              <Pressable onPress={closeModal} style={styles.closeButton}>
-                <Text style={styles.closeButtonText}>✕</Text>
-              </Pressable>
             </View>
             <View style={styles.divider} />
             <ScrollView style={styles.attendeesList}>
@@ -129,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    // Add any text styling here if needed
+    maxWidth: '80%',
   },
   attendeesRow: {
     flexDirection: 'row',
@@ -137,16 +134,17 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   plusButton: {
-    width: 24,
+    width: 68,
     height: 24,
     borderRadius: 12,
-    backgroundColor: 'black',
+    borderWidth: 1, 
+    borderColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   },
   plusButtonText: {
-    color: 'white',
-    fontSize: 18,
+    color: 'black',
+    fontSize: 12,
     fontWeight: '600',
     lineHeight: 20,
   },

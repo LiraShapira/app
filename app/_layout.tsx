@@ -48,12 +48,19 @@ export default function RootLayout() {
 
   return (
     <>
-      <SafeAreaProvider>
+      {Platform.OS === 'ios' ? (
+        <SafeAreaProvider>
+          <Provider store={store}>
+            {!loaded && <Slot />}
+            {loaded && <RootLayoutNav />}
+          </Provider>
+        </SafeAreaProvider>
+      ) : (
         <Provider store={store}>
           {!loaded && <Slot />}
           {loaded && <RootLayoutNav />}
         </Provider>
-      </SafeAreaProvider>
+      )}
     </>
   );
 }
@@ -111,10 +118,12 @@ function RootLayoutNav() {
 
   return (
     <>
-      <StatusBar
-        barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
-        translucent={false}
-      />
+      {Platform.OS === 'ios' && (
+        <StatusBar
+          barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+          translucent={false}
+        />
+      )}
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <LoadingPage
           loading={
