@@ -1,4 +1,14 @@
-import { View, StyleSheet, Text, useColorScheme, Platform } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  Platform,
+  Modal,
+  Pressable,
+  FlatList,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -21,8 +31,7 @@ import { CustomModal } from '../../components/utils/CustomModal';
 import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
 import DepositFormCheckBox from '../../components/DepositFormCheckbox';
 import { parseNumberPadInputForDeposit } from '../../utils/functions';
-import { Picker } from '@react-native-picker/picker';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { compostStands } from '../../utils/compostStands';
 import { StorageKeys } from '../../types/AsyncStorage';
 import { setItem } from '../../utils/asyncStorage';
@@ -35,6 +44,7 @@ export default function Deposit() {
   const depositValue = useAppSelector(selectDepositValue);
   const isGuaranteedAccurate = useAppSelector(selectIsGuaranteedAccurate);
   const compostStand = useAppSelector(selectCompostStand);
+  const [isSelectionModalVisible, setSelectionModalVisible] = useState(false);
 
   const onPressCancel = () => {
     dispatch(resetForm());
@@ -79,6 +89,11 @@ export default function Deposit() {
     }
   };
 
+  const onSelectStand = (stand: CompostStand) => {
+    dispatch(setCompostStand(stand));
+    setSelectionModalVisible(false);
+  };
+
   useEffect(() => {
     // Reset compost stand to blank when component mounts
     dispatch(setCompostStand('' as CompostStand));
@@ -105,36 +120,69 @@ export default function Deposit() {
         customElement={<DepositFormCheckBox />}
       />
 
+      {/* Stand Selection Modal */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isSelectionModalVisible}
+        onRequestClose={() => setSelectionModalVisible(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setSelectionModalVisible(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={[styles.modalContent, { backgroundColor: Colors[colorScheme].background }]}>
+                <Text style={[styles.modalTitle, { color: Colors[colorScheme].text }]}>
+                  {i18n.t('deposit_choose_location')}
+                </Text>
+                <FlatList
+                  data={compostStands}
+                  keyExtractor={(item) => item}
+                  renderItem={({ item }) => (
+                    <Pressable
+                      style={({ pressed }) => [
+                        styles.modalOption,
+                        pressed && styles.modalOptionPressed,
+                        item === compostStand && { backgroundColor: Colors[colorScheme].tint + '20' },
+                      ]}
+                      onPress={() => onSelectStand(item)}
+                    >
+                      <Text style={[styles.modalOptionText, { color: Colors[colorScheme].text }]}>
+                        {i18n.t(`deposit_compost_stand_${item}`)}
+                      </Text>
+                    </Pressable>
+                  )}
+                  style={{ maxHeight: 300 }}
+                />
+                <CustomButton
+                  text={i18n.t('cancel')}
+                  onPress={() => setSelectionModalVisible(false)}
+                  transparent={true}
+                  style={{ marginTop: 10 }}
+                  textColor='white'
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
       <View style={styles.contentContainer}>
         {/* 1. Select at the top */}
         <View style={styles.selectSection}>
           <Text style={[styles.selectLabel, { color: Colors[colorScheme].text }]}>
             {i18n.t('deposit_choose_location')}
           </Text>
-          <View style={[styles.pickerWrapper, { backgroundColor: Colors[colorScheme].highlight }]}>
+          <Pressable
+            style={[styles.pickerWrapper, { backgroundColor: Colors[colorScheme].highlight }]}
+            onPress={() => setSelectionModalVisible(true)}
+          >
             <Text
               style={[styles.pickerText, { color: Colors[colorScheme].text }]}
               numberOfLines={1}
             >
               {selectedStandLabel}
             </Text>
-            <Picker
-              selectedValue={compostStand || ''}
-              onValueChange={(stand) => dispatch(setCompostStand(stand))}
-              style={styles.picker}
-              mode="dropdown"
-              dropdownIconColor={Colors[colorScheme].text}
-            >
-              <Picker.Item label={i18n.t('deposit_compost_stand_blank')} value="" />
-              {compostStands.map((stand) => (
-                <Picker.Item
-                  key={stand}
-                  label={i18n.t(`deposit_compost_stand_${stand}`)}
-                  value={stand}
-                />
-              ))}
-            </Picker>
-          </View>
+          </Pressable>
         </View>
 
         {/* 2. Title */}
@@ -150,8 +198,6 @@ export default function Deposit() {
             value={depositValue}
           />
         </View>
-
-        {/* Spacer to push buttons to bottom is handled by marginTop 'auto' on buttonsSection */}
 
         {/* 4. Buttons at the bottom */}
         <View style={styles.buttonsSection}>
@@ -191,6 +237,7 @@ const styles = StyleSheet.create({
   },
   selectSection: {
     marginBottom: 10,
+    zIndex: 20, // Ensure overlay sits on top of specific content
   },
   selectLabel: {
     fontSize: 14,
@@ -203,24 +250,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 12,
     position: 'relative',
+    zIndex: 20, // Ensure touch events are captured
   },
   pickerText: {
     fontSize: 16,
-    position: 'absolute',
-    left: 12,
-    right: 40,
-  },
-  picker: {
-    opacity: 0.01,
-    height: 50,
-    width: '100%',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    zIndex: 10, // Ensure it sits on top for touch events
-    elevation: 10,
+    // aligned left by default in wrapper justifyContent
   },
   numberPadContainer: {
     // Explicit width to ensure children with aspectRatio have a base dimension
@@ -232,5 +266,43 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     gap: 12, // ensure clearance from tab bar
+  },
+  // Modal Styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    maxHeight: '80%',
+    width: '100%',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
+  modalOption: {
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    width: '100%',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#ccc',
+  },
+  modalOptionPressed: {
+    opacity: 0.5,
+  },
+  modalOptionText: {
+    fontSize: 18,
+    textAlign: 'center',
   },
 });
