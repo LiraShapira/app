@@ -52,6 +52,7 @@ export default function Send() {
         style={{
           fontSize: 24,
           color: Colors[colorScheme ?? 'light'].text,
+          marginLeft: 10,
         }}
       >
         {isRequest === 'true'
