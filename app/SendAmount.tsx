@@ -44,14 +44,18 @@ export default function SendAmount() {
     const newValue = parseNumberPadInputForDeposit(n, amount.toString());
     // NB! conditional on false required because 0 falsy value
     if (newValue !== false) {
-      dispatch(setAmount(newValue));
+      if (newValue === '') {
+        dispatch(setAmount(0));
+      } else {
+        dispatch(setAmount(parseFloat(newValue)));
+      }
     }
   };
 
   return (
-    <GradientContainer>
+    <GradientContainer safeAreaStyle={{ flex: 1 }} styles={{ flex: 1 }}>
       <SendFlowHeader stage='amount' />
-      <View style={[styles.container]}>
+      <View style={styles.contentContainer}>
         <CustomModal
           type="error"
           buttons={[
@@ -59,22 +63,30 @@ export default function SendAmount() {
             { text: i18n.t('sendamount_back'), onPress: onModalChangeUser },
           ]}
         />
-        <View>
-          <Text style={{ fontSize: 24, color: Colors[colorScheme].text }}>
+
+        {/* Title and Error */}
+        <View style={styles.headerSection}>
+          <Text style={{ fontSize: 24, color: Colors[colorScheme].text, textAlign: 'center' }}>
             {isRequest
               ? i18n.t('request_how_much')
               : i18n.t('sendamount_how_much')}
           </Text>
-          {amountError ? (
-            <Text style={{ fontSize: 10, color: Colors[colorScheme].tint }}>
+          {amountError && (
+            <Text style={{ fontSize: 10, color: Colors[colorScheme].tint, textAlign: 'center' }}>
               {i18n.t('sendamount_validate_amount')}
             </Text>
-          ) : null}
+          )}
+        </View>
+
+        {/* Number Pad Input */}
+        <View style={styles.numberPadContainer}>
           <NumberInputNumberPad
             onButtonPress={onPressNumberPadInput}
             value={amount.toString()}
           />
         </View>
+
+        {/* Buttons at Bottom */}
         <View style={styles.buttonContainer}>
           <CustomButton
             disabled={!amount || amountError}
@@ -88,23 +100,34 @@ export default function SendAmount() {
           <CustomButton
             onPress={() => router.back()}
             text={i18n.t('sendamount_back')}
+            transparent={true}
+            textColor='white'
           />
         </View>
       </View>
     </GradientContainer>
   );
 }
+
 const styles = StyleSheet.create({
-  container: {
+  contentContainer: {
     flex: 1,
-    padding: 30,
-    justifyContent: 'center',
+    paddingHorizontal: 6,
+    paddingTop: 40,
+    paddingBottom: 80, // Ensure buttons clear footer
+  },
+  headerSection: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  numberPadContainer: {
+    width: '90%',
+    alignSelf: 'center',
   },
   buttonContainer: {
+    marginTop: 'auto', // Pushes to bottom
     flexDirection: 'row',
-    gap: 35,
-    justifyContent: 'center',
-    top: 40,
-    padding: 10,
+    justifyContent: 'space-around',
+    gap: 12,
   },
 });
