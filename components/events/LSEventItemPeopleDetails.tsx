@@ -57,7 +57,7 @@ const LSEventItemPeopleDetails: React.FC<LSEventItemPeopleDetailsProps> = ({
             {i18n.t('ls_event_item_people_details_attendees')}
           </Text>
           <Pressable onPress={openModal} style={styles.plusButton}>
-            <Text style={styles.plusButtonText}>See list</Text>
+            <Text style={styles.plusButtonText}>{i18n.t('event_see_list')}</Text>
           </Pressable>
         </View>
         {sellers.length > 0 && (
@@ -102,7 +102,7 @@ const LSEventItemPeopleDetails: React.FC<LSEventItemPeopleDetailsProps> = ({
                   {isSeller(attendee) && attendee.productsForSale.length > 0 && (
                     <View style={styles.productsContainer}>
                       <Text style={styles.productsLabel}>
-                        Products: 
+                        Products:
                       </Text>
                       <Text style={styles.productsText}>
                         {attendee.productsForSale.join(', ')}
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     width: 68,
     height: 24,
     borderRadius: 12,
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',

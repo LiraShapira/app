@@ -106,19 +106,6 @@ export type DictionaryKey =
   'request_search_title' |
   'request_card_request_from' |
   'request_card_accept' |
-  'request_card_refuse' |
-  'request_how_much' |
-
-  // EVENTS
-  'events_list_no_events' |
-  'ls_event_item_joining_as' |
-  'ls_event_item_people_details_attendees' |
-  'ls_event_item_people_details_vendors' |
-  'ls_event_item_rsvp' |
-  'ls_event_item_seller' |
-  'ls_event_item_attendee' |
-  'ls_event_item_volunteer' |
-  'ls_event_item_not_attending' |
   'seller_options_add_item' |
   'seller_options_finish' |
   'ls_event_item_share' |

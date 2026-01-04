@@ -117,6 +117,7 @@ const heDictionary: Dictionary = {
   events_list_no_events: 'אין אירועים קרובים',
   ls_event_item_joining_as: 'מגיע.ה כ...',
   ls_event_item_people_details_attendees: ' חברים מהשכונה יגיעו',
+  event_see_list: 'הצג',
   ls_event_item_people_details_vendors: 'שכנים מוכרים :',
   ls_event_item_rsvp: 'מגיע.ה',
   ls_event_item_seller: 'מוכר.ת',

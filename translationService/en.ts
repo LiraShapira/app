@@ -115,6 +115,7 @@ const enDictionary: Dictionary = {
   // EVENTS
   events_list_no_events: 'no upcoming events',
   ls_event_item_people_details_attendees: ' friends joining',
+  event_see_list: 'See list',
   ls_event_item_people_details_vendors: ' friends selling: ',
   ls_event_item_rsvp: 'Join',
   ls_event_item_seller: 'seller',
