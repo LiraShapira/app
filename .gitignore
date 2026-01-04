@@ -21,6 +21,13 @@ eas.json
 # iOS
 ios/pods/
 ios/DerivedData/
+ios/.build/
+ios/*xcworkspace
+ios/*xcodeproj
+ios/*xcuserstate
+ios/*xcuserdata
+ios/**/xcuserdata/
+ios/**/*.xcuserstate
 
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
@@ -66,3 +73,29 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
+ios/.xcode.env
+ios/Podfile
+ios/Podfile.properties.json
+.gitignore
+ios/liraShapiraApp/AppDelegate.swift
+ios/liraShapiraApp/Info.plist
+.gitignore
+ios/Podfile.lock
+ios/liraShapiraApp/liraShapiraApp-Bridging-Header.h
+ios/liraShapiraApp/liraShapiraApp.entitlements
+ios/liraShapiraApp/PrivacyInfo.xcprivacy
+.gitignore
+.gitignore
+ios/liraShapiraApp/Images.xcassets/Contents.json
+ios/liraShapiraApp/Images.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png
+.gitignore
+.gitignore
+ios/liraShapiraApp/Images.xcassets/SplashScreenLegacy.imageset/image.png
+ios/liraShapiraApp/Images.xcassets/SplashScreenLegacy.imageset/image@2x.png
+ios/liraShapiraApp/Images.xcassets/SplashScreenLegacy.imageset/image@3x.png
+ios/liraShapiraApp/Supporting/Expo.plist
+.gitignore
+ios/liraShapiraApp/SplashScreen.storyboard
+ios/liraShapiraApp/Images.xcassets/AppIcon.appiconset/Contents.json
+ios/liraShapiraApp/Images.xcassets/SplashScreenBackground.colorset/Contents.json
+ios/liraShapiraApp/Images.xcassets/SplashScreenLegacy.imageset/Contents.json

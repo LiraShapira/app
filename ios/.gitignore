@@ -2,10 +2,6 @@
 #
 .DS_Store
 
-# iOS
-ios/pods/
-ios/DerivedData/
-
 # Xcode
 #
 build/
