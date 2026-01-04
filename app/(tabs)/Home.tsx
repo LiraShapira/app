@@ -83,7 +83,7 @@ export default function Home() {
   // User is verified and not banned - show normal dashboard
   return (
     <View style={styles.container}>
-      <GradientContainer styles={{ height: 'auto', flex: 0 }} safeAreaStyle={{ flex: 0 }}>
+      <GradientContainer styles={{ height: 'auto', flex: 0, width: '100%', paddingHorizontal: 0 }} safeAreaStyle={{ flex: 0 }}>
         <Dashboard />
       </GradientContainer>
 

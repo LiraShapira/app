@@ -85,7 +85,7 @@ export default function Dashboard() {
   const colorScheme = useColorScheme();
   const user = useAppSelector(selectUser);
   return (
-    <View>
+    <View style={styles.dashboardContainer}>
       <View style={styles.headerContainer}>
         <Text
           style={{
@@ -217,7 +217,6 @@ const styles = StyleSheet.create({
   dashboardContainer: {
     width: '100%',
     paddingHorizontal: 8, // Add horizontal padding for content spacing
-    paddingBottom: 35, // Extends gradient to middle of buttons (half of 70px button height from their top position)
-    overflow: 'hidden', // Clip content to container bounds
+    paddingBottom: 95, // Extends gradient to middle of buttons: 60px (top offset) + 35px (half of 70px button height)
   },
 });
