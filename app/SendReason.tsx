@@ -64,7 +64,7 @@ export default function SendReason() {
       if (chosenUser.id === currentUser.id) {
         throw new Error('Cannot send or make request to yourself');
       }
-      
+
       const newTransaction = {
         recipientPhoneNumber: isRequest
           ? currentUser.phoneNumber
@@ -74,7 +74,7 @@ export default function SendReason() {
         reason: reason,
         // in a request the purchaserid is the id of person the request is sent to and is therefore not known
         purchaserId: isRequest ? chosenUser.id : currentUserId,
-        ...(isRequest && { isRequest: true }),
+        isRequest: isRequest === 'true',
       };
       const { data: transaction } = await dispatch(
         saveTransaction(newTransaction)
@@ -121,9 +121,9 @@ export default function SendReason() {
   };
 
   return (
-    <GradientContainer>
+    <GradientContainer safeAreaStyle={{ flex: 1 }} styles={{ flex: 1 }}>
       <SendFlowHeader stage='reason' />
-      <View style={styles.container}>
+      <View style={styles.contentContainer}>
         <CustomModal
           type="error"
           buttons={[
@@ -131,24 +131,27 @@ export default function SendReason() {
             { text: i18n.t('sendamount_back'), onPress: onModalChangeUser },
           ]}
         />
-        <Text
-          style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
-        >
-          {i18n.t('sendamount_why')}
-        </Text>
-        <TextInput
-          maxLength={15}
-          style={{
-            fontSize: 44,
-            textAlign: 'center',
-            color: Colors[colorScheme ?? 'light'].text,
-            borderBottomColor: Colors[colorScheme ?? 'light'].text,
-            borderBottomWidth: 1,
-            width: '60%',
-          }}
-          onChangeText={onChangeReason}
-          inputMode="text"
-        />
+        <View style={styles.inputSection}>
+          <Text
+            style={{ fontSize: 24, color: Colors[colorScheme ?? 'light'].text }}
+          >
+            {i18n.t('sendamount_why')}
+          </Text>
+          <TextInput
+            maxLength={15}
+            style={{
+              fontSize: 44,
+              textAlign: 'center',
+              color: Colors[colorScheme ?? 'light'].text,
+              borderBottomColor: Colors[colorScheme ?? 'light'].text,
+              borderBottomWidth: 1,
+              width: '80%',
+            }}
+            onChangeText={onChangeReason}
+            value={reason}
+            inputMode="text"
+          />
+        </View>
         <View style={styles.buttonContainer}>
           <CustomButton
             disabled={!reason || reasonError}
@@ -158,6 +161,8 @@ export default function SendReason() {
           <CustomButton
             onPress={() => router.back()}
             text={i18n.t('sendamount_back')}
+            transparent={true}
+            textColor='white'
           />
         </View>
       </View>
@@ -166,14 +171,21 @@ export default function SendReason() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  contentContainer: {
     flex: 1,
-    paddingTop: 100,
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    paddingBottom: 80, // Ensure buttons clear footer
+  },
+  inputSection: {
+    marginTop: 60,
     alignItems: 'center',
+    gap: 20,
   },
   buttonContainer: {
+    marginTop: 'auto', // Pushes to bottom
     flexDirection: 'row',
-    padding: 20,
-    gap: 10,
+    gap: 12,
+    justifyContent: 'space-around',
   },
 });
