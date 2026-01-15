@@ -99,21 +99,23 @@ export default function Deposit() {
         customElement={<DepositFormCheckBox />}
       />
 
-      <Text
+      {/* <Text
         style={{
+          marginTop: 20,
           paddingTop: 10,
           paddingHorizontal: 10,
           color: Colors[colorScheme].text,
         }}
       >
         {i18n.t('deposit_choose_location')}
-      </Text>
+      </Text> */}
 
       <View
         style={{
           backgroundColor: Colors[colorScheme].highlight,
           borderRadius: 10,
           margin: 10,
+          marginTop: 45,
           paddingHorizontal: 10,
           paddingVertical: 8,
         }}
