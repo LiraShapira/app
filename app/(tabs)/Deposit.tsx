@@ -22,11 +22,11 @@ import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
 import DepositFormCheckBox from '../../components/DepositFormCheckbox';
 import { parseNumberPadInputForDeposit } from '../../utils/functions';
 import { Picker } from '@react-native-picker/picker';
-import { useEffect } from 'react';
-import { compostStands } from '../../utils/compostStands';
+import { useEffect, useState } from 'react';
 import { StorageKeys } from '../../types/AsyncStorage';
 import { getItem, setItem } from '../../utils/asyncStorage';
 import { CompostStand } from '../../types/Deposit';
+import { fetchCompostStands, CompostStandFromAPI } from '../../API/compostStandAPI';
 
 export default function Deposit() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -35,6 +35,8 @@ export default function Deposit() {
   const depositValue = useAppSelector(selectDepositValue);
   const isGuaranteedAccurate = useAppSelector(selectIsGuaranteedAccurate);
   const compostStand = useAppSelector(selectCompostStand);
+  const [availableStands, setAvailableStands] = useState<CompostStandFromAPI[]>([]);
+  const [isLoadingStands, setIsLoadingStands] = useState(true);
 
   const onPressCancel = () => {
     dispatch(resetForm());
@@ -80,6 +82,36 @@ export default function Deposit() {
   useEffect(() => {
     // Reset compost stand to blank when component mounts
     dispatch(setCompostStand('' as CompostStand));
+    
+    // Fetch stands from API
+    const loadStands = async () => {
+      try {
+        setIsLoadingStands(true);
+        // Normalize locale: 'iw' is Hebrew on some devices, map it to 'he'
+        const locale = (i18n.locale === 'iw' || i18n.locale === 'he') ? 'he' : (i18n.locale || 'he');
+        const response = await fetchCompostStands(locale);
+        if (response.data) {
+          // Ensure displayName exists, fallback to name_he or name_en if missing
+          const standsWithDisplayNames = response.data.map(stand => ({
+            ...stand,
+            displayName: stand.displayName || stand.name_he || stand.name_en || stand.name || 'Unknown',
+          }));
+          setAvailableStands(standsWithDisplayNames);
+          console.log('Loaded compost stands:', standsWithDisplayNames);
+        } else {
+          console.error('Error loading compost stands:', response.error);
+          // Fallback to empty array - user won't see any stands but app won't crash
+          setAvailableStands([]);
+        }
+      } catch (error) {
+        console.error('Error loading compost stands:', error);
+        setAvailableStands([]);
+      } finally {
+        setIsLoadingStands(false);
+      }
+    };
+    
+    loadStands();
   }, []);
 
   return (
@@ -128,15 +160,19 @@ export default function Deposit() {
             height: 60,
           }}
           mode="dropdown"
+          enabled={!isLoadingStands}
         >
           <Picker.Item label={i18n.t('deposit_compost_stand_blank')} value="" />
-          {compostStands.map((stand) => (
-            <Picker.Item
-              key={stand}
-              label={i18n.t(`deposit_compost_stand_${stand}`)}
-              value={stand}
-            />
-          ))}
+          {availableStands.map((stand) => {
+            const displayName = stand.displayName || stand.name_he || stand.name_en || stand.name || 'Unknown';
+            return (
+              <Picker.Item
+                key={stand.compostStandId}
+                label={displayName}
+                value={stand.name || String(stand.compostStandId)}
+              />
+            );
+          })}
         </Picker>
       </View>
       <Text
