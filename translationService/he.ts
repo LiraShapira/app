@@ -20,6 +20,8 @@ const heDictionary: Dictionary = {
   enter_number: 'אנא הכנס את מספר הטלפון שלך כדי להתחיל',
   auth_first_name: 'שם פרטי',
   auth_last_name: 'שם משפחה',
+  auth_community: 'קהילה',
+  auth_community_placeholder: 'בחר קהילה...',
   auth_number_error: 'מספר הטלפון אינו חוקי',
 
   // HOME

@@ -18,6 +18,8 @@ export type DictionaryKey =
   'auth_phone_number' |
   'auth_first_name' |
   'auth_last_name' |
+  'auth_community' |
+  'auth_community_placeholder' |
   'auth_number_error' |
 
   // HOME

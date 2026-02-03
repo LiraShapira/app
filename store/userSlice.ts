@@ -50,8 +50,9 @@ export const loadAllUsers = createAsyncThunk<
   User[],
   void,
   { state: RootState }
->('user/loadAllUsers', async () => {
-  const response = await fetchAllUsers();
+>('user/loadAllUsers', async (_arg, { getState }) => {
+  const communityId = getState().user.user.communityId;
+  const response = await fetchAllUsers(communityId);
   if (!('data' in response)) {
     throw new Error(response.message || 'Failed to fetch users');
   }

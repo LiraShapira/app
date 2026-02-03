@@ -10,9 +10,13 @@ export interface CompostStandFromAPI {
   displayName?: string;
 }
 
-export const fetchCompostStands = async (locale: string = 'he'): Promise<ApiResponse<CompostStandFromAPI[]>> => {
+export const fetchCompostStands = async (locale: string = 'he', communityId?: string): Promise<ApiResponse<CompostStandFromAPI[]>> => {
   try {
-    const response = await fetch(`${SERVER_URL}/compostStands?locale=${locale}`, {
+    let url = `${SERVER_URL}/compostStands?locale=${locale}`;
+    if (communityId) {
+      url += `&communityId=${encodeURIComponent(communityId)}`;
+    }
+    const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
       },

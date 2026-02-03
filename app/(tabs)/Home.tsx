@@ -26,7 +26,7 @@ export default function Home() {
     const loadVerificationMessage = async () => {
       try {
         setIsLoadingMessage(true);
-        const response = await fetchVerificationMessage();
+        const response = await fetchVerificationMessage(user.communityId);
         if ('data' in response && response.data) {
           setVerifyMessageInfo(response.data.message);
         } else {
@@ -50,7 +50,7 @@ export default function Home() {
     if (user.isVerified !== true) {
       loadVerificationMessage();
     }
-  }, [user.isVerified]);
+  }, [user.isVerified, user.communityId]);
 
   // Check if user is banned
   if (user.isBanned === true) {

@@ -72,9 +72,9 @@ export default function SendReason() {
         amount: amount,
         category: Category.MISC,
         reason: reason,
-        // in a request the purchaserid is the id of person the request is sent to and is therefore not known
         purchaserId: isRequest ? chosenUser.id : currentUserId,
         ...(isRequest && { isRequest: true }),
+        ...(currentUser.communityId && { communityId: currentUser.communityId }),
       };
       const { data: transaction } = await dispatch(
         saveTransaction(newTransaction)

@@ -119,7 +119,7 @@ export default function Dashboard() {
           <Text
             style={{ color: Colors[colorScheme ?? 'light'].text, ...styles.LS }}
           >
-            {i18n.t('home_lira_shapira_currency_shorthand')}
+            {user.communityCoin ?? i18n.t('home_lira_shapira_currency_shorthand')}
           </Text>
         </View>
       </View>

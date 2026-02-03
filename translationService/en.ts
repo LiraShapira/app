@@ -19,6 +19,8 @@ const enDictionary: Dictionary = {
   auth_phone_number: 'Phone Number',
   auth_first_name: 'First Name',
   auth_last_name: 'Last Name',
+  auth_community: 'Community',
+  auth_community_placeholder: 'Select community...',
   auth_number_error: 'Number not valid',
 
   // HOME

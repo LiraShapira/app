@@ -18,10 +18,13 @@ export interface User {
   adminCompostStandId: number | null;
   isVerified?: boolean | null;
   isBanned?: boolean;
+  communityId?: string;
+  communityCoin?: string | null;
 }
 
 export interface FetchUserArgs {
   phoneNumber: string;
   firstName?: string;
   lastName?: string;
+  communityId: string;
 }

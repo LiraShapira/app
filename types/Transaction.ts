@@ -35,4 +35,5 @@ export type SaveTransactionArgs = Pick<
   'category' | 'amount' | 'purchaserId' | 'reason' | 'isRequest'
 > & {
   recipientPhoneNumber: string;
+  communityId?: string;
 };

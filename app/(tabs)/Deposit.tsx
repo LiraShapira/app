@@ -27,11 +27,13 @@ import { StorageKeys } from '../../types/AsyncStorage';
 import { getItem, setItem } from '../../utils/asyncStorage';
 import { CompostStand } from '../../types/Deposit';
 import { fetchCompostStands, CompostStandFromAPI } from '../../API/compostStandAPI';
+import { selectUser } from '../../store/userSlice';
 
 export default function Deposit() {
   const colorScheme = useColorScheme() ?? 'light';
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
   const depositValue = useAppSelector(selectDepositValue);
   const isGuaranteedAccurate = useAppSelector(selectIsGuaranteedAccurate);
   const compostStand = useAppSelector(selectCompostStand);
@@ -89,7 +91,7 @@ export default function Deposit() {
         setIsLoadingStands(true);
         // Normalize locale: 'iw' is Hebrew on some devices, map it to 'he'
         const locale = (i18n.locale === 'iw' || i18n.locale === 'he') ? 'he' : (i18n.locale || 'he');
-        const response = await fetchCompostStands(locale);
+        const response = await fetchCompostStands(locale, user.communityId);
         if (response.data) {
           // Ensure displayName exists, fallback to name_he or name_en if missing
           const standsWithDisplayNames = response.data.map(stand => ({
