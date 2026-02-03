@@ -91,6 +91,7 @@ export default function Dashboard() {
           style={{
             color: Colors[colorScheme ?? 'light'].text,
             ...styles.nameLabel,
+            marginTop: 20,
           }}
         >
           {i18n.t('dashboard_greeting_message', { name: user.firstName })}
