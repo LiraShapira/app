@@ -86,7 +86,7 @@ export default function AuthNameEntry() {
           <TextInput
             value={firstName}
             onChangeText={(e) => dispatch(setFirstName(e))}
-            style={{ color: Colors[colorScheme].text, ...styles.inputtedValue }}
+            style={{ color: Colors[colorScheme].text, ...styles.inputtedValue}}
           />
           <Text style={{ color: Colors[colorScheme].text }}>{i18n.t('auth_last_name')}</Text>
           <TextInput
@@ -128,11 +128,14 @@ export default function AuthNameEntry() {
 const styles = StyleSheet.create({
   inputtedValue: {
     fontSize: 18,
+    lineHeight: 18, 
+    textAlignVertical: 'bottom',
     borderBottomWidth: 1,
     width: '100%',
-    height: 40,
+    height: 50,
     marginVertical: 0,
     marginHorizontal: 'auto',
+    marginBottom: 20,
   },
   pickerWrap: {
     borderRadius: 8,

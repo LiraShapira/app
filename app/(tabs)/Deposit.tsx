@@ -55,7 +55,7 @@ export default function Deposit() {
         `${i18n.t('deposit_modal_amount', { amount: depositValue })}
         ${i18n.t('deposit_modal_stand_manager')}
         ${i18n.t('deposit_modal_you_earn', {
-          netAmount: parseFloat(depositValue) * 0.9,
+          netAmount: (parseFloat(depositValue) * 0.9).toFixed(2),
         })}
         `
       )
