@@ -18,9 +18,7 @@ export default function Home() {
   const colorScheme = useColorScheme();
   const [verifyMessageInfo, setVerifyMessageInfo] = useState<string>('');
   const [isLoadingMessage, setIsLoadingMessage] = useState<boolean>(true);
-  
-  // Diagnostics: log the user object and transactions (on tab load)
-  console.log('Home.tsx - user object:', user);
+
 
   useEffect(() => {
     const loadVerificationMessage = async () => {
@@ -66,17 +64,29 @@ export default function Home() {
   // Check if user is not verified (isVerified is false or null)
   if (user.isVerified !== true) {
     return (
-      <View style={[styles.container, styles.messageContainer]}>
-        {isLoadingMessage ? (
-          <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
-            Loading...
-          </Text>
-        ) : (
-          <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
-            {verifyMessageInfo}
-          </Text>
-        )}
-      </View>
+      <GradientContainer styles={styles.container}>
+        <View 
+          style={[
+            styles.messageContainer, 
+            { 
+              flex: 1, 
+              alignItems: 'center', 
+              width: '100%',
+              backgroundColor: 'transparent' 
+            }
+          ]}
+        >
+          {isLoadingMessage ? (
+            <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
+              Loading...
+            </Text>
+          ) : (
+            <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
+              {verifyMessageInfo}
+            </Text>
+          )}
+        </View>
+    </GradientContainer>
     );
   }
 

@@ -75,8 +75,6 @@ function RootLayoutNav() {
         .unwrap()
         .then(({ data: user }) => {
           if (user) {
-            // Diagnostic log: print user transactions
-            console.log('User loaded on login. Transaction count:', user.transactions?.length, 'Sample:', user.transactions?.[0]);
             dispatch(setUser(user));
             dispatch(setIsLoggedIn(true));
             router.push(Platform.OS === 'web' ? '/Home' : '/(tabs)/Home');
