@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot, Stack, useRouter } from 'expo-router';
-import { Platform, useColorScheme } from 'react-native';
+import { Appearance, Platform, useColorScheme } from 'react-native';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../store';
@@ -23,6 +23,12 @@ import LoadingPage from '../components/utils/LoadingPage';
 import { selectDepositFormLoading } from '../store/depositFormSlice';
 import { selectSendFormLoading } from '../store/sendFormSlice';
 import { selectIsAppLoading } from '../store/appStateSlice';
+import {
+  setPreferredLocale,
+  setPreferredColorScheme,
+  selectPreferredColorScheme,
+} from '../store/preferencesSlice';
+import i18n from '../translationService';
 import React from 'react';
 
 export {
@@ -56,7 +62,9 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const systemColorScheme = useColorScheme();
+  const preferredColorScheme = useAppSelector(selectPreferredColorScheme);
+  const colorScheme = preferredColorScheme ?? systemColorScheme ?? 'light';
   const dispatch = useAppDispatch();
   const isUserLoading = useAppSelector(selectUserLoading);
   const isAuthLoading = useAppSelector(selectAuthFormLoading);
@@ -64,6 +72,27 @@ function RootLayoutNav() {
   const isSendFormLoading = useAppSelector(selectSendFormLoading);
   const isAppLoading = useAppSelector(selectIsAppLoading);
   const router = useRouter();
+
+  // Load and apply saved preferences (locale, theme)
+  useEffect(() => {
+    (async () => {
+      const [savedLocale, savedScheme] = await Promise.all([
+        getItem(StorageKeys.preferredLocale),
+        getItem(StorageKeys.preferredColorScheme),
+      ]);
+      if (savedLocale != null) {
+        const locale = savedLocale === 'iw' ? 'he' : savedLocale;
+        dispatch(setPreferredLocale(locale));
+        i18n.locale = locale;
+      }
+      if (savedScheme === 'light' || savedScheme === 'dark') {
+        dispatch(setPreferredColorScheme(savedScheme));
+        if (typeof Appearance?.setColorScheme === 'function') {
+          Appearance.setColorScheme(savedScheme);
+        }
+      }
+    })();
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(setIsUserLoading(true));

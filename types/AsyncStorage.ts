@@ -5,5 +5,7 @@ export enum StorageKeys {
     lastName = 'lastName',
     amount = 'amount',
     compostStand = 'compostStand',
-    productsForSale = 'productsForSale'
+    productsForSale = 'productsForSale',
+    preferredLocale = 'preferredLocale',
+    preferredColorScheme = 'preferredColorScheme',
 }

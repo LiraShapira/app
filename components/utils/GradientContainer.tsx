@@ -1,9 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { useColorScheme, ViewProps } from 'react-native';
+import { useColorScheme, StyleProp, ViewStyle } from 'react-native';
 
 interface GradientContainerProps {
   children: JSX.Element | JSX.Element[];
-  styles?: ViewProps;
+  styles?: StyleProp<ViewStyle>;
 }
 
 export default function GradientContainer({

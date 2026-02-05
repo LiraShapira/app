@@ -7,6 +7,7 @@ const heDictionary: Dictionary = {
   some: 'מעט',
   cancel: 'ביטול',
   continue: 'המשך',
+  settings_language: 'שפה',
   generic_error: 'יש בעיה. בבקשה נסה שוב מאוחר יותר.',
   dashboard_greeting_message: 'היי {{name}}',
 

@@ -157,7 +157,10 @@ export type DictionaryKey =
   'day_friday' |
   'day_saturday' |
   'main_title' |
-  'secondary_main_title'
+  'secondary_main_title' |
+
+  // SETTINGS
+  'settings_language'
 
 
 export type Dictionary = Record<DictionaryKey, string>

@@ -7,6 +7,7 @@ const arDictionary: Dictionary = {
   some: 'بعض',
   cancel: 'إلغاء',
   continue: 'متابعة',
+  settings_language: 'اللغة',
   dashboard_greeting_message: 'مرحبًا {{name}}',
   // HOME
   tabs_wallet: 'محفظة',
