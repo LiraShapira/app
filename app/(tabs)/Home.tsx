@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Pressable, Appearance } from 'react-native';
+import { ScrollView, StyleSheet, Pressable, Appearance, View as RNView } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import Dashboard from '../../components/home/Dashboard';
@@ -81,17 +81,29 @@ export default function Home() {
   // Check if user is not verified (isVerified is false or null)
   if (user.isVerified !== true) {
     return (
-      <View style={[styles.container, styles.messageContainer]}>
-        {isLoadingMessage ? (
-          <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
-            Loading...
-          </Text>
-        ) : (
-          <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
-            {verifyMessageInfo}
-          </Text>
-        )}
-      </View>
+      <GradientContainer styles={styles.container}>
+              <RNView
+                style={[
+                  styles.messageContainer,
+                  {
+                    flex: 1,
+                    alignItems: 'center',
+                    width: '100%',
+                    backgroundColor: 'transparent',
+                  },
+                ]}
+              >
+                {isLoadingMessage ? (
+                  <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
+                    Loading...
+                  </Text>
+                ) : (
+                  <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
+                    {verifyMessageInfo}
+                  </Text>
+                )}
+              </RNView>
+          </GradientContainer>
     );
   }
 
