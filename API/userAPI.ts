@@ -30,7 +30,7 @@ export const fetchUser = async (phoneNumber: string): Promise<ApiResponse<User>>
 
 export const registerNewUser = async (fetchUserArgs: FetchUserArgs): Promise<ApiResponse<User>> => {
   if (process.env.EXPO_PUBLIC_DEMO) return {
-    data: mockUser,
+    data: { ...mockUser, communityId: fetchUserArgs.communityId ?? null },
     status: 200
   };
   const jsonBody = JSON.stringify(fetchUserArgs)
@@ -80,9 +80,12 @@ export const fetchUserIdByNumber = async (phoneNumber: string): Promise<ApiRespo
   }
 }
 
-export const fetchAllUsers = async (): Promise<ApiResponse<User[]>> => {
+export const fetchAllUsers = async (communityId?: string): Promise<ApiResponse<User[]>> => {
   try {
-    const requestString = `${SERVER_URL}/users`;
+    let requestString = `${SERVER_URL}/users`;
+    if (communityId) {
+      requestString += `?communityId=${encodeURIComponent(communityId)}`;
+    }
     const response = await fetch(requestString, {
       method: 'GET',
       headers: {

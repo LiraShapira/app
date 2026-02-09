@@ -15,6 +15,7 @@ export interface Transaction {
   createdAt: string;
   reason: string;
   isRequest: boolean;
+  communityId?: string | null;
   users: [
     {
       id: string;

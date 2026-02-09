@@ -5,9 +5,12 @@ export interface VerificationMessage {
   message: string;
 }
 
-export const fetchVerificationMessage = async (): Promise<ApiResponse<VerificationMessage>> => {
+export const fetchVerificationMessage = async (communityId?: string | null): Promise<ApiResponse<VerificationMessage>> => {
   try {
-    const requestString = `${SERVER_URL}/verificationMessage`;
+    let requestString = `${SERVER_URL}/verificationMessage`;
+    if (communityId) {
+      requestString += `?communityId=${encodeURIComponent(communityId)}`;
+    }
     const response = await fetch(requestString, {
       method: 'GET',
       headers: {

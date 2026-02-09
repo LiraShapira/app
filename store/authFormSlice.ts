@@ -13,7 +13,7 @@ interface AuthForm {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-
+  selectedCommunityId: string;
 }
 interface AuthFormState extends AuthForm {
   loading: boolean;
@@ -24,6 +24,7 @@ const initialState: AuthFormState = {
   firstName: '',
   lastName: '',
   phoneNumber: '05',
+  selectedCommunityId: '',
   loading: false,
   isLoggedIn: false,
 };
@@ -86,10 +87,13 @@ export const sendRegistrationForm = createAsyncThunk<
   string | undefined,
   { state: RootState }
 >('authForm/sendRegistrationForm', async (_userId: string | undefined, { getState, dispatch }): Promise<SuccessApiResponse<User>> => {
-  const { phoneNumber, firstName, lastName } = getState().authForm;
+  const { phoneNumber, firstName, lastName, selectedCommunityId } = getState().authForm;
+  if (!selectedCommunityId) {
+    throw new Error('Please select a community');
+  }
   // send number in format 5******** (9 digits)
   const parsedPhoneNumber = parsePhoneNumber(phoneNumber, 'IL').nationalNumber;
-  const response = await registerNewUser({ phoneNumber: parsedPhoneNumber, firstName, lastName });
+  const response = await registerNewUser({ phoneNumber: parsedPhoneNumber, firstName, lastName, communityId: selectedCommunityId });
   if (!('data' in response)) {
     throw new Error(response.message)
   }
@@ -115,8 +119,16 @@ const authFormSlice = createSlice({
     setPhoneNumber: (state, action: PayloadAction<string>) => {
       state.phoneNumber = action.payload;
     },
+    setSelectedCommunityId: (state, action: PayloadAction<string>) => {
+      state.selectedCommunityId = action.payload;
+    },
     resetForm: (state) => {
-      state = initialState;
+      state.firstName = initialState.firstName;
+      state.lastName = initialState.lastName;
+      state.phoneNumber = initialState.phoneNumber;
+      state.selectedCommunityId = initialState.selectedCommunityId;
+      state.loading = initialState.loading;
+      state.isLoggedIn = initialState.isLoggedIn;
     },
     setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
@@ -149,6 +161,7 @@ export const {
   setFirstName,
   setLastName,
   setPhoneNumber,
+  setSelectedCommunityId,
   resetForm,
   setIsLoggedIn,
 } = authFormSlice.actions;
@@ -158,6 +171,7 @@ export const selectFirstName = (state: RootState) => state.authForm.firstName
 
 export const selectLastName = (state: RootState) => state.authForm.lastName
 
+export const selectSelectedCommunityId = (state: RootState) => state.authForm.selectedCommunityId;
 
 export const selectPhoneNumber = (state: RootState) => state.authForm.phoneNumber
 

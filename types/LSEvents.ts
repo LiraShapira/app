@@ -25,6 +25,7 @@ export interface LSEvent {
   endDate: string;
   title: string;
   description: string;
+  communityId?: string | null;
   attendees: Attendee[]
   location: {
     name: string;

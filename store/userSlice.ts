@@ -24,6 +24,8 @@ const initialState: UserState = {
     firstName: '',
     phoneNumber: '',
     role: UserRole.BASIC,
+    adminCompostStandId: null,
+    communityId: null,
   },
   users: [],
   loading: false,
@@ -50,8 +52,9 @@ export const loadAllUsers = createAsyncThunk<
   User[],
   void,
   { state: RootState }
->('user/loadAllUsers', async () => {
-  const response = await fetchAllUsers();
+>('user/loadAllUsers', async (_, { getState }) => {
+  const communityId = getState().user.user.communityId;
+  const response = await fetchAllUsers(communityId ?? undefined);
   if (!('data' in response)) {
     throw new Error(response.message || 'Failed to fetch users');
   }

@@ -18,6 +18,7 @@ export type DictionaryKey =
   'auth_phone_number' |
   'auth_first_name' |
   'auth_last_name' |
+  'auth_community' |
   'auth_number_error' |
 
   // HOME
@@ -155,7 +156,11 @@ export type DictionaryKey =
   'day_friday' |
   'day_saturday' |
   'main_title' |
-  'secondary_main_title'
+  'secondary_main_title' |
+  'settings_language' |
+  'settings_theme' |
+  'settings_theme_light' |
+  'settings_theme_dark'
 
 
 export type Dictionary = Record<DictionaryKey, string>

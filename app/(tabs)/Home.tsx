@@ -1,10 +1,11 @@
-import { Dimensions, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Pressable, Appearance } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import Dashboard from '../../components/home/Dashboard';
 import i18n from '../../translationService';
 import { selectUser } from '../../store/userSlice';
-import { useAppSelector } from '../../hooks';
+import { selectTheme, selectLocale, setTheme, setLocale } from '../../store/appStateSlice';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import GradientContainer from '../../components/utils/GradientContainer';
 import RequestCard from '../../components/requests/RequestCard';
 import { User } from '../../types/User';
@@ -13,20 +14,34 @@ import Colors from '../../constants/Colors';
 import { useState, useEffect } from 'react';
 import { fetchVerificationMessage } from '../../API/verificationMessageAPI';
 
+const LOCALE_ORDER = ['en', 'he', 'ar'] as const;
+
 export default function Home() {
   const user = useAppSelector<User>(selectUser);
   const colorScheme = useColorScheme();
+  const theme = useAppSelector(selectTheme);
+  const locale = useAppSelector(selectLocale);
+  const dispatch = useAppDispatch();
   const [verifyMessageInfo, setVerifyMessageInfo] = useState<string>('');
   const [isLoadingMessage, setIsLoadingMessage] = useState<boolean>(true);
-  
-  // Diagnostics: log the user object and transactions (on tab load)
-  console.log('Home.tsx - user object:', user);
+
+  // Apply theme preference to the app
+  useEffect(() => {
+    Appearance.setColorScheme(theme);
+  }, [theme]);
+
+  // Keep i18n in sync with app locale
+  useEffect(() => {
+    if (locale && i18n.locale !== locale) {
+      i18n.locale = locale;
+    }
+  }, [locale]);
 
   useEffect(() => {
     const loadVerificationMessage = async () => {
       try {
         setIsLoadingMessage(true);
-        const response = await fetchVerificationMessage();
+        const response = await fetchVerificationMessage(user.communityId);
         if ('data' in response && response.data) {
           setVerifyMessageInfo(response.data.message);
         } else {
@@ -50,7 +65,7 @@ export default function Home() {
     if (user.isVerified !== true) {
       loadVerificationMessage();
     }
-  }, [user.isVerified]);
+  }, [user.isVerified, user.communityId]);
 
   // Check if user is banned
   if (user.isBanned === true) {
@@ -80,10 +95,45 @@ export default function Home() {
     );
   }
 
+  const onLanguagePress = () => {
+    const idx = LOCALE_ORDER.indexOf((locale || 'en') as typeof LOCALE_ORDER[number]);
+    const nextLocale = LOCALE_ORDER[(idx + 1) % LOCALE_ORDER.length];
+    dispatch(setLocale(nextLocale));
+    i18n.locale = nextLocale;
+  };
+
+  const onThemePress = () => {
+    dispatch(setTheme(theme === 'light' ? 'dark' : 'light'));
+  };
+
   // User is verified and not banned - show normal dashboard
   return (
     <View style={styles.container}>
       <GradientContainer styles={{ height: 'auto' }}>
+        <View style={styles.settingsRow}>
+          <Pressable
+            onPress={onLanguagePress}
+            style={({ pressed }) => [
+              styles.settingsButton,
+              { backgroundColor: Colors[colorScheme ?? 'light'].highlight, opacity: pressed ? 0.8 : 1 },
+            ]}
+          >
+            <Text style={[styles.settingsButtonText, { color: Colors[colorScheme ?? 'light'].text }]}>
+              {i18n.t('settings_language')}: {locale || 'en'}
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={onThemePress}
+            style={({ pressed }) => [
+              styles.settingsButton,
+              { backgroundColor: Colors[colorScheme ?? 'light'].highlight, opacity: pressed ? 0.8 : 1 },
+            ]}
+          >
+            <Text style={[styles.settingsButtonText, { color: Colors[colorScheme ?? 'light'].text }]}>
+              {i18n.t('settings_theme')}: {theme === 'light' ? i18n.t('settings_theme_light') : i18n.t('settings_theme_dark')}
+            </Text>
+          </Pressable>
+        </View>
         <Dashboard />
       </GradientContainer>
 
@@ -99,7 +149,9 @@ export default function Home() {
       >
         <RequestCard />
       </View>
-      <Text style={{ fontSize: 40 }}>{i18n.t('home_transactions_title')}</Text>
+      <Text style={[styles.transactionsTitle, { color: Colors[colorScheme ?? 'light'].text }]}>
+        {i18n.t('home_transactions_title')}
+      </Text>
       <ScrollView style={{ width: '100%' }}>
         <TransactionsList currentUser={user} />
       </ScrollView>
@@ -113,6 +165,25 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  settingsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  settingsButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  settingsButtonText: {
+    fontSize: 14,
+  },
+  transactionsTitle: {
+    fontSize: 40,
   },
   messageContainer: {
     justifyContent: 'center',

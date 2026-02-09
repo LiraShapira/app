@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, useColorScheme, Platform } from 'react-native';
+import { View, StyleSheet, Text, useColorScheme, ActivityIndicator } from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -22,19 +22,39 @@ import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
 import DepositFormCheckBox from '../../components/DepositFormCheckbox';
 import { parseNumberPadInputForDeposit } from '../../utils/functions';
 import { Picker } from '@react-native-picker/picker';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { compostStands } from '../../utils/compostStands';
 import { StorageKeys } from '../../types/AsyncStorage';
-import { getItem, setItem } from '../../utils/asyncStorage';
+import { setItem } from '../../utils/asyncStorage';
 import { CompostStand } from '../../types/Deposit';
+import { selectUser } from '../../store/userSlice';
+import { fetchCompostStands } from '../../API/compostStandsAPI';
+import { CompostStandFromAPI } from '../../API/compostStandsAPI';
 
 export default function Deposit() {
   const colorScheme = useColorScheme() ?? 'light';
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
   const depositValue = useAppSelector(selectDepositValue);
   const isGuaranteedAccurate = useAppSelector(selectIsGuaranteedAccurate);
   const compostStand = useAppSelector(selectCompostStand);
+  const [apiStands, setApiStands] = useState<CompostStandFromAPI[] | null>(null);
+  const [loadingStands, setLoadingStands] = useState(false);
+
+  useEffect(() => {
+    if (user.communityId) {
+      setLoadingStands(true);
+      fetchCompostStands(user.communityId, i18n.locale?.split('-')[0] || 'he')
+        .then((res) => {
+          if ('data' in res && res.data) setApiStands(res.data);
+          else setApiStands([]);
+        })
+        .finally(() => setLoadingStands(false));
+    } else {
+      setApiStands(null);
+    }
+  }, [user.communityId]);
 
   const onPressCancel = () => {
     dispatch(resetForm());
@@ -82,6 +102,10 @@ export default function Deposit() {
     dispatch(setCompostStand('' as CompostStand));
   }, []);
 
+  const standOptions = apiStands !== null
+    ? apiStands.map((s) => ({ value: s.name, label: s.displayName || s.name_he || s.name_en || s.name }))
+    : compostStands.map((stand) => ({ value: stand, label: i18n.t(`deposit_compost_stand_${stand}`) }));
+
   return (
     <GradientContainer>
       <CustomModal
@@ -118,24 +142,24 @@ export default function Deposit() {
           paddingVertical: 8,
         }}
       >
-        <Picker
-          selectedValue={compostStand || ''}
-          onValueChange={(stand) => dispatch(setCompostStand(stand))}
-          style={{
-            fontSize: 18,
-            height: 60,
-          }}
-          mode="dropdown"
-        >
-          <Picker.Item label={i18n.t('deposit_compost_stand_blank')} value="" />
-          {compostStands.map((stand) => (
-            <Picker.Item
-              key={stand}
-              label={i18n.t(`deposit_compost_stand_${stand}`)}
-              value={stand}
-            />
-          ))}
-        </Picker>
+        {loadingStands ? (
+          <ActivityIndicator style={{ paddingVertical: 12 }} />
+        ) : (
+          <Picker
+            selectedValue={compostStand || ''}
+            onValueChange={(stand) => dispatch(setCompostStand(stand as CompostStand))}
+            style={{
+              fontSize: 18,
+              height: 60,
+            }}
+            mode="dropdown"
+          >
+            <Picker.Item label={i18n.t('deposit_compost_stand_blank')} value="" />
+            {standOptions.map((opt) => (
+              <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
+            ))}
+          </Picker>
+        )}
       </View>
       <Text
         style={{

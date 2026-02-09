@@ -20,6 +20,7 @@ const heDictionary: Dictionary = {
   enter_number: 'אנא הכנס את מספר הטלפון שלך כדי להתחיל',
   auth_first_name: 'שם פרטי',
   auth_last_name: 'שם משפחה',
+  auth_community: 'קהילה',
   auth_number_error: 'מספר הטלפון אינו חוקי',
 
   // HOME
@@ -163,6 +164,11 @@ const heDictionary: Dictionary = {
 
   main_title: 'לירה שפירא - מטבע מקומי(ע״ר)',
   secondary_main_title: 'הזבל שלך שווה כסף בשפירא',
+
+  settings_language: 'שפה',
+  settings_theme: 'ערכת נושא',
+  settings_theme_light: 'בהיר',
+  settings_theme_dark: 'כהה',
 }
 
 export default heDictionary;

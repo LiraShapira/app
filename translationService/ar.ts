@@ -19,6 +19,7 @@ const arDictionary: Dictionary = {
   auth_phone_number: 'رقم الهاتف',
   auth_first_name: 'الاسم الأول',
   auth_last_name: 'اسم العائلة',
+  auth_community: 'المجتمع',
   tabs_market: 'السوق',
   tabs_events: 'الفعاليات',
   home_lira_shapira_currency_you_have: 'كم لديك؟',
@@ -137,6 +138,11 @@ const arDictionary: Dictionary = {
 
   main_title: 'ليرة شفيرا - عملة محلية',
   secondary_main_title: 'قم بتحويل قمامتك إلى أموال في شفيرا',
+
+  settings_language: 'اللغة',
+  settings_theme: 'المظهر',
+  settings_theme_light: 'فاتح',
+  settings_theme_dark: 'داكن',
 }
 
 export default arDictionary;

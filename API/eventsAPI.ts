@@ -8,13 +8,16 @@ export interface AddAttendeeArgs {
   eventId: string
 }
 
-export const fetchEvents = async (): Promise<ApiResponse<LSEvent[]>> => {
+export const fetchEvents = async (communityId?: string | null): Promise<ApiResponse<LSEvent[]>> => {
   if (process.env.EXPO_PUBLIC_DEMO) return {
     data: mockEvents,
     status: 200
   };
   try {
-    const requestString = `${SERVER_URL}/events`;
+    let requestString = `${SERVER_URL}/events`;
+    if (communityId) {
+      requestString += `?communityId=${encodeURIComponent(communityId)}`;
+    }
     const response = await fetch(requestString)
     const JSONresponse = await response.json()
 

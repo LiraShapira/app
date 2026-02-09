@@ -19,6 +19,7 @@ const enDictionary: Dictionary = {
   auth_phone_number: 'Phone Number',
   auth_first_name: 'First Name',
   auth_last_name: 'Last Name',
+  auth_community: 'Community',
   auth_number_error: 'Number not valid',
 
   // HOME
@@ -164,6 +165,12 @@ const enDictionary: Dictionary = {
 
   main_title: 'Lira Shapira Green Local Currency',
   secondary_main_title: 'Garbage Worth Money In Shapira',
+
+  // SETTINGS (Home buttons)
+  settings_language: 'Language',
+  settings_theme: 'Theme',
+  settings_theme_light: 'Light',
+  settings_theme_dark: 'Dark',
 }
 
 export default enDictionary;
