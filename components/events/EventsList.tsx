@@ -34,7 +34,9 @@ export default function EventsList() {
 }
 
 const styles = StyleSheet.create({
-  flexContainer: {},
+  flexContainer: {
+    width: '100%',
+  },
 
   noEventsText: {
     fontSize: 15,

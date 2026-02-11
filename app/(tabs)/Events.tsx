@@ -5,7 +5,7 @@ import EventsList from '../../components/events/EventsList';
 export default function TabTwoScreen() {
   return (
     <GradientContainer styles={styles.container}>
-      <View style={{ width: '90%', flex: 1 }}>
+      <View style={{ width: '95%', flex: 1 }}>
         <ScrollView>
           <EventsList />
         </ScrollView>

@@ -155,17 +155,21 @@ export default function Dashboard() {
         )}
       </View>
       <View style={styles.co2eContainer}>
-        <Text
-          style={{
-            color: Colors[colorScheme ?? 'light'].text,
-            ...styles.co2eText,
-          }}
-        >
-          {i18n.t('dashboard_You_have_prevented_kilos_of_garbage', {
-            kilos: calculateGarbagePrevented(user.transactions ?? []),
-          })}
-          <FontAwesome name='truck' size={30} color='#e1a6a6' />
-        </Text>
+        <View style={styles.co2eTextContainer}>
+          <Text
+            style={{
+              color: Colors[colorScheme ?? 'light'].text,
+              ...styles.co2eText,
+            }}
+          >
+            {i18n.t('dashboard_You_have_prevented_kilos_of_garbage', {
+              kilos: calculateGarbagePrevented(user.transactions ?? []),
+            })}
+          </Text>
+          <View style={styles.truckIconContainer}>
+            <FontAwesome name='truck' size={30} color='#e1a6a6' />
+          </View>
+        </View>
       </View>
       <ButtonGroup />
     </View>
@@ -232,13 +236,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  co2eText: {
+  co2eTextContainer: {
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  co2eText: {
     fontWeight: 500,
-    gap: 10,
     textAlign: 'center',
+  },
+  truckIconContainer: {
+    marginLeft: 8,
   },
   LS: {
     display: 'flex',

@@ -22,10 +22,11 @@ export default function Card({
 
 const styles = StyleSheet.create({
   card: {
-    margin: 10,
-    marginHorizontal: 8,
+    marginVertical: 10,
+    marginHorizontal: 4,
     paddingBottom: 12,
     borderRadius: 29,
+    alignSelf: 'stretch',
     shadowColor: '#272424',            // For iOS and Web
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
