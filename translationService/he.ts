@@ -28,7 +28,7 @@ const heDictionary: Dictionary = {
   tabs_wallet: 'ארנק',
   tabs_market: 'שוק',
   tabs_events: 'אירועים',
-  home_lira_shapira_currency_you_have: 'כמה יש?',
+  home_lira_shapira_currency_you_have: 'יש ברשותך כ',
   home_lira_shapira_currency_shorthand: 'ל"ש',
   dashboard_dashboard_buttons_send: 'העברה',
   dashboard_dashboard_buttons_request: 'בקשה',

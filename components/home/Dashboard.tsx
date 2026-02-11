@@ -71,7 +71,7 @@ const ButtonGroup = () => {
   );
 };
 
-const calculateGarbagePrevented = (transactionHistory = []) => {
+const calculateGarbagePrevented = (transactionHistory: Transaction[] = []) => {
   const sumDeposits = transactionHistory.reduce((acc, item: Transaction) => {
     return item?.category in Category &&
       item?.category.toLocaleLowerCase() === 'deposit'
@@ -98,41 +98,75 @@ export default function Dashboard() {
       </View>
 
       <View style={styles.dashboard}>
-        <Text
-          style={{
-            color: Colors[colorScheme ?? 'light'].text,
-            ...styles.subtitle,
-          }}
-        >
-          {i18n.t('home_lira_shapira_currency_you_have')}
-        </Text>
-        <View style={styles.amountDisplay}>
+        {i18n.locale !== 'he' && i18n.locale !== 'ar' && (
           <Text
             style={{
               color: Colors[colorScheme ?? 'light'].text,
-              ...styles.title,
+              ...styles.subtitle,
             }}
           >
-            {user.accountBalance.toFixed(1)}
+            {i18n.t('home_lira_shapira_currency_you_have')}
           </Text>
-          <Text
-            style={{ color: Colors[colorScheme ?? 'light'].text, ...styles.LS }}
-          >
-            {i18n.t('home_lira_shapira_currency_shorthand')}
-          </Text>
+        )}
+        <View style={styles.amountDisplay}>
+          {i18n.locale === 'he' || i18n.locale === 'ar' ? (
+            <>
+              <Text
+                style={{ color: Colors[colorScheme ?? 'light'].text, ...styles.LS, marginRight: 10 }}
+              >
+                {i18n.t('home_lira_shapira_currency_shorthand')}
+              </Text>
+              <Text
+                style={{
+                  color: Colors[colorScheme ?? 'light'].text,
+                  ...styles.title,
+                }}
+              >
+                {user.accountBalance.toFixed(1)}
+              </Text>
+            </>
+          ) : (
+            <>
+              <Text
+                style={{
+                  color: Colors[colorScheme ?? 'light'].text,
+                  ...styles.title,
+                }}
+              >
+                {user.accountBalance.toFixed(1)}
+              </Text>
+              <Text
+                style={{ color: Colors[colorScheme ?? 'light'].text, ...styles.LS }}
+              >
+                {i18n.t('home_lira_shapira_currency_shorthand')}
+              </Text>
+            </>
+          )}
         </View>
+        {(i18n.locale === 'he' || i18n.locale === 'ar') && (
+          <Text
+            style={{
+              color: Colors[colorScheme ?? 'light'].text,
+              ...styles.subtitle,
+            }}
+          >
+            {i18n.t('home_lira_shapira_currency_you_have')}
+          </Text>
+        )}
       </View>
-      <Text
-        style={{
-          color: Colors[colorScheme ?? 'light'].text,
-          ...styles.co2eText,
-        }}
-      >
-        {i18n.t('dashboard_You_have_prevented_kilos_of_garbage', {
-          kilos: calculateGarbagePrevented(user.transactions ?? []),
-        })}
-        <FontAwesome name='truck' size={30} color='#e1a6a6' />
-      </Text>
+      <View style={styles.co2eContainer}>
+        <Text
+          style={{
+            color: Colors[colorScheme ?? 'light'].text,
+            ...styles.co2eText,
+          }}
+        >
+          {i18n.t('dashboard_You_have_prevented_kilos_of_garbage', {
+            kilos: calculateGarbagePrevented(user.transactions ?? []),
+          })}
+          <FontAwesome name='truck' size={30} color='#e1a6a6' />
+        </Text>
+      </View>
       <ButtonGroup />
     </View>
   );
@@ -192,12 +226,19 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
   },
+  co2eContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
   co2eText: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     fontWeight: 500,
     gap: 10,
+    textAlign: 'center',
   },
   LS: {
     display: 'flex',

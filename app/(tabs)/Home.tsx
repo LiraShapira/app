@@ -162,23 +162,23 @@ export default function Home() {
           </RNView>
         </>
       )}
-      <RNView style={[styles.settingsBar, { marginTop: 24 }]}>
-        <Pressable
-          onPress={() => setLanguageDropdownVisible((v) => !v)}
-          style={styles.settingsButton}
-          hitSlop={12}
-        >
-          <FontAwesome name="language" size={24} color={iconColor} />
-        </Pressable>
-        <Pressable onPress={toggleTheme} style={styles.settingsButton} hitSlop={12}>
-          <MaterialIcons
-            name={preferredColorScheme === 'dark' ? 'light-mode' : 'dark-mode'}
-            size={24}
-            color={iconColor}
-          />
-        </Pressable>
-      </RNView>
       <GradientContainer styles={styles.gradientHeader}>
+        <RNView style={[styles.settingsBar]}>
+          <Pressable
+            onPress={() => setLanguageDropdownVisible((v) => !v)}
+            style={styles.settingsButton}
+            hitSlop={12}
+          >
+            <FontAwesome name="language" size={24} color={iconColor} />
+          </Pressable>
+          <Pressable onPress={toggleTheme} style={styles.settingsButton} hitSlop={12}>
+            <MaterialIcons
+              name={preferredColorScheme === 'dark' ? 'light-mode' : 'dark-mode'}
+              size={24}
+              color={iconColor}
+            />
+          </Pressable>
+        </RNView>
         <Dashboard />
       </GradientContainer>
 
