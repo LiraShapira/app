@@ -5,6 +5,7 @@ import sendFormSliceReducer from './sendFormSlice';
 import authFormSlice from './authFormSlice';
 import appStateSlice from './appStateSlice';
 import eventsSlice from './eventsSlice';
+import preferencesReducer from './preferencesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     sendForm: sendFormSliceReducer,
     authForm: authFormSlice,
     appState: appStateSlice,
-    eventState: eventsSlice
+    eventState: eventsSlice,
+    preferences: preferencesReducer,
   },
 });
 

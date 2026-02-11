@@ -23,5 +23,6 @@ export interface DepositForm {
   compostFull?: boolean;
   cleanAndTidy?: boolean;
   notes?: string;
-  compostStand: CompostStand
+  compostStand: CompostStand | string; // Allow string for dynamic stands
+  communityId?: string;
 }

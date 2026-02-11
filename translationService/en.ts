@@ -20,6 +20,8 @@ const enDictionary: Dictionary = {
   auth_first_name: 'First Name',
   auth_last_name: 'Last Name',
   auth_number_error: 'Number not valid',
+  auth_community: 'Community',
+  auth_community_placeholder: 'Select community...',
 
   // HOME
   tabs_wallet: 'wallet',

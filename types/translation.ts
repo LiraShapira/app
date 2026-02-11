@@ -19,6 +19,8 @@ export type DictionaryKey =
   'auth_first_name' |
   'auth_last_name' |
   'auth_number_error' |
+  'auth_community' |
+  'auth_community_placeholder' |
 
   // HOME
   'tabs_wallet' |

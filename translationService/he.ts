@@ -21,6 +21,8 @@ const heDictionary: Dictionary = {
   auth_first_name: 'שם פרטי',
   auth_last_name: 'שם משפחה',
   auth_number_error: 'מספר הטלפון אינו חוקי',
+  auth_community: 'קהילה',
+  auth_community_placeholder: 'בחר קהילה...',
 
   // HOME
   tabs_wallet: 'ארנק',

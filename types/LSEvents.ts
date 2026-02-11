@@ -11,12 +11,14 @@ export interface Seller {
   productsForSale: string[];
   user: User
   userId: string;
+  communityId?: string;
 }
 
 export type Attendee = {
   role: AttendeeRole.attendee | AttendeeRole.volunteer;
   user: User;
   userId: string;
+  communityId?: string;
 } | Seller
 
 export interface LSEvent {
@@ -32,4 +34,5 @@ export interface LSEvent {
     address: string;
     link: string;
   }
+  communityId?: string;
 }
