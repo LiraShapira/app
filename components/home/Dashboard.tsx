@@ -84,6 +84,17 @@ const calculateGarbagePrevented = (transactionHistory = []) => {
 export default function Dashboard() {
   const colorScheme = useColorScheme();
   const user = useAppSelector(selectUser);
+  const locale = i18n.locale ?? 'en';
+  const isRTL = locale === 'he' || locale === 'iw' || locale === 'ar';
+  // In Hebrew/Arabic: swap positions so shorthand is first (right), amount, then "you have" (left)
+  const labelBeforeAmount = isRTL
+    ? (user.communityCoin ?? i18n.t('home_lira_shapira_currency_shorthand'))
+    : i18n.t('home_lira_shapira_currency_you_have');
+  const labelAfterAmount = isRTL
+    ? i18n.t('home_lira_shapira_currency_you_have')
+    : (user.communityCoin ?? i18n.t('home_lira_shapira_currency_shorthand'));
+  const labelBeforeStyle = isRTL ? styles.LS : styles.subtitle;
+  const labelAfterStyle = isRTL ? styles.subtitle : styles.LS;
   return (
     <View>
       <View style={styles.headerContainer}>
@@ -102,24 +113,24 @@ export default function Dashboard() {
         <Text
           style={{
             color: Colors[colorScheme ?? 'light'].text,
-            ...styles.subtitle,
+            ...labelBeforeStyle, marginLeft: 10
           }}
         >
-          {i18n.t('home_lira_shapira_currency_you_have')}
+          {labelBeforeAmount}
         </Text>
         <View style={styles.amountDisplay}>
           <Text
             style={{
               color: Colors[colorScheme ?? 'light'].text,
-              ...styles.title,
+              ...styles.title, marginLeft: 8, marginRight: 2,
             }}
           >
             {user.accountBalance.toFixed(1)}
           </Text>
           <Text
-            style={{ color: Colors[colorScheme ?? 'light'].text, ...styles.LS }}
+            style={{ color: Colors[colorScheme ?? 'light'].text, ...labelAfterStyle }}
           >
-            {user.communityCoin ?? i18n.t('home_lira_shapira_currency_shorthand')}
+            {labelAfterAmount}
           </Text>
         </View>
       </View>
@@ -127,12 +138,13 @@ export default function Dashboard() {
         style={{
           color: Colors[colorScheme ?? 'light'].text,
           ...styles.co2eText,
+          marginLeft: isRTL ? 20 : 2,
         }}
       >
         {i18n.t('dashboard_You_have_prevented_kilos_of_garbage', {
           kilos: calculateGarbagePrevented(user.transactions ?? []),
-        })}
-        <FontAwesome name='truck' size={30} color='#e1a6a6' />
+        })} &nbsp;
+        <FontAwesome name='truck' size={30} color='#e1a6a6'  />
       </Text>
       <ButtonGroup />
     </View>
