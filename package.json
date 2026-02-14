@@ -1,6 +1,6 @@
 {
   "name": "lirashapiraapp",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "scripts": {
     "start": "expo start",
     "demo": "cross-env EXPO_PUBLIC_DEMO=true expo start",
