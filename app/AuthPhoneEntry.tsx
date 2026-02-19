@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import {
   selectPhoneNumber,
   sendLoginForm,
-  sendVerificationCode,
   setPhoneNumber,
 } from '../store/authFormSlice';
 import CustomButton from '../components/utils/CustomButton';
@@ -17,8 +16,8 @@ import { setAppLoading, setIsModalVisible, setModalText } from '../store/appStat
 import GradientContainer from '../components/utils/GradientContainer';
 import NumberInputNumberPad from '../components/form/NumberInputNumberPad';
 import { parseNumberPadInputForPhoneNumber } from '../utils/functions';
-import { parsePhoneNumber } from 'libphonenumber-js';
 import { NumberLabel } from '../components/form/NumberInputNumberPad';
+import { parsePhoneNumber } from 'libphonenumber-js';
 
 export default function AuthPhoneEntry() {
   const dispatch = useAppDispatch();
@@ -62,15 +61,8 @@ export default function AuthPhoneEntry() {
       })
       .catch((e) => {
         if (e.message === 'User not found') {
-          const phoneNumberForTwilio = parsePhoneNumber(displayedPhoneNumber, 'IL')
-            .formatInternational()
-            .split(' ')
-            .join('');
-
-          dispatch(sendVerificationCode(phoneNumberForTwilio))
-            .unwrap()
-            .then(() => router.push('/AuthCodeValidation'))
-            .catch(console.error);
+          // Skip verification - go directly to name entry for new users
+          router.push('/AuthNameEntry');
         } else {
           dispatch(setModalText(e.message));
           dispatch(setIsModalVisible(true));
