@@ -4,7 +4,12 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import {
+  FontAwesome,
+  FontAwesome5,
+  Ionicons,
+  MaterialIcons,
+} from '@expo/vector-icons';
 import { Slot, Stack, useRouter } from 'expo-router';
 import { Appearance, Platform, useColorScheme } from 'react-native';
 import { useEffect } from 'react';
@@ -47,6 +52,8 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...Ionicons.font,
     ...MaterialIcons.font,
+    ...FontAwesome.font,
+    ...FontAwesome5.font,
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
