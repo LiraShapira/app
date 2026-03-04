@@ -47,13 +47,35 @@ export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+// On web static export, fonts from node_modules get URLs like /assets/node_modules/... which
+// fail to load on deployed hosts. Load icon fonts from CDN on web instead.
+const EXPO_VECTOR_ICONS_CDN =
+  'https://cdn.jsdelivr.net/npm/@expo/vector-icons@15.0.2/build/vendor/react-native-vector-icons/Fonts';
+
+const getIconFontsForPlatform = () => {
+  if (Platform.OS === 'web') {
+    return {
+      ionicons: `${EXPO_VECTOR_ICONS_CDN}/Ionicons.ttf`,
+      material: `${EXPO_VECTOR_ICONS_CDN}/MaterialIcons.ttf`,
+      FontAwesome: `${EXPO_VECTOR_ICONS_CDN}/FontAwesome.ttf`,
+      'FontAwesome5Free-Regular': `${EXPO_VECTOR_ICONS_CDN}/FontAwesome5_Regular.ttf`,
+      'FontAwesome5Free-Light': `${EXPO_VECTOR_ICONS_CDN}/FontAwesome5_Regular.ttf`,
+      'FontAwesome5Free-Solid': `${EXPO_VECTOR_ICONS_CDN}/FontAwesome5_Solid.ttf`,
+      'FontAwesome5Free-Brand': `${EXPO_VECTOR_ICONS_CDN}/FontAwesome5_Brands.ttf`,
+    };
+  }
+  return {
     ...Ionicons.font,
     ...MaterialIcons.font,
     ...FontAwesome.font,
     ...FontAwesome5.font,
+  };
+};
+
+export default function RootLayout() {
+  const [loaded, error] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    ...getIconFontsForPlatform(),
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
