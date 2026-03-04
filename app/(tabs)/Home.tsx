@@ -39,8 +39,8 @@ const SUPPORTED_LOCALES: { code: string; label: string }[] = [
 export default function Home() {
   const user = useAppSelector<User>(selectUser);
   const colorScheme = useColorScheme();
-  const preferredLocale = useAppSelector(selectPreferredLocale);
-  const preferredColorScheme = useAppSelector(selectPreferredColorScheme);
+  // const preferredLocale = useAppSelector(selectPreferredLocale);
+  // const preferredColorScheme = useAppSelector(selectPreferredColorScheme);
   const dispatch = useAppDispatch();
   const [verifyMessageInfo, setVerifyMessageInfo] = useState<string>('');
   const [isLoadingMessage, setIsLoadingMessage] = useState<boolean>(true);
@@ -54,14 +54,14 @@ export default function Home() {
     setLanguageDropdownVisible(false);
   };
 
-  const toggleTheme = () => {
-    const next: ColorSchemePreference = preferredColorScheme === 'dark' ? 'light' : 'dark';
-    dispatch(setPreferredColorScheme(next));
-    setItem(StorageKeys.preferredColorScheme, next);
-    if (typeof Appearance?.setColorScheme === 'function') {
-      Appearance.setColorScheme(next);
-    }
-  };
+  // const toggleTheme = () => {
+  //   const next: ColorSchemePreference = preferredColorScheme === 'dark' ? 'light' : 'dark';
+  //   dispatch(setPreferredColorScheme(next));
+  //   setItem(StorageKeys.preferredColorScheme, next);
+  //   if (typeof Appearance?.setColorScheme === 'function') {
+  //     Appearance.setColorScheme(next);
+  //   }
+  // };
 
 
   useEffect(() => {
@@ -171,13 +171,13 @@ export default function Home() {
         >
           <FontAwesome name="language" size={24} color={iconColor} />
         </Pressable>
-        <Pressable onPress={toggleTheme} style={styles.settingsButton} hitSlop={12}>
+        {/* <Pressable onPress={toggleTheme} style={styles.settingsButton} hitSlop={12}>
           <MaterialIcons
             name={preferredColorScheme === 'dark' ? 'light-mode' : 'dark-mode'}
             size={24}
             color={iconColor}
           />
-        </Pressable>
+        </Pressable> */}
       </RNView>
       <GradientContainer styles={styles.gradientHeader}>
         <Dashboard />

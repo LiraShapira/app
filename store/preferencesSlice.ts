@@ -21,7 +21,7 @@ export const preferencesSlice = createSlice({
       state.locale = action.payload;
     },
     setPreferredColorScheme: (state, action: PayloadAction<ColorSchemePreference>) => {
-      state.colorScheme = action.payload;
+      state.colorScheme = 'light'; // default to light mode for web
     },
   },
 });
