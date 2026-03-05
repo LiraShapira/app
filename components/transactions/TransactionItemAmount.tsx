@@ -1,4 +1,5 @@
-import { Text, useColorScheme, StyleSheet, View } from "react-native";
+import { useColorScheme, StyleSheet, View } from "react-native";
+import { Text } from "../Themed";
 import Colors from "../../constants/Colors";
 
 interface TransactionItemAmountProps {

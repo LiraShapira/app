@@ -1,4 +1,5 @@
-import { Text, StyleSheet, Modal, View, useColorScheme } from 'react-native';
+import { StyleSheet, Modal, View, useColorScheme } from 'react-native';
+import { Text } from '../Themed';
 import CustomButton, { ButtonProps } from './CustomButton';
 import {
   selectIsModalVisible,

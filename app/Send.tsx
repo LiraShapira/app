@@ -1,4 +1,5 @@
-import { Text, TextInput, View, useColorScheme } from 'react-native';
+import { TextInput, View, useColorScheme } from 'react-native';
+import { Text } from '../components/Themed';
 import UserList from '../components/users/UserList';
 import { useEffect, useState } from 'react';
 import i18n from '../translationService';

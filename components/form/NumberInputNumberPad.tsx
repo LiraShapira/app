@@ -1,4 +1,5 @@
-import { Text, useColorScheme, StyleSheet, View, Pressable } from 'react-native';
+import { useColorScheme, StyleSheet, View, Pressable } from 'react-native';
+import { Text } from '../Themed';
 import Colors from '../../constants/Colors';
 import { getLocales } from 'expo-localization';
 import { MaterialIcons } from '@expo/vector-icons';

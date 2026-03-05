@@ -1,4 +1,5 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Text } from '../components/Themed';
 import { setUser } from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import {

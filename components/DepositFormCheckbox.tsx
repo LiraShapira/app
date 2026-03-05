@@ -1,4 +1,5 @@
-import { Text, TextInput, View, useColorScheme } from 'react-native';
+import { TextInput, View, useColorScheme } from 'react-native';
+import { Text } from './Themed';
 import Colors from '../constants/Colors';
 import i18n from '../translationService';
 import { useAppDispatch } from '../hooks';
