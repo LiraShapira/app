@@ -1,3 +1,4 @@
+import '../app/typography';
 import {
   DarkTheme,
   DefaultTheme,

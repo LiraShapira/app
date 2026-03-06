@@ -22,7 +22,8 @@ export default function GradientContainer({
       style={{
         width: '100%',
         position: 'relative',
-        height: '100%',
+        flex: 1,
+        minHeight: 0,
         padding: 8,
         ...styles,
       }}

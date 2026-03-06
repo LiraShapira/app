@@ -14,7 +14,7 @@ import { IconLibrary } from '../../types/Icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Category, Transaction } from '../../types/Transaction';
 
-const ButtonGroup = () => {
+export const ButtonGroup = () => {
   const colorScheme = useColorScheme();
 
   return (
@@ -81,7 +81,12 @@ const calculateGarbagePrevented = (transactionHistory = []) => {
 
   return parseFloat(sumDeposits + '').toFixed(2);
 };
-export default function Dashboard() {
+interface DashboardProps {
+  /** When false, only header (greeting, balance, co2) is rendered so buttons can straddle the gradient boundary in Home */
+  includeButtons?: boolean;
+}
+
+export default function Dashboard({ includeButtons = true }: DashboardProps) {
   const colorScheme = useColorScheme();
   const user = useAppSelector(selectUser);
   const locale = i18n.locale ?? 'en';
@@ -146,7 +151,7 @@ export default function Dashboard() {
         })} &nbsp;
         <FontAwesome name='truck' size={30} color='#e1a6a6'  />
       </Text>
-      <ButtonGroup />
+      {includeButtons && <ButtonGroup />}
     </View>
   );
 }

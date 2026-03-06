@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import TransactionsList from '../../components/transactions/TransactionsList';
-import Dashboard from '../../components/home/Dashboard';
+import Dashboard, { ButtonGroup } from '../../components/home/Dashboard';
 import i18n from '../../translationService';
 import { selectUser } from '../../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -179,24 +179,31 @@ export default function Home() {
           />
         </Pressable> */}
       </RNView>
-      <GradientContainer styles={styles.gradientHeader}>
-        <Dashboard />
+      <GradientContainer styles={[styles.gradientHeader, styles.gradientHeaderStraddle]}>
+        <Dashboard includeButtons={false} />
       </GradientContainer>
 
-      <RNView
-        style={{
-          paddingTop: 75,
-          paddingBottom: 10,
-          zIndex: 0,
-          width: '100%',
-          position: 'relative',
-          height: 'auto',
-        }}
-      >
-        <RequestCard />
+      <RNView style={styles.buttonsStraddle}>
+        <ButtonGroup />
       </RNView>
-      <Text style={{ fontSize: 40 }}>{i18n.t('home_transactions_title')}</Text>
-      <ScrollView style={{ width: '100%' }}>
+
+      <ScrollView
+        style={styles.mainScrollView}
+        contentContainerStyle={styles.mainScrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <RNView
+          style={{
+            paddingTop: 75,
+            paddingBottom: 10,
+            zIndex: 0,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          <RequestCard />
+        </RNView>
+        <Text style={{ fontSize: 40 }}>{i18n.t('home_transactions_title')}</Text>
         <TransactionsList currentUser={user} />
       </ScrollView>
     </RNView>
@@ -250,8 +257,23 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 16,
   },
+  mainScrollView: {
+    flex: 1,
+    minHeight: 0,
+    width: '100%',
+  },
+  mainScrollContent: {
+    paddingBottom: 88,
+  },
   gradientHeader: {
     height: 'auto',
+  },
+  gradientHeaderStraddle: {
+    paddingBottom: 95,
+  },
+  buttonsStraddle: {
+    marginTop: -95,
+    zIndex: 1,
   },
   messageContainer: {
     justifyContent: 'center',

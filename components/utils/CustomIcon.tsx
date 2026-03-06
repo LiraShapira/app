@@ -14,7 +14,7 @@ import {
   SimpleLineIcons,
   Zocial,
 } from '@expo/vector-icons';
-import { Text } from 'react-native';
+import { Text } from '../Themed';
 import { ExpoIcon, LocalIcon } from '../../types/Icons';
 import { SvgProps } from 'react-native-svg';
 import send_icon from '../../assets/icons/send_icon';
