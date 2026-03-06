@@ -51,6 +51,7 @@ export default function Send() {
       <SendFlowHeader stage='who' />
       <Text
         style={{
+          marginTop: 5,
           fontSize: 24,
           color: Colors[colorScheme ?? 'light'].text,
         }}

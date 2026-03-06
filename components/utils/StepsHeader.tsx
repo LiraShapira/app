@@ -31,7 +31,7 @@ export default function SendFlowHeader({ stage }: SendFlowHeaderProps) {
           const displayIndex = index;
           const isLast = index === arr.length - 1;
           return (
-            <View key={s.key} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View key={s.key} style={{ flexDirection: 'row', alignItems: 'center', marginTop: 40 }}>
               <View
                 style={[
                   styles.bubble,

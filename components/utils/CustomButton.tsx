@@ -1,4 +1,5 @@
-import { View, Pressable, Text, StyleSheet } from 'react-native';
+import { View, Pressable, StyleSheet } from 'react-native';
+import { Text } from '../Themed';
 import Colors from '../../constants/Colors';
 
 export interface ButtonProps {
@@ -54,7 +55,7 @@ export default function CustomButton({
       <Text
         style={{
           fontWeight: '700',
-          fontSize: 14,
+          fontSize: 16,
           color: fg,
           marginRight: showDeleteButton ? 10 : 0,  // replace `gap`
         }}

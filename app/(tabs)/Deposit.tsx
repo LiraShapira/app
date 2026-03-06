@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, useColorScheme, Platform } from 'react-native';
+import { View, StyleSheet, Text, useColorScheme, Platform, ScrollView } from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -133,88 +133,106 @@ export default function Deposit() {
         customElement={<DepositFormCheckBox />}
       />
 
-      {/* <Text
-        style={{
-          marginTop: 20,
-          paddingTop: 10,
-          paddingHorizontal: 10,
-          color: Colors[colorScheme].text,
-        }}
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
-        {i18n.t('deposit_choose_location')}
-      </Text> */}
-
-      <View
-        style={{
-          backgroundColor: Colors[colorScheme].highlight,
-          borderRadius: 10,
-          margin: 10,
-          marginTop: 45,
-          paddingHorizontal: 10,
-          paddingVertical: 8,
-        }}
-      >
-        <Picker
-          selectedValue={compostStand || ''}
-          onValueChange={(stand) => dispatch(setCompostStand(stand))}
+        <View
           style={{
-            fontSize: 18,
-            height: 60,
+            backgroundColor: Colors[colorScheme].highlight,
+            borderRadius: 10,
+            margin: 10,
+            marginTop: 45,
+            paddingHorizontal: 10,
+            paddingVertical: 8,
           }}
-          mode="dropdown"
-          enabled={!isLoadingStands}
         >
-          <Picker.Item label={i18n.t('deposit_compost_stand_blank')} value="" />
-          {availableStands.map((stand) => {
-            const displayName = stand.displayName || stand.name_he || stand.name_en || stand.name || 'Unknown';
-            return (
-              <Picker.Item
-                key={stand.compostStandId}
-                label={displayName}
-                value={stand.name || String(stand.compostStandId)}
-              />
-            );
-          })}
-        </Picker>
-      </View>
-      <Text
-        maxFontSizeMultiplier={1.0}
-        style={{
-          fontSize: 40,
-          paddingVertical: 16,
-          color: Colors[colorScheme].text,
-          fontWeight: 700,
-        }}
-      >
-        {i18n.t('deposit_title')}
-      </Text>
-      <View style={styles.depositSwitches}>
-        <NumberInputNumberPad
-          onButtonPress={onPressNumberPadInput}
-          appendedText={i18n.t('deposit_form_kilogram')}
-          value={depositValue}
-        />
-
-        <View style={styles.buttons}>
-          <CustomButton
-            text={i18n.t('continue')}
-            onPress={onPressContinue}
-            disabled={!depositValue || !compostStand}
-          />
-          <CustomButton
-            transparent={true}
-            text={i18n.t('cancel')}
-            onPress={onPressCancel}
-          />
+          <Picker
+            selectedValue={compostStand || ''}
+            onValueChange={(stand) => dispatch(setCompostStand(stand))}
+            
+            style={{
+              fontSize: 18,
+            }}
+            
+            itemStyle={{
+              fontSize: 18,
+              height: 60, 
+              color: 'black'
+            }}
+            
+            mode="dropdown"
+            enabled={!isLoadingStands}
+          >
+            <Picker.Item 
+              label={i18n.t('deposit_compost_stand_blank')} 
+              style={{ fontSize: 18 }} 
+              value="" 
+            />
+            
+            {availableStands.map((stand) => {
+              const displayName = stand.displayName || stand.name_he || stand.name_en || stand.name || 'Unknown';
+              return (
+                <Picker.Item
+                  key={stand.compostStandId}
+                  label={displayName}
+                  value={stand.name || String(stand.compostStandId)}
+                  style={{ fontSize: 18 }} // Enforce size on items
+                />
+              );
+            })}
+          </Picker>
         </View>
-      </View>
+        <Text
+          maxFontSizeMultiplier={1.0}
+          style={{
+            fontSize: 40,
+            paddingVertical: 8,
+            color: Colors[colorScheme].text,
+            fontWeight: 700,
+          }}
+        >
+          {i18n.t('deposit_title')}
+        </Text>
+        <View style={styles.depositSwitches}>
+          <NumberInputNumberPad
+            onButtonPress={onPressNumberPadInput}
+            appendedText={i18n.t('deposit_form_kilogram')}
+            value={depositValue}
+          />
+
+          <View style={styles.buttons}>
+            <CustomButton
+              text={i18n.t('continue')}
+              onPress={onPressContinue}
+              disabled={!depositValue || !compostStand}
+            />
+            <CustomButton
+              transparent={true}
+              text={i18n.t('cancel')}
+              onPress={onPressCancel}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </GradientContainer>
   );
 
 }
 
+const TAB_BAR_SAFE_BOTTOM = 88;
+
 const styles = StyleSheet.create({
   container: { height: '100%', padding: 8 },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: TAB_BAR_SAFE_BOTTOM,
+  },
   depositSwitches: {
     display: 'flex',
     flexDirection: 'column',
