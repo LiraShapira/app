@@ -178,6 +178,7 @@ export default function Deposit() {
         </Picker>
       </View>
       <Text
+        maxFontSizeMultiplier={1.0}
         style={{
           fontSize: 40,
           paddingVertical: 16,
