@@ -71,7 +71,14 @@ const NumberInputNumberPad = ({
   return (
     <View style={{ flexDirection: 'column', gap: 12 }}>
       <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', minHeight: 60 }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            minHeight: 60,
+            width: '100%',
+          }}
+        >
           {prependedText && (
             <Text
               style={{
@@ -85,12 +92,16 @@ const NumberInputNumberPad = ({
               {prependedText}
             </Text>
           )}
-          <Text
-            numberOfLines={1}
-            style={{ ...styles.inputtedValue, color: Colors[colorScheme].text }}
-          >
-            {value}
-          </Text>
+          <View style={styles.valueTextWrap}>
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.45}
+              style={{ ...styles.inputtedValue, color: Colors[colorScheme].text }}
+            >
+              {value}
+            </Text>
+          </View>
           {appendedText && (
             <Text
               style={{
@@ -167,11 +178,15 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '600',
   },
+  valueTextWrap: {
+    flex: 1,
+    minWidth: 0,
+    justifyContent: 'center',
+  },
   inputtedValue: {
     fontSize: 36,
     marginVertical: 0,
-    marginHorizontal: 'auto',
-    maxWidth: '100%',
+    width: '100%',
     textAlign: 'center',
   },
   numberPadButton: {
