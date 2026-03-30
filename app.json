@@ -32,7 +32,9 @@
     },
     "web": {
       "bundler": "metro",
-      "favicon": "./assets/icons/favicon.png"
+      "favicon": "./assets/icons/favicon.png",
+      "title": "Lira Shapira App",
+      "description": "Web version of the Lira Shapira App, local eco currency"
     },
     "plugins": [
       "expo-localization",
