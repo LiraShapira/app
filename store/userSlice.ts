@@ -138,6 +138,9 @@ export const userSlice = createSlice({
         state.user.accountBalance = action.payload;
       }
     },
+    setCommunityCoin: (state, action: PayloadAction<string | null>) => {
+      state.user.communityCoin = action.payload;
+    },
     incrementUserBalance: (state, action: PayloadAction<number | string>) => {
       console.log('incrementUserBalance called with:', action.payload, 'Type:', typeof action.payload);
       console.log('Current balance:', state.user.accountBalance, 'Type:', typeof state.user.accountBalance);
@@ -167,8 +170,12 @@ export const userSlice = createSlice({
       .addCase(loadUser.pending, (state) => {
         state.loading = true;
       })
-      .addCase(loadUser.fulfilled, (state) => {
+      .addCase(loadUser.fulfilled, (state, action) => {
         state.loading = false;
+        const communityCoin = action.payload.data?.communityCoin;
+        if (communityCoin) {
+          state.user.communityCoin = communityCoin;
+        }
       })
       .addCase(loadUser.rejected, (state) => {
         state.loading = false;
@@ -189,6 +196,7 @@ export const {
   setUser,
   addUserTransaction,
   setUserBalance,
+  setCommunityCoin,
   setIsUserLoading,
   incrementUserBalance,
 } = userSlice.actions;

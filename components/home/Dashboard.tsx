@@ -91,13 +91,15 @@ export default function Dashboard({ includeButtons = true }: DashboardProps) {
   const user = useAppSelector(selectUser);
   const locale = i18n.locale ?? 'en';
   const isRTL = locale === 'he' || locale === 'iw' || locale === 'ar';
+  const communityCoinLabel =
+    user.communityCoin?.trim() || i18n.t('home_lira_shapira_currency_shorthand');
   // In Hebrew/Arabic: swap positions so shorthand is first (right), amount, then "you have" (left)
   const labelBeforeAmount = isRTL
-    ? (user.communityCoin ?? i18n.t('home_lira_shapira_currency_shorthand'))
+    ? communityCoinLabel
     : i18n.t('home_lira_shapira_currency_you_have');
   const labelAfterAmount = isRTL
     ? i18n.t('home_lira_shapira_currency_you_have')
-    : (user.communityCoin ?? i18n.t('home_lira_shapira_currency_shorthand'));
+    : communityCoinLabel;
   const labelBeforeStyle = isRTL ? styles.LS : styles.subtitle;
   const labelAfterStyle = isRTL ? styles.subtitle : styles.LS;
   return (

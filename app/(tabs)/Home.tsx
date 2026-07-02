@@ -10,7 +10,7 @@ import { Text, View } from '../../components/Themed';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import Dashboard, { ButtonGroup } from '../../components/home/Dashboard';
 import i18n from '../../translationService';
-import { selectUser } from '../../store/userSlice';
+import { selectUser, setCommunityCoin } from '../../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import GradientContainer from '../../components/utils/GradientContainer';
 import RequestCard from '../../components/requests/RequestCard';
@@ -18,6 +18,7 @@ import { User } from '../../types/User';
 import Colors from '../../constants/Colors';
 import { useState, useEffect } from 'react';
 import { fetchVerificationMessage } from '../../API/verificationMessageAPI';
+import { fetchCommunityById } from '../../API/communitiesAPI';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import {
@@ -93,6 +94,36 @@ export default function Home() {
       loadVerificationMessage();
     }
   }, [user.isVerified, user.communityId]);
+
+  useEffect(() => {
+    if (!user.communityId) {
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadCommunityCoin = async () => {
+      try {
+        const response = await fetchCommunityById(user.communityId!);
+        if (cancelled || !('data' in response) || !response.data) {
+          return;
+        }
+
+        const coin = response.data.Coin?.trim();
+        if (coin) {
+          dispatch(setCommunityCoin(coin));
+        }
+      } catch (error) {
+        console.error('Error fetching community coin:', error);
+      }
+    };
+
+    loadCommunityCoin();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user.communityId, dispatch]);
 
   // Check if user is banned
   if (user.isBanned === true) {
