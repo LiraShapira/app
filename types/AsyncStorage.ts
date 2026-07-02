@@ -8,4 +8,5 @@ export enum StorageKeys {
     productsForSale = 'productsForSale',
     preferredLocale = 'preferredLocale',
     preferredColorScheme = 'preferredColorScheme',
+    lastDepositFlow = 'lastDepositFlow',
 }

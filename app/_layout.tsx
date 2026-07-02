@@ -31,6 +31,7 @@ import {
 } from '../store/preferencesSlice';
 import i18n from '../translationService';
 import React from 'react';
+import { depositLogger } from '../utils/depositLogger';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -96,6 +97,7 @@ function RootLayoutNav() {
   }, [dispatch]);
 
   useEffect(() => {
+    depositLogger.warnIfPreviousFlowIncomplete();
     dispatch(setIsUserLoading(true));
     
     if (Platform.OS === 'web') {

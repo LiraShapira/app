@@ -32,7 +32,9 @@ export default function TransactionItemAmount({ income, amount, isRequest }: Tra
           fontWeight: '600'
         }}
       >
-        {typeof amount == 'string' ? parseFloat(amount).toFixed(2) : amount.toFixed(2)}
+        {typeof amount === 'string'
+          ? (Number.isFinite(parseFloat(amount)) ? parseFloat(amount).toFixed(2) : '0.00')
+          : (typeof amount === 'number' && Number.isFinite(amount) ? amount.toFixed(2) : '0.00')}
       </Text>
     </View>
   )

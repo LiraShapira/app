@@ -26,6 +26,7 @@ type StorageKeyTypes = {
     [StorageKeys.productsForSale]: string;
     [StorageKeys.preferredLocale]: string;
     [StorageKeys.preferredColorScheme]: string;
+    [StorageKeys.lastDepositFlow]: string;
 };
 
 type StorageValue<K extends StorageKeys> = K extends keyof StorageKeyTypes ? StorageKeyTypes[K] : never;

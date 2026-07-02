@@ -130,7 +130,9 @@ export default function Dashboard({ includeButtons = true }: DashboardProps) {
               ...styles.title, marginLeft: 8, marginRight: 2,
             }}
           >
-            {user.accountBalance.toFixed(1)}
+            {user.accountBalance != null && Number.isFinite(Number(user.accountBalance))
+              ? Number(user.accountBalance).toFixed(1)
+              : '0.0'}
           </Text>
           <Text
             style={{ color: Colors[colorScheme ?? 'light'].text, ...labelAfterStyle }}

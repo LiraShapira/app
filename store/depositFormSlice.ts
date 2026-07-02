@@ -5,6 +5,13 @@ import { ApiResponse, SuccessApiResponse } from '../types/APITypes';
 import { Transaction } from '../types/Transaction';
 import { CompostStand, DepositForm } from '../types/Deposit';
 
+const getDepositApiError = (response: ApiResponse<Transaction[]>): string => {
+  if ('error' in response && response.error) {
+    return response.error;
+  }
+  return 'Deposit failed';
+};
+
 interface DepositFormState extends DepositForm {
   loading: boolean;
   guaranteedAccurate: boolean;
@@ -42,8 +49,8 @@ export const sendSkippedDepositForm = createAsyncThunk<
 
     response = await saveDepositToDatabase(requestBody);
 
-    if (!('data' in response)) {
-      throw new Error(response.message);
+    if (!response.data) {
+      throw new Error(getDepositApiError(response));
     }
 
     return response;
@@ -71,8 +78,8 @@ export const sendDepositForm = createAsyncThunk<
 
     response = await saveDepositToDatabase(requestBody);
 
-    if (!('data' in response)) {
-      throw new Error(response.message);
+    if (!response.data) {
+      throw new Error(getDepositApiError(response));
     }
 
     return response;
@@ -136,6 +143,15 @@ export const depositFormSlice = createSlice({
         state.loading = false;
       })
       .addCase(sendDepositForm.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(sendSkippedDepositForm.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(sendSkippedDepositForm.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(sendSkippedDepositForm.rejected, (state) => {
         state.loading = false;
       });
   },
