@@ -29,6 +29,8 @@ export default function SendAmount() {
   const params = useLocalSearchParams();
   const { isRequest } = params;
 
+  const amountInput = amount === 0 ? '' : amount.toString();
+
   const onModalCancel = () => {
     dispatch(setAmount(0));
     dispatch(setReason(''));
@@ -41,10 +43,10 @@ export default function SendAmount() {
     router.back();
   };
   const onPressNumberPadInput = (n: NumberLabel) => {
-    const newValue = parseNumberPadInputForSend(n, amount.toString());
+    const newValue = parseNumberPadInputForSend(n, amountInput);
     // NB! conditional on false required because 0 falsy value
     if (newValue !== false) {
-      dispatch(setAmount(newValue));
+      dispatch(setAmount(newValue === '' ? 0 : parseFloat(newValue)));
     }
   };
 
@@ -72,7 +74,7 @@ export default function SendAmount() {
           ) : null}
           <NumberInputNumberPad
             onButtonPress={onPressNumberPadInput}
-            value={amount.toString()}
+            value={amountInput}
           />
         </View>
         <View style={styles.buttonContainer}>

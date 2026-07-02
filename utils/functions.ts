@@ -28,9 +28,14 @@ export const parseNumberPadInputWithMax = (
   if (oldValue.includes('.') && n === '.') {
     return false;
   }
-  if (!oldValue && n === '0') return false;
 
-  const newValue = oldValue + n;
+  // Treat a lone "0" as empty so typing "1" gives "1", not "01".
+  const baseValue =
+    oldValue === '0' && n !== '.' ? '' : oldValue;
+
+  if (!baseValue && n === '0') return false;
+
+  const newValue = baseValue + n;
   if (parseFloat(newValue) > maxAmount) return false;
   if (newValue.includes('.') && newValue.split('.')[1].length > 1) return false;
   return newValue;
