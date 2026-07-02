@@ -161,6 +161,10 @@ export const userSlice = createSlice({
       state.user.accountBalance = currentBalance + amountToAdd;
       console.log('New balance:', state.user.accountBalance, 'Type:', typeof state.user.accountBalance);
     },
+    resetUser: (state) => {
+      state.user = { ...initialState.user, transactions: [] };
+      state.users = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -199,6 +203,7 @@ export const {
   setCommunityCoin,
   setIsUserLoading,
   incrementUserBalance,
+  resetUser,
 } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;

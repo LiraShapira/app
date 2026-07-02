@@ -10,7 +10,7 @@ import { Text, View } from '../../components/Themed';
 import TransactionsList from '../../components/transactions/TransactionsList';
 import Dashboard, { ButtonGroup } from '../../components/home/Dashboard';
 import i18n from '../../translationService';
-import { selectUser, setCommunityCoin } from '../../store/userSlice';
+import { selectUser, setCommunityCoin, resetUser } from '../../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import GradientContainer from '../../components/utils/GradientContainer';
 import RequestCard from '../../components/requests/RequestCard';
@@ -27,9 +27,11 @@ import {
   selectPreferredLocale,
   selectPreferredColorScheme,
 } from '../../store/preferencesSlice';
-import { setItem } from '../../utils/asyncStorage';
+import { removeItem, setItem } from '../../utils/asyncStorage';
 import { StorageKeys } from '../../types/AsyncStorage';
 import type { ColorSchemePreference } from '../../store/preferencesSlice';
+import { setIsLoggedIn } from '../../store/authFormSlice';
+import { useRouter } from 'expo-router';
 
 const SUPPORTED_LOCALES: { code: string; label: string }[] = [
   { code: 'en', label: 'English' },
@@ -43,9 +45,29 @@ export default function Home() {
   const preferredLocale = useAppSelector(selectPreferredLocale);
   const preferredColorScheme = useAppSelector(selectPreferredColorScheme);
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const [verifyMessageInfo, setVerifyMessageInfo] = useState<string>('');
   const [isLoadingMessage, setIsLoadingMessage] = useState<boolean>(true);
   const [languageDropdownVisible, setLanguageDropdownVisible] = useState(false);
+  const iconColor = Colors[colorScheme ?? 'light'].text;
+
+  const onLogout = async () => {
+    await removeItem(StorageKeys.phoneNumber);
+    dispatch(setIsLoggedIn(false));
+    dispatch(resetUser());
+    router.replace('/AuthPhoneEntry');
+  };
+
+  const renderLogoutButton = () => (
+    <Pressable
+      onPress={onLogout}
+      style={[styles.logoutButton, { marginTop: 24 }]}
+      hitSlop={12}
+      accessibilityLabel={i18n.t('auth_logout')}
+    >
+      <MaterialIcons name="logout" size={24} color={iconColor} />
+    </Pressable>
+  );
 
   const selectLocale = (code: string) => {
     const locale = code === 'iw' ? 'he' : code;
@@ -129,6 +151,7 @@ export default function Home() {
   if (user.isBanned === true) {
     return (
       <View style={[styles.container, styles.messageContainer]}>
+        {renderLogoutButton()}
         <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
           This account is banned.
         </Text>
@@ -140,6 +163,7 @@ export default function Home() {
   if (user.isVerified !== true) {
     return (
       <GradientContainer styles={styles.container}>
+        {renderLogoutButton()}
         <RNView
           style={[
             styles.messageContainer,
@@ -166,10 +190,10 @@ export default function Home() {
   }
 
   // User is verified and not banned - show normal dashboard
-  const iconColor = Colors[colorScheme ?? 'light'].text;
   const colors = Colors[colorScheme ?? 'light'];
   return (
     <RNView style={styles.container}>
+      {renderLogoutButton()}
       {languageDropdownVisible && (
         <>
           <Pressable
@@ -257,6 +281,13 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   settingsButton: {
+    padding: 8,
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    zIndex: 10,
     padding: 8,
   },
   dropdownBackdrop: {
