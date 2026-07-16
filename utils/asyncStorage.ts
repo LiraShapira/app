@@ -26,6 +26,7 @@ type StorageKeyTypes = {
     [StorageKeys.productsForSale]: string;
     [StorageKeys.preferredLocale]: string;
     [StorageKeys.preferredColorScheme]: string;
+    [StorageKeys.lastDepositFlow]: string;
 };
 
 type StorageValue<K extends StorageKeys> = K extends keyof StorageKeyTypes ? StorageKeyTypes[K] : never;
@@ -49,6 +50,10 @@ export const getItem = async <K extends StorageKeys>(key: K): Promise<StorageVal
 }
 
 export const removeItem = async (key: StorageKeys): Promise<void> => {
+    if (Platform.OS === 'web') {
+        localStorage.removeItem(key);
+        return;
+    }
     try {
         await AsyncStorage.removeItem(key);
     } catch (e) {

@@ -3,11 +3,11 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
-  Platform,
   Modal,
   Pressable,
   FlatList,
   TouchableWithoutFeedback,
+  ScrollView,
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import i18n from '../../translationService';
@@ -32,19 +32,25 @@ import { setIsModalVisible, setModalText } from '../../store/appStateSlice';
 import DepositFormCheckBox from '../../components/DepositFormCheckbox';
 import { parseNumberPadInputForDeposit } from '../../utils/functions';
 import { useState, useEffect } from 'react';
-import { compostStands } from '../../utils/compostStands';
 import { StorageKeys } from '../../types/AsyncStorage';
 import { setItem } from '../../utils/asyncStorage';
 import { CompostStand } from '../../types/Deposit';
+import { fetchCompostStands, CompostStandFromAPI } from '../../API/compostStandAPI';
+import { selectUser } from '../../store/userSlice';
+
+const TAB_BAR_SAFE_BOTTOM = 88;
 
 export default function Deposit() {
   const colorScheme = useColorScheme() ?? 'light';
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
   const depositValue = useAppSelector(selectDepositValue);
   const isGuaranteedAccurate = useAppSelector(selectIsGuaranteedAccurate);
   const compostStand = useAppSelector(selectCompostStand);
   const [isSelectionModalVisible, setSelectionModalVisible] = useState(false);
+  const [availableStands, setAvailableStands] = useState<CompostStandFromAPI[]>([]);
+  const [isLoadingStands, setIsLoadingStands] = useState(true);
 
   const onPressCancel = () => {
     dispatch(resetForm());
@@ -62,7 +68,7 @@ export default function Deposit() {
         `${i18n.t('deposit_modal_amount', { amount: depositValue })}
         ${i18n.t('deposit_modal_stand_manager')}
         ${i18n.t('deposit_modal_you_earn', {
-          netAmount: parseFloat(depositValue) * 0.9,
+          netAmount: (parseFloat(depositValue) * 0.9).toFixed(2),
         })}
         `
       )
@@ -83,7 +89,6 @@ export default function Deposit() {
 
   const onPressNumberPadInput = (n: NumberLabel) => {
     const newValue = parseNumberPadInputForDeposit(n, depositValue);
-    // NB! conditional on false required because 0 falsy value
     if (newValue !== false) {
       dispatch(setAmount(newValue));
     }
@@ -95,13 +100,42 @@ export default function Deposit() {
   };
 
   useEffect(() => {
-    // Reset compost stand to blank when component mounts
     dispatch(setCompostStand('' as CompostStand));
-  }, []);
 
-  const selectedStandLabel = compostStand
-    ? i18n.t(`deposit_compost_stand_${compostStand}`)
-    : i18n.t('deposit_compost_stand_blank');
+    const loadStands = async () => {
+      try {
+        setIsLoadingStands(true);
+        const locale = (i18n.locale === 'iw' || i18n.locale === 'he') ? 'he' : (i18n.locale || 'he');
+        const response = await fetchCompostStands(locale, user.communityId);
+        if (response.data) {
+          const standsWithDisplayNames = response.data.map(stand => ({
+            ...stand,
+            displayName: stand.displayName || stand.name_he || stand.name_en || stand.name || 'Unknown',
+          }));
+          setAvailableStands(standsWithDisplayNames);
+        } else {
+          console.error('Error loading compost stands:', response.error);
+          setAvailableStands([]);
+        }
+      } catch (error) {
+        console.error('Error loading compost stands:', error);
+        setAvailableStands([]);
+      } finally {
+        setIsLoadingStands(false);
+      }
+    };
+
+    loadStands();
+  }, [user.communityId, dispatch]);
+
+  const selectedStand = availableStands.find(
+    (s) => (s.name || String(s.compostStandId)) === compostStand
+  );
+  const selectedStandLabel = selectedStand
+    ? (selectedStand.displayName || selectedStand.name_he || selectedStand.name_en || selectedStand.name)
+    : isLoadingStands
+      ? i18n.t('deposit_compost_stand_blank')
+      : i18n.t('deposit_compost_stand_blank');
 
   return (
     <GradientContainer styles={styles.container} safeAreaStyle={{ flex: 1 }}>
@@ -120,7 +154,6 @@ export default function Deposit() {
         customElement={<DepositFormCheckBox />}
       />
 
-      {/* Stand Selection Modal */}
       <Modal
         animationType="fade"
         transparent={true}
@@ -135,29 +168,39 @@ export default function Deposit() {
                   {i18n.t('deposit_choose_location')}
                 </Text>
                 <FlatList
-                  data={compostStands}
-                  keyExtractor={(item) => item}
-                  renderItem={({ item }) => (
-                    <Pressable
-                      style={({ pressed }) => [
-                        styles.modalOption,
-                        pressed && styles.modalOptionPressed,
-                        item === compostStand && { backgroundColor: Colors[colorScheme].tint + '20' },
-                      ]}
-                      onPress={() => onSelectStand(item)}
-                    >
-                      <Text style={[styles.modalOptionText, { color: Colors[colorScheme].text }]}>
-                        {i18n.t(`deposit_compost_stand_${item}`)}
-                      </Text>
-                    </Pressable>
-                  )}
+                  data={availableStands}
+                  keyExtractor={(item) => String(item.compostStandId)}
+                  renderItem={({ item }) => {
+                    const standValue = (item.name || String(item.compostStandId)) as CompostStand;
+                    const displayName = item.displayName || item.name_he || item.name_en || item.name || 'Unknown';
+                    return (
+                      <Pressable
+                        style={({ pressed }) => [
+                          styles.modalOption,
+                          pressed && styles.modalOptionPressed,
+                          standValue === compostStand && { backgroundColor: Colors[colorScheme].tint + '20' },
+                        ]}
+                        onPress={() => onSelectStand(standValue)}
+                      >
+                        <Text style={[styles.modalOptionText, { color: Colors[colorScheme].text }]}>
+                          {displayName}
+                        </Text>
+                      </Pressable>
+                    );
+                  }}
                   style={{ maxHeight: 300 }}
+                  ListEmptyComponent={
+                    !isLoadingStands ? (
+                      <Text style={[styles.modalOptionText, { color: Colors[colorScheme].text }]}>
+                        {i18n.t('deposit_compost_stand_blank')}
+                      </Text>
+                    ) : null
+                  }
                 />
                 <CustomButton
                   text={i18n.t('cancel')}
                   onPress={() => setSelectionModalVisible(false)}
                   transparent={true}
-                  style={{ marginTop: 10 }}
                   textColor='white'
                 />
               </View>
@@ -166,54 +209,62 @@ export default function Deposit() {
         </TouchableWithoutFeedback>
       </Modal>
 
-      <View style={styles.contentContainer}>
-        {/* 1. Select at the top */}
-        <View style={styles.selectSection}>
-          <Text style={[styles.selectLabel, { color: Colors[colorScheme].text }]}>
-            {i18n.t('deposit_choose_location')}
-          </Text>
-          <Pressable
-            style={[styles.pickerWrapper, { backgroundColor: Colors[colorScheme].highlight }]}
-            onPress={() => setSelectionModalVisible(true)}
-          >
-            <Text
-              style={[styles.pickerText, { color: Colors[colorScheme].text }]}
-              numberOfLines={1}
-            >
-              {selectedStandLabel}
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.contentContainer}>
+          <View style={styles.selectSection}>
+            <Text style={[styles.selectLabel, { color: Colors[colorScheme].text }]}>
+              {i18n.t('deposit_choose_location')}
             </Text>
-          </Pressable>
-        </View>
+            <Pressable
+              style={[styles.pickerWrapper, { backgroundColor: Colors[colorScheme].highlight }]}
+              onPress={() => !isLoadingStands && setSelectionModalVisible(true)}
+              disabled={isLoadingStands}
+            >
+              <Text
+                style={[styles.pickerText, { color: Colors[colorScheme].text }]}
+                numberOfLines={1}
+                maxFontSizeMultiplier={1.0}
+              >
+                {selectedStandLabel}
+              </Text>
+            </Pressable>
+          </View>
 
-        {/* 2. Title */}
-        <Text style={[styles.title, { color: Colors[colorScheme].text }]}>
-          {i18n.t('deposit_title')}
-        </Text>
+          <Text
+            maxFontSizeMultiplier={1.0}
+            style={[styles.title, { color: Colors[colorScheme].text }]}
+          >
+            {i18n.t('deposit_title')}
+          </Text>
 
-        {/* 3. Input field and number pad */}
-        <View style={styles.numberPadContainer}>
-          <NumberInputNumberPad
-            onButtonPress={onPressNumberPadInput}
-            appendedText={i18n.t('deposit_form_kilogram')}
-            value={depositValue}
-          />
-        </View>
+          <View style={styles.numberPadContainer}>
+            <NumberInputNumberPad
+              onButtonPress={onPressNumberPadInput}
+              appendedText={i18n.t('deposit_form_kilogram')}
+              value={depositValue}
+            />
+          </View>
 
-        {/* 4. Buttons at the bottom */}
-        <View style={styles.buttonsSection}>
-          <CustomButton
-            text={i18n.t('continue')}
-            onPress={onPressContinue}
-            disabled={!depositValue || !compostStand}
-          />
-          <CustomButton
-            transparent={true}
-            text={i18n.t('cancel')}
-            onPress={onPressCancel}
-            textColor='white'
-          />
+          <View style={styles.buttonsSection}>
+            <CustomButton
+              text={i18n.t('continue')}
+              onPress={onPressContinue}
+              disabled={!depositValue || !compostStand}
+            />
+            <CustomButton
+              transparent={true}
+              text={i18n.t('cancel')}
+              onPress={onPressCancel}
+              textColor='white'
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </GradientContainer>
   );
 }
@@ -222,11 +273,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: TAB_BAR_SAFE_BOTTOM,
+  },
   contentContainer: {
     flex: 1,
     paddingHorizontal: 6,
     paddingTop: 40,
-    paddingBottom: 80, // Increased to ensure buttons are visible above footer
+    paddingBottom: 20,
   },
   title: {
     fontSize: 32,
@@ -237,7 +295,7 @@ const styles = StyleSheet.create({
   },
   selectSection: {
     marginBottom: 10,
-    zIndex: 20, // Ensure overlay sits on top of specific content
+    zIndex: 20,
   },
   selectLabel: {
     fontSize: 14,
@@ -250,24 +308,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 12,
     position: 'relative',
-    zIndex: 20, // Ensure touch events are captured
+    zIndex: 20,
   },
   pickerText: {
     fontSize: 16,
-    // aligned left by default in wrapper justifyContent
   },
   numberPadContainer: {
-    // Explicit width to ensure children with aspectRatio have a base dimension
     width: '90%',
     alignSelf: 'center',
   },
   buttonsSection: {
-    marginTop: 'auto', // Pushes to the bottom
+    marginTop: 'auto',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    gap: 12, // ensure clearance from tab bar
+    gap: 12,
   },
-  // Modal Styles
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',

@@ -1,3 +1,4 @@
+import '../app/typography';
 import {
   DarkTheme,
   DefaultTheme,
@@ -5,7 +6,7 @@ import {
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot, Stack, useRouter } from 'expo-router';
-import { Platform, useColorScheme, StatusBar } from 'react-native';
+import { Appearance, Platform, useColorScheme, StatusBar } from 'react-native';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../store';
@@ -24,15 +25,20 @@ import LoadingPage from '../components/utils/LoadingPage';
 import { selectDepositFormLoading } from '../store/depositFormSlice';
 import { selectSendFormLoading } from '../store/sendFormSlice';
 import { selectIsAppLoading } from '../store/appStateSlice';
+import {
+  setPreferredLocale,
+  setPreferredColorScheme,
+  selectPreferredColorScheme,
+} from '../store/preferencesSlice';
+import i18n from '../translationService';
 import React from 'react';
+import { depositLogger } from '../utils/depositLogger';
 
 export {
-  // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: '(tabs)',
 };
 
@@ -41,7 +47,6 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf')
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -66,7 +71,9 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const systemColorScheme = useColorScheme();
+  const preferredColorScheme = useAppSelector(selectPreferredColorScheme);
+  const colorScheme = preferredColorScheme ?? systemColorScheme ?? 'light';
   const dispatch = useAppDispatch();
   const isUserLoading = useAppSelector(selectUserLoading);
   const isAuthLoading = useAppSelector(selectAuthFormLoading);
@@ -76,6 +83,27 @@ function RootLayoutNav() {
   const router = useRouter();
 
   useEffect(() => {
+    (async () => {
+      const [savedLocale, savedScheme] = await Promise.all([
+        getItem(StorageKeys.preferredLocale),
+        getItem(StorageKeys.preferredColorScheme),
+      ]);
+      if (savedLocale != null) {
+        const locale = savedLocale === 'iw' ? 'he' : savedLocale;
+        dispatch(setPreferredLocale(locale));
+        i18n.locale = locale;
+      }
+      if (savedScheme === 'light' || savedScheme === 'dark') {
+        dispatch(setPreferredColorScheme(savedScheme));
+        if (typeof Appearance?.setColorScheme === 'function') {
+          Appearance.setColorScheme(savedScheme);
+        }
+      }
+    })();
+  }, [dispatch]);
+
+  useEffect(() => {
+    depositLogger.warnIfPreviousFlowIncomplete();
     dispatch(setIsUserLoading(true));
     
     if (Platform.OS === 'web') {
@@ -85,8 +113,6 @@ function RootLayoutNav() {
         .unwrap()
         .then(({ data: user }) => {
           if (user) {
-            // Diagnostic log: print user transactions
-            console.log('User loaded on login. Transaction count:', user.transactions?.length, 'Sample:', user.transactions?.[0]);
             dispatch(setUser(user));
             dispatch(setIsLoggedIn(true));
             router.push(Platform.OS === 'web' ? '/Home' : '/(tabs)/Home');

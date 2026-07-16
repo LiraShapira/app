@@ -20,8 +20,13 @@ export default function TransactionItemDescription({ transaction, income, isRequ
   const topTextPrefix = isRequest ? i18n.t('transaction_request_to') : income ? i18n.t('transactions_list_received_from') : i18n.t('transactions_list_sent_to');
   const currentUser = useAppSelector<User>(selectUser);
   const users = Array.isArray(transaction.users) ? transaction.users : [];
+  const otherPartyId =
+    currentUser.id === transaction.purchaserId
+      ? transaction.recipientId
+      : transaction.purchaserId;
   const otherUser =
-    users.find(u => u && u.id !== currentUser.id) ||
+    users.find(u => u && u.id === otherPartyId) ||
+    (currentUser.id === transaction.purchaserId ? users[1] : users[0]) ||
     users[0];
   const topText = topTextPrefix + (otherUser?.firstName || '');
 

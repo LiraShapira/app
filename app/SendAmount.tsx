@@ -16,7 +16,7 @@ import { CustomModal } from '../components/utils/CustomModal';
 import NumberInputNumberPad, {
   NumberLabel,
 } from '../components/form/NumberInputNumberPad';
-import { parseNumberPadInputForDeposit } from '../utils/functions';
+import { parseNumberPadInputForSend } from '../utils/functions';
 import GradientContainer from '../components/utils/GradientContainer';
 import SendFlowHeader from '../components/utils/StepsHeader';
 
@@ -41,8 +41,8 @@ export default function SendAmount() {
     router.back();
   };
   const onPressNumberPadInput = (n: NumberLabel) => {
-    const newValue = parseNumberPadInputForDeposit(n, amount.toString());
-    // NB! conditional on false required because 0 falsy value
+    const amountInput = amount === 0 ? '' : amount.toString();
+    const newValue = parseNumberPadInputForSend(n, amountInput);
     if (newValue !== false) {
       if (newValue === '') {
         dispatch(setAmount(0));
@@ -82,7 +82,7 @@ export default function SendAmount() {
         <View style={styles.numberPadContainer}>
           <NumberInputNumberPad
             onButtonPress={onPressNumberPadInput}
-            value={amount.toString()}
+            value={amount === 0 ? '' : amount.toString()}
           />
         </View>
 

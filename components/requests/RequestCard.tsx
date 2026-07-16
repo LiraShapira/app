@@ -45,7 +45,7 @@ export default function RequestCard() {
             dir={getLocales()[0].textDirection || 'ltr'}
           >
             <Text style={styles.number}>{request.amount}</Text>
-            <Text>{i18n.t('home_lira_shapira_currency_shorthand')}</Text>
+            <Text>{currentUser.communityCoin ?? i18n.t('home_lira_shapira_currency_shorthand')}</Text>
           </View>
           <Text style={styles.reason}>{request.reason}</Text>
         </View>

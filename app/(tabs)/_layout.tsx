@@ -4,9 +4,12 @@ import Colors from '../../constants/Colors';
 import { CustomIcon } from '../../components/utils/CustomIcon';
 import i18n from '../../translationService';
 import { IconLibrary } from '../../types/Icons';
+import { useAppSelector } from '../../hooks';
+import { selectPreferredLocale } from '../../store/preferencesSlice';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  useAppSelector(selectPreferredLocale);
 
   return (
     <Tabs

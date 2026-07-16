@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   useColorScheme,
-  Dimensions,
 } from 'react-native';
 import DashboardButton from './DashboardButton';
 import Colors from '../../constants/Colors';
@@ -14,7 +13,7 @@ import { IconLibrary } from '../../types/Icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Category, Transaction } from '../../types/Transaction';
 
-const ButtonGroup = () => {
+export const ButtonGroup = () => {
   const colorScheme = useColorScheme();
 
   return (
@@ -81,16 +80,35 @@ const calculateGarbagePrevented = (transactionHistory: Transaction[] = []) => {
 
   return parseFloat(sumDeposits + '').toFixed(2);
 };
-export default function Dashboard() {
+
+interface DashboardProps {
+  includeButtons?: boolean;
+}
+
+export default function Dashboard({ includeButtons = true }: DashboardProps) {
   const colorScheme = useColorScheme();
   const user = useAppSelector(selectUser);
+  const locale = i18n.locale ?? 'en';
+  const isRTL = locale === 'he' || locale === 'iw' || locale === 'ar';
+  const communityCoinLabel =
+    user.communityCoin?.trim() || i18n.t('home_lira_shapira_currency_shorthand');
+  const labelBeforeAmount = isRTL
+    ? communityCoinLabel
+    : i18n.t('home_lira_shapira_currency_you_have');
+  const labelAfterAmount = isRTL
+    ? i18n.t('home_lira_shapira_currency_you_have')
+    : communityCoinLabel;
+  const labelBeforeStyle = isRTL ? styles.LS : styles.subtitle;
+  const labelAfterStyle = isRTL ? styles.subtitle : styles.LS;
+
   return (
-    <View style={styles.dashboardContainer}>
+    <View>
       <View style={styles.headerContainer}>
         <Text
           style={{
             color: Colors[colorScheme ?? 'light'].text,
             ...styles.nameLabel,
+            marginTop: 20,
           }}
         >
           {i18n.t('dashboard_greeting_message', { name: user.firstName })}
@@ -98,83 +116,52 @@ export default function Dashboard() {
       </View>
 
       <View style={styles.dashboard}>
-        {i18n.locale !== 'he' && i18n.locale !== 'ar' && (
-          <Text
-            style={{
-              color: Colors[colorScheme ?? 'light'].text,
-              ...styles.subtitle,
-            }}
-          >
-            {i18n.t('home_lira_shapira_currency_you_have')}
-          </Text>
-        )}
+        <Text
+          style={{
+            color: Colors[colorScheme ?? 'light'].text,
+            ...labelBeforeStyle,
+            marginLeft: 10,
+          }}
+        >
+          {labelBeforeAmount}
+        </Text>
         <View style={styles.amountDisplay}>
-          {i18n.locale === 'he' || i18n.locale === 'ar' ? (
-            <>
-              <Text
-                style={{ color: Colors[colorScheme ?? 'light'].text, ...styles.LS, marginRight: 10 }}
-              >
-                {i18n.t('home_lira_shapira_currency_shorthand')}
-              </Text>
-              <Text
-                style={{
-                  color: Colors[colorScheme ?? 'light'].text,
-                  ...styles.title,
-                }}
-              >
-                {user.accountBalance.toFixed(1)}
-              </Text>
-            </>
-          ) : (
-            <>
-              <Text
-                style={{
-                  color: Colors[colorScheme ?? 'light'].text,
-                  ...styles.title,
-                }}
-              >
-                {user.accountBalance.toFixed(1)}
-              </Text>
-              <Text
-                style={{ color: Colors[colorScheme ?? 'light'].text, ...styles.LS }}
-              >
-                {i18n.t('home_lira_shapira_currency_shorthand')}
-              </Text>
-            </>
-          )}
-        </View>
-        {(i18n.locale === 'he' || i18n.locale === 'ar') && (
           <Text
             style={{
               color: Colors[colorScheme ?? 'light'].text,
-              ...styles.subtitle,
+              ...styles.title,
+              marginLeft: 8,
+              marginRight: 2,
             }}
           >
-            {i18n.t('home_lira_shapira_currency_you_have')}
+            {user.accountBalance != null && Number.isFinite(Number(user.accountBalance))
+              ? Number(user.accountBalance).toFixed(1)
+              : '0.0'}
           </Text>
-        )}
-      </View>
-      <View style={styles.co2eContainer}>
-        <View style={styles.co2eTextContainer}>
           <Text
-            style={{
-              color: Colors[colorScheme ?? 'light'].text,
-              ...styles.co2eText,
-            }}
+            style={{ color: Colors[colorScheme ?? 'light'].text, ...labelAfterStyle }}
           >
-            {i18n.t('dashboard_You_have_prevented_kilos_of_garbage', {
-              kilos: calculateGarbagePrevented(user.transactions ?? []),
-            })}
+            {labelAfterAmount}
           </Text>
-          <View style={styles.truckIconContainer}>
-            <FontAwesome name='truck' size={30} color='#e1a6a6' />
-          </View>
         </View>
       </View>
-      <ButtonGroup />
+      <Text
+        style={{
+          color: Colors[colorScheme ?? 'light'].text,
+          ...styles.co2eText,
+          marginLeft: isRTL ? 20 : 2,
+        }}
+      >
+        {i18n.t('dashboard_You_have_prevented_kilos_of_garbage', {
+          kilos: calculateGarbagePrevented(user.transactions ?? []),
+        })} &nbsp;
+        <FontAwesome name='truck' size={30} color='#e1a6a6' />
+      </Text>
+      {includeButtons && <ButtonGroup />}
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   dashboard: {
     display: 'flex',
@@ -206,17 +193,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'relative',
   },
-  shadowPhantom: {
-    shadowColor: '#272424',
-    shadowOffset: { width: -1, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    borderRadius: 50,
-    height: 70,
-    width: 68,
-    top: -10,
-    position: 'absolute',
-  },
   buttonsContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -230,24 +206,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
   },
-  co2eContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  },
-  co2eTextContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   co2eText: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     fontWeight: 500,
-    textAlign: 'center',
-  },
-  truckIconContainer: {
-    marginLeft: 8,
+    gap: 10,
   },
   LS: {
     display: 'flex',
@@ -263,10 +227,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     flex: 2,
-  },
-  dashboardContainer: {
-    width: '100%',
-    paddingHorizontal: 8, // Add horizontal padding for content spacing
-    paddingBottom: 95, // Extends gradient to middle of buttons: 60px (top offset) + 35px (half of 70px button height)
   },
 });

@@ -4,6 +4,8 @@ import {
   TextInput,
   Text,
   useColorScheme,
+  Alert,
+  InteractionManager,
 } from 'react-native';
 import {
   setNotes,
@@ -18,6 +20,7 @@ import {
   toggleCleanAndTidy,
   toggleBugs,
   sendSkippedDepositForm,
+  selectDepositFormLoading,
 } from '../store/depositFormSlice';
 import i18n from '../translationService';
 import CustomButton from '../components/utils/CustomButton';
@@ -32,7 +35,45 @@ import { useRouter } from 'expo-router';
 import CustomTag from '../components/utils/CustomTag';
 import GradientContainer from '../components/utils/GradientContainer';
 import { useState } from 'react';
-import { setAppLoading, setIsModalVisible, setModalText } from '../store/appStateSlice';
+import { setAppLoading } from '../store/appStateSlice';
+import { Transaction } from '../types/Transaction';
+import { depositLogger } from '../utils/depositLogger';
+import { AppDispatch } from '../store';
+import { Router } from 'expo-router';
+
+const applyDepositTransactions = (
+  transactions: Transaction[],
+  userId: string,
+  dispatch: AppDispatch,
+) => {
+  transactions.forEach((transaction) => {
+    const amount = Number(transaction.amount);
+    const safeAmount = Number.isFinite(amount) ? amount : 0;
+
+    if (transaction.recipientId === userId && safeAmount !== 0) {
+      dispatch(incrementUserBalance(safeAmount));
+    }
+
+    dispatch(
+      addUserTransaction({
+        ...transaction,
+        amount: safeAmount,
+        users: Array.isArray(transaction.users) ? transaction.users : [],
+      }),
+    );
+  });
+};
+
+const finishDepositFlow = (dispatch: AppDispatch, router: Router) => {
+  dispatch(setAppLoading(false));
+  depositLogger.step('loading_dismissed').then(() => {
+    InteractionManager.runAfterInteractions(() => {
+      depositLogger.step('navigating_home').then(() => {
+        router.replace('/Home');
+      });
+    });
+  });
+};
 
 export default function CompostReport() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -40,58 +81,59 @@ export default function CompostReport() {
   const dispatch = useAppDispatch();
   const userId = useAppSelector(selectUserId);
   const depositForm = useAppSelector(selectDepositForm);
+  const isSubmitting = useAppSelector(selectDepositFormLoading);
   const router = useRouter();
   const [isTouched, setIsTouched] = useState(false);
 
-  const onPressSend = () => {
+  const submitDeposit = async (skippedReport: boolean) => {
+    if (isSubmitting) {
+      return;
+    }
+
     dispatch(setAppLoading(true));
-    dispatch(sendDepositForm(userId))
-      .unwrap()
-      .then(({ data: transactions }) => {
-        transactions.forEach((transaction) => {
-          console.log('Transaction received:', transaction);
-          console.log('Transaction amount:', transaction.amount, 'Type:', typeof transaction.amount);
-          if (transaction.recipientId === userId) {
-            console.log('Incrementing balance by:', transaction.amount);
-            dispatch(incrementUserBalance(transaction.amount));
-          }
-          dispatch(addUserTransaction(transaction));
-        });
-        dispatch(resetForm());
-      })
-      .catch(e => {
-        console.error("Error sending deposit form:", e);
-        dispatch(setModalText(e.message));
-        dispatch(setIsModalVisible(true));
-      })
-      .finally(() => {
-        router.replace('/Home');
-        dispatch(setAppLoading(false));
+    await depositLogger.step('submit_started', { skippedReport });
+
+    const action = skippedReport
+      ? sendSkippedDepositForm(userId)
+      : sendDepositForm(userId);
+
+    try {
+      const { data: transactions } = await dispatch(action).unwrap();
+
+      if (!Array.isArray(transactions)) {
+        throw new Error('Server returned an unexpected deposit response');
+      }
+
+      applyDepositTransactions(transactions, userId, dispatch);
+      await depositLogger.step('transactions_applied', {
+        transactionCount: transactions.length,
+        skippedReport,
       });
+
+      dispatch(resetForm());
+      await depositLogger.step('form_reset', { skippedReport });
+      await depositLogger.step('submit_complete', { skippedReport });
+      await depositLogger.clear();
+      finishDepositFlow(dispatch, router);
+    } catch (e: any) {
+      const errorMessage = e?.message ?? 'Deposit failed';
+      console.error('Error sending deposit form:', e);
+      await depositLogger.step('submit_failed', {
+        error: errorMessage,
+        skippedReport,
+      });
+
+      dispatch(setAppLoading(false));
+      Alert.alert(i18n.t('deposit'), errorMessage);
+    }
+  };
+
+  const onPressSend = () => {
+    submitDeposit(false);
   };
 
   const onPressSkip = () => {
-    dispatch(setAppLoading(true));
-    dispatch(sendSkippedDepositForm(userId))
-      .unwrap()
-      .then(({ data: transactions }) => {
-        transactions.forEach((transaction) => {
-          if (transaction.recipientId === userId) {
-            dispatch(incrementUserBalance(transaction.amount));
-          }
-          dispatch(addUserTransaction(transaction));
-        })
-      })
-      .catch(e => {
-        console.error("Error sending deposit form:", e);
-        dispatch(setModalText(e.message));
-        dispatch(setIsModalVisible(true));
-      })
-      .finally(() => {
-        dispatch(resetForm());
-        router.replace('/Home');
-        dispatch(setAppLoading(false));
-      });;
+    submitDeposit(true);
   };
 
   const onChangeForm = (func: () => any) => {
@@ -158,11 +200,12 @@ export default function CompostReport() {
         </View>
         <View style={styles.buttons}>
           <CustomButton
-            disabled={!isTouched}
+            disabled={!isTouched || isSubmitting}
             text={i18n.t('deposit_form_send')}
             onPress={onPressSend}
           />
           <CustomButton
+            disabled={isSubmitting}
             text={i18n.t('deposit_form_skip')}
             onPress={onPressSkip}
           />

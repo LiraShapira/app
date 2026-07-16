@@ -1,4 +1,5 @@
-import { Text, useColorScheme, StyleSheet, View, Pressable } from 'react-native';
+import { useColorScheme, StyleSheet, View, Pressable } from 'react-native';
+import { Text } from '../Themed';
 import Colors from '../../constants/Colors';
 import { getLocales } from 'expo-localization';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -70,7 +71,14 @@ const NumberInputNumberPad = ({
   return (
     <View style={{ flexDirection: 'column', gap: 12 }}>
       <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', minHeight: 60 }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            minHeight: 60,
+            width: '100%',
+          }}
+        >
           {prependedText && (
             <Text
               style={{
@@ -84,12 +92,16 @@ const NumberInputNumberPad = ({
               {prependedText}
             </Text>
           )}
-          <Text
-            numberOfLines={1}
-            style={{ ...styles.inputtedValue, color: Colors[colorScheme].text }}
-          >
-            {value}
-          </Text>
+          <View style={styles.valueTextWrap}>
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.45}
+              style={{ ...styles.inputtedValue, color: Colors[colorScheme].text }}
+            >
+              {value}
+            </Text>
+          </View>
           {appendedText && (
             <Text
               style={{
@@ -131,7 +143,6 @@ const NumberInputNumberPad = ({
           {allowDecimal ? (
             <NumberPadButton n={'.'} onPress={onButtonPress} />
           ) : (
-            // placeholder to keep grid alignment
             <View style={styles.numberPadPlaceholder} />
           )}
           <NumberPadButton n={'0'} onPress={onButtonPress} />
@@ -152,7 +163,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     margin: 4,
-    aspectRatio: 1,        // make it square
+    aspectRatio: 1,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
@@ -166,11 +177,15 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '600',
   },
+  valueTextWrap: {
+    flex: 1,
+    minWidth: 0,
+    justifyContent: 'center',
+  },
   inputtedValue: {
     fontSize: 36,
     marginVertical: 0,
-    marginHorizontal: 'auto',
-    maxWidth: '100%',
+    width: '100%',
     textAlign: 'center',
   },
   numberPadButton: {

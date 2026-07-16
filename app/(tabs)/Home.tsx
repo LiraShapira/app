@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import TransactionsList from '../../components/transactions/TransactionsList';
-import Dashboard from '../../components/home/Dashboard';
+import Dashboard, { ButtonGroup } from '../../components/home/Dashboard';
 import i18n from '../../translationService';
-import { selectUser } from '../../store/userSlice';
+import { selectUser, setCommunityCoin, resetUser } from '../../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import GradientContainer from '../../components/utils/GradientContainer';
 import RequestCard from '../../components/requests/RequestCard';
@@ -18,6 +18,7 @@ import { User } from '../../types/User';
 import Colors from '../../constants/Colors';
 import { useState, useEffect } from 'react';
 import { fetchVerificationMessage } from '../../API/verificationMessageAPI';
+import { fetchCommunityById } from '../../API/communitiesAPI';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import {
@@ -26,9 +27,11 @@ import {
   selectPreferredLocale,
   selectPreferredColorScheme,
 } from '../../store/preferencesSlice';
-import { setItem } from '../../utils/asyncStorage';
+import { removeItem, setItem } from '../../utils/asyncStorage';
 import { StorageKeys } from '../../types/AsyncStorage';
 import type { ColorSchemePreference } from '../../store/preferencesSlice';
+import { setIsLoggedIn } from '../../store/authFormSlice';
+import { useRouter } from 'expo-router';
 
 const SUPPORTED_LOCALES: { code: string; label: string }[] = [
   { code: 'en', label: 'English' },
@@ -42,9 +45,29 @@ export default function Home() {
   const preferredLocale = useAppSelector(selectPreferredLocale);
   const preferredColorScheme = useAppSelector(selectPreferredColorScheme);
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const [verifyMessageInfo, setVerifyMessageInfo] = useState<string>('');
   const [isLoadingMessage, setIsLoadingMessage] = useState<boolean>(true);
   const [languageDropdownVisible, setLanguageDropdownVisible] = useState(false);
+  const iconColor = Colors[colorScheme ?? 'light'].text;
+
+  const onLogout = async () => {
+    await removeItem(StorageKeys.phoneNumber);
+    dispatch(setIsLoggedIn(false));
+    dispatch(resetUser());
+    router.replace('/AuthPhoneEntry');
+  };
+
+  const renderLogoutButton = () => (
+    <Pressable
+      onPress={onLogout}
+      style={[styles.logoutButton, { marginTop: 24 }]}
+      hitSlop={12}
+      accessibilityLabel={i18n.t('auth_logout')}
+    >
+      <MaterialIcons name="logout" size={24} color={iconColor} />
+    </Pressable>
+  );
 
   const selectLocale = (code: string) => {
     const locale = code === 'iw' ? 'he' : code;
@@ -71,14 +94,12 @@ export default function Home() {
         if ('data' in response && response.data) {
           setVerifyMessageInfo(response.data.message);
         } else {
-          // Fallback to default message if API fails
           setVerifyMessageInfo(`חברי קהילה יקרים, 
 ברוכים הבאים לאפליקצית לירה שפירא! 
 על מנת להפעיל את חשבונכם יש ליצור קשר עם אחד מאנשי הקהילה לשיחת הכירות.`);
         }
       } catch (error) {
         console.error('Error fetching verification message:', error);
-        // Fallback to default message on error
         setVerifyMessageInfo(`חברי קהילה יקרים, 
 ברוכים הבאים לאפליקצית לירה שפירא! 
 על מנת להפעיל את חשבונכם יש ליצור קשר עם אחד מאנשי הקהילה לשיחת הכירות.`);
@@ -87,16 +108,45 @@ export default function Home() {
       }
     };
 
-    // Only fetch if user is not verified
     if (user.isVerified !== true) {
       loadVerificationMessage();
     }
   }, [user.isVerified, user.communityId]);
 
-  // Check if user is banned
+  useEffect(() => {
+    if (!user.communityId) {
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadCommunityCoin = async () => {
+      try {
+        const response = await fetchCommunityById(user.communityId!);
+        if (cancelled || !('data' in response) || !response.data) {
+          return;
+        }
+
+        const coin = response.data.Coin?.trim();
+        if (coin) {
+          dispatch(setCommunityCoin(coin));
+        }
+      } catch (error) {
+        console.error('Error fetching community coin:', error);
+      }
+    };
+
+    loadCommunityCoin();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user.communityId, dispatch]);
+
   if (user.isBanned === true) {
     return (
       <View style={[styles.container, styles.messageContainer]}>
+        {renderLogoutButton()}
         <Text style={[styles.messageText, { color: Colors[colorScheme ?? 'light'].text }]}>
           This account is banned.
         </Text>
@@ -104,10 +154,10 @@ export default function Home() {
     );
   }
 
-  // Check if user is not verified (isVerified is false or null)
   if (user.isVerified !== true) {
     return (
       <GradientContainer styles={styles.container}>
+        {renderLogoutButton()}
         <RNView
           style={[
             styles.messageContainer,
@@ -133,28 +183,27 @@ export default function Home() {
     );
   }
 
-  // User is verified and not banned - show normal dashboard
-  const iconColor = Colors[colorScheme ?? 'light'].text;
-  const currentColors = Colors[colorScheme ?? 'light'];
+  const colors = Colors[colorScheme ?? 'light'];
   return (
     <RNView style={styles.container}>
+      {renderLogoutButton()}
       {languageDropdownVisible && (
         <>
           <Pressable
             style={styles.dropdownBackdrop}
             onPress={() => setLanguageDropdownVisible(false)}
           />
-          <RNView style={[styles.dropdown, { backgroundColor: currentColors.background }]}>
+          <RNView style={[styles.dropdown, { backgroundColor: colors.background }]}>
             {SUPPORTED_LOCALES.map(({ code, label }) => (
               <Pressable
                 key={code}
                 style={({ pressed }) => [
                   styles.dropdownItem,
-                  { backgroundColor: pressed ? currentColors.shading : 'transparent' },
+                  { backgroundColor: pressed ? colors.shading : 'transparent' },
                 ]}
                 onPress={() => selectLocale(code)}
               >
-                <Text style={[styles.dropdownItemText, { color: currentColors.text }]}>
+                <Text style={[styles.dropdownItemText, { color: colors.text }]}>
                   {label}
                 </Text>
               </Pressable>
@@ -162,40 +211,47 @@ export default function Home() {
           </RNView>
         </>
       )}
-      <GradientContainer styles={styles.gradientHeader}>
-        <RNView style={[styles.settingsBar]}>
-          <Pressable
-            onPress={() => setLanguageDropdownVisible((v) => !v)}
-            style={styles.settingsButton}
-            hitSlop={12}
-          >
-            <FontAwesome name="language" size={24} color={iconColor} />
-          </Pressable>
-          <Pressable onPress={toggleTheme} style={styles.settingsButton} hitSlop={12}>
-            <MaterialIcons
-              name={preferredColorScheme === 'dark' ? 'light-mode' : 'dark-mode'}
-              size={24}
-              color={iconColor}
-            />
-          </Pressable>
-        </RNView>
-        <Dashboard />
+      <RNView style={[styles.settingsBar, { marginTop: 24 }]}>
+        <Pressable
+          onPress={() => setLanguageDropdownVisible((v) => !v)}
+          style={styles.settingsButton}
+          hitSlop={12}
+        >
+          <FontAwesome name="language" size={24} color={iconColor} />
+        </Pressable>
+        <Pressable onPress={toggleTheme} style={styles.settingsButton} hitSlop={12}>
+          <MaterialIcons
+            name={preferredColorScheme === 'dark' ? 'light-mode' : 'dark-mode'}
+            size={24}
+            color={iconColor}
+          />
+        </Pressable>
+      </RNView>
+      <GradientContainer styles={{ ...styles.gradientHeader, ...styles.gradientHeaderStraddle }}>
+        <Dashboard includeButtons={false} />
       </GradientContainer>
 
-      <RNView
-        style={{
-          paddingTop: 75,
-          paddingBottom: 10,
-          zIndex: 0,
-          width: '100%',
-          position: 'relative',
-          height: 'auto',
-        }}
-      >
-        <RequestCard />
+      <RNView style={styles.buttonsStraddle}>
+        <ButtonGroup />
       </RNView>
-      <Text style={{ fontSize: 40 }}>{i18n.t('home_transactions_title')}</Text>
-      <ScrollView style={{ width: '100%' }}>
+
+      <ScrollView
+        style={styles.mainScrollView}
+        contentContainerStyle={styles.mainScrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <RNView
+          style={{
+            paddingTop: 75,
+            paddingBottom: 10,
+            zIndex: 0,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          <RequestCard />
+        </RNView>
+        <Text style={{ fontSize: 40 }}>{i18n.t('home_transactions_title')}</Text>
         <TransactionsList currentUser={user} />
       </ScrollView>
     </RNView>
@@ -209,42 +265,22 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  messageContainer: {
-    justifyContent: 'center',
-    padding: 20,
-  },
-  messageText: {
-    fontSize: 18,
-    textAlign: 'center',
-    lineHeight: 24,
-  },
-  dashboardContainer: {
-    width: '100%',
-  },
-  icon: {
-    height: 70,
-    width: 70,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-    backgroundColor: 'grey',
-    borderRadius: 50,
-    fontSize: 40,
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
   settingsBar: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: '100%',
-    paddingHorizontal: 16,
-    gap: 12,
+    position: 'absolute',
+    top: 12,
+    right: 12,
     zIndex: 10,
+    flexDirection: 'row',
+    gap: 8,
   },
   settingsButton: {
+    padding: 8,
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    zIndex: 10,
     padding: 8,
   },
   dropdownBackdrop: {
@@ -257,16 +293,17 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     position: 'absolute',
-    top: 60,
-    right: 16,
+    top: 76,
+    right: 12,
+    zIndex: 11,
+    minWidth: 140,
     borderRadius: 8,
+    paddingVertical: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    zIndex: 10,
-    minWidth: 120,
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4,
   },
   dropdownItem: {
     paddingVertical: 12,
@@ -275,10 +312,31 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 16,
   },
+  mainScrollView: {
+    flex: 1,
+    minHeight: 0,
+    width: '100%',
+  },
+  mainScrollContent: {
+    paddingBottom: 88,
+  },
   gradientHeader: {
     height: 'auto',
-    flex: 0,
-    width: '100%',
-    paddingHorizontal: 0,
+  },
+  gradientHeaderStraddle: {
+    paddingBottom: 95,
+  },
+  buttonsStraddle: {
+    marginTop: -95,
+    zIndex: 1,
+  },
+  messageContainer: {
+    justifyContent: 'center',
+    padding: 20,
+  },
+  messageText: {
+    fontSize: 18,
+    textAlign: 'center',
+    lineHeight: 24,
   },
 });

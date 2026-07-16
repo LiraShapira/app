@@ -105,7 +105,7 @@ const heDictionary: Dictionary = {
   sendamount_back: 'חזרה למי',
   send_search_no_results: 'אין תוצאות ל\'%{search}\'',
   send_search_no_results_send_to_number: '. שלח ל\'%{number}\'',
-  sendamount_validate_amount: 'אנא הכנס מספר בין 1 - 99',
+  sendamount_validate_amount: 'אנא הכנס מספר בין 1 - 1000',
 
   // REQUEST
   request_search_no_results_send_to_number: 'בקשה מ\'%{number}\'',

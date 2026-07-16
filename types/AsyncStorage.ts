@@ -7,5 +7,6 @@ export enum StorageKeys {
     compostStand = 'compostStand',
     productsForSale = 'productsForSale',
     preferredLocale = 'preferredLocale',
-    preferredColorScheme = 'preferredColorScheme'
+    preferredColorScheme = 'preferredColorScheme',
+    lastDepositFlow = 'lastDepositFlow',
 }
