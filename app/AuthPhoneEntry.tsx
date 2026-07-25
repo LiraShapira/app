@@ -76,21 +76,26 @@ export default function AuthPhoneEntry() {
   const isContinueDisabled = !isTouched || isNumberError;
 
   return (
-    <GradientContainer>
-      <View style={{ flex: 1, padding: 16 }}>
-        <View style={{ flex: 0.15, justifyContent: 'center' }}>
-          <Text>
-            {i18n.t('enter_number')}
-          </Text>
+    <GradientContainer safeAreaStyle={{ flex: 1 }} styles={{ flex: 1 }}>
+      <View style={styles.contentContainer}>
+        <View style={styles.headerSection}>
+          <Text>{i18n.t('enter_number')}</Text>
         </View>
-        <View style={{ flex: 0.7, justifyContent: 'center' }}>
+
+        <View style={styles.numberPadContainer}>
           <NumberInputNumberPad
             allowDecimal={false}
             value={displayedPhoneNumber}
             onButtonPress={onChangePhoneNumber}
           />
         </View>
-        <View style={{ flex: 0.15, justifyContent: 'center' }}>
+
+        <View style={styles.buttonSection}>
+          {isTouched && isNumberError && (
+            <Text style={styles.numberErrorText}>
+              {i18n.t('auth_number_error')}
+            </Text>
+          )}
           <CustomButton
             text={i18n.t('continue')}
             disabled={isContinueDisabled}
@@ -98,20 +103,29 @@ export default function AuthPhoneEntry() {
           />
         </View>
       </View>
-
-      <View style={{ minHeight: 40, paddingHorizontal: 16, paddingBottom: 5 }}>
-        {isTouched && isNumberError && (
-          <Text style={styles.numberErrorText}>
-            {i18n.t('auth_number_error')}
-          </Text>
-        )}
-      </View>
     </GradientContainer>
   );
 }
 
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    flex: 1,
+    padding: 16,
+    paddingBottom: 24,
+  },
+  headerSection: {
+    paddingTop: 8,
+  },
+  numberPadContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    width: '100%',
+  },
+  buttonSection: {
+    marginTop: 'auto',
+    gap: 8,
+  },
   numberErrorText: {
     fontSize: 20,
     color: 'red',

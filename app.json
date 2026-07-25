@@ -21,7 +21,8 @@
       "bundleIdentifier": "com.gilreich1.liraShapiraApp",
       "infoPlist": {
         "ExpoLocalization_supportsRTL": true,
-        "NSContactsUsageDescription": "This app needs access to your contacts to help you find and send money to people in your contact list."
+        "NSContactsUsageDescription": "This app needs access to your contacts to help you find and send money to people in your contact list.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
