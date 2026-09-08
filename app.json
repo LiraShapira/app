@@ -2,7 +2,7 @@
   "expo": {
     "name": "liraShapiraApp",
     "slug": "liraShapiraApp",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "orientation": "portrait",
     "icon": "./assets/icons/lira-shapira.png",
     "scheme": "myapp",
@@ -28,16 +28,27 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": [],
-      "package": "com.gilreich1.liraShapiraApp"
+      "package": "com.gilreich1.liraShapiraApp",
+      "versionCode": 4
     },
     "web": {
       "bundler": "metro",
       "favicon": "./assets/icons/favicon.png"
     },
     "plugins": [
-      "expo-localization",
-      "expo-router",
-      "expo-font"
+          "expo-localization",
+          "expo-router",
+          "expo-font",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "buildToolsVersion": "36.0.0"
+          }
+        }
+      ]
     ],
     "extra": {
       "supportsRTL": true,
