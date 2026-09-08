@@ -21,6 +21,7 @@
     "@reduxjs/toolkit": "^2.0.0",
     "@types/react-native-simple-radio-button": "^2.7.7",
     "expo": "~54.0.0",
+    "expo-build-properties": "~1.0.10",
     "expo-constants": "~18.0.9",
     "expo-contacts": "~15.0.9",
     "expo-dev-client": "~6.0.15",
